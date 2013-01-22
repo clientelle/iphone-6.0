@@ -7,7 +7,7 @@
 //
 
 #import "CTLGroupsListViewController.h"
-#import "RWSTwoPanelViewController.h"
+#import "RWSSliderMenuViewController.h"
 
 @interface CTLGroupsListViewController ()
 

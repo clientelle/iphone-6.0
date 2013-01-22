@@ -7,7 +7,7 @@
 //
 
 #import "CTLAppDelegate.h"
-#import "RWSTwoPanelViewController.h"
+#import "RWSSliderMenuViewController.h"
 #import "CTLMainMenuViewController.h"
 
 @implementation CTLAppDelegate
@@ -20,7 +20,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
     CTLMainMenuViewController *menuPanel = [storyboard instantiateInitialViewController];
     UINavigationController *contactsNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"contactsNavigationController"];
-    RWSTwoPanelViewController *twoPanel = [[RWSTwoPanelViewController alloc] initWithMenu:menuPanel andRightPanel:contactsNavigationController];
+    RWSSliderMenuViewController *twoPanel = [[RWSSliderMenuViewController alloc] initWithMenu:menuPanel andRightPanel:contactsNavigationController];
     [self.window setRootViewController:twoPanel];
      
     return YES;

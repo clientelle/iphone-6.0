@@ -7,7 +7,7 @@
 //
 
 #import "CTLContactsListViewController.h"
-#import "RWSTwoPanelViewController.h"
+#import "RWSSliderMenuViewController.h"
 
 @interface CTLContactsListViewController ()
 

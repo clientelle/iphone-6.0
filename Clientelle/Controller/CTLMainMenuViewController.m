@@ -8,7 +8,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIColor+CTLColor.h"
 #import "CTLMainMenuViewController.h"
-#import "RWSTwoPanelViewController.h"
+#import "RWSSliderMenuViewController.h"
 #import "CTLContactsListViewController.h"
 
 

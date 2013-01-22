@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RWSPanelController.h"
+#import "RWSSlideMenuViewDelegate.h"
 
-@interface CTLMainMenuViewController : UITableViewController<RWSPanelController>{
+@interface CTLMainMenuViewController : UITableViewController<RWSSlideMenuViewDelegate>{
     NSArray *_menuItems;
 }
 
-@property (nonatomic, weak) RWSTwoPanelViewController *twoPanelViewController;
+@property (nonatomic, weak) RWSSliderMenuViewController *twoPanelViewController;
 
 @end

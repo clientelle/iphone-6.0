@@ -1,21 +1,21 @@
 //
-//  RWSTwoPanelViewController.m
+//  RWSSliderMenuViewController.m
 //  Created by Samuel Goodwin on 1/17/13.
 //  Copyright (c) 2013 Roundwall Software. All rights reserved.
 //
 
-#import "RWSTwoPanelViewController.h"
+#import "RWSSliderMenuViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface RWSTwoPanelViewController()
+@interface RWSSliderMenuViewController()
 
 @end
 
 const CGFloat CTLMainMenuWidth = 170.0f;
 
-@implementation RWSTwoPanelViewController
+@implementation RWSSliderMenuViewController
 
-- (id)initWithMenu:(UIViewController<RWSPanelController> *)menuPanel andRightPanel:(UINavigationController *)rightPanel
+- (id)initWithMenu:(UIViewController<RWSSlideMenuViewDelegate> *)menuPanel andRightPanel:(UINavigationController *)rightPanel
 {
     self = [super init];
     if(self){
@@ -71,7 +71,7 @@ const CGFloat CTLMainMenuWidth = 170.0f;
     }];
 }
 
-- (void)setLeftPanel:(UIViewController<RWSPanelController> *)leftPanel withFrame:(CGRect)frame
+- (void)setLeftPanel:(UIViewController<RWSSlideMenuViewDelegate> *)leftPanel withFrame:(CGRect)frame
 {
     frame.size.width = CTLMainMenuWidth;
     leftPanel.view.frame = frame;
@@ -83,7 +83,7 @@ const CGFloat CTLMainMenuWidth = 170.0f;
 
 - (void)setRightPanel:(UINavigationController *)rightNavigationController withFrame:(CGRect)frame
 {
-    UIViewController<RWSDetailPanel> *rightViewController = (UIViewController <RWSDetailPanel>*)rightNavigationController.topViewController;
+    UIViewController<RWSSlideMenuRevealDelegate> *rightViewController = (UIViewController <RWSSlideMenuRevealDelegate>*)rightNavigationController.topViewController;
     [rightViewController setTwoPanelViewController:self];
     self.navigationController = rightNavigationController;
     [self addChildViewController:self.navigationController];
