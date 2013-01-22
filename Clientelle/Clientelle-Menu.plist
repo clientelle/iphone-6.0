@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>Contacts</string>
+		<key>identifier</key>
+		<string>contacts</string>
+		<key>icon</key>
+		<string>24-person.png</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Groups</string>
+		<key>identifier</key>
+		<string>groups</string>
+		<key>icon</key>
+		<string>112-group.png</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Account</string>
+		<key>identifier</key>
+		<string>account</string>
+		<key>icon</key>
+		<string>21-wrench.png</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Help &amp; Support</string>
+		<key>identifier</key>
+		<string>support</string>
+		<key>icon</key>
+		<string>21-wrench.png</string>
+	</dict>
+</array>
+</plist>

@@ -1,0 +1,575 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		417DC23E16ADF1140073199D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23D16ADF1140073199D /* UIKit.framework */; };
+		417DC24016ADF1140073199D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23F16ADF1140073199D /* Foundation.framework */; };
+		417DC24216ADF1140073199D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC24116ADF1140073199D /* CoreGraphics.framework */; };
+		417DC24816ADF1140073199D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 417DC24616ADF1140073199D /* InfoPlist.strings */; };
+		417DC24A16ADF1140073199D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC24916ADF1140073199D /* main.m */; };
+		417DC24E16ADF1140073199D /* CTLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC24D16ADF1140073199D /* CTLAppDelegate.m */; };
+		417DC25016ADF1140073199D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC24F16ADF1140073199D /* Default.png */; };
+		417DC25216ADF1140073199D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC25116ADF1140073199D /* Default@2x.png */; };
+		417DC25416ADF1140073199D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC25316ADF1140073199D /* Default-568h@2x.png */; };
+		417DC25716ADF1140073199D /* Clientelle.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 417DC25516ADF1140073199D /* Clientelle.storyboard */; };
+		417DC26216ADF1140073199D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC26116ADF1140073199D /* SenTestingKit.framework */; };
+		417DC26316ADF1140073199D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23D16ADF1140073199D /* UIKit.framework */; };
+		417DC26416ADF1140073199D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23F16ADF1140073199D /* Foundation.framework */; };
+		417DC26C16ADF1140073199D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 417DC26A16ADF1140073199D /* InfoPlist.strings */; };
+		417DC26F16ADF1140073199D /* ClientelleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC26E16ADF1140073199D /* ClientelleTests.m */; };
+		417DC28416ADF3330073199D /* RWSTwoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC28316ADF3330073199D /* RWSTwoPanelViewController.m */; };
+		417DC29C16ADF60E0073199D /* CTLContactsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC29516ADF60E0073199D /* CTLContactsListViewController.m */; };
+		417DC29D16ADF60E0073199D /* CTLMainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */; };
+		417DC2AA16AE16220073199D /* dark_matter.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2A816AE16220073199D /* dark_matter.png */; };
+		417DC2AB16AE16220073199D /* dark_matter@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2A916AE16220073199D /* dark_matter@2X.png */; };
+		417DC2AD16AE17560073199D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC2AC16AE17560073199D /* QuartzCore.framework */; };
+		417DC2AF16AE18C00073199D /* Clientelle-Menu.plist in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2AE16AE18C00073199D /* Clientelle-Menu.plist */; };
+		417DC2B416AE1C9A0073199D /* 21-wrench.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B016AE1C9A0073199D /* 21-wrench.png */; };
+		417DC2B516AE1C9A0073199D /* 21-wrench@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B116AE1C9A0073199D /* 21-wrench@2x.png */; };
+		417DC2B616AE1C9A0073199D /* 24-person.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B216AE1C9A0073199D /* 24-person.png */; };
+		417DC2B716AE1C9A0073199D /* 24-person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B316AE1C9A0073199D /* 24-person@2x.png */; };
+		417DC2BA16AE1EE30073199D /* 112-group.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B816AE1EE30073199D /* 112-group.png */; };
+		417DC2BB16AE1EE30073199D /* 112-group@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B916AE1EE30073199D /* 112-group@2x.png */; };
+		417DC2BE16AE30FA0073199D /* CTLGroupsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2BD16AE30FA0073199D /* CTLGroupsListViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		417DC26516ADF1140073199D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 417DC23016ADF1140073199D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 417DC23816ADF1140073199D;
+			remoteInfo = Clientelle;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		417DC23916ADF1140073199D /* Clientelle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clientelle.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		417DC23D16ADF1140073199D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		417DC23F16ADF1140073199D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		417DC24116ADF1140073199D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		417DC24516ADF1140073199D /* Clientelle-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Clientelle-Info.plist"; sourceTree = "<group>"; };
+		417DC24716ADF1140073199D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		417DC24916ADF1140073199D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		417DC24B16ADF1140073199D /* Clientelle-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Clientelle-Prefix.pch"; sourceTree = "<group>"; };
+		417DC24C16ADF1140073199D /* CTLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTLAppDelegate.h; sourceTree = "<group>"; };
+		417DC24D16ADF1140073199D /* CTLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CTLAppDelegate.m; sourceTree = "<group>"; };
+		417DC24F16ADF1140073199D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		417DC25116ADF1140073199D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		417DC25316ADF1140073199D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		417DC25616ADF1140073199D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Clientelle.storyboard; sourceTree = "<group>"; };
+		417DC26016ADF1140073199D /* ClientelleTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClientelleTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		417DC26116ADF1140073199D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		417DC26916ADF1140073199D /* ClientelleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClientelleTests-Info.plist"; sourceTree = "<group>"; };
+		417DC26B16ADF1140073199D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		417DC26D16ADF1140073199D /* ClientelleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClientelleTests.h; sourceTree = "<group>"; };
+		417DC26E16ADF1140073199D /* ClientelleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClientelleTests.m; sourceTree = "<group>"; };
+		417DC28116ADF3330073199D /* RWSPanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWSPanelController.h; sourceTree = "<group>"; };
+		417DC28216ADF3330073199D /* RWSTwoPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWSTwoPanelViewController.h; sourceTree = "<group>"; };
+		417DC28316ADF3330073199D /* RWSTwoPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWSTwoPanelViewController.m; sourceTree = "<group>"; };
+		417DC29416ADF60E0073199D /* CTLContactsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactsListViewController.h; sourceTree = "<group>"; };
+		417DC29516ADF60E0073199D /* CTLContactsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactsListViewController.m; sourceTree = "<group>"; };
+		417DC29616ADF60E0073199D /* CTLMainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMainMenuViewController.h; sourceTree = "<group>"; };
+		417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMainMenuViewController.m; sourceTree = "<group>"; };
+		417DC2A316ADF8EC0073199D /* RWSDetailPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWSDetailPanel.h; sourceTree = "<group>"; };
+		417DC2A816AE16220073199D /* dark_matter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dark_matter.png; sourceTree = "<group>"; };
+		417DC2A916AE16220073199D /* dark_matter@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_matter@2X.png"; sourceTree = "<group>"; };
+		417DC2AC16AE17560073199D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		417DC2AE16AE18C00073199D /* Clientelle-Menu.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Clientelle-Menu.plist"; sourceTree = "<group>"; };
+		417DC2B016AE1C9A0073199D /* 21-wrench.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "21-wrench.png"; sourceTree = "<group>"; };
+		417DC2B116AE1C9A0073199D /* 21-wrench@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "21-wrench@2x.png"; sourceTree = "<group>"; };
+		417DC2B216AE1C9A0073199D /* 24-person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "24-person.png"; sourceTree = "<group>"; };
+		417DC2B316AE1C9A0073199D /* 24-person@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "24-person@2x.png"; sourceTree = "<group>"; };
+		417DC2B816AE1EE30073199D /* 112-group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "112-group.png"; sourceTree = "<group>"; };
+		417DC2B916AE1EE30073199D /* 112-group@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "112-group@2x.png"; sourceTree = "<group>"; };
+		417DC2BC16AE30F90073199D /* CTLGroupsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLGroupsListViewController.h; sourceTree = "<group>"; };
+		417DC2BD16AE30FA0073199D /* CTLGroupsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLGroupsListViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		417DC23616ADF1140073199D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				417DC2AD16AE17560073199D /* QuartzCore.framework in Frameworks */,
+				417DC23E16ADF1140073199D /* UIKit.framework in Frameworks */,
+				417DC24016ADF1140073199D /* Foundation.framework in Frameworks */,
+				417DC24216ADF1140073199D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		417DC25C16ADF1140073199D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				417DC26216ADF1140073199D /* SenTestingKit.framework in Frameworks */,
+				417DC26316ADF1140073199D /* UIKit.framework in Frameworks */,
+				417DC26416ADF1140073199D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		417DC22E16ADF1140073199D = {
+			isa = PBXGroup;
+			children = (
+				417DC24316ADF1140073199D /* Clientelle */,
+				417DC26716ADF1140073199D /* ClientelleTests */,
+				417DC23C16ADF1140073199D /* Frameworks */,
+				417DC23A16ADF1140073199D /* Products */,
+				417DC27E16ADF2A00073199D /* Vendor */,
+			);
+			sourceTree = "<group>";
+		};
+		417DC23A16ADF1140073199D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				417DC23916ADF1140073199D /* Clientelle.app */,
+				417DC26016ADF1140073199D /* ClientelleTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		417DC23C16ADF1140073199D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				417DC2AC16AE17560073199D /* QuartzCore.framework */,
+				417DC23D16ADF1140073199D /* UIKit.framework */,
+				417DC23F16ADF1140073199D /* Foundation.framework */,
+				417DC24116ADF1140073199D /* CoreGraphics.framework */,
+				417DC26116ADF1140073199D /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		417DC24316ADF1140073199D /* Clientelle */ = {
+			isa = PBXGroup;
+			children = (
+				417DC29A16ADF60E0073199D /* Model */,
+				417DC29B16ADF60E0073199D /* View */,
+				417DC29316ADF60E0073199D /* Controller */,
+				417DC24416ADF1140073199D /* Supporting Files */,
+				417DC2A716AE16220073199D /* Resources */,
+			);
+			path = Clientelle;
+			sourceTree = "<group>";
+		};
+		417DC24416ADF1140073199D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				417DC24916ADF1140073199D /* main.m */,
+				417DC24616ADF1140073199D /* InfoPlist.strings */,
+				417DC24C16ADF1140073199D /* CTLAppDelegate.h */,
+				417DC24D16ADF1140073199D /* CTLAppDelegate.m */,
+				417DC25516ADF1140073199D /* Clientelle.storyboard */,
+				417DC24516ADF1140073199D /* Clientelle-Info.plist */,
+				417DC24B16ADF1140073199D /* Clientelle-Prefix.pch */,
+				417DC2AE16AE18C00073199D /* Clientelle-Menu.plist */,
+				417DC24F16ADF1140073199D /* Default.png */,
+				417DC25116ADF1140073199D /* Default@2x.png */,
+				417DC25316ADF1140073199D /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		417DC26716ADF1140073199D /* ClientelleTests */ = {
+			isa = PBXGroup;
+			children = (
+				417DC26D16ADF1140073199D /* ClientelleTests.h */,
+				417DC26E16ADF1140073199D /* ClientelleTests.m */,
+				417DC26816ADF1140073199D /* Supporting Files */,
+			);
+			path = ClientelleTests;
+			sourceTree = "<group>";
+		};
+		417DC26816ADF1140073199D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				417DC26916ADF1140073199D /* ClientelleTests-Info.plist */,
+				417DC26A16ADF1140073199D /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		417DC27E16ADF2A00073199D /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				417DC27F16ADF3330073199D /* Roundwall */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		417DC27F16ADF3330073199D /* Roundwall */ = {
+			isa = PBXGroup;
+			children = (
+				417DC2A316ADF8EC0073199D /* RWSDetailPanel.h */,
+				417DC28116ADF3330073199D /* RWSPanelController.h */,
+				417DC28216ADF3330073199D /* RWSTwoPanelViewController.h */,
+				417DC28316ADF3330073199D /* RWSTwoPanelViewController.m */,
+			);
+			path = Roundwall;
+			sourceTree = "<group>";
+		};
+		417DC29316ADF60E0073199D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				417DC29416ADF60E0073199D /* CTLContactsListViewController.h */,
+				417DC29516ADF60E0073199D /* CTLContactsListViewController.m */,
+				417DC29616ADF60E0073199D /* CTLMainMenuViewController.h */,
+				417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */,
+				417DC2BC16AE30F90073199D /* CTLGroupsListViewController.h */,
+				417DC2BD16AE30FA0073199D /* CTLGroupsListViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		417DC29A16ADF60E0073199D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		417DC29B16ADF60E0073199D /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		417DC2A716AE16220073199D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				417DC2B816AE1EE30073199D /* 112-group.png */,
+				417DC2B916AE1EE30073199D /* 112-group@2x.png */,
+				417DC2B016AE1C9A0073199D /* 21-wrench.png */,
+				417DC2B116AE1C9A0073199D /* 21-wrench@2x.png */,
+				417DC2B216AE1C9A0073199D /* 24-person.png */,
+				417DC2B316AE1C9A0073199D /* 24-person@2x.png */,
+				417DC2A816AE16220073199D /* dark_matter.png */,
+				417DC2A916AE16220073199D /* dark_matter@2X.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		417DC23816ADF1140073199D /* Clientelle */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 417DC27216ADF1140073199D /* Build configuration list for PBXNativeTarget "Clientelle" */;
+			buildPhases = (
+				417DC23516ADF1140073199D /* Sources */,
+				417DC23616ADF1140073199D /* Frameworks */,
+				417DC23716ADF1140073199D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Clientelle;
+			productName = Clientelle;
+			productReference = 417DC23916ADF1140073199D /* Clientelle.app */;
+			productType = "com.apple.product-type.application";
+		};
+		417DC25F16ADF1140073199D /* ClientelleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 417DC27516ADF1140073199D /* Build configuration list for PBXNativeTarget "ClientelleTests" */;
+			buildPhases = (
+				417DC25B16ADF1140073199D /* Sources */,
+				417DC25C16ADF1140073199D /* Frameworks */,
+				417DC25D16ADF1140073199D /* Resources */,
+				417DC25E16ADF1140073199D /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				417DC26616ADF1140073199D /* PBXTargetDependency */,
+			);
+			name = ClientelleTests;
+			productName = ClientelleTests;
+			productReference = 417DC26016ADF1140073199D /* ClientelleTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		417DC23016ADF1140073199D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = CTL;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Kevin Liu";
+			};
+			buildConfigurationList = 417DC23316ADF1140073199D /* Build configuration list for PBXProject "Clientelle" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 417DC22E16ADF1140073199D;
+			productRefGroup = 417DC23A16ADF1140073199D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				417DC23816ADF1140073199D /* Clientelle */,
+				417DC25F16ADF1140073199D /* ClientelleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		417DC23716ADF1140073199D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				417DC24816ADF1140073199D /* InfoPlist.strings in Resources */,
+				417DC25016ADF1140073199D /* Default.png in Resources */,
+				417DC25216ADF1140073199D /* Default@2x.png in Resources */,
+				417DC25416ADF1140073199D /* Default-568h@2x.png in Resources */,
+				417DC25716ADF1140073199D /* Clientelle.storyboard in Resources */,
+				417DC2AA16AE16220073199D /* dark_matter.png in Resources */,
+				417DC2AB16AE16220073199D /* dark_matter@2X.png in Resources */,
+				417DC2AF16AE18C00073199D /* Clientelle-Menu.plist in Resources */,
+				417DC2B416AE1C9A0073199D /* 21-wrench.png in Resources */,
+				417DC2B516AE1C9A0073199D /* 21-wrench@2x.png in Resources */,
+				417DC2B616AE1C9A0073199D /* 24-person.png in Resources */,
+				417DC2B716AE1C9A0073199D /* 24-person@2x.png in Resources */,
+				417DC2BA16AE1EE30073199D /* 112-group.png in Resources */,
+				417DC2BB16AE1EE30073199D /* 112-group@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		417DC25D16ADF1140073199D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				417DC26C16ADF1140073199D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		417DC25E16ADF1140073199D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		417DC23516ADF1140073199D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				417DC24A16ADF1140073199D /* main.m in Sources */,
+				417DC24E16ADF1140073199D /* CTLAppDelegate.m in Sources */,
+				417DC28416ADF3330073199D /* RWSTwoPanelViewController.m in Sources */,
+				417DC29C16ADF60E0073199D /* CTLContactsListViewController.m in Sources */,
+				417DC29D16ADF60E0073199D /* CTLMainMenuViewController.m in Sources */,
+				417DC2BE16AE30FA0073199D /* CTLGroupsListViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		417DC25B16ADF1140073199D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				417DC26F16ADF1140073199D /* ClientelleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		417DC26616ADF1140073199D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 417DC23816ADF1140073199D /* Clientelle */;
+			targetProxy = 417DC26516ADF1140073199D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		417DC24616ADF1140073199D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				417DC24716ADF1140073199D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		417DC25516ADF1140073199D /* Clientelle.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				417DC25616ADF1140073199D /* en */,
+			);
+			name = Clientelle.storyboard;
+			sourceTree = "<group>";
+		};
+		417DC26A16ADF1140073199D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				417DC26B16ADF1140073199D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		417DC27016ADF1140073199D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		417DC27116ADF1140073199D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		417DC27316ADF1140073199D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Clientelle/Clientelle-Prefix.pch";
+				INFOPLIST_FILE = "Clientelle/Clientelle-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		417DC27416ADF1140073199D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Clientelle/Clientelle-Prefix.pch";
+				INFOPLIST_FILE = "Clientelle/Clientelle-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		417DC27616ADF1140073199D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Clientelle.app/Clientelle";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Clientelle/Clientelle-Prefix.pch";
+				INFOPLIST_FILE = "ClientelleTests/ClientelleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		417DC27716ADF1140073199D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Clientelle.app/Clientelle";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Clientelle/Clientelle-Prefix.pch";
+				INFOPLIST_FILE = "ClientelleTests/ClientelleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		417DC23316ADF1140073199D /* Build configuration list for PBXProject "Clientelle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				417DC27016ADF1140073199D /* Debug */,
+				417DC27116ADF1140073199D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		417DC27216ADF1140073199D /* Build configuration list for PBXNativeTarget "Clientelle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				417DC27316ADF1140073199D /* Debug */,
+				417DC27416ADF1140073199D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		417DC27516ADF1140073199D /* Build configuration list for PBXNativeTarget "ClientelleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				417DC27616ADF1140073199D /* Debug */,
+				417DC27716ADF1140073199D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 417DC23016ADF1140073199D /* Project object */;
+}
