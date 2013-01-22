@@ -11,23 +11,17 @@
 
 @end
 
-const CGFloat CTLMainMenuWidth = 215.0f;
+const CGFloat CTLMainMenuWidth = 170.0f;
 
 @implementation RWSTwoPanelViewController
 
-- (id)initWithPanels:(UIViewController<RWSPanelController> *)leftPanel andRightPanel:(UINavigationController *)rightPanel
+- (id)initWithMenu:(UIViewController<RWSPanelController> *)menuPanel andRightPanel:(UINavigationController *)rightPanel
 {
     self = [super init];
     if(self){
-
-        _isOpened = NO;
-        
         CGRect frame = self.view.bounds;
-        CGFloat width = CGRectGetWidth(frame);
-        CGFloat height = CGRectGetHeight(frame);
-        
-        [self setLeftPanel:leftPanel withFrame:frame];
-        [self setRightPanel:rightPanel withFrame:CGRectMake(0.0f, 0.0f, width, height)];
+        [self setLeftPanel:menuPanel withFrame:frame];
+        [self setRightPanel:rightPanel withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(frame), CGRectGetHeight(frame))];
     }
     return self;
 }
@@ -45,24 +39,35 @@ const CGFloat CTLMainMenuWidth = 215.0f;
     [self.view addGestureRecognizer:swipeRight];
 }
 
-- (void)setDetailPanel:(UINavigationController*)detail
+-(void)handleSwipeLeft:(UISwipeGestureRecognizer*)recognizer
 {
-    if(self.detail){
-        [self.detail removeFromParentViewController];
+    if(self.navigationController.view.frame.origin.x != 0){
+        [self hideMenu];
     }
-    
-    [self animateInDetail:detail];
 }
 
-- (void)animateInDetail:(UINavigationController *)detail
+-(void)handleSwipeRight:(UISwipeGestureRecognizer*)recognizer
 {
+    if(self.navigationController.view.frame.origin.x == 0){
+        [self showMenu];
+    }
+}
+
+#pragma mark - Set Panels
+
+- (void)setMainView:(UINavigationController*)navigationController
+{
+    if(self.navigationController){
+        [self.navigationController removeFromParentViewController];
+    }
+    
     CGFloat width = CGRectGetWidth(self.view.bounds);
     CGFloat height = CGRectGetHeight(self.view.bounds);
     
-    [self setRightPanel:detail withFrame:CGRectMake(CTLMainMenuWidth, 0.0f, width, height)];
-
+    [self setRightPanel:navigationController withFrame:CGRectMake(CTLMainMenuWidth, 0.0f, width, height)];
+    
     [UIView animateWithDuration:0.3 animations:^{
-        self.detail.view.frame = CGRectMake(0.0f, 0.0f, width, height);
+        self.navigationController.view.frame = CGRectMake(0.0f, 0.0f, width, height);
     }];
 }
 
@@ -80,15 +85,17 @@ const CGFloat CTLMainMenuWidth = 215.0f;
 {
     UIViewController<RWSDetailPanel> *rightViewController = (UIViewController <RWSDetailPanel>*)rightNavigationController.topViewController;
     [rightViewController setTwoPanelViewController:self];
-    self.detail = rightNavigationController;
-    [self addChildViewController:self.detail];
-    self.detail.view.frame = frame;
-    [self.view addSubview:self.detail.view];
+    self.navigationController = rightNavigationController;
+    [self addChildViewController:self.navigationController];
+    self.navigationController.view.frame = frame;
+    [self.view addSubview:self.navigationController.view];
 }
+
+#pragma mark - Toggle Menu
 
 - (void)toggleMenu:(id)sender
 {
-    if(self.detail.view.frame.origin.x == 0){
+    if(self.navigationController.view.frame.origin.x == 0){
         [self showMenu];
     }else{
         [self hideMenu];
@@ -98,33 +105,15 @@ const CGFloat CTLMainMenuWidth = 215.0f;
 -(void)showMenu
 {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.detail.view setFrame:CGRectMake(self.panel.view.frame.size.width, self.detail.view.frame.origin.y, self.detail.view.frame.size.width, self.detail.view.frame.size.height)];
+        [self.navigationController.view setFrame:CGRectMake(self.panel.view.frame.size.width, self.navigationController.view.frame.origin.y, self.navigationController.view.frame.size.width, self.navigationController.view.frame.size.height)];
     }];
-    _isOpened = YES;
 }
 
 -(void)hideMenu
 {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.detail.view setFrame:CGRectMake(0, self.detail.view.frame.origin.y, self.detail.view.frame.size.width, self.detail.view.frame.size.height)];
+        [self.navigationController.view setFrame:CGRectMake(0, self.navigationController.view.frame.origin.y, self.navigationController.view.frame.size.width, self.navigationController.view.frame.size.height)];
     }];
-    _isOpened = NO;
-}
-
-#pragma mark - Gesture handlers -
-
--(void)handleSwipeLeft:(UISwipeGestureRecognizer*)recognizer
-{
-    if(self.detail.view.frame.origin.x != 0){
-        [self hideMenu];
-    }
-}
-
--(void)handleSwipeRight:(UISwipeGestureRecognizer*)recognizer
-{
-    if(self.detail.view.frame.origin.x == 0){
-        [self showMenu];
-    }
 }
 
 @end

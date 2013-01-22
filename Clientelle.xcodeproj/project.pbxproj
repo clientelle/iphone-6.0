@@ -36,6 +36,26 @@
 		417DC2BA16AE1EE30073199D /* 112-group.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B816AE1EE30073199D /* 112-group.png */; };
 		417DC2BB16AE1EE30073199D /* 112-group@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B916AE1EE30073199D /* 112-group@2x.png */; };
 		417DC2BE16AE30FA0073199D /* CTLGroupsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2BD16AE30FA0073199D /* CTLGroupsListViewController.m */; };
+		417DC2C516AE46640073199D /* 38-house.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2C316AE46640073199D /* 38-house.png */; };
+		417DC2C616AE46640073199D /* 38-house@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2C416AE46640073199D /* 38-house@2x.png */; };
+		417DC2DB16AE4C060073199D /* CTLPhoneNumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D216AE4C060073199D /* CTLPhoneNumberFormatter.m */; };
+		417DC2DC16AE4C060073199D /* UIColor+CTLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D416AE4C060073199D /* UIColor+CTLColor.m */; };
+		417DC2DD16AE4C060073199D /* NSDate+CTLDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D616AE4C060073199D /* NSDate+CTLDate.m */; };
+		417DC2DE16AE4C060073199D /* NSString+CTLString.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D816AE4C060073199D /* NSString+CTLString.m */; };
+		417DC2E116AE4CFA0073199D /* CTLPhoneNumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D216AE4C060073199D /* CTLPhoneNumberFormatter.m */; };
+		417DC2E216AE4CFA0073199D /* UIColor+CTLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D416AE4C060073199D /* UIColor+CTLColor.m */; };
+		417DC2E316AE4CFA0073199D /* NSDate+CTLDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D616AE4C060073199D /* NSDate+CTLDate.m */; };
+		417DC2E416AE4CFA0073199D /* NSString+CTLString.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D816AE4C060073199D /* NSString+CTLString.m */; };
+		417DC2E716AE52EC0073199D /* 253-person.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2E516AE52EC0073199D /* 253-person.png */; };
+		417DC2E816AE52EC0073199D /* 253-person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2E616AE52EC0073199D /* 253-person@2x.png */; };
+		417DC2EB16AE544E0073199D /* 152-rolodex.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2E916AE544E0073199D /* 152-rolodex.png */; };
+		417DC2EC16AE544E0073199D /* 152-rolodex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2EA16AE544E0073199D /* 152-rolodex@2x.png */; };
+		417DC2EF16AE54F60073199D /* 294-macroflower.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2ED16AE54F60073199D /* 294-macroflower.png */; };
+		417DC2F016AE54F60073199D /* 294-macroflower@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2EE16AE54F60073199D /* 294-macroflower@2x.png */; };
+		417DC2F316AE551D0073199D /* 291-idcard.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2F116AE551C0073199D /* 291-idcard.png */; };
+		417DC2F416AE551D0073199D /* 291-idcard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2F216AE551C0073199D /* 291-idcard@2x.png */; };
+		417DC2F716AE55800073199D /* group-message.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2F516AE557F0073199D /* group-message.png */; };
+		417DC2F816AE55800073199D /* group-message@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2F616AE55800073199D /* group-message@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +109,26 @@
 		417DC2B916AE1EE30073199D /* 112-group@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "112-group@2x.png"; sourceTree = "<group>"; };
 		417DC2BC16AE30F90073199D /* CTLGroupsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLGroupsListViewController.h; sourceTree = "<group>"; };
 		417DC2BD16AE30FA0073199D /* CTLGroupsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLGroupsListViewController.m; sourceTree = "<group>"; };
+		417DC2C316AE46640073199D /* 38-house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "38-house.png"; sourceTree = "<group>"; };
+		417DC2C416AE46640073199D /* 38-house@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "38-house@2x.png"; sourceTree = "<group>"; };
+		417DC2D116AE4C060073199D /* CTLPhoneNumberFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLPhoneNumberFormatter.h; sourceTree = "<group>"; };
+		417DC2D216AE4C060073199D /* CTLPhoneNumberFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPhoneNumberFormatter.m; sourceTree = "<group>"; };
+		417DC2D316AE4C060073199D /* UIColor+CTLColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CTLColor.h"; sourceTree = "<group>"; };
+		417DC2D416AE4C060073199D /* UIColor+CTLColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CTLColor.m"; sourceTree = "<group>"; };
+		417DC2D516AE4C060073199D /* NSDate+CTLDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CTLDate.h"; sourceTree = "<group>"; };
+		417DC2D616AE4C060073199D /* NSDate+CTLDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+CTLDate.m"; sourceTree = "<group>"; };
+		417DC2D716AE4C060073199D /* NSString+CTLString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CTLString.h"; sourceTree = "<group>"; };
+		417DC2D816AE4C060073199D /* NSString+CTLString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CTLString.m"; sourceTree = "<group>"; };
+		417DC2E516AE52EC0073199D /* 253-person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "253-person.png"; sourceTree = "<group>"; };
+		417DC2E616AE52EC0073199D /* 253-person@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "253-person@2x.png"; sourceTree = "<group>"; };
+		417DC2E916AE544E0073199D /* 152-rolodex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "152-rolodex.png"; sourceTree = "<group>"; };
+		417DC2EA16AE544E0073199D /* 152-rolodex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "152-rolodex@2x.png"; sourceTree = "<group>"; };
+		417DC2ED16AE54F60073199D /* 294-macroflower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "294-macroflower.png"; sourceTree = "<group>"; };
+		417DC2EE16AE54F60073199D /* 294-macroflower@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "294-macroflower@2x.png"; sourceTree = "<group>"; };
+		417DC2F116AE551C0073199D /* 291-idcard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "291-idcard.png"; sourceTree = "<group>"; };
+		417DC2F216AE551C0073199D /* 291-idcard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "291-idcard@2x.png"; sourceTree = "<group>"; };
+		417DC2F516AE557F0073199D /* group-message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group-message.png"; sourceTree = "<group>"; };
+		417DC2F616AE55800073199D /* group-message@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group-message@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +191,7 @@
 		417DC24316ADF1140073199D /* Clientelle */ = {
 			isa = PBXGroup;
 			children = (
+				417DC2CC16AE4BF30073199D /* Helpers */,
 				417DC29A16ADF60E0073199D /* Model */,
 				417DC29B16ADF60E0073199D /* View */,
 				417DC29316ADF60E0073199D /* Controller */,
@@ -219,10 +260,10 @@
 		417DC29316ADF60E0073199D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				417DC29416ADF60E0073199D /* CTLContactsListViewController.h */,
-				417DC29516ADF60E0073199D /* CTLContactsListViewController.m */,
 				417DC29616ADF60E0073199D /* CTLMainMenuViewController.h */,
 				417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */,
+				417DC29416ADF60E0073199D /* CTLContactsListViewController.h */,
+				417DC29516ADF60E0073199D /* CTLContactsListViewController.m */,
 				417DC2BC16AE30F90073199D /* CTLGroupsListViewController.h */,
 				417DC2BD16AE30FA0073199D /* CTLGroupsListViewController.m */,
 			);
@@ -246,6 +287,18 @@
 		417DC2A716AE16220073199D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				417DC2F516AE557F0073199D /* group-message.png */,
+				417DC2F616AE55800073199D /* group-message@2x.png */,
+				417DC2F116AE551C0073199D /* 291-idcard.png */,
+				417DC2F216AE551C0073199D /* 291-idcard@2x.png */,
+				417DC2ED16AE54F60073199D /* 294-macroflower.png */,
+				417DC2EE16AE54F60073199D /* 294-macroflower@2x.png */,
+				417DC2E916AE544E0073199D /* 152-rolodex.png */,
+				417DC2EA16AE544E0073199D /* 152-rolodex@2x.png */,
+				417DC2E516AE52EC0073199D /* 253-person.png */,
+				417DC2E616AE52EC0073199D /* 253-person@2x.png */,
+				417DC2C316AE46640073199D /* 38-house.png */,
+				417DC2C416AE46640073199D /* 38-house@2x.png */,
 				417DC2B816AE1EE30073199D /* 112-group.png */,
 				417DC2B916AE1EE30073199D /* 112-group@2x.png */,
 				417DC2B016AE1C9A0073199D /* 21-wrench.png */,
@@ -256,6 +309,21 @@
 				417DC2A916AE16220073199D /* dark_matter@2X.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		417DC2CC16AE4BF30073199D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				417DC2D116AE4C060073199D /* CTLPhoneNumberFormatter.h */,
+				417DC2D216AE4C060073199D /* CTLPhoneNumberFormatter.m */,
+				417DC2D316AE4C060073199D /* UIColor+CTLColor.h */,
+				417DC2D416AE4C060073199D /* UIColor+CTLColor.m */,
+				417DC2D516AE4C060073199D /* NSDate+CTLDate.h */,
+				417DC2D616AE4C060073199D /* NSDate+CTLDate.m */,
+				417DC2D716AE4C060073199D /* NSString+CTLString.h */,
+				417DC2D816AE4C060073199D /* NSString+CTLString.m */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -344,6 +412,18 @@
 				417DC2B716AE1C9A0073199D /* 24-person@2x.png in Resources */,
 				417DC2BA16AE1EE30073199D /* 112-group.png in Resources */,
 				417DC2BB16AE1EE30073199D /* 112-group@2x.png in Resources */,
+				417DC2C516AE46640073199D /* 38-house.png in Resources */,
+				417DC2C616AE46640073199D /* 38-house@2x.png in Resources */,
+				417DC2E716AE52EC0073199D /* 253-person.png in Resources */,
+				417DC2E816AE52EC0073199D /* 253-person@2x.png in Resources */,
+				417DC2EB16AE544E0073199D /* 152-rolodex.png in Resources */,
+				417DC2EC16AE544E0073199D /* 152-rolodex@2x.png in Resources */,
+				417DC2EF16AE54F60073199D /* 294-macroflower.png in Resources */,
+				417DC2F016AE54F60073199D /* 294-macroflower@2x.png in Resources */,
+				417DC2F316AE551D0073199D /* 291-idcard.png in Resources */,
+				417DC2F416AE551D0073199D /* 291-idcard@2x.png in Resources */,
+				417DC2F716AE55800073199D /* group-message.png in Resources */,
+				417DC2F816AE55800073199D /* group-message@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +458,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				417DC2E116AE4CFA0073199D /* CTLPhoneNumberFormatter.m in Sources */,
+				417DC2E216AE4CFA0073199D /* UIColor+CTLColor.m in Sources */,
+				417DC2E316AE4CFA0073199D /* NSDate+CTLDate.m in Sources */,
+				417DC2E416AE4CFA0073199D /* NSString+CTLString.m in Sources */,
 				417DC24A16ADF1140073199D /* main.m in Sources */,
 				417DC24E16ADF1140073199D /* CTLAppDelegate.m in Sources */,
 				417DC28416ADF3330073199D /* RWSTwoPanelViewController.m in Sources */,
@@ -392,6 +476,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				417DC26F16ADF1140073199D /* ClientelleTests.m in Sources */,
+				417DC2DB16AE4C060073199D /* CTLPhoneNumberFormatter.m in Sources */,
+				417DC2DC16AE4C060073199D /* UIColor+CTLColor.m in Sources */,
+				417DC2DD16AE4C060073199D /* NSDate+CTLDate.m in Sources */,
+				417DC2DE16AE4C060073199D /* NSString+CTLString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,11 +14,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackOpaque];
 
+    //init menu view controller
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
     CTLMainMenuViewController *menuPanel = [storyboard instantiateInitialViewController];
     UINavigationController *contactsNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"contactsNavigationController"];
-    RWSTwoPanelViewController *twoPanel = [[RWSTwoPanelViewController alloc] initWithPanels:menuPanel andRightPanel:contactsNavigationController];
+    RWSTwoPanelViewController *twoPanel = [[RWSTwoPanelViewController alloc] initWithMenu:menuPanel andRightPanel:contactsNavigationController];
     [self.window setRootViewController:twoPanel];
      
     return YES;

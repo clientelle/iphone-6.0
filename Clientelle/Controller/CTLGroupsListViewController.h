@@ -12,6 +12,6 @@
 @interface CTLGroupsListViewController : UITableViewController<RWSDetailPanel>
 @property (nonatomic, weak) RWSTwoPanelViewController *twoPanelViewController;
 
-//- (IBAction)showMenu:(id)sender;
+- (IBAction)showMenu:(id)sender;
 
 @end

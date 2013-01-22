@@ -65,7 +65,7 @@
         <!--Navigation Controller-->
         <scene sceneID="LiR-yh-OOF">
             <objects>
-                <navigationController storyboardIdentifier="groups" definesPresentationContext="YES" id="nGd-BQ-2aM" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="groupsNavigationController" definesPresentationContext="YES" id="nGd-BQ-2aM" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="NmB-xw-svW"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wuf-Y7-MRv">
                         <autoresizingMask key="autoresizingMask"/>
@@ -129,11 +129,6 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Contacts" id="FiH-F8-BEo">
-                        <barButtonItem key="leftBarButtonItem" title="menu" id="wck-iZ-5lp">
-                            <connections>
-                                <action selector="showMenu:" destination="ZCG-MJ-IUd" id="ZrZ-Hc-JRO"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="avt-Ex-kI0">
                             <connections>
                                 <segue destination="bAp-Yc-MJs" kind="push" id="9Qs-RI-BIq"/>
@@ -162,6 +157,26 @@
             <point key="canvasLocation" x="338" y="63"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="CTLContactsListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactsListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="showMenu:"/>
+            </relationships>
+        </class>
+        <class className="CTLGroupsListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLGroupsListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="showMenu:"/>
+            </relationships>
+        </class>
+        <class className="CTLMainMenuViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMainMenuViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

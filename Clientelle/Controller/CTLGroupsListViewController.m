@@ -23,7 +23,11 @@
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"38-house.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showMenu:)];
+    
+    
+    //self.navigationItem.rightBarButtonItem = self.addButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -106,9 +110,9 @@
      */
 }
 
-//- (IBAction)showMenu:(id)sender
-//{
- ///   [self.twoPanelViewController toggleMenu:sender];
-//}
+- (IBAction)showMenu:(id)sender
+{
+    [self.twoPanelViewController toggleMenu:sender];
+}
 
 @end

@@ -8,16 +8,13 @@
 #import "RWSPanelController.h"
 #import "RWSDetailPanel.h"
 
-@interface RWSTwoPanelViewController : UIViewController{
-    BOOL _isOpened;
-}
+@interface RWSTwoPanelViewController : UIViewController
 
-@property (nonatomic, assign) BOOL isOpened;
 @property (nonatomic, weak) UIViewController<RWSPanelController> *panel;
-@property (nonatomic, weak) UINavigationController *detail;
+@property (nonatomic, weak) UINavigationController *navigationController;
 
-- (id)initWithPanels:(UIViewController<RWSPanelController> *)leftPanel andRightPanel:(UINavigationController *)rightPanel;
-- (void)setDetailPanel:(UINavigationController *)detail;
+- (id)initWithMenu:(UIViewController<RWSPanelController> *)menuPanel andRightPanel:(UINavigationController *)rightPanel;
+- (void)setMainView:(UINavigationController *)navController;
 - (void)toggleMenu:(id)sender;
 
 @end
