@@ -41,7 +41,7 @@
 {
     static NSString *CellIdentifier = @"contactCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = @"hello";
+    cell.textLabel.text = NSLocalizedString(@"HELLO", nil);
     return cell;
 }
 

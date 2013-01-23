@@ -87,7 +87,7 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
     NSDictionary *menuItem = [_menuItems objectAtIndex:indexPath.row];
     
     //cell.imageView.image = [UIImage imageNamed:menuItem[@"icon"]];
-    cell.textLabel.text = menuItem[@"title"];
+    cell.textLabel.text = NSLocalizedString(menuItem[@"title"], nil);
     
     [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13.0f]];
     [cell.textLabel setTextColor:[UIColor whiteColor]];

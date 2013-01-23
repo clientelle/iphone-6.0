@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  Clientelle
+
+  Created by Kevin Liu on 1/23/13.
+  Copyright (c) 2013 Kevin Liu. All rights reserved.
+*/
+
+"CONTACTS" = "Contacts";
+"GROUP_MESSAGING" = "Groupe de Messagerie";
+"MY_ACCOUNT" = "Mon Compte";
+"SETTINGS" = "Paramètres";
+"SUPPORT" = "Aider";

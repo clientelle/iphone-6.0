@@ -4,7 +4,7 @@
 <array>
 	<dict>
 		<key>title</key>
-		<string>Address Book</string>
+		<string>CONTACTS</string>
 		<key>identifier</key>
 		<string>contactsNavigationController</string>
 		<key>icon</key>
@@ -12,7 +12,7 @@
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>Group Messaging</string>
+		<string>GROUP_MESSAGING</string>
 		<key>identifier</key>
 		<string>groupsNavigationController</string>
 		<key>icon</key>
@@ -20,7 +20,7 @@
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>My Account</string>
+		<string>MY_ACCOUNT</string>
 		<key>identifier</key>
 		<string>accountNavigationController</string>
 		<key>icon</key>
@@ -28,7 +28,7 @@
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>Settings</string>
+		<string>SETTINGS</string>
 		<key>identifier</key>
 		<string>settingsNavigationController</string>
 		<key>icon</key>
@@ -36,7 +36,7 @@
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>Help &amp; Support</string>
+		<string>SUPPORT</string>
 		<key>identifier</key>
 		<string>supportNavigationController</string>
 		<key>icon</key>
