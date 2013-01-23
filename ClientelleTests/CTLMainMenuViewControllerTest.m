@@ -14,25 +14,20 @@
 - (void)setUp
 {
     [super setUp];
-    
     _storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
     _menuItems = [[NSArray alloc]initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:CTLMenuPlistName ofType:@"plist"]];
 }
 
 - (void)tearDown
 {
-    // Tear-down code here.
-    
     _storyboard = nil;
     _menuItems = nil;
-    
     [super tearDown];
 }
 
 - (void)testMenuHasValidItems
 {
     NSInteger menuCount = [_menuItems count];
-    
     if(menuCount == 0){
         STFail(@"Main menu has 0 items");
     }
@@ -45,6 +40,13 @@
     }
 }
 
+- (void) testTableHasCorrectRowsAndSections
+{
+    CTLMainMenuViewController *mainMenuViewController = [_storyboard instantiateInitialViewController];
+    STAssertEquals(1,[mainMenuViewController numberOfSectionsInTableView:nil],@"");
+    STAssertEquals((NSInteger)[_menuItems count],[mainMenuViewController tableView:mainMenuViewController.tableView numberOfRowsInSection:0], @"Number of menu item rows");
+}
+
 - (void)testMenuItemsInstantiateValidViewControllers
 {
     NSInteger menuCount = [_menuItems count];
@@ -53,25 +55,12 @@
         UINavigationController *navController = [_storyboard instantiateViewControllerWithIdentifier:menuItem[@"identifier"]];
         
         if(![navController isKindOfClass:[UINavigationController class]]){
-            STFail(@"UIViewController with Storyboard ID: %@ is nil", menuItem[@"identifier"]);
+            STFail(@"UIViewController with Storyboard ID: %@ is invalid", menuItem[@"identifier"]);
         }
         
         UIViewController *vc = navController.topViewController;
-        
         STAssertTrue([vc canPerformAction:@selector(setMenuController:) withSender:vc], @"%@ does not implement delegate", menuItem[@"identifier"]);
     }
 }
 
-
-/*
-- (void) testTableHasCorrectRowsAndSections
-{
-    id tableViewController = [[CTLMainMenuViewController alloc] init];
-    
-   
-    //STAssertEquals(2,[tableViewController numberOfSectionsInTableView:nil], @"");
-    STAssertEquals((NSInteger)[menuItems count],[tableViewController tableView:nil numberOfRowsInSection:0],@"");
-    //STAssertEquals(5,[tableViewController tableView:nil numberOfRowsInSection:1],@"");
-}
-*/
 @end
