@@ -7,7 +7,7 @@
 //
 
 #import "CTLAppDelegate.h"
-#import "RWSSliderMenuViewController.h"
+#import "CTLSlideMenuController.h"
 #import "CTLMainMenuViewController.h"
 
 @implementation CTLAppDelegate
@@ -18,10 +18,11 @@
 
     //init menu view controller
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
-    CTLMainMenuViewController *menuPanel = [storyboard instantiateInitialViewController];
-    UINavigationController *contactsNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"contactsNavigationController"];
-    RWSSliderMenuViewController *twoPanel = [[RWSSliderMenuViewController alloc] initWithMenu:menuPanel andRightPanel:contactsNavigationController];
-    [self.window setRootViewController:twoPanel];
+    CTLMainMenuViewController *menuView = [storyboard instantiateInitialViewController];
+    UINavigationController *contactList = [storyboard instantiateViewControllerWithIdentifier:@"contactsNavigationController"];
+    
+    CTLSlideMenuController *rootViewController = [[CTLSlideMenuController alloc] initWithMenu:menuView mainView:contactList];
+    [self.window setRootViewController:rootViewController];
      
     return YES;
 }

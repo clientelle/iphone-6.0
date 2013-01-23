@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RWSSlideMenuViewDelegate.h"
 
 extern NSString *const CTLMenuPlistName;
 
-@interface CTLMainMenuViewController : UITableViewController<RWSSlideMenuViewDelegate>{
+@interface CTLMainMenuViewController : UITableViewController<CTLSlideMenuDelegate>{
     NSArray *_menuItems;
 }
 
-@property (nonatomic, weak) RWSSliderMenuViewController *twoPanelViewController;
+@property (nonatomic, weak) CTLSlideMenuController *menuController;
 
 @end

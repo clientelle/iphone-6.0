@@ -23,6 +23,9 @@
 {
     // Tear-down code here.
     
+    _storyboard = nil;
+    _menuItems = nil;
+    
     [super tearDown];
 }
 
@@ -54,11 +57,9 @@
         }
         
         UIViewController *vc = navController.topViewController;
-        STAssertTrue([vc canPerformAction:@selector(setTwoPanelViewController:) withSender:vc], @"%@ does not implement delegate", menuItem[@"identifier"]);
+        
+        STAssertTrue([vc canPerformAction:@selector(setMenuController:) withSender:vc], @"%@ does not implement delegate", menuItem[@"identifier"]);
     }
-    
-    
-    
 }
 
 

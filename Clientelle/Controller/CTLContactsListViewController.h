@@ -7,11 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RWSSlideMenuRevealDelegate.h"
 
-@interface CTLContactsListViewController : UITableViewController<RWSSlideMenuRevealDelegate>
-@property (nonatomic, weak) RWSSliderMenuViewController *twoPanelViewController;
-
-- (IBAction)showMenu:(id)sender;
+@interface CTLContactsListViewController : UITableViewController<CTLSlideMenuDelegate>
+@property (nonatomic, weak) CTLSlideMenuController *menuController;
 
 @end

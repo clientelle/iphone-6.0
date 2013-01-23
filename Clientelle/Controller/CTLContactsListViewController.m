@@ -7,7 +7,6 @@
 //
 
 #import "CTLContactsListViewController.h"
-#import "RWSSliderMenuViewController.h"
 
 @interface CTLContactsListViewController ()
 
@@ -18,18 +17,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"38-house.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showMenu:)];
-
-}
-
-
-- (void)viewWillAppear:(BOOL)animate
-{
-    //if([self.twoPanelViewController isOpened]){
-    //    [self showMenu:nil];
-    //}
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,11 +50,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-}
-
-- (IBAction)showMenu:(id)sender
-{
-    [self.twoPanelViewController toggleMenu:sender];
 }
 
 @end

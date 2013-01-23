@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		416DD82B16AF966400F2F8B3 /* CTLSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */; };
 		417DC23E16ADF1140073199D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23D16ADF1140073199D /* UIKit.framework */; };
 		417DC24016ADF1140073199D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23F16ADF1140073199D /* Foundation.framework */; };
 		417DC24216ADF1140073199D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC24116ADF1140073199D /* CoreGraphics.framework */; };
@@ -21,7 +22,6 @@
 		417DC26316ADF1140073199D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23D16ADF1140073199D /* UIKit.framework */; };
 		417DC26416ADF1140073199D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23F16ADF1140073199D /* Foundation.framework */; };
 		417DC26C16ADF1140073199D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 417DC26A16ADF1140073199D /* InfoPlist.strings */; };
-		417DC28416ADF3330073199D /* RWSSliderMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC28316ADF3330073199D /* RWSSliderMenuViewController.m */; };
 		417DC29C16ADF60E0073199D /* CTLContactsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC29516ADF60E0073199D /* CTLContactsListViewController.m */; };
 		417DC29D16ADF60E0073199D /* CTLMainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */; };
 		417DC2AA16AE16220073199D /* dark_matter.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2A816AE16220073199D /* dark_matter.png */; };
@@ -69,6 +69,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		416DD82816AF966300F2F8B3 /* CTLSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSlideMenuController.h; sourceTree = "<group>"; };
+		416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLSlideMenuController.m; sourceTree = "<group>"; };
+		416DD82A16AF966400F2F8B3 /* CTLSlideMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSlideMenuDelegate.h; sourceTree = "<group>"; };
 		417DC23916ADF1140073199D /* Clientelle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clientelle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		417DC23D16ADF1140073199D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		417DC23F16ADF1140073199D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -87,14 +90,10 @@
 		417DC26116ADF1140073199D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		417DC26916ADF1140073199D /* ClientelleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClientelleTests-Info.plist"; sourceTree = "<group>"; };
 		417DC26B16ADF1140073199D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		417DC28116ADF3330073199D /* RWSSlideMenuViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWSSlideMenuViewDelegate.h; sourceTree = "<group>"; };
-		417DC28216ADF3330073199D /* RWSSliderMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWSSliderMenuViewController.h; sourceTree = "<group>"; };
-		417DC28316ADF3330073199D /* RWSSliderMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWSSliderMenuViewController.m; sourceTree = "<group>"; };
 		417DC29416ADF60E0073199D /* CTLContactsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactsListViewController.h; sourceTree = "<group>"; };
 		417DC29516ADF60E0073199D /* CTLContactsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactsListViewController.m; sourceTree = "<group>"; };
 		417DC29616ADF60E0073199D /* CTLMainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMainMenuViewController.h; sourceTree = "<group>"; };
 		417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMainMenuViewController.m; sourceTree = "<group>"; };
-		417DC2A316ADF8EC0073199D /* RWSSlideMenuRevealDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWSSlideMenuRevealDelegate.h; sourceTree = "<group>"; };
 		417DC2A816AE16220073199D /* dark_matter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dark_matter.png; sourceTree = "<group>"; };
 		417DC2A916AE16220073199D /* dark_matter@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_matter@2X.png"; sourceTree = "<group>"; };
 		417DC2AC16AE17560073199D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -241,25 +240,16 @@
 		417DC27E16ADF2A00073199D /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				417DC27F16ADF3330073199D /* Roundwall */,
 			);
 			path = Vendor;
-			sourceTree = "<group>";
-		};
-		417DC27F16ADF3330073199D /* Roundwall */ = {
-			isa = PBXGroup;
-			children = (
-				417DC2A316ADF8EC0073199D /* RWSSlideMenuRevealDelegate.h */,
-				417DC28116ADF3330073199D /* RWSSlideMenuViewDelegate.h */,
-				417DC28216ADF3330073199D /* RWSSliderMenuViewController.h */,
-				417DC28316ADF3330073199D /* RWSSliderMenuViewController.m */,
-			);
-			path = Roundwall;
 			sourceTree = "<group>";
 		};
 		417DC29316ADF60E0073199D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				416DD82A16AF966400F2F8B3 /* CTLSlideMenuDelegate.h */,
+				416DD82816AF966300F2F8B3 /* CTLSlideMenuController.h */,
+				416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */,
 				417DC29616ADF60E0073199D /* CTLMainMenuViewController.h */,
 				417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */,
 				417DC29416ADF60E0073199D /* CTLContactsListViewController.h */,
@@ -464,10 +454,10 @@
 				417DC2E416AE4CFA0073199D /* NSString+CTLString.m in Sources */,
 				417DC24A16ADF1140073199D /* main.m in Sources */,
 				417DC24E16ADF1140073199D /* CTLAppDelegate.m in Sources */,
-				417DC28416ADF3330073199D /* RWSSliderMenuViewController.m in Sources */,
 				417DC29C16ADF60E0073199D /* CTLContactsListViewController.m in Sources */,
 				417DC29D16ADF60E0073199D /* CTLMainMenuViewController.m in Sources */,
 				417DC2BE16AE30FA0073199D /* CTLGroupsListViewController.m in Sources */,
+				416DD82B16AF966400F2F8B3 /* CTLSlideMenuController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIColor+CTLColor.h"
 #import "CTLMainMenuViewController.h"
-#import "RWSSliderMenuViewController.h"
+#import "CTLSlideMenuController.h"
 #import "CTLContactsListViewController.h"
 
 NSString *const CTLMenuPlistName = @"Clientelle-Menu";
@@ -32,11 +32,6 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
     // Dispose of any resources that can be recreated.
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return @"Clientelle";
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 30.0f;
@@ -45,15 +40,12 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30.0f)];
-        
     [headerView setBackgroundColor:[UIColor ctlTorquoise]];
-   
     
     CALayer *bevelBottomLine = [CALayer layer];
     bevelBottomLine.frame = CGRectMake(0.0f, headerView.frame.size.height-1, headerView.frame.size.width, 1.0f);
     bevelBottomLine.backgroundColor = [UIColor blackColor].CGColor;
     [headerView.layer addSublayer:bevelBottomLine];
-    
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 29.0f)];
     [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
@@ -61,7 +53,6 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
     [label setBackgroundColor:[UIColor clearColor]];
     [label setTextAlignment:NSTextAlignmentCenter];
     label.text = @"Clientelle";
-    
     
     [headerView addSubview:label];
     
@@ -103,15 +94,14 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
  
     CALayer *bevelTopLine = [CALayer layer];
     bevelTopLine.frame = CGRectMake(0.0f, 0.0f, cell.frame.size.width, 1.0f);
-    bevelTopLine.backgroundColor = [UIColor colorFromUnNormalizedRGB:51.0f green:51.0f blue:51.0f alpha:1.0f].CGColor;
+    bevelTopLine.backgroundColor = [UIColor colorFromUnNormalizedRGB:15.0f green:15.0f blue:15.0f alpha:1.0f].CGColor;
     [cell.layer addSublayer:bevelTopLine];
     
-    
-    CALayer *bevelBottomLine = [CALayer layer];
-    bevelBottomLine.frame = CGRectMake(0.0f, cell.frame.size.height-12, cell.frame.size.width, 1.0f);
-    bevelBottomLine.backgroundColor = [UIColor colorFromUnNormalizedRGB:15.0f green:15.0f blue:15.0f alpha:1.0f].CGColor;
-    [cell.layer addSublayer:bevelBottomLine];
-    
+    CALayer *bevelLine = [CALayer layer];
+    bevelLine.frame = CGRectMake(0.0f, 1.0f, cell.frame.size.width, 1.0f);
+    bevelLine.backgroundColor = [UIColor colorFromUnNormalizedRGB:51.0f green:51.0f blue:51.0f alpha:1.0f].CGColor;
+    [cell.layer addSublayer:bevelLine];
+
     return cell;
 }
 
@@ -123,7 +113,7 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
     NSDictionary *menuItem = [_menuItems objectAtIndex:indexPath.row];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
     UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:menuItem[@"identifier"]];
-    [self.twoPanelViewController setMainView:navigationController];
+    [self.menuController setMainView:navigationController];
 }
 
 @end
