@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "RWSSlideMenuViewDelegate.h"
 
+extern NSString *const CTLMenuPlistName;
+
 @interface CTLMainMenuViewController : UITableViewController<RWSSlideMenuViewDelegate>{
     NSArray *_menuItems;
 }

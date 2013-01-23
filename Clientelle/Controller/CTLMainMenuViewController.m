@@ -11,7 +11,7 @@
 #import "RWSSliderMenuViewController.h"
 #import "CTLContactsListViewController.h"
 
-
+NSString *const CTLMenuPlistName = @"Clientelle-Menu";
 
 @implementation CTLMainMenuViewController
 
@@ -22,7 +22,7 @@
     self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter.png"]];
     self.tableView.separatorColor = [UIColor clearColor];
     
-    _menuItems = [[NSArray alloc]initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Clientelle-Menu" ofType:@"plist"]];
+    _menuItems = [[NSArray alloc]initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:CTLMenuPlistName ofType:@"plist"]];
     
 }
 

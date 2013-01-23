@@ -21,14 +21,12 @@
 		417DC26316ADF1140073199D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23D16ADF1140073199D /* UIKit.framework */; };
 		417DC26416ADF1140073199D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23F16ADF1140073199D /* Foundation.framework */; };
 		417DC26C16ADF1140073199D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 417DC26A16ADF1140073199D /* InfoPlist.strings */; };
-		417DC26F16ADF1140073199D /* ClientelleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC26E16ADF1140073199D /* ClientelleTests.m */; };
 		417DC28416ADF3330073199D /* RWSSliderMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC28316ADF3330073199D /* RWSSliderMenuViewController.m */; };
 		417DC29C16ADF60E0073199D /* CTLContactsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC29516ADF60E0073199D /* CTLContactsListViewController.m */; };
 		417DC29D16ADF60E0073199D /* CTLMainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */; };
 		417DC2AA16AE16220073199D /* dark_matter.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2A816AE16220073199D /* dark_matter.png */; };
 		417DC2AB16AE16220073199D /* dark_matter@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2A916AE16220073199D /* dark_matter@2X.png */; };
 		417DC2AD16AE17560073199D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC2AC16AE17560073199D /* QuartzCore.framework */; };
-		417DC2AF16AE18C00073199D /* Clientelle-Menu.plist in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2AE16AE18C00073199D /* Clientelle-Menu.plist */; };
 		417DC2B416AE1C9A0073199D /* 21-wrench.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B016AE1C9A0073199D /* 21-wrench.png */; };
 		417DC2B516AE1C9A0073199D /* 21-wrench@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B116AE1C9A0073199D /* 21-wrench@2x.png */; };
 		417DC2B616AE1C9A0073199D /* 24-person.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B216AE1C9A0073199D /* 24-person.png */; };
@@ -56,6 +54,8 @@
 		417DC2F416AE551D0073199D /* 291-idcard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2F216AE551C0073199D /* 291-idcard@2x.png */; };
 		417DC2F716AE55800073199D /* group-message.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2F516AE557F0073199D /* group-message.png */; };
 		417DC2F816AE55800073199D /* group-message@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2F616AE55800073199D /* group-message@2x.png */; };
+		417DC30A16AF10BE0073199D /* CTLMainMenuViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC30916AF10BE0073199D /* CTLMainMenuViewControllerTest.m */; };
+		417DC31416AF5A460073199D /* Clientelle-Menu.plist in Resources */ = {isa = PBXBuildFile; fileRef = 417DC31316AF5A460073199D /* Clientelle-Menu.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,8 +87,6 @@
 		417DC26116ADF1140073199D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		417DC26916ADF1140073199D /* ClientelleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClientelleTests-Info.plist"; sourceTree = "<group>"; };
 		417DC26B16ADF1140073199D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		417DC26D16ADF1140073199D /* ClientelleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClientelleTests.h; sourceTree = "<group>"; };
-		417DC26E16ADF1140073199D /* ClientelleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClientelleTests.m; sourceTree = "<group>"; };
 		417DC28116ADF3330073199D /* RWSSlideMenuViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWSSlideMenuViewDelegate.h; sourceTree = "<group>"; };
 		417DC28216ADF3330073199D /* RWSSliderMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWSSliderMenuViewController.h; sourceTree = "<group>"; };
 		417DC28316ADF3330073199D /* RWSSliderMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWSSliderMenuViewController.m; sourceTree = "<group>"; };
@@ -100,7 +98,6 @@
 		417DC2A816AE16220073199D /* dark_matter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dark_matter.png; sourceTree = "<group>"; };
 		417DC2A916AE16220073199D /* dark_matter@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_matter@2X.png"; sourceTree = "<group>"; };
 		417DC2AC16AE17560073199D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		417DC2AE16AE18C00073199D /* Clientelle-Menu.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Clientelle-Menu.plist"; sourceTree = "<group>"; };
 		417DC2B016AE1C9A0073199D /* 21-wrench.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "21-wrench.png"; sourceTree = "<group>"; };
 		417DC2B116AE1C9A0073199D /* 21-wrench@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "21-wrench@2x.png"; sourceTree = "<group>"; };
 		417DC2B216AE1C9A0073199D /* 24-person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "24-person.png"; sourceTree = "<group>"; };
@@ -129,6 +126,9 @@
 		417DC2F216AE551C0073199D /* 291-idcard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "291-idcard@2x.png"; sourceTree = "<group>"; };
 		417DC2F516AE557F0073199D /* group-message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group-message.png"; sourceTree = "<group>"; };
 		417DC2F616AE55800073199D /* group-message@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group-message@2x.png"; sourceTree = "<group>"; };
+		417DC30816AF10BE0073199D /* CTLMainMenuViewControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMainMenuViewControllerTest.h; sourceTree = "<group>"; };
+		417DC30916AF10BE0073199D /* CTLMainMenuViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMainMenuViewControllerTest.m; sourceTree = "<group>"; };
+		417DC31316AF5A460073199D /* Clientelle-Menu.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Clientelle-Menu.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,10 +160,10 @@
 			isa = PBXGroup;
 			children = (
 				417DC24316ADF1140073199D /* Clientelle */,
-				417DC26716ADF1140073199D /* ClientelleTests */,
 				417DC23C16ADF1140073199D /* Frameworks */,
 				417DC23A16ADF1140073199D /* Products */,
 				417DC27E16ADF2A00073199D /* Vendor */,
+				417DC26716ADF1140073199D /* ClientelleTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,7 +211,7 @@
 				417DC25516ADF1140073199D /* Clientelle.storyboard */,
 				417DC24516ADF1140073199D /* Clientelle-Info.plist */,
 				417DC24B16ADF1140073199D /* Clientelle-Prefix.pch */,
-				417DC2AE16AE18C00073199D /* Clientelle-Menu.plist */,
+				417DC31316AF5A460073199D /* Clientelle-Menu.plist */,
 				417DC24F16ADF1140073199D /* Default.png */,
 				417DC25116ADF1140073199D /* Default@2x.png */,
 				417DC25316ADF1140073199D /* Default-568h@2x.png */,
@@ -222,9 +222,9 @@
 		417DC26716ADF1140073199D /* ClientelleTests */ = {
 			isa = PBXGroup;
 			children = (
-				417DC26D16ADF1140073199D /* ClientelleTests.h */,
-				417DC26E16ADF1140073199D /* ClientelleTests.m */,
 				417DC26816ADF1140073199D /* Supporting Files */,
+				417DC30816AF10BE0073199D /* CTLMainMenuViewControllerTest.h */,
+				417DC30916AF10BE0073199D /* CTLMainMenuViewControllerTest.m */,
 			);
 			path = ClientelleTests;
 			sourceTree = "<group>";
@@ -405,7 +405,6 @@
 				417DC25716ADF1140073199D /* Clientelle.storyboard in Resources */,
 				417DC2AA16AE16220073199D /* dark_matter.png in Resources */,
 				417DC2AB16AE16220073199D /* dark_matter@2X.png in Resources */,
-				417DC2AF16AE18C00073199D /* Clientelle-Menu.plist in Resources */,
 				417DC2B416AE1C9A0073199D /* 21-wrench.png in Resources */,
 				417DC2B516AE1C9A0073199D /* 21-wrench@2x.png in Resources */,
 				417DC2B616AE1C9A0073199D /* 24-person.png in Resources */,
@@ -424,6 +423,7 @@
 				417DC2F416AE551D0073199D /* 291-idcard@2x.png in Resources */,
 				417DC2F716AE55800073199D /* group-message.png in Resources */,
 				417DC2F816AE55800073199D /* group-message@2x.png in Resources */,
+				417DC31416AF5A460073199D /* Clientelle-Menu.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,11 +475,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				417DC26F16ADF1140073199D /* ClientelleTests.m in Sources */,
 				417DC2DB16AE4C060073199D /* CTLPhoneNumberFormatter.m in Sources */,
 				417DC2DC16AE4C060073199D /* UIColor+CTLColor.m in Sources */,
 				417DC2DD16AE4C060073199D /* NSDate+CTLDate.m in Sources */,
 				417DC2DE16AE4C060073199D /* NSString+CTLString.m in Sources */,
+				417DC30A16AF10BE0073199D /* CTLMainMenuViewControllerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

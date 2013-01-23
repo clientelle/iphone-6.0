@@ -22,7 +22,7 @@
 		<key>title</key>
 		<string>My Account</string>
 		<key>identifier</key>
-		<string>account</string>
+		<string>accountNavigationController</string>
 		<key>icon</key>
 		<string>21-wrench.png</string>
 	</dict>
@@ -30,7 +30,7 @@
 		<key>title</key>
 		<string>Settings</string>
 		<key>identifier</key>
-		<string>settings</string>
+		<string>settingsNavigationController</string>
 		<key>icon</key>
 		<string>21-wrench.png</string>
 	</dict>
@@ -38,7 +38,7 @@
 		<key>title</key>
 		<string>Help &amp; Support</string>
 		<key>identifier</key>
-		<string>support</string>
+		<string>supportNavigationController</string>
 		<key>icon</key>
 		<string>21-wrench.png</string>
 	</dict>
