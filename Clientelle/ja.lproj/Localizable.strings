@@ -6,8 +6,8 @@
   Copyright (c) 2013 Kevin Liu. All rights reserved.
 */
 
-"CONTACTS" = "コンタクト";
-"GROUP_MESSAGING" = "グループメッセージング";
+"CONTACTS" = "連絡先";
+"GROUP_MESSAGING" = "グループ";
 "MY_ACCOUNT" = "私のアカウント";
-"SETTINGS" = "セッティング";
+"SETTINGS" = "設定";
 "SUPPORT" = "手助け";
