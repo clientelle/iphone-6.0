@@ -8,6 +8,25 @@
 
 #import "CTLContactsListViewController.h"
 
+NSString *const CTLAllContactsTitle = @"All Contacts";
+
+NSString *const CTLImporterSegueIdentifyer = @"toImporter";
+NSString *const CTLContactListSegueIdentifyer = @"toContacts";
+NSString *const CTLContactFormSegueIdentifyer = @"toContactForm";
+NSString *const CTLProspectFormSegueIdentifyer = @"toProspectForm";
+NSString *const CTLGroupListSegueIdentifyer = @"toGroupList";
+NSString *const CTLAppointmentSegueIdentifyer = @"toSetAppointment";
+
+NSString *const CTLContactListReloadNotification = @"com.clientelle.notifications.reloadContacts";
+NSString *const CTLGroupWasRenamedNotification = @"com.clientelle.notifications.groupWasRenamed";
+NSString *const CTLGroupWasAddedNotification = @"com.clientelle.notifications.groupWasAdded";
+NSString *const CTLGroupWasDeletedNotification = @"com.clientelle.notifications.groupWasDeleted";
+
+
+NSString *const CTLTimestampForRowNotification = @"com.clientelle.com.notifications.timestampChanged";
+NSString *const CTLContactRowDidChangeNotification = @"com.clientelle.com.notifications.contactRowDidChange";
+NSString *const CTLNewContactWasAddedNotification = @"com.clientelle.com.notifications.contactWasAdded";
+
 @interface CTLContactsListViewController ()
 
 @end

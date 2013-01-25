@@ -8,6 +8,7 @@
 
 #import "CTLAddressBook.h"
 #import "CTLABGroup.h"
+#import "CTLABPerson.h"
 #import "CTLCDFormSchema.h"
 
 NSString *const CTLGroupTypeClient = @"Clients";
@@ -22,6 +23,29 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
 
 @implementation CTLABGroup
 
+
+- (id)initWithGroupID:(ABRecordID)groupID addressBook:(ABAddressBookRef)addressBookRef includeMembers:(BOOL)incudeMembers
+{
+    self = [super init];
+    if(self != nil){
+        self.addressBookRef = addressBookRef;
+        ABRecordRef groupRef = ABAddressBookGetGroupWithRecordID(addressBookRef, groupID);
+        if(groupRef){
+            self.groupRef = groupRef;
+            self.groupID = groupID;
+            self.name = (__bridge NSString *)ABRecordCopyCompositeName(self.groupRef);
+            if(!incudeMembers){
+                self.members = [NSMutableArray array];
+                self.memberCount = [self countMembers];
+            }else{
+                self.members = [self contactsInGroup];
+                self.memberCount = [self.members count];
+            }
+        }
+    }
+    return self;
+}
+
 - (id)initWithGroupRef:(ABRecordRef)groupRef addressBook:(ABAddressBookRef)addressBookRef
 {
     self = [super init];
@@ -33,6 +57,140 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
         self.members = [NSMutableArray array];
     }
     return self;
+}
+
+- (NSMutableArray *)contactsInGroup
+{
+    CFArrayRef contactsRef = ABGroupCopyArrayOfAllMembers(self.groupRef);
+    if(contactsRef){
+        CFIndex count = CFArrayGetCount(contactsRef);
+        _members = [NSMutableArray arrayWithCapacity:count];
+        for(CFIndex i = 0;i < count; i++){
+            ABRecordRef personRef = CFArrayGetValueAtIndex(contactsRef, i);
+            CTLABPerson *abPerson = [[CTLABPerson alloc] initWithRecordRef:personRef withAddressBookRef:self.addressBookRef];
+            if(abPerson){
+                [_members addObject:abPerson];
+            }
+        }
+        CFRelease(contactsRef);
+    }
+    
+    return _members;
+}
+
+- (CFIndex)countMembers
+{
+    CFIndex count = 0;
+    CFArrayRef contactsRef = ABGroupCopyArrayOfAllMembers(self.groupRef);
+    if(contactsRef){
+        count = CFArrayGetCount(contactsRef);
+        CFRelease(contactsRef);
+    }
+    return count;
+}
+
+- (void)removeMembers
+{
+    CFArrayRef contactsRef = ABGroupCopyArrayOfAllMembers(self.groupRef);
+    BOOL result = NO;
+    
+    if(!contactsRef){
+        return;
+    }
+    
+    CFIndex count = CFArrayGetCount(contactsRef);
+    CFErrorRef error = NULL;
+    
+    for(CFIndex i = 0;i < count; i++){
+        ABRecordRef contactRef = CFArrayGetValueAtIndex(contactsRef, i);
+        if(ABGroupRemoveMember(self.groupRef, contactRef, &error)){
+            result = ABAddressBookSave(self.addressBookRef, &error);
+        }
+    }
+    
+    CFRelease(contactsRef);
+}
+
+- (BOOL)renameTo:(NSString *)newName
+{
+ 	if ([newName length] == 0){
+        return NO;
+    }
+    
+    CFErrorRef error;
+    ABRecordSetValue(self.groupRef, kABGroupNameProperty, (__bridge CFTypeRef)(newName), &error);
+    return ABAddressBookSave(self.addressBookRef, &error);
+}
+
+- (void)addMember:(ABRecordID)personID
+{
+    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(self.addressBookRef, personID);
+    ABRecordRef groupRef = ABAddressBookGetGroupWithRecordID(self.addressBookRef, self.groupID);
+    
+    CFErrorRef error = NULL;
+    if(ABGroupAddMember(groupRef, personRef, &error)){
+        if(!ABAddressBookSave(self.addressBookRef, &error)){
+            //[self alertErrorMessage:error];
+        }
+    } else {
+        //[self alertErrorMessage:error];
+    }
+}
+
+- (void)removeMember:(ABRecordID)personID
+{
+    ABRecordRef contactRef = ABAddressBookGetPersonWithRecordID(self.addressBookRef, personID);
+    
+    CFErrorRef error = NULL;
+    if(ABGroupRemoveMember(self.groupRef, contactRef, &error)){
+        if(!ABAddressBookSave(self.addressBookRef, &error)){
+            //[self alertErrorMessage:error];
+        }
+    }else{
+        //[self alertErrorMessage:error];
+    }
+}
+
+
+- (void)addMembers:(NSMutableDictionary *)contacts
+{
+    ABRecordRef groupRef = ABAddressBookGetGroupWithRecordID(self.addressBookRef, self.groupID);
+    [contacts enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        
+        CTLABPerson *person = obj;
+        ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(self.addressBookRef, person.recordID);
+        
+        CFErrorRef error = NULL;
+        if(ABGroupAddMember(groupRef, personRef, &error)){
+            if(!ABAddressBookSave(self.addressBookRef, &error)){
+                //[self alertErrorMessage:error];
+            }
+        }else{
+            //[self alertErrorMessageWithString:(__bridge NSString *)(CFErrorCopyDescription(error))];
+        }
+    }];
+}
+
+
+#pragma mark - Class Methods
+
++ (ABRecordID)defaultGroupID
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:CTLDefaultSelectedGroupIDKey];
+}
+
++ (ABRecordID)prospectGroupID
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kCTLProspectGroupID];
+}
+
++ (ABRecordID)clientGroupID
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kCTLClientGroupID];
+}
+
+- (NSString *)description{
+    return [NSString stringWithFormat:@"<%@: %@, groupID:%i>", [self class], [self name], [self groupID]];
 }
 
 + (void)createDefaultGroups:(ABAddressBookRef)addressBookRef

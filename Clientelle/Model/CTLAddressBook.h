@@ -20,4 +20,5 @@
 - (NSArray *)groupsFromSourceType:(ABSourceType)sourceType;
 - (ABRecordID)createGroup:(NSString *)groupName;
 - (ABRecordRef)findGroupByName:(NSString *)groupName;
+- (BOOL)deleteGroup:(ABRecordRef)groupRef;
 @end

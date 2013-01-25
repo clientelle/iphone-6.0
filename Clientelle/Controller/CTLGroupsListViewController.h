@@ -7,8 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
-@interface CTLGroupsListViewController : UITableViewController<CTLSlideMenuDelegate>
+@class CTLAddressBook;
+@class CTLABGroup;
+
+@interface CTLGroupsListViewController : UITableViewController<UIGestureRecognizerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, CTLSlideMenuDelegate>{
+    CTLAddressBook *_addressBook;
+    CTLABGroup *_selectedGroup;
+    NSMutableArray *_groupRecipients;
+    NSIndexPath *_selectedIndexPath;
+    NSArray *_abGroups;
+    NSArray *_groupIDKeysArray;
+    NSMutableDictionary *_groupsDict;
+    UIActionSheet *_groupMessageActionSheet;
+}
+
+
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
+
+- (IBAction)newGroupPrompt:(id)sender;
 
 @end

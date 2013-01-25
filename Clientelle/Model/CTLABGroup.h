@@ -33,9 +33,21 @@ extern NSString *const CTLDefaultSelectedGroupIDKey;
 @property (nonatomic, strong) NSMutableArray *members;
 @property (nonatomic, assign) CFIndex memberCount;
 
+- (id)initWithGroupID:(ABRecordID)groupID addressBook:(ABAddressBookRef)addressBookRef includeMembers:(BOOL)incudeMembers;
 - (id)initWithGroupRef:(ABRecordRef)groupRef addressBook:(ABAddressBookRef)addressBookRef;
+- (NSString *)description;
 
+- (NSMutableArray *)contactsInGroup;
+- (void)addMember:(ABRecordID)personID;
+- (void)addMembers:(NSMutableDictionary *)contacts;
+- (void)removeMember:(ABRecordID)personID;
+- (void)removeMembers;
+- (BOOL)renameTo:(NSString *)newName;
 
+//Class methods
++ (ABRecordID)defaultGroupID;
++ (ABRecordID)prospectGroupID;
++ (ABRecordID)clientGroupID;
 + (void)createDefaultGroups:(ABAddressBookRef)addressBookRef;
 
 @end

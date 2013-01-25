@@ -19,9 +19,6 @@
         CFErrorRef error;
         self.addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
         ABAddressBookRequestAccessWithCompletion(self.addressBookRef, ^(bool granted, CFErrorRef requestError){
-            
-            NSLog(@"PERM %i", granted);
-            
             if(granted){
                 
             }
@@ -106,23 +103,35 @@
 
 - (ABRecordID)createGroup:(NSString *)groupName
 {
-    CFErrorRef error = NULL;
-    ABRecordRef newGroup = ABGroupCreate();
-    ABRecordSetValue(newGroup, kABGroupNameProperty, (__bridge CFTypeRef)(groupName), &error);
+    ABRecordRef newGroupRef = ABGroupCreate();
     
-    if(ABAddressBookAddRecord(self.addressBookRef, newGroup, &error)){
+    CFErrorRef error = NULL;
+    ABRecordSetValue(newGroupRef, kABGroupNameProperty, (__bridge CFTypeRef)(groupName), &error);
+    
+    if(ABAddressBookAddRecord(self.addressBookRef, newGroupRef, &error)){
         if(!ABAddressBookSave(self.addressBookRef, &error)){
-            CFRelease(newGroup);
+            CFRelease(newGroupRef);
             return kABRecordInvalidID;
         }
     }else{
-        CFRelease(newGroup);
+        CFRelease(newGroupRef);
         return kABRecordInvalidID;
     }
     
-    ABRecordID groupID = ABRecordGetRecordID(newGroup);
-    CFRelease(newGroup);
+    ABRecordID groupID = ABRecordGetRecordID(newGroupRef);
+    CFRelease(newGroupRef);
     return groupID;
+}
+
+- (BOOL)deleteGroup:(ABRecordRef)groupRef
+{
+    __block BOOL result = NO;
+    CFErrorRef error = NULL;
+    if(ABAddressBookRemoveRecord(self.addressBookRef, groupRef, &error)){
+        result = ABAddressBookSave(self.addressBookRef, &error);
+    }
+    
+    return result;
 }
 
 @end

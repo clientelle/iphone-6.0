@@ -51,22 +51,6 @@ const CGFloat CTLMainMenuWidth = 170.0f;
 
 #pragma mark - Set Panels
 
-- (void)setMainView:(UINavigationController*)navigationController
-{
-    if(self.mainViewNavController){
-        [self.mainViewNavController removeFromParentViewController];
-    }
-    
-    CGFloat width = CGRectGetWidth(self.view.bounds);
-    CGFloat height = CGRectGetHeight(self.view.bounds);
-    
-    [self setRightPanel:navigationController withFrame:CGRectMake(CTLMainMenuWidth, 0.0f, width, height)];
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        self.mainViewNavController.view.frame = CGRectMake(0.0f, 0.0f, width, height);
-    }];
-}
-
 - (void)setLeftPanel:(UIViewController<CTLSlideMenuDelegate> *)leftPanel withFrame:(CGRect)frame
 {
     frame.size.width = CTLMainMenuWidth;
@@ -75,6 +59,21 @@ const CGFloat CTLMainMenuWidth = 170.0f;
     [self.panel setMenuController:self];
     [self addChildViewController:self.panel];
     [self.view addSubview:self.panel.view];
+}
+
+- (void)setMainView:(UINavigationController*)navigationController
+{
+    if(self.mainViewNavController){
+        [self.mainViewNavController removeFromParentViewController];
+        [self.mainViewNavController.view removeFromSuperview];
+    }
+    
+    CGFloat width = CGRectGetWidth(self.view.bounds);
+    CGFloat height = CGRectGetHeight(self.view.bounds);
+    [self setRightPanel:navigationController withFrame:CGRectMake(CTLMainMenuWidth, 0.0f, width, height)];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.mainViewNavController.view.frame = CGRectMake(0.0f, 0.0f, width, height);
+    }];
 }
 
 - (void)setRightPanel:(UINavigationController *)rightNavigationController withFrame:(CGRect)frame

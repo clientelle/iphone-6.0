@@ -4,35 +4,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="LAy-g6-ORa">
-            <objects>
-                <viewController id="bAp-Yc-MJs" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5w9-x0-BYz">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="segue" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbf-Og-hhD">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="247" id="AvS-Zf-yL7"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="qbf-Og-hhD" firstAttribute="top" secondItem="5w9-x0-BYz" secondAttribute="top" constant="40" id="ANO-wY-DLh"/>
-                            <constraint firstAttribute="trailing" secondItem="qbf-Og-hhD" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="NqM-M4-Kr5"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="zil-cH-4iC"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="exP-ou-nUW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="462" y="-2393"/>
-        </scene>
         <!--Main Menu View Controller-->
         <scene sceneID="NdT-tt-JVS">
             <objects>
@@ -71,42 +42,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="U3q-Ag-aCU" kind="relationship" relationship="rootViewController" id="YUg-IM-4av"/>
+                        <segue destination="7eO-xp-37q" kind="relationship" relationship="rootViewController" id="nJN-Ec-ZS6"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kt9-QR-IiM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1139" y="-1574"/>
-        </scene>
-        <!--Groups List View Controller - Groups-->
-        <scene sceneID="aUc-V2-FT3">
-            <objects>
-                <tableViewController id="U3q-Ag-aCU" customClass="CTLGroupsListViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="PLk-2P-UWm">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="groupCell" id="H9G-n7-535">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="U3q-Ag-aCU" id="wqU-TO-wIX"/>
-                            <outlet property="delegate" destination="U3q-Ag-aCU" id="nk6-zr-uws"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Groups" id="kAi-j6-Xfh"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1MG-tx-gh9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-593" y="-1574"/>
         </scene>
         <!--Contacts List View Controller - Contacts-->
         <scene sceneID="MuB-Ur-YSQ">
@@ -129,11 +70,7 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Contacts" id="FiH-F8-BEo">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="avt-Ex-kI0">
-                            <connections>
-                                <segue destination="bAp-Yc-MJs" kind="push" id="9Qs-RI-BIq"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="avt-Ex-kI0"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zjy-9W-Cwi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -287,7 +224,83 @@
             </objects>
             <point key="canvasLocation" x="-593" y="-2393"/>
         </scene>
+        <!--Groups List View Controller - Groups-->
+        <scene sceneID="cIV-4c-sOj">
+            <objects>
+                <tableViewController id="7eO-xp-37q" customClass="CTLGroupsListViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="LOQ-tt-g5V">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.8980392814" green="0.8980392814" blue="0.8980392814" alpha="1" colorSpace="deviceRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="groupDisplayRow" textLabel="HTx-8Y-unW" imageView="rBh-g4-aS0" rowHeight="50" style="IBUITableViewCellStyleDefault" id="FiH-md-GCK">
+                                <rect key="frame" x="0.0" y="46" width="320" height="52"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="10" y="1" width="300" height="49"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Group Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HTx-8Y-unW">
+                                            <rect key="frame" x="36" y="0.0" width="254" height="49"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="group-gray.png" id="rBh-g4-aS0">
+                                            <rect key="frame" x="10" y="16" width="16" height="16"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="7eO-xp-37q" id="wvR-C9-leF"/>
+                            <outlet property="delegate" destination="7eO-xp-37q" id="phc-bq-4BI"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Groups" id="ZDr-Wz-hes">
+                        <barButtonItem key="rightBarButtonItem" image="plus.png" id="OsQ-J9-Jzy">
+                            <connections>
+                                <action selector="newGroupPrompt:" destination="7eO-xp-37q" id="6bx-JY-FFb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cFj-Yf-5pK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-593" y="-1568"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="group-gray.png" width="32" height="21"/>
+        <image name="plus.png" width="19" height="19"/>
+    </resources>
+    <classes>
+        <class className="CTLAccountViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAccountViewController.h"/>
+        </class>
+        <class className="CTLContactsListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactsListViewController.h"/>
+        </class>
+        <class className="CTLGroupsListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLGroupsListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="newGroupPrompt:"/>
+            </relationships>
+        </class>
+        <class className="CTLMainMenuViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMainMenuViewController.h"/>
+        </class>
+        <class className="CTLSettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSettingsViewController.h"/>
+        </class>
+        <class className="CTLSupportViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSupportViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -19,7 +19,7 @@
 {
     //setup CoreData/MagicalRecord
     [MagicalRecord setupCoreDataStack];
-    
+
     //setup global appearance
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackOpaque];
 

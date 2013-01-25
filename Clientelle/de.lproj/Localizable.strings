@@ -11,3 +11,18 @@
 "MY_ACCOUNT" = "Mein Konto";
 "SETTINGS" = "Einstellungen";
 "SUPPORT" = "Unterstützen";
+
+"OK" = "OK";
+"CANCEL" = "Cancel";
+"SAVE" = "Save";
+"CREATE" = "Create";
+
+"CREATE_NEW_GROUP" = "Create New Group";
+"ENTER_GROUP_NAME" = "Enter a Group name";
+"GROUP_EXISTS" = "This group already exist!";
+"GROUP_FAILED_TO_SAVE" = "Could not save group";
+"SEND_GROUP_MESSAGE" = "Send a Group Message";
+"GROUP_SMS" = "Group SMS";
+"GROUP_EMAIL" = "Group Email";
+"GROUP_OPTIONS_INSTRUCTIONS" = "Press and hold to rename a group, swipe to delete.";
+"RENAME_GROUP_TO" = "Rename %@ to:";
