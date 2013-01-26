@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>label</key>
+		<string>First Name</string>
+		<key>name</key>
+		<string>firstName</string>
+		<key>placeholder</key>
+		<string>First Name</string>
+		<key>keyboardType</key>
+		<integer>0</integer>
+		<key>enabled</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>label</key>
+		<string>Last Name</string>
+		<key>name</key>
+		<string>lastName</string>
+		<key>placeholder</key>
+		<string>Last Name</string>
+		<key>keyboardType</key>
+		<integer>0</integer>
+		<key>enabled</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>label</key>
+		<string>Company</string>
+		<key>name</key>
+		<string>organization</string>
+		<key>placeholder</key>
+		<string>Company Name</string>
+		<key>keyboardType</key>
+		<integer>0</integer>
+		<key>enabled</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>label</key>
+		<string>Title</string>
+		<key>name</key>
+		<string>jobTitle</string>
+		<key>placeholder</key>
+		<string>Job Title or Role</string>
+		<key>keyboardType</key>
+		<integer>0</integer>
+		<key>enabled</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>label</key>
+		<string>Phone</string>
+		<key>name</key>
+		<string>phone</string>
+		<key>placeholder</key>
+		<string>Primary Phone</string>
+		<key>keyboardType</key>
+		<integer>5</integer>
+		<key>enabled</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>label</key>
+		<string>Email</string>
+		<key>name</key>
+		<string>email</string>
+		<key>placeholder</key>
+		<string>Email Address</string>
+		<key>keyboardType</key>
+		<integer>7</integer>
+		<key>enabled</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>label</key>
+		<string>Note</string>
+		<key>name</key>
+		<string>note</string>
+		<key>placeholder</key>
+		<string>Add a note</string>
+		<key>keyboardType</key>
+		<integer>0</integer>
+		<key>enabled</key>
+		<false/>
+	</dict>
+</array>
+</plist>

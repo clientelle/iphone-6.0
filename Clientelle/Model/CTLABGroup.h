@@ -17,37 +17,43 @@ extern NSString *const CTLGroupTypeAssociate;
 
 extern NSString *const CTLDefaultSelectedGroupIDKey;
 
-
 @interface CTLABGroup : NSObject{
     ABAddressBookRef _addressBookRef;
     ABRecordRef _groupRef;
     ABRecordID _groupID;
     NSString *_name;
-    NSMutableArray *_members;
+    NSMutableDictionary *_members;
 }
 
 @property (nonatomic, assign) ABAddressBookRef addressBookRef;
 @property (nonatomic, assign) ABRecordRef groupRef;
 @property (nonatomic, assign) ABRecordID groupID;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSMutableArray *members;
-@property (nonatomic, assign) CFIndex memberCount;
+@property (nonatomic, strong) NSMutableDictionary *members;
 
-- (id)initWithGroupID:(ABRecordID)groupID addressBook:(ABAddressBookRef)addressBookRef includeMembers:(BOOL)incudeMembers;
+- (id)initWithGroupID:(ABRecordID)groupID addressBook:(ABAddressBookRef)addressBookRef;
 - (id)initWithGroupRef:(ABRecordRef)groupRef addressBook:(ABAddressBookRef)addressBookRef;
-- (NSString *)description;
 
-- (NSMutableArray *)contactsInGroup;
+//- (NSMutableDictionary *)members;
+
 - (void)addMember:(ABRecordID)personID;
 - (void)addMembers:(NSMutableDictionary *)contacts;
 - (void)removeMember:(ABRecordID)personID;
 - (void)removeMembers;
 - (BOOL)renameTo:(NSString *)newName;
+- (BOOL)deleteGroup:(ABRecordRef)groupRef;
 
-//Class methods
++ (ABRecordRef)findByName:(NSString *)groupName addressBookRef:(ABAddressBookRef)addressBookRef;
++ (NSMutableArray *)groupsInLocalSource:(ABAddressBookRef)addressBookRef;
++ (void)createDefaultGroups:(ABAddressBookRef)addressBookRef;
++ (ABRecordID)createGroup:(NSString *)groupName addressBookRef:(ABAddressBookRef)addressBookRef;
++ (NSArray *)groupsFromSourceType:(ABSourceType)sourceType addressBookRef:(ABAddressBookRef)addressBookRef;
+
++ (void)saveDefaultGroupID:(int)groupID;
 + (ABRecordID)defaultGroupID;
 + (ABRecordID)prospectGroupID;
 + (ABRecordID)clientGroupID;
-+ (void)createDefaultGroups:(ABAddressBookRef)addressBookRef;
+
+- (NSString *)description;
 
 @end

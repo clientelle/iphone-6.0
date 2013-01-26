@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 
-@class CTLAddressBook;
+
 @class CTLABGroup;
 
 @interface CTLGroupsListViewController : UITableViewController<UIGestureRecognizerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, CTLSlideMenuDelegate>{
-    CTLAddressBook *_addressBook;
+    ABAddressBookRef _addressBookRef;
     CTLABGroup *_selectedGroup;
     NSMutableArray *_groupRecipients;
     NSIndexPath *_selectedIndexPath;

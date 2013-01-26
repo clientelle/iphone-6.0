@@ -7,22 +7,52 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
 extern NSString *const CTLContactListReloadNotification;
-extern NSString *const CTLGroupWasRenamedNotification;
-extern NSString *const CTLGroupWasAddedNotification;
-extern NSString *const CTLGroupWasDeletedNotification;
 
-extern NSString *const CTLImporterSegueIdentifyer;
-extern NSString *const CTLContactListSegueIdentifyer;
-extern NSString *const CTLContactFormSegueIdentifyer;
-extern NSString *const CTLGroupListSegueIdentifyer;
-extern NSString *const CTLAddGroupSegueIdentifyer;
-extern NSString *const CTLTimestampForRowNotification;
-extern NSString *const CTLContactRowDidChangeNotification;
-extern NSString *const CTLNewContactWasAddedNotification;
 
-@interface CTLContactsListViewController : UITableViewController<CTLSlideMenuDelegate>
+@class CTLABGroup;
+@class CTLABPerson;
+@class CTLContactToolbarView;
+@class CTLContactHeaderView;
+@class CTLPhoneNumberFormatter;
+
+@interface CTLContactsListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CTLSlideMenuDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>{
+    
+    ABAddressBookRef _addressBookRef;
+    
+    BOOL _groupPickerIsVisible;
+    UIPickerView *_groupPickerView;
+    NSMutableArray *_groupArray;
+        
+    NSMutableArray *_contacts;
+    NSMutableArray *_filteredContacts;
+    NSMutableDictionary *_accessedDictionary;
+    NSMutableDictionary *_contactsDictionary;
+    
+    UIView *_emptyView;
+    BOOL _inContactMode;
+    NSIndexPath *_selectedIndexPath;
+    CTLABPerson *_selectedPerson;
+    
+    BOOL _shouldReorderListOnScroll;
+}
+
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, assign) ABAddressBookRef addressBookRef;
+
+/* Empty View */
+@property (nonatomic, weak) IBOutlet UILabel *emptyContactsTitleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *emptyContactsMessageLabel;
+@property (nonatomic, weak) IBOutlet UIButton *addContactsButton;
+
+/* UI Elements */
+@property (nonatomic, strong) CTLContactHeaderView *contactHeader;
+@property (nonatomic, strong) CTLContactToolbarView *contactToolbar;
+
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+
+- (IBAction)dismissGroupPickerFromTap:(UITapGestureRecognizer *)recognizer;
 
 @end

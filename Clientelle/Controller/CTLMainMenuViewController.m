@@ -111,9 +111,7 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *menuItem = [_menuItems objectAtIndex:indexPath.row];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
-    UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:menuItem[@"identifier"]];
-    [self.menuController setMainView:navigationController];
+    [self.menuController setMainView:menuItem[@"identifier"]];
 }
 
 @end

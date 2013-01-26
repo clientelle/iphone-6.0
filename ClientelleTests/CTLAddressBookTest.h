@@ -8,10 +8,8 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@class CTLAddressBook;
-
 @interface CTLAddressBookTest : SenTestCase{
-    CTLAddressBook *_addressBook;
+    ABAddressBookRef *_addressBookRef;
 }
 
 @end

@@ -12,6 +12,11 @@
 "SETTINGS" = "설정";
 "SUPPORT" = "도움";
 
+"ALL_CONTACTS" = "All Contacts";
+"CLIENTS" = "Clients";
+"PROSPECTS" = "Prospects";
+"ASSOCIATES" = "Associates";
+
 "OK" = "OK";
 "CANCEL" = "Cancel";
 "SAVE" = "Save";

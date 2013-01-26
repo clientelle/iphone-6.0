@@ -6,15 +6,17 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
-#import "CTLABGroup.h"
 #import "CTLAddressBook.h"
+#import "CTLABGroup.h"
+#import "CTLABPerson.h"
+
+NSString *const CTLAddressBookChanged = @"CTLAddressBookChanged";
 
 @implementation CTLAddressBook
 
 - (id)init
 {
     self = [super init];
-    
     if(self){
         CFErrorRef error;
         self.addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
@@ -39,99 +41,117 @@
     return self;
 }
 
-- (NSMutableArray *)groupsInLocalSource
++ (void)performWithBlock:(CTLABRefBlock)block withErrorBlock:(CTLVoidBlock)errorBlock
 {
-    NSMutableArray *groups = [NSMutableArray array];
-    NSArray *groupsArray = [self groupsFromSourceType:kABSourceTypeLocal];
-    for(NSInteger i=0;i<[groupsArray count];i++){
-        ABRecordRef groupRef = (__bridge ABRecordRef)([groupsArray objectAtIndex:i]);
-        CTLABGroup *group = [[CTLABGroup alloc] initWithGroupRef:groupRef addressBook:self.addressBookRef];
-        [groups addObject:group];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    CFErrorRef error;
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
+    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef reqError) {
+        if(granted){
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                block(addressBookRef);
+                dispatch_semaphore_signal(semaphore);
+            });
+        }else{
+            errorBlock();
+            dispatch_semaphore_signal(semaphore);
+        }
+    });
+    while(dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW)){
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
     }
-    
-    return groups;
 }
 
 
-- (NSArray *)groupsFromSourceType:(ABSourceType)sourceType
+#pragma mark - Source Methods
+
+- (ABRecordRef)sourceByType:(ABSourceType)sourceType
 {
-    NSMutableArray *groupsInSource = [NSMutableArray array];
-    ABRecordRef sourceRef = NULL;
     CFArrayRef sourcesRef = ABAddressBookCopyArrayOfAllSources(self.addressBookRef);
     CFIndex sourceCount = CFArrayGetCount(sourcesRef);
     
-    for (CFIndex i = 0; i < sourceCount; i++) {
+    for (CFIndex i = 0 ; i < sourceCount; i++) {
         ABRecordRef currentSource = CFArrayGetValueAtIndex(sourcesRef, i);
         CFTypeRef sourceTypeRef = ABRecordCopyValue(currentSource, kABSourceTypeProperty);
-        BOOL isMatch = (sourceType == [(__bridge NSNumber *)sourceTypeRef intValue]);
+        if (sourceType == [(__bridge NSNumber *)sourceTypeRef intValue]) {
+            CFRelease(sourcesRef);
+            CFRelease(sourceTypeRef);
+            return currentSource;
+        }
         CFRelease(sourceTypeRef);
-        if (isMatch) {
-            sourceRef = currentSource;
-            break;
-        }
     }
     
-    CFArrayRef groupsRef = ABAddressBookCopyArrayOfAllGroupsInSource (self.addressBookRef, sourceRef);
-    if (CFArrayGetCount(groupsRef) > 0){
-        groupsInSource = [[NSMutableArray alloc] initWithArray:(__bridge NSArray *)groupsRef];
-    }
-    
-    CFRelease(groupsRef);
     CFRelease(sourcesRef);
-    return groupsInSource;
+    
+    return nil;
 }
 
-- (ABRecordRef)findGroupByName:(NSString *)groupName
+- (NSString *)nameForSource:(ABRecordRef)source
 {
-    ABRecordRef existingGroupRef = NULL;
-    NSArray *groupsInSource = [self groupsFromSourceType:kABSourceTypeLocal];
-    for(int i=0;i<[groupsInSource count];i++){
-        existingGroupRef = (__bridge ABRecordRef)([groupsInSource objectAtIndex:i]);
-        CFTypeRef groupNameRef = ABRecordCopyValue(existingGroupRef, kABGroupNameProperty);
-        NSString *groupNameStr = (__bridge NSString *)(groupNameRef);
-        if([groupName isEqualToString:groupNameStr]){
-            //Group already exists
-            CFRelease(groupNameRef);
-            break;
+	CFNumberRef sourceType = ABRecordCopyValue(source, kABSourceTypeProperty);
+	NSString *sourceName = [self nameForSourceWithIdentifier:[(__bridge NSNumber*)sourceType intValue]];
+	CFRelease(sourceType);
+	return sourceName;
+}
+
+- (NSString *)nameForSourceWithIdentifier:(ABSourceType)identifier
+{
+	switch (identifier){
+		case kABSourceTypeLocal:
+			return @"On My Device";
+			break;
+		case kABSourceTypeExchange:
+			return @"Exchange server";
+			break;
+		case kABSourceTypeExchangeGAL:
+			return @"Exchange Global Address List";
+			break;
+		case kABSourceTypeMobileMe:
+			return @"MobileMe";
+			break;
+		case kABSourceTypeLDAP:
+			return @"LDAP server";
+			break;
+		case kABSourceTypeCardDAV:
+			return @"CardDAV server";
+			break;
+		case kABSourceTypeCardDAVSearch:
+			return @"Searchable CardDAV server";
+			break;
+		default:
+			break;
+	}
+	return nil;
+}
+
+
+
+#pragma mark - People Methods
+
+- (void)peopleFromAddressBookWithDictionaryBlock:(CTLDictionayBlock)block
+{
+    ABRecordRef localSource = [self sourceByType:kABSourceTypeLocal];
+    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeopleInSource(self.addressBookRef, localSource);
+    
+    if(!allPeople){
+        return;
+    }
+    
+    CFIndex count = CFArrayGetCount(allPeople);
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    
+    for(CFIndex i = 0;i < count; i++){
+        ABRecordRef contactRef = CFArrayGetValueAtIndex(allPeople, i);
+        CTLABPerson *abPerson = [[CTLABPerson alloc] initWithRecordRef:contactRef withAddressBookRef:self.addressBookRef];
+        if(abPerson){
+            [results setObject:abPerson forKey:@(abPerson.recordID)];
         }
-        existingGroupRef = NULL;
-        CFRelease(groupNameRef);
     }
     
-    return existingGroupRef;
+    block(results);
+    CFRelease(allPeople);
+    
 }
 
-- (ABRecordID)createGroup:(NSString *)groupName
-{
-    ABRecordRef newGroupRef = ABGroupCreate();
-    
-    CFErrorRef error = NULL;
-    ABRecordSetValue(newGroupRef, kABGroupNameProperty, (__bridge CFTypeRef)(groupName), &error);
-    
-    if(ABAddressBookAddRecord(self.addressBookRef, newGroupRef, &error)){
-        if(!ABAddressBookSave(self.addressBookRef, &error)){
-            CFRelease(newGroupRef);
-            return kABRecordInvalidID;
-        }
-    }else{
-        CFRelease(newGroupRef);
-        return kABRecordInvalidID;
-    }
-    
-    ABRecordID groupID = ABRecordGetRecordID(newGroupRef);
-    CFRelease(newGroupRef);
-    return groupID;
-}
-
-- (BOOL)deleteGroup:(ABRecordRef)groupRef
-{
-    __block BOOL result = NO;
-    CFErrorRef error = NULL;
-    if(ABAddressBookRemoveRecord(self.addressBookRef, groupRef, &error)){
-        result = ABAddressBookSave(self.addressBookRef, &error);
-    }
-    
-    return result;
-}
 
 @end

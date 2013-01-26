@@ -12,6 +12,11 @@
 "SETTINGS" = "Einstellungen";
 "SUPPORT" = "Unterstützen";
 
+"ALL_CONTACTS" = "All Contacts";
+"CLIENTS" = "Clients";
+"PROSPECTS" = "Prospects";
+"ASSOCIATES" = "Associates";
+
 "OK" = "OK";
 "CANCEL" = "Cancel";
 "SAVE" = "Save";

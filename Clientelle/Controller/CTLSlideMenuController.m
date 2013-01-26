@@ -14,6 +14,7 @@ const CGFloat CTLMainMenuWidth = 170.0f;
 - (id)initWithMenu:(UIViewController<CTLSlideMenuDelegate> *)menuView mainView:(UINavigationController *)mainView
 {
     self = [super init];
+
     if(self){
         CGRect frame = self.view.bounds;
         [self setLeftPanel:menuView withFrame:frame];
@@ -49,6 +50,7 @@ const CGFloat CTLMainMenuWidth = 170.0f;
     }
 }
 
+
 #pragma mark - Set Panels
 
 - (void)setLeftPanel:(UIViewController<CTLSlideMenuDelegate> *)leftPanel withFrame:(CGRect)frame
@@ -61,8 +63,11 @@ const CGFloat CTLMainMenuWidth = 170.0f;
     [self.view addSubview:self.panel.view];
 }
 
-- (void)setMainView:(UINavigationController*)navigationController
+- (void)setMainView:(NSString *)navigationControllerName
 {
+    
+    UINavigationController *navigationController = (UINavigationController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:navigationControllerName];
+    
     if(self.mainViewNavController){
         [self.mainViewNavController removeFromParentViewController];
         [self.mainViewNavController.view removeFromSuperview];

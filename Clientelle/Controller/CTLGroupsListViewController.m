@@ -12,7 +12,6 @@
 #import "CTLMainMenuViewController.h"
 #import "CTLSlideMenuController.h"
 
-#import "CTLAddressBook.h"
 #import "CTLABGroup.h"
 #import "CTLABPerson.h"
 #import "CTLCDFormSchema.h"
@@ -28,8 +27,10 @@ int const CTLDeleteGroupAlertViewTag = 3;
 {
     [super viewDidLoad];
     
-    _addressBook = [[CTLAddressBook alloc] init];
-    _abGroups = [_addressBook groupsFromSourceType:kABSourceTypeLocal];
+    
+    _addressBookRef = [self.menuController addressBookRef];
+    
+    _abGroups = [CTLABGroup groupsFromSourceType:kABSourceTypeLocal addressBookRef:_addressBookRef];
     _groupRecipients = [NSMutableArray array];
     
     _groupsDict = [NSMutableDictionary dictionary];
@@ -37,7 +38,7 @@ int const CTLDeleteGroupAlertViewTag = 3;
     for(NSInteger i=0;i<[_abGroups count];i++){
         ABRecordRef goupRef = (__bridge ABRecordRef)([_abGroups objectAtIndex:i]);
         ABRecordID groupID = ABRecordGetRecordID(goupRef);
-        CTLABGroup *abGroup = [[CTLABGroup alloc] initWithGroupID:groupID addressBook:_addressBook.addressBookRef includeMembers:NO];
+        CTLABGroup *abGroup = [[CTLABGroup alloc] initWithGroupID:groupID addressBook:_addressBookRef];
         [_groupsDict setObject:abGroup forKey:@(groupID)];
     }
     
@@ -80,11 +81,7 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
     UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToRenameGroup:)];
     [cell addGestureRecognizer:longPressGesture];
     
-    
-    NSString *imageName = (abGroup.memberCount == 0) ? @"09-chat-gray-disabled.png" : @"09-chat-gray.png";
-    UIImageView *groupMessageIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-    
-    cell.accessoryView = groupMessageIcon;
+    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"09-chat-gray.png"]];
     cell.accessoryType = UITableViewCellAccessoryNone;
     return cell;
 }
@@ -93,7 +90,8 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
 {
     _selectedIndexPath = indexPath;
     _selectedGroup = [self groupFromIndexPath:indexPath];
-    if(_selectedGroup.memberCount > 0){
+
+    if([_selectedGroup.members count] > 0){
         [_groupMessageActionSheet showInView:self.view];
     }
 }
@@ -213,49 +211,23 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
 
 - (void)createNewGroupFromPrompt:(NSString *)newGroupName
 {
-    ABRecordRef existinGroupRef = [_addressBook findGroupByName:newGroupName];
-    
-    if(existinGroupRef){
+    ABRecordRef  existingGroupRef = [CTLABGroup findByName:newGroupName addressBookRef:_addressBookRef];
+
+    if(existingGroupRef){
         NSString *dupMessage = [NSString stringWithFormat:NSLocalizedString(@"GROUP_EXISTS", nil), newGroupName];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:dupMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
         [alert show];
         return;
     }
                 
-    ABRecordID groupID = [_addressBook createGroup:newGroupName];
+    ABRecordID groupID = [CTLABGroup createGroup:newGroupName addressBookRef:_addressBookRef];
     if(groupID != kABRecordInvalidID){
         CTLCDFormSchema *formSchema = [CTLCDFormSchema MR_createEntity];
         formSchema.groupIDValue = groupID;
-                        
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-        [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-            if(success){
-                //set the contact list to new group so that user can start adding contacts
-                CTLABGroup *newGroup = [[CTLABGroup alloc] initWithGroupID:groupID addressBook:_addressBook.addressBookRef includeMembers:NO];
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:CTLGroupWasAddedNotification object:newGroup];
-                //[self.navigationController popViewControllerAnimated:YES];
-                
-                
-                
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
-                
-                UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"contactsNavigationController"];
-                
-                 //CTLMainMenuViewController *menuView = [storyboard instantiateInitialViewController];
-                
-                //[self.menuController setm];
-                [self.menuController setMainView:navigationController];
-                
-                
-               
-                
-                
-            }else{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GROUP_FAILED_TO_SAVE", nil) message:[[error userInfo] description] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
-                [alert show];
-            }
-        }];
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+        //set the selected group to new group and transition back to contact list
+        [CTLABGroup saveDefaultGroupID:groupID];
+        [self.menuController setMainView:@"contactsNavigationController"];
     }
 }
 
@@ -273,9 +245,10 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
     }
 
     NSString *message = nil;
-    if(abGroup.memberCount > 0){
+    NSInteger memberCount = [abGroup.members count];
+    if(memberCount > 0){
         //Warn the user that group has members
-        message = [NSString stringWithFormat:NSLocalizedString(@"GROUP_HAS_CONTACTS", nil), abGroup.name, abGroup.memberCount];
+        message = [NSString stringWithFormat:NSLocalizedString(@"GROUP_HAS_CONTACTS", nil), abGroup.name, memberCount];
     }else{
         //Confirm delete
         message = [NSString stringWithFormat:NSLocalizedString(@"CONFIRM_DELETE", nil), abGroup.name];
@@ -294,7 +267,8 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
     if([abGroup.members count] > 0){
         [abGroup removeMembers];
     }
-    if([_addressBook deleteGroup:abGroup.groupRef]){
+
+    if([abGroup deleteGroup:abGroup.groupRef]){
         [self.tableView beginUpdates];
         [self.tableView deleteRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
         [_groupsDict removeObjectForKey:@(abGroup.groupID)];
@@ -306,7 +280,14 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
         [self.tableView endUpdates];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:CTLGroupWasDeletedNotification object:@(deletedGroupID)];
+    /*
+     * if the active contact list (group) was deleted.
+     * reset the contact list to"clients" (default)
+     */
+    
+    if(deletedGroupID == [CTLABGroup defaultGroupID]){
+        [CTLABGroup saveDefaultGroupID:[CTLABGroup clientGroupID]];
+    }
 }
 
 - (void)renameGroup:(NSString *)newGroupName
@@ -323,12 +304,12 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
     //some groups may exist before or created outside the app so lets create a schema for it
     if(!formSchema){
         formSchema = [CTLCDFormSchema MR_createEntity];
-        formSchema.groupID = [NSNumber numberWithInt:119];// @(_selectedGroup.groupID);
+        formSchema.groupID = @(_selectedGroup.groupID);
         NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
         [context MR_saveToPersistentStoreAndWait];
     }
-    
-    if([_addressBook findGroupByName:newGroupName]){
+        
+    if([CTLABGroup findByName:newGroupName addressBookRef:_addressBookRef]){
         NSString *dupMessage = [NSString stringWithFormat:NSLocalizedString(@"GROUP_EXISTS", nil), newGroupName];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"CANNOT_RENAME_GROUP", nil) message:dupMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
         [alert show];
@@ -336,7 +317,6 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
         if([_selectedGroup renameTo:newGroupName]){
             groupCell.textLabel.text = newGroupName;
             _selectedGroup.name = newGroupName;
-            [[NSNotificationCenter defaultCenter] postNotificationName:CTLGroupWasRenamedNotification object:_selectedGroup];
         }
     }
 }
@@ -407,10 +387,9 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
 
 - (NSArray *)recipientArrayForKey:(NSString *)field
 {
-    NSArray *contacts = [_selectedGroup contactsInGroup];
     NSMutableArray *contactDataArray = [NSMutableArray array];
-    for(NSUInteger i=0;i < [contacts count];i++){
-        CTLABPerson *contact = [contacts objectAtIndex:i];
+    for(NSNumber *recordID in _selectedGroup.members){
+        CTLABPerson *contact = [_selectedGroup.members objectForKey:recordID];
         NSString *contactStr = [contact valueForKey:field];
         if([contactStr length] > 0){
             [contactDataArray addObject:contactStr];
@@ -437,7 +416,7 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
         [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-            [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:@(_selectedGroup.groupID)];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:@(_selectedGroup.groupID)];
         }];
     }
 }

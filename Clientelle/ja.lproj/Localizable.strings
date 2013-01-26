@@ -12,6 +12,11 @@
 "SETTINGS" = "設定";
 "SUPPORT" = "手助け";
 
+"ALL_CONTACTS" = "絡在伙ープ"; /* <-fake */
+"CLIENTS" = "客户端";
+"PROSPECTS" = "潜在客户";
+"ASSOCIATES" = "合伙人";
+
 "OK" = "OK";
 "CANCEL" = "Cancel";
 "SAVE" = "Save";

@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
-#import "CTLAddressBook.h"
 #import "CTLABGroup.h"
 #import "CTLABPerson.h"
 #import "CTLCDFormSchema.h"
+#import "CTLCDPerson.h"
 
-NSString *const CTLGroupTypeClient = @"Clients";
-NSString *const CTLGroupTypeProspect = @"Prospects";
-NSString *const CTLGroupTypeAssociate = @"Associates";
+NSString *const CTLGroupTypeClient = @"CLIENTS";
+NSString *const CTLGroupTypeProspect = @"PROSPECTS";
+NSString *const CTLGroupTypeAssociate = @"ASSOCIATES";
 
 NSString *const kCTLClientGroupID = @"ClientGroupID";
 NSString *const kCTLProspectGroupID = @"ProspectGroupID";
@@ -23,8 +23,7 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
 
 @implementation CTLABGroup
 
-
-- (id)initWithGroupID:(ABRecordID)groupID addressBook:(ABAddressBookRef)addressBookRef includeMembers:(BOOL)incudeMembers
+- (id)initWithGroupID:(ABRecordID)groupID addressBook:(ABAddressBookRef)addressBookRef
 {
     self = [super init];
     if(self != nil){
@@ -34,13 +33,6 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
             self.groupRef = groupRef;
             self.groupID = groupID;
             self.name = (__bridge NSString *)ABRecordCopyCompositeName(self.groupRef);
-            if(!incudeMembers){
-                self.members = [NSMutableArray array];
-                self.memberCount = [self countMembers];
-            }else{
-                self.members = [self contactsInGroup];
-                self.memberCount = [self.members count];
-            }
         }
     }
     return self;
@@ -54,39 +46,96 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
         self.groupRef = groupRef;
         self.groupID = ABRecordGetRecordID(groupRef);
         self.name = (__bridge NSString *)ABRecordCopyCompositeName(groupRef);
-        self.members = [NSMutableArray array];
     }
     return self;
 }
 
-- (NSMutableArray *)contactsInGroup
+- (NSMutableDictionary *)members
 {
+    _members = [NSMutableDictionary dictionary];
     CFArrayRef contactsRef = ABGroupCopyArrayOfAllMembers(self.groupRef);
     if(contactsRef){
         CFIndex count = CFArrayGetCount(contactsRef);
-        _members = [NSMutableArray arrayWithCapacity:count];
+        _members = [NSMutableDictionary dictionaryWithCapacity:count];
         for(CFIndex i = 0;i < count; i++){
-            ABRecordRef personRef = CFArrayGetValueAtIndex(contactsRef, i);
-            CTLABPerson *abPerson = [[CTLABPerson alloc] initWithRecordRef:personRef withAddressBookRef:self.addressBookRef];
-            if(abPerson){
-                [_members addObject:abPerson];
-            }
+            CTLABPerson *abPerson = [[CTLABPerson alloc] initWithRecordRef:CFArrayGetValueAtIndex(contactsRef, i) withAddressBookRef:self.addressBookRef];
+            [_members setObject:abPerson forKey:@(abPerson.recordID)];
         }
         CFRelease(contactsRef);
     }
-    
+
     return _members;
 }
 
-- (CFIndex)countMembers
+- (void)addMember:(ABRecordID)personID
 {
-    CFIndex count = 0;
-    CFArrayRef contactsRef = ABGroupCopyArrayOfAllMembers(self.groupRef);
-    if(contactsRef){
-        count = CFArrayGetCount(contactsRef);
-        CFRelease(contactsRef);
+    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(self.addressBookRef, personID);
+    ABRecordRef groupRef = ABAddressBookGetGroupWithRecordID(self.addressBookRef, self.groupID);
+    
+    CFErrorRef error = NULL;
+    if(ABGroupAddMember(groupRef, personRef, &error)){
+        if(!ABAddressBookSave(self.addressBookRef, &error)){
+            //[self alertErrorMessage:error];
+        }
+    } else {
+        //[self alertErrorMessage:error];
     }
-    return count;
+}
+
+- (void)addMembers:(NSMutableDictionary *)contacts
+{
+    if([contacts count] == 0){
+        return;
+    }
+    
+    ABRecordRef groupRef = ABAddressBookGetGroupWithRecordID(self.addressBookRef, self.groupID);
+    
+    for(NSNumber *recordID in contacts){
+        CTLABPerson *person = [contacts objectForKey:recordID];
+        ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(self.addressBookRef, person.recordID);
+        
+        CFErrorRef error = NULL;
+        if(ABGroupAddMember(groupRef, personRef, &error)){
+            if(ABAddressBookSave(self.addressBookRef, &error)){
+                
+                CTLCDPerson *cdPerson = [CTLCDPerson MR_createEntity];
+                cdPerson.recordID = @(person.recordID);
+                cdPerson.firstName = person.firstName;
+                cdPerson.lastName = person.lastName;
+                cdPerson.phone = person.phone;
+                cdPerson.email = person.email;
+                cdPerson.jobTitle  = person.jobTitle;
+                cdPerson.organization = person.organization;
+                cdPerson.note = person.note;
+                cdPerson.lastAccessed = [NSDate date];
+                
+                NSDictionary *address = [person addressDict];
+                cdPerson.address = [address objectForKey:@"Street"];
+                cdPerson.city = [address objectForKey:@"City"];
+                cdPerson.state = [address objectForKey:@"State"];
+                cdPerson.zip = [address objectForKey:@"ZIP"];
+            
+            }
+        }
+    }
+
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+        NSLog(@"Saving humans to CoreData");
+    }];
+}
+
+- (void)removeMember:(ABRecordID)personID
+{
+    ABRecordRef contactRef = ABAddressBookGetPersonWithRecordID(self.addressBookRef, personID);
+    
+    CFErrorRef error = NULL;
+    if(ABGroupRemoveMember(self.groupRef, contactRef, &error)){
+        if(!ABAddressBookSave(self.addressBookRef, &error)){
+            //[self alertErrorMessage:error];
+        }
+    }else{
+        //[self alertErrorMessage:error];
+    }
 }
 
 - (void)removeMembers
@@ -122,57 +171,173 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
     return ABAddressBookSave(self.addressBookRef, &error);
 }
 
-- (void)addMember:(ABRecordID)personID
+- (BOOL)deleteGroup:(ABRecordRef)groupRef
 {
-    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(self.addressBookRef, personID);
-    ABRecordRef groupRef = ABAddressBookGetGroupWithRecordID(self.addressBookRef, self.groupID);
-    
+    __block BOOL result = NO;
     CFErrorRef error = NULL;
-    if(ABGroupAddMember(groupRef, personRef, &error)){
-        if(!ABAddressBookSave(self.addressBookRef, &error)){
-            //[self alertErrorMessage:error];
-        }
-    } else {
-        //[self alertErrorMessage:error];
+    if(ABAddressBookRemoveRecord(self.addressBookRef, groupRef, &error)){
+        result = ABAddressBookSave(self.addressBookRef, &error);
     }
-}
-
-- (void)removeMember:(ABRecordID)personID
-{
-    ABRecordRef contactRef = ABAddressBookGetPersonWithRecordID(self.addressBookRef, personID);
     
-    CFErrorRef error = NULL;
-    if(ABGroupRemoveMember(self.groupRef, contactRef, &error)){
-        if(!ABAddressBookSave(self.addressBookRef, &error)){
-            //[self alertErrorMessage:error];
-        }
-    }else{
-        //[self alertErrorMessage:error];
-    }
+    return result;
 }
 
-
-- (void)addMembers:(NSMutableDictionary *)contacts
-{
-    ABRecordRef groupRef = ABAddressBookGetGroupWithRecordID(self.addressBookRef, self.groupID);
-    [contacts enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        
-        CTLABPerson *person = obj;
-        ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(self.addressBookRef, person.recordID);
-        
-        CFErrorRef error = NULL;
-        if(ABGroupAddMember(groupRef, personRef, &error)){
-            if(!ABAddressBookSave(self.addressBookRef, &error)){
-                //[self alertErrorMessage:error];
-            }
-        }else{
-            //[self alertErrorMessageWithString:(__bridge NSString *)(CFErrorCopyDescription(error))];
-        }
-    }];
-}
 
 
 #pragma mark - Class Methods
+
+
+
++ (void)createDefaultGroups:(ABAddressBookRef)addressBookRef
+{
+    
+    NSArray *abGroups = [CTLABGroup groupsFromSourceType:kABSourceTypeLocal addressBookRef:addressBookRef];
+    
+    ABRecordID clientsGroupID = kABRecordInvalidID;
+    ABRecordID prospectsGroupID = kABRecordInvalidID;
+    ABRecordID associatesGroupID = kABRecordInvalidID;
+    
+    NSString *clientsGroupName = NSLocalizedString(CTLGroupTypeClient, nil);
+    NSString *associatesGroupName = NSLocalizedString(CTLGroupTypeAssociate, nil);
+    NSString *prospectsGroupName = NSLocalizedString(CTLGroupTypeProspect, nil);
+    
+    //create form schemas for existing groups
+    for(NSUInteger i=0;i<[abGroups count];i++){
+        
+        ABRecordRef groupRef = (__bridge ABRecordRef)([abGroups objectAtIndex:i]);
+        NSString *groupName = (__bridge NSString *)ABRecordCopyCompositeName(groupRef);
+        ABRecordID groupID = ABRecordGetRecordID(groupRef);
+        
+        if([groupName isEqualToString:clientsGroupName]){
+            clientsGroupID = groupID;
+        }
+        
+        if([groupName isEqualToString:prospectsGroupName]){
+            prospectsGroupID = groupID;
+        }
+        
+        if([groupName isEqualToString:associatesGroupName]){
+            associatesGroupID = groupID;
+        }
+        
+        CTLCDFormSchema *formSchema = [CTLCDFormSchema MR_createEntity];
+        formSchema.groupIDValue = groupID;
+    }
+    
+    if(clientsGroupID == kABRecordInvalidID){
+        CTLCDFormSchema *clientGroup = [CTLCDFormSchema MR_createEntity];
+        clientsGroupID = [CTLABGroup createGroup:clientsGroupName addressBookRef:addressBookRef];
+        clientGroup.groupIDValue = clientsGroupID;
+    }
+    
+    if(prospectsGroupID == kABRecordInvalidID){
+        CTLCDFormSchema *prospectGroup = [CTLCDFormSchema MR_createEntity];
+        prospectsGroupID = [CTLABGroup createGroup:prospectsGroupName addressBookRef:addressBookRef];
+        prospectGroup.groupIDValue = prospectsGroupID;
+    }
+    
+    if(associatesGroupID == kABRecordInvalidID){
+        CTLCDFormSchema *associatesGroup = [CTLCDFormSchema MR_createEntity];
+        associatesGroupID = [CTLABGroup createGroup:associatesGroupName addressBookRef:addressBookRef];
+        associatesGroup.groupIDValue = associatesGroupID;
+    }
+    
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [[NSUserDefaults standardUserDefaults] setInteger:clientsGroupID forKey:kCTLClientGroupID];
+    [[NSUserDefaults standardUserDefaults] setInteger:prospectsGroupID forKey:kCTLProspectGroupID];
+    [[NSUserDefaults standardUserDefaults] setInteger:clientsGroupID forKey:CTLDefaultSelectedGroupIDKey];
+}
+
+
++ (NSMutableArray *)groupsInLocalSource:(ABAddressBookRef)addressBookRef;
+{
+    NSMutableArray *groups = [NSMutableArray array];
+    NSArray *groupsArray = [CTLABGroup groupsFromSourceType:kABSourceTypeLocal addressBookRef:addressBookRef];
+    for(NSInteger i=0;i<[groupsArray count];i++){
+        ABRecordRef groupRef = (__bridge ABRecordRef)([groupsArray objectAtIndex:i]);
+        CTLABGroup *group = [[CTLABGroup alloc] initWithGroupRef:groupRef addressBook:addressBookRef];
+        [groups addObject:group];
+    }
+    
+    return groups;
+}
+
+
++ (NSArray *)groupsFromSourceType:(ABSourceType)sourceType addressBookRef:(ABAddressBookRef)addressBookRef
+{
+    NSMutableArray *groupsInSource = [NSMutableArray array];
+    ABRecordRef sourceRef = NULL;
+    CFArrayRef sourcesRef = ABAddressBookCopyArrayOfAllSources(addressBookRef);
+    CFIndex sourceCount = CFArrayGetCount(sourcesRef);
+    
+    for (CFIndex i = 0; i < sourceCount; i++) {
+        ABRecordRef currentSource = CFArrayGetValueAtIndex(sourcesRef, i);
+        CFTypeRef sourceTypeRef = ABRecordCopyValue(currentSource, kABSourceTypeProperty);
+        BOOL isMatch = (sourceType == [(__bridge NSNumber *)sourceTypeRef intValue]);
+        CFRelease(sourceTypeRef);
+        if (isMatch) {
+            sourceRef = currentSource;
+            break;
+        }
+    }
+    
+    CFArrayRef groupsRef = ABAddressBookCopyArrayOfAllGroupsInSource (addressBookRef, sourceRef);
+    if (CFArrayGetCount(groupsRef) > 0){
+        groupsInSource = [[NSMutableArray alloc] initWithArray:(__bridge NSArray *)groupsRef];
+    }
+    
+    CFRelease(groupsRef);
+    CFRelease(sourcesRef);
+    return groupsInSource;
+}
+
++ (ABRecordRef)findByName:(NSString *)groupName addressBookRef:(ABAddressBookRef)addressBookRef
+{
+    ABRecordRef existingGroupRef = NULL;
+    NSArray *groupsInSource = [CTLABGroup groupsFromSourceType:kABSourceTypeLocal addressBookRef:addressBookRef];
+    for(int i=0;i<[groupsInSource count];i++){
+        existingGroupRef = (__bridge ABRecordRef)([groupsInSource objectAtIndex:i]);
+        CFTypeRef groupNameRef = ABRecordCopyValue(existingGroupRef, kABGroupNameProperty);
+        NSString *groupNameStr = (__bridge NSString *)(groupNameRef);
+        if([groupName isEqualToString:groupNameStr]){
+            //Group already exists
+            CFRelease(groupNameRef);
+            break;
+        }
+        existingGroupRef = NULL;
+        CFRelease(groupNameRef);
+    }
+    
+    return existingGroupRef;
+}
+
++ (ABRecordID)createGroup:(NSString *)groupName addressBookRef:(ABAddressBookRef)addressBookRef
+{
+    ABRecordRef newGroupRef = ABGroupCreate();
+    
+    CFErrorRef error = NULL;
+    ABRecordSetValue(newGroupRef, kABGroupNameProperty, (__bridge CFTypeRef)(groupName), &error);
+    
+    if(ABAddressBookAddRecord(addressBookRef, newGroupRef, &error)){
+        if(!ABAddressBookSave(addressBookRef, &error)){
+            CFRelease(newGroupRef);
+            return kABRecordInvalidID;
+        }
+    }else{
+        CFRelease(newGroupRef);
+        return kABRecordInvalidID;
+    }
+    
+    ABRecordID groupID = ABRecordGetRecordID(newGroupRef); 
+    CFRelease(newGroupRef);
+    return groupID;
+}
+
++ (void)saveDefaultGroupID:(int)groupID
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:groupID forKey:CTLDefaultSelectedGroupIDKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 + (ABRecordID)defaultGroupID
 {
@@ -191,65 +356,6 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
 
 - (NSString *)description{
     return [NSString stringWithFormat:@"<%@: %@, groupID:%i>", [self class], [self name], [self groupID]];
-}
-
-+ (void)createDefaultGroups:(ABAddressBookRef)addressBookRef
-{
-    CTLAddressBook *addressBook = [[CTLAddressBook alloc] initWithAddressBookRef:addressBookRef];
-    NSArray *abGroups = [addressBook groupsFromSourceType:kABSourceTypeLocal];
-    
-    ABRecordID clientsGroupID = kABRecordInvalidID;
-    ABRecordID prospectsGroupID = kABRecordInvalidID;
-    ABRecordID associatesGroupID = kABRecordInvalidID;
-    
-    //create form schemas for existing groups
-    for(NSUInteger i=0;i<[abGroups count];i++){
-        
-        ABRecordRef groupRef = (__bridge ABRecordRef)([abGroups objectAtIndex:i]);
-        ABRecordID groupID = ABRecordGetRecordID(groupRef);
-        NSString *groupName = (__bridge NSString *)ABRecordCopyCompositeName(groupRef);
-        
-        if([groupName isEqualToString:CTLGroupTypeClient]){
-            clientsGroupID = groupID;
-        }
-        
-        if([groupName isEqualToString:CTLGroupTypeProspect]){
-            prospectsGroupID = groupID;
-        }
-        
-        if([groupName isEqualToString:CTLGroupTypeAssociate]){
-            associatesGroupID = groupID;
-        }
-        
-        CTLCDFormSchema *formSchema = [CTLCDFormSchema MR_createEntity];
-        formSchema.groupIDValue = groupID;
-    }
-    
-    if(clientsGroupID == kABRecordInvalidID){
-        CTLCDFormSchema *clientGroup = [CTLCDFormSchema MR_createEntity];
-        clientsGroupID = [addressBook createGroup:CTLGroupTypeClient];
-        clientGroup.groupIDValue = clientsGroupID;
-    }
-    
-    if(prospectsGroupID == kABRecordInvalidID){
-        CTLCDFormSchema *prospectGroup = [CTLCDFormSchema MR_createEntity];
-        prospectsGroupID = [addressBook createGroup:CTLGroupTypeProspect];
-        prospectGroup.groupIDValue = prospectsGroupID;
-    }
-    
-    if(associatesGroupID == kABRecordInvalidID){
-        CTLCDFormSchema *associatesGroup = [CTLCDFormSchema MR_createEntity];
-        associatesGroupID = [addressBook createGroup:CTLGroupTypeAssociate];
-        associatesGroup.groupIDValue = associatesGroupID;
-    }
-    
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-        [[NSUserDefaults standardUserDefaults] setInteger:clientsGroupID forKey:kCTLClientGroupID];
-        [[NSUserDefaults standardUserDefaults] setInteger:prospectsGroupID forKey:kCTLProspectGroupID];
-        [[NSUserDefaults standardUserDefaults] setInteger:clientsGroupID forKey:CTLDefaultSelectedGroupIDKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }];
 }
 
 @end

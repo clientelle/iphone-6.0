@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^CTLVoidBlock)(void);
+typedef void (^CTLABRefBlock)(ABAddressBookRef addressBookRef);
+typedef void (^CTLDictionayBlock)(NSDictionary* results);
+
+extern NSString *const CTLAddressBookChanged;
+
 @interface CTLAddressBook : NSObject{
     ABAddressBookRef _addressBookRef;
 }
@@ -16,9 +22,13 @@
 
 - (id)initWithAddressBookRef:(ABAddressBookRef)addressBookRef;
 
-- (NSMutableArray *)groupsInLocalSource;
-- (NSArray *)groupsFromSourceType:(ABSourceType)sourceType;
-- (ABRecordID)createGroup:(NSString *)groupName;
-- (ABRecordRef)findGroupByName:(NSString *)groupName;
-- (BOOL)deleteGroup:(ABRecordRef)groupRef;
++ (void)performWithBlock:(CTLABRefBlock)block withErrorBlock:(CTLVoidBlock)errorBlock;
+
+// Source
+- (ABRecordRef)sourceByType:(ABSourceType)sourceType;
+
+// People
++ (void)peopleFromAddressBookWithDictionaryBlock:(CTLDictionayBlock)block;
+
+
 @end

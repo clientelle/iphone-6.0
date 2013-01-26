@@ -6,12 +6,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTLSlideMenuController : UIViewController
+@interface CTLSlideMenuController : UIViewController{
+    UIStoryboard *_mainStoryboard;
+    ABAddressBookRef _addressBookRef;
+}
 
 @property (nonatomic, weak) UIViewController<CTLSlideMenuDelegate> *panel;
 @property (nonatomic, weak) UINavigationController *mainViewNavController;
+@property (nonatomic, assign) ABAddressBookRef addressBookRef;
+@property (nonatomic, strong) UIStoryboard *mainStoryboard;
 
 - (id)initWithMenu:(UIViewController<CTLSlideMenuDelegate> *)menuView mainView:(UINavigationController *)mainView;
-- (void)setMainView:(UINavigationController *)navController;
+- (void)setMainView:(NSString *)navigationControllerName;
 
 @end

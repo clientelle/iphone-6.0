@@ -7,10 +7,9 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
-@class CTLAddressBook;
 
 @interface CTLABGroupTest : SenTestCase{
-    CTLAddressBook *_addressBook;
+    ABAddressBookRef *_addressBookRef;
     NSString *_testGroupName;
     NSString *_renamedGroupName;
     ABRecordRef _groupRef;

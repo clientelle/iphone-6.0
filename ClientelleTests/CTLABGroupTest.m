@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
-#import "CTLAddressBook.h"
 #import "CTLABGroup.h"
 #import "CTLABGroupTest.h"
 
@@ -16,14 +15,14 @@
 {
     [super setUp];
 
-    _addressBook = [[CTLAddressBook alloc] init];
+    _addressBookRef = nil;
     _testGroupName = @"Random Group";
     _renamedGroupName = @"Renamed Group";
 }
 
 - (void)tearDown
 {
-    _addressBook = nil;
+    _addressBookRef = nil;
     _testGroupName = nil;
     
     [super tearDown];

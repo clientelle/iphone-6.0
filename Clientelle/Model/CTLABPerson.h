@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Clientelle Ltd. All rights reserved.
 //
 
+typedef void (^CTLDictionayBlock)(NSDictionary* results);
+
 extern NSString *const CTLPersonCompositeNameProperty;
 extern NSString *const CTLPersonRecordIDProperty;
 extern NSString *const CTLPersonFirstNameProperty;
@@ -44,9 +46,13 @@ extern NSString *const CTLPersonAddressProperty;
 
 - (id)initWithRecordID:(ABRecordID)recordID withAddressBookRef:(ABAddressBookRef)addressBookRef;
 - (id)initWithRecordRef:(ABRecordRef)recordRef withAddressBookRef:(ABAddressBookRef)addressBookRef;
-- (id)initWithDictionary:(NSDictionary *)fields withAddressBookRef:(ABAddressBookRef)addressBookRef inSource:(ABRecordRef)sourceRef;
+- (id)initWithDictionary:(NSDictionary *)fields withAddressBookRef:(ABAddressBookRef)addressBookRef;
 
 - (CTLABPerson *)updateWithDictionary:(NSDictionary *)fields;
 + (BOOL)validateContactInfo:(NSDictionary *)fieldsDict;
+
++ (void)peopleFromAddressBook:(ABAddressBookRef)addressBookRef withBlock:(CTLDictionayBlock)block;
+
++ (ABRecordRef)sourceByType:(ABSourceType)sourceType addessBookRef:(ABAddressBookRef)addressBookRef;
 
 @end
