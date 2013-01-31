@@ -81,7 +81,10 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
     UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToRenameGroup:)];
     [cell addGestureRecognizer:longPressGesture];
     
-    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"09-chat-gray.png"]];
+    
+    NSString *imageName = ([abGroup.members count] == 0) ? @"09-chat-gray-disabled.png" : @"09-chat-gray.png";
+        
+    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
     cell.accessoryType = UITableViewCellAccessoryNone;
     return cell;
 }
@@ -353,7 +356,7 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
 
 - (void)displayMessageComposer
 {
-    if([MFMessageComposeViewController canSendText]){
+    if(![MFMessageComposeViewController canSendText]){
         [self displayAlertMessage:NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_SMS", nil)];
         return;
     }

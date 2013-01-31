@@ -10,6 +10,7 @@
 #import <MessageUI/MessageUI.h>
 
 extern NSString *const CTLContactListReloadNotification;
+extern NSString *const CTLTimestampForRowNotification;
 
 
 @class CTLABGroup;

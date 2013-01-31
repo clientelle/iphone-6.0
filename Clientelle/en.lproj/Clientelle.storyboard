@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="RJA-eB-QdT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="RJA-eB-QdT">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
         <!--Main Menu View Controller-->
@@ -77,7 +77,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PQ0-8K-PXU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3986" y="1092"/>
+            <point key="canvasLocation" x="-2938" y="-420"/>
         </scene>
         <!--Support View Controller - Support-->
         <scene sceneID="EoM-OE-ajq">
@@ -107,7 +107,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0uU-9N-5aY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3977" y="-477"/>
+            <point key="canvasLocation" x="-4565" y="-2997"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="E9s-Ab-DBl">
@@ -122,7 +122,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="62O-G1-jVm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4523" y="-485"/>
+            <point key="canvasLocation" x="-5111" y="-3005"/>
         </scene>
         <!--Settings View Controller - Settings-->
         <scene sceneID="A3L-Vk-zcl">
@@ -148,7 +148,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vmZ-f7-Arq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3991" y="319"/>
+            <point key="canvasLocation" x="-4025" y="-433"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="H3V-GB-IMb">
@@ -163,7 +163,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oaN-0W-nrg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4523" y="319"/>
+            <point key="canvasLocation" x="-4557" y="-433"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1iQ-LV-OG7">
@@ -178,7 +178,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fBw-ug-yHg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4518" y="1092"/>
+            <point key="canvasLocation" x="-3470" y="-420"/>
         </scene>
         <!--Groups List View Controller - Groups-->
         <scene sceneID="cIV-4c-sOj">
@@ -227,7 +227,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cFj-Yf-5pK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3319" y="-1380"/>
+            <point key="canvasLocation" x="-3977" y="-1288"/>
         </scene>
         <!--Contact Form Editor View Controller-->
         <scene sceneID="v7H-NB-3Oz">
@@ -309,7 +309,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pbe-Fm-nXO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2449" y="-2190"/>
+            <point key="canvasLocation" x="-2453" y="-2178"/>
         </scene>
         <!--Contact Import View Controller - Import Contact(s)-->
         <scene sceneID="Ipp-T5-eLi">
@@ -414,7 +414,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-3333" y="-3046"/>
+            <point key="canvasLocation" x="-4025" y="-3005"/>
         </scene>
         <!--Prospect Form View Controller-->
         <scene sceneID="iZ9-9d-YGm">
@@ -683,7 +683,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ud0-rH-xtg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3911" y="-3046"/>
+            <point key="canvasLocation" x="-3093" y="-1282"/>
         </scene>
         <!--Add Event View Controller - Set Appointment-->
         <scene sceneID="JP8-07-Dus">
@@ -853,7 +853,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kUZ-wU-eJ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2249" y="-3046"/>
+            <point key="canvasLocation" x="-2453" y="-3005"/>
         </scene>
         <!--Contacts List View Controller-->
         <scene sceneID="WiY-vu-SF0">
@@ -863,8 +863,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="63" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ru9-mV-weG">
-                                <color key="backgroundColor" white="0.88797331199999996" alpha="1" colorSpace="calibratedWhite"/>
+                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="63" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ru9-mV-weG">
                                 <searchBar key="tableHeaderView" contentMode="redraw" barStyle="blackTranslucent" id="2GW-XM-GmG">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -934,7 +933,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.96078437569999997" green="0.96078437569999997" blue="0.96078437569999997" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Ru9-mV-weG" firstAttribute="trailing" secondItem="E3e-aU-ko6" secondAttribute="trailing" type="default" id="0Wu-dI-XqI"/>
                             <constraint firstItem="Ru9-mV-weG" firstAttribute="leading" secondItem="E3e-aU-ko6" secondAttribute="leading" type="default" id="bQC-Zl-ThH"/>
@@ -992,7 +991,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cO3-aD-DaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4682" y="-2218"/>
+            <point key="canvasLocation" x="-4570" y="-2178"/>
         </scene>
         <!--Contact View Controller - Edit Contact-->
         <scene sceneID="gV0-Rn-hss">
@@ -1086,7 +1085,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3073" y="-2190"/>
+            <point key="canvasLocation" x="-3093" y="-2178"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ff2-z9-n9f">
@@ -1104,7 +1103,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="86C-I2-aor" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2775" y="-3046"/>
+            <point key="canvasLocation" x="-3093" y="-3005"/>
         </scene>
     </scenes>
     <resources>
@@ -1171,6 +1170,7 @@
             <relationships>
                 <relationship kind="action" name="cancel:"/>
                 <relationship kind="action" name="dismissKeyboard:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="action" name="highlightTextField:"/>
                 <relationship kind="action" name="submit:"/>
                 <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>

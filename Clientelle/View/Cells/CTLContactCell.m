@@ -20,25 +20,4 @@
     self.indicatorLayer = leftBorder;
 }
 
--(void)drawRect:(CGRect)rect {
-   /* [self.contentView setBackgroundColor:[UIColor colorFromUnNormalizedRGB:245 green:245 blue:245 alpha:1.0f]];
-    CALayer *bevelLine = [CALayer layer];
-    bevelLine.frame = CGRectMake(0.0f, 0.0f, self.frame.size.width, 1.0f);
-    bevelLine.backgroundColor = [UIColor whiteColor].CGColor;
-    [self.layer addSublayer:bevelLine]; */
-    
-    [self.contentView setBackgroundColor:[UIColor colorFromUnNormalizedRGB:245 green:245 blue:245 alpha:1.0f]];
-    
-    CALayer *bevelTopLine = [CALayer layer];
-    bevelTopLine.frame = CGRectMake(0.0f, 1.0f, self.frame.size.width, 1.0f);
-    bevelTopLine.backgroundColor = [UIColor whiteColor].CGColor;
-    [self.layer addSublayer:bevelTopLine];
-    
-    CALayer *bevelLine = [CALayer layer];
-    bevelLine.frame = CGRectMake(0.0f, self.frame.size.height, self.frame.size.width, 1.0f);
-    bevelLine.backgroundColor = [UIColor colorFromUnNormalizedRGB:200.0f green:200.0f blue:200.0f alpha:1.0f].CGColor;
-    [self.layer addSublayer:bevelLine];
-    
-}
-
 @end

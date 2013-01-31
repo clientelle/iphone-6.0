@@ -32,6 +32,7 @@
 
 
 NSString *const CTLContactListReloadNotification = @"com.clientelle.notifications.reloadContacts";
+NSString *const CTLTimestampForRowNotification = @"com.clientelle.notifications.updateContactTimestamp";
 
 NSString *const CTLImporterSegueIdentifyer = @"toImporter";
 NSString *const CTLContactListSegueIdentifyer = @"toContacts";
@@ -57,6 +58,9 @@ int const CTLAddContactActionSheetTag = 424;
     
     [self buildGroupSelector:defaultGroupID];
     
+    _contacts = [NSArray array];
+    _filteredContacts = [NSMutableArray array];
+    
     if(defaultGroupID == CTLAllContactsGroupID){
         self.navigationItem.titleView = [self groupPickerButtonWithTitle: NSLocalizedString(@"ALL_CONTACTS", nil)];
         [self loadAllContacts];
@@ -74,7 +78,7 @@ int const CTLAddContactActionSheetTag = 424;
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactList:) name:CTLContactListReloadNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timestampForRowDidChange:) name:CTLTimestampForRowNotification object:nil];
 }
 
 - (void)buildGroupSelector:(int)defaultGroupID
@@ -494,28 +498,24 @@ int const CTLAddContactActionSheetTag = 424;
     CGSize viewSize = self.view.bounds.size;
     CGFloat shadowOffset = 5.0f;
     
-    //Add Contact Header
-    self.contactHeader = [[CTLContactHeaderView alloc] initWithFrame:CGRectMake(0, -CTLContactViewHeaderHeight - shadowOffset, viewSize.width, CTLContactViewHeaderHeight)];
-    
+    CGRect headerFrame = CGRectMake(0, -CTLContactViewHeaderHeight - shadowOffset, viewSize.width, CTLContactViewHeaderHeight);
+    self.contactHeader = [[CTLContactHeaderView alloc] initWithFrame:headerFrame];
     [self.contactHeader.editButton addTarget:self action:@selector(editContact:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:self.contactHeader];
-    
-    //Configure Toolbar Actions
-    
-    self.contactToolbar = [[CTLContactToolbarView alloc] initWithFrame:CGRectMake(0, viewSize.height + CTLContactModeToolbarViewHeight + shadowOffset, viewSize.width, CTLContactModeToolbarViewHeight)];
-    
+    CGRect toolbarFrame = CGRectMake(0, viewSize.height + CTLContactModeToolbarViewHeight + shadowOffset, viewSize.width, CTLContactModeToolbarViewHeight);
+    self.contactToolbar = [[CTLContactToolbarView alloc] initWithFrame:toolbarFrame];
     [self.contactToolbar.appointmentButton addTarget:self action:@selector(showAppointmentScheduler:) forControlEvents:UIControlEventTouchUpInside];
     [self.contactToolbar.emailButton addTarget:self action:@selector(showEmailForPerson:) forControlEvents:UIControlEventTouchUpInside];
     [self.contactToolbar.callButton addTarget:self action:@selector(showDialPerson:) forControlEvents:UIControlEventTouchUpInside];
     [self.contactToolbar.smsButton addTarget:self action:@selector(showSMSForPerson:) forControlEvents:UIControlEventTouchUpInside];
     [self.contactToolbar.mapButton addTarget:self action:@selector(showMapForPerson:) forControlEvents:UIControlEventTouchUpInside];
     
+    [self.view addSubview:self.contactHeader];
     [self.view addSubview:self.contactToolbar];
 }
 
-- (void)enterContactMode{
-    
+- (void)enterContactMode
+{
     [self.contactHeader populateViewData:_selectedPerson];
     [self determineToolbarAbilities];
     
@@ -535,11 +535,12 @@ int const CTLAddContactActionSheetTag = 424;
     [UIView animateWithDuration:0.3 animations:^{
         self.contactHeader.frame = headerFrame;
         self.contactToolbar.frame = toolbarFrame;
+        [self.view setBackgroundColor:[UIColor ctlLightGray]];
     }];
 }
 
-- (void)exitContactMode {
-    
+- (void)exitContactMode
+{
     [self.tableView deselectRowAtIndexPath:_selectedIndexPath animated:YES];
     CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
     [cell.indicatorLayer removeFromSuperlayer];
@@ -550,24 +551,23 @@ int const CTLAddContactActionSheetTag = 424;
     headerFrame.origin.y = -100;
     footerFrame.origin.y = CGRectGetHeight(self.view.bounds) + 5;
     
-    typeof(self) weakself = self;
-    
     [UIView animateWithDuration:0.3 animations:^{
         self.contactHeader.frame = headerFrame;
         self.contactToolbar.frame = footerFrame;
+        [self.view setBackgroundColor:[UIColor whiteColor]];
     } completion:^(BOOL finished){
         _inContactMode = NO;
         _selectedPerson = nil;
         _selectedIndexPath = nil;
-        
         if(_shouldReorderListOnScroll){
-            [weakself sortContactListByAccessDate:_contacts];
+            [self sortContactListByAccessDate:_contacts];
             _shouldReorderListOnScroll = NO;
         }
     }];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView
+{
     if(_inContactMode){
         [self rightTitlebarWithAddContactButton];
         [self exitContactMode];
@@ -670,7 +670,13 @@ int const CTLAddContactActionSheetTag = 424;
     return nil;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if([self.selectedGroup groupID] == CTLAllContactsGroupID){
+        return false;
+    }
+    
     return !_inContactMode;//do not allow deleting row in "inContact" Mode
 }
 
@@ -687,10 +693,6 @@ int const CTLAddContactActionSheetTag = 424;
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView endUpdates];
     }
-}
-
--(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return @"Remove";
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -725,12 +727,132 @@ int const CTLAddContactActionSheetTag = 424;
     [self enterContactMode];
 }
 
-#pragma mark Share Contact
+#pragma mark - Toolbar Actions
+
+- (void)showAppointmentScheduler:(id)sender
+{
+    [self performSegueWithIdentifier:CTLAppointmentSegueIdentifyer sender:sender];
+}
+
+- (void)showMapForPerson:(id)sender
+{
+    NSArray *addressArray = [_selectedPerson.addressDict allValues];
+    NSMutableArray *addyArray = [[NSMutableArray alloc] init];
+    for(NSUInteger i=0;i<[addressArray count];i++){
+        if([[addressArray objectAtIndex:i] length] > 0){
+            [addyArray addObject:[addressArray objectAtIndex:i]];
+        }
+    }
+    
+    NSString *addressStr = [addyArray componentsJoinedByString:@", "];
+    NSString *encodedAddress = [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *mapURLString = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@", encodedAddress];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mapURLString]];
+    [self updateContactTimestampInPlace];
+}
+
+- (void)showDialPerson:(id)sender
+{
+    NSString *cleanPhoneNumber = [NSString cleanPhoneNumber:[_selectedPerson phone]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", cleanPhoneNumber]]];
+    [self updateContactTimestampInPlace];
+}
+
+- (void)showEmailForPerson:(id)sender
+{
+    if(![MFMailComposeViewController canSendMail]){
+        [self displayAlertMessage:@"Device is not configued to send email messages"];
+        return;
+    }
+    
+    MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
+    [mailController setMailComposeDelegate:self];
+    [mailController setToRecipients:@[[_selectedPerson email]]];
+    [self presentViewController:mailController animated:YES completion:nil];
+}
+
+- (void)showSMSForPerson:(id)sender
+{
+    NSString *cleanNumber = [NSString cleanPhoneNumber:[_selectedPerson phone]];
+    NSString *phoneToCall = [NSString stringWithFormat:@"sms: %@", cleanNumber];
+    NSString *phoneToCallEncoded = [phoneToCall stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    NSURL *smsURL = [[NSURL alloc] initWithString:phoneToCallEncoded];
+    [[UIApplication sharedApplication] openURL:smsURL];
+    [self updateContactTimestampInPlace];
+}
+
+#pragma mark - Updating Timestamp for Contact Row
+- (void)updateContactTimestampInPlace
+{
+    [self saveTimestampForContact];
+    [self updateTimestampForActiveCell];
+}
+
+- (void)updateTimestampForActiveCell
+{
+    CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
+    cell.timestampLabel.text = [[NSDate dateToString:[NSDate date]] stringByReplacingOccurrencesOfString:@"Today, " withString:@""];
+    _shouldReorderListOnScroll = YES;
+}
+
+- (void)saveTimestampForContact
+{
+    NSNumber *recordIDKey = @(_selectedPerson.recordID);
+        
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID=%i", _selectedPerson.recordID];
+    CTLCDPerson *person = [CTLCDPerson MR_findFirstWithPredicate:predicate];
+    
+    if(!person){
+        person = [CTLCDPerson MR_createEntity];
+        person.recordIDValue = [_selectedPerson recordID];
+    }
+    
+    person.lastAccessed = [NSDate date];
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    
+    _selectedPerson.accessDate = person.lastAccessed;
+    [_accessedDictionary setObject:person.lastAccessed forKey:recordIDKey];
+    [_contactsDictionary setObject:_selectedPerson forKey:recordIDKey];
+}
+
+- (void)timestampForRowDidChange:(NSNotification *)notification
+{
+    [self updateContactTimestampInPlace];
+}
+
+#pragma mark - UISearchDisplayController Delegate Methods
+
+- (void)filterContactListForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+	[_filteredContacts removeAllObjects];
+	for (NSNumber *key in _contactsDictionary){
+        CTLABPerson *person = [_contactsDictionary objectForKey:key];
+        NSComparisonResult result = [person.compositeName compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+        if (result == NSOrderedSame){
+            [_filteredContacts addObject:person];
+        }
+	}
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContactListForSearchText:searchString scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    return YES;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption{
+    [self filterContactListForSearchText:[self.searchDisplayController.searchBar text] scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+    return YES;
+}
+
+#pragma mark - Share Contact
 
 - (void)shareContactViaSMS:(id)sender
 {
     if(![MFMessageComposeViewController canSendText]){
-        // Kevin: Maybe error message here?
+        [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_SMS", nil)];
         return;
     }
     
@@ -742,7 +864,7 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)shareContactViaEmail:(id)sender {
     if(![MFMailComposeViewController canSendMail]){
-        // Kevin: Maybe error message here?
+        [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL", nil)];
         return;
     }
     
@@ -769,18 +891,24 @@ int const CTLAddContactActionSheetTag = 424;
     return body;
 }
 
-#pragma mark - Message Methods
+- (void)displayAlertMessage:(NSString *)message
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+#pragma mark - Message Delegate Methods
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     if(result == MFMailComposeResultSent){
-        //[self updateContactTimestampInPlace];
+        [self updateContactTimestampInPlace];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
     if(result == MessageComposeResultSent){
-        //[self updateContactTimestampInPlace];
+        [self updateContactTimestampInPlace];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }

@@ -729,7 +729,6 @@
 		417DC29B16ADF60E0073199D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				41E9BA5516B45AD900FEF1FE /* CTLContactsEmptyView.xib */,
 				41B546CD16B39A8900302652 /* Cells */,
 				41B546D216B39BC500302652 /* CTLContactHeaderView.h */,
 				41B546D316B39BC500302652 /* CTLContactHeaderView.m */,
@@ -737,6 +736,7 @@
 				41B546D516B39BC500302652 /* CTLContactToolbarView.m */,
 				41B546D616B39BC500302652 /* CTLFiveStarRater.h */,
 				41B546D716B39BC500302652 /* CTLFiveStarRater.m */,
+				41E9BA5516B45AD900FEF1FE /* CTLContactsEmptyView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";

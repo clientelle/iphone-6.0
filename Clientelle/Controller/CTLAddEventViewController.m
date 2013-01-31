@@ -230,7 +230,7 @@ int CTLEndTimeInputTag = 81;
     [self.endTimeTextField setBackgroundColor:[UIColor clearColor]];
     
     [self dismissViewControllerAnimated:YES completion:^{
-       // [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
     }];
 }
 

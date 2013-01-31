@@ -15,4 +15,6 @@
 
 + (UIColor *)ctlTorquoise;
 
++ (UIColor *)ctlLightGray;
+
 @end
