@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class CTLABPerson;
+
 extern NSString *const kCTLClientGroupID;
 extern NSString *const kCTLProspectGroupID;
 
@@ -34,9 +36,7 @@ extern NSString *const CTLDefaultSelectedGroupIDKey;
 - (id)initWithGroupID:(ABRecordID)groupID addressBook:(ABAddressBookRef)addressBookRef;
 - (id)initWithGroupRef:(ABRecordRef)groupRef addressBook:(ABAddressBookRef)addressBookRef;
 
-//- (NSMutableDictionary *)members;
-
-- (void)addMember:(ABRecordID)personID;
+- (void)addMember:(CTLABPerson *)person;
 - (void)addMembers:(NSMutableDictionary *)contacts;
 - (void)removeMember:(ABRecordID)personID;
 - (void)removeMembers;

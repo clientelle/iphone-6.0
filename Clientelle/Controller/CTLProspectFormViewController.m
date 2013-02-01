@@ -160,7 +160,7 @@ int const CTLNotesFieldTag = 4;
     recordID = abPerson.recordID;
     if(recordID != kABRecordInvalidID){
         CTLABGroup *prospectGroup = [[CTLABGroup alloc] initWithGroupID:[CTLABGroup prospectGroupID] addressBook:self.addressBookRef];
-        [prospectGroup addMember:recordID];
+        [prospectGroup addMember:abPerson];
     }
     
     

@@ -55,4 +55,6 @@ extern NSString *const CTLPersonAddressProperty;
 
 + (ABRecordRef)sourceByType:(ABSourceType)sourceType addessBookRef:(ABAddressBookRef)addressBookRef;
 
+- (NSString *)description;
+
 @end

@@ -11,7 +11,8 @@
 
 extern NSString *const CTLContactListReloadNotification;
 extern NSString *const CTLTimestampForRowNotification;
-
+extern NSString *const CTLNewContactWasAddedNotification;
+extern NSString *const CTLContactRowDidChangeNotification;
 
 @class CTLABGroup;
 @class CTLABPerson;
@@ -42,16 +43,8 @@ extern NSString *const CTLTimestampForRowNotification;
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
 @property (nonatomic, assign) ABAddressBookRef addressBookRef;
-
-/* Empty View */
-@property (nonatomic, weak) IBOutlet UILabel *emptyContactsTitleLabel;
-@property (nonatomic, weak) IBOutlet UILabel *emptyContactsMessageLabel;
-@property (nonatomic, weak) IBOutlet UIButton *addContactsButton;
-
-/* UI Elements */
 @property (nonatomic, strong) CTLContactHeaderView *contactHeader;
 @property (nonatomic, strong) CTLContactToolbarView *contactToolbar;
-
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 - (IBAction)dismissGroupPickerFromTap:(UITapGestureRecognizer *)recognizer;

@@ -13,7 +13,7 @@
 
 @interface CTLContactViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate>{
     BOOL _addressbookChangeDidComeFromApp;
-    ABAddressBookRef *_addressBookRef;
+    ABAddressBookRef _addressBookRef;
     CTLCDFormSchema *_cdFormSchema;
      
     NSMutableDictionary *_personDict;
@@ -30,7 +30,7 @@
     UITextField *_focusedTextField;
 }
 
-@property(nonatomic, assign) ABAddressBookRef *addressBookRef;
+@property(nonatomic, assign) ABAddressBookRef addressBookRef;
 @property(nonatomic, strong) CTLABPerson *abPerson;
 @property(nonatomic, strong) CTLABGroup *abGroup;
 @property(nonatomic, weak) IBOutlet UINavigationBar *navigationBar;

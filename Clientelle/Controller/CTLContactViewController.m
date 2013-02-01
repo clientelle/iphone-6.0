@@ -86,6 +86,18 @@ int const CTLOverwriteExternalChangeIndex = 1;
 
 - (void)buildSchema
 {
+    _fieldRows = [NSMutableArray array];
+    _formSchema = [NSMutableArray array];
+    _addressRows = [NSMutableArray array];
+    
+    if(!_personDict){
+        _personDict = [NSMutableDictionary dictionary];
+    }
+    
+    if(!_addressDict){
+        _addressDict = [NSMutableDictionary dictionary];
+    }
+    
     if(!_formFields){
         _formFields = [CTLCDFormSchema fieldsFromPlist:CTLABPersonSchemaPlist];
     }
@@ -93,65 +105,62 @@ int const CTLOverwriteExternalChangeIndex = 1;
     if(!_addressFields){
         _addressFields = [CTLCDFormSchema fieldsFromPlist:CTLAddressSchemaPlist];
     }
-    
-    _fieldRows = [[NSMutableArray alloc] initWithCapacity:0];
-    _formSchema = [[NSMutableArray alloc] initWithCapacity:0];
-    _personDict = [[NSMutableDictionary alloc] init];
-    _addressDict = [[NSMutableDictionary alloc] init];
-    
-    _addressRows = [[NSMutableArray alloc] initWithCapacity:0];
-    _showAddress = [[_cdFormSchema valueForKey:CTLPersonAddressProperty] isEqualToNumber:[NSNumber numberWithBool:YES]];
-    
-    BOOL hasPerson = (self.abPerson != nil);
-
+        
+    _showAddress = [self fieldIsVisible:CTLPersonAddressProperty];
+     
     for(NSUInteger i=0; i < [_formFields count]; i++){
-        NSDictionary *field = [_formFields objectAtIndex:i];
-        NSString *fieldName = [field objectForKey:kCTLFieldName];
+        NSMutableDictionary *inputField = nil;
+        NSString *field = _formFields[i][kCTLFieldName];
+        NSString *newValue = [_personDict objectForKey:field];
         NSString *value = nil;
         
-        if(hasPerson){
-            value = [[self.abPerson valueForKey:fieldName] description];
+        if(newValue){
+            value = newValue;
+        }else if(self.abPerson != nil){
+            value = [[self.abPerson valueForKey:field] description];
             if(value){
-                [_personDict setValue:value forKey:fieldName];
+                [_personDict setValue:value forKey:field];
             }
         }
-        
-        if([[_cdFormSchema valueForKey:fieldName] isEqualToNumber:[NSNumber numberWithBool:YES]]){
-            NSMutableDictionary *inputField = [field mutableCopy];
+
+        if([self fieldIsVisible:field]){
+            inputField = [_formFields[i] mutableCopy];
             if(value){
                 [inputField setValue:value forKey:kCTLFieldValue];
             }
             [_fieldRows addObject:inputField];
         }
     }
-    
-    //address fields
+
     if(_showAddress){
-        for(NSUInteger k=0; k < [_addressFields count]; k++){
-            NSDictionary *input = [_addressFields objectAtIndex:k];
-            NSString *fieldName = [input objectForKey:kCTLFieldName];
+        for(NSInteger k=0; k < [_addressFields count]; k++){
+            NSMutableDictionary *inputField = [_addressFields[k] mutableCopy];
+            NSString *field = _addressFields[k][kCTLFieldName];
+            NSString *newValue = [_addressDict objectForKey:field];
             NSString *value = nil;
             
-            if(hasPerson){
-                value = [[[self.abPerson addressDict] valueForKey:fieldName] description];
-            }
-            
-            NSMutableDictionary *inputField = [input mutableCopy];
-            if(value){
-                [inputField setValue:value forKey:kCTLFieldValue];
+            if(newValue){
+                value = newValue;
+            }else if(self.abPerson != nil){
+                value = [[[self.abPerson addressDict] valueForKey:field] description];
+                if(value){
+                    [inputField setValue:value forKey:kCTLFieldValue];
+                }
             }
             [_addressRows addObject:inputField];
         }
     }
 }
 
+- (BOOL)fieldIsVisible:(NSString *)fieldName{
+    return [[_cdFormSchema valueForKey:fieldName] isEqualToNumber:[NSNumber numberWithBool:YES]];
+}
+
 - (void)setPersonDictionary
 {
     NSArray *fields = [NSArray arrayWithArray:_fieldRows];
     [fields enumerateObjectsUsingBlock:^(id input, NSUInteger idx, BOOL *stop){
-        NSString *value = [input objectForKey:kCTLFieldValue];
-        NSString *field = [input objectForKey:kCTLFieldName];
-        [_personDict setValue:value forKey:field];
+        [_personDict setValue:input[kCTLFieldValue] forKey:input[kCTLFieldName]];
     }];
 }
 
@@ -159,15 +168,12 @@ int const CTLOverwriteExternalChangeIndex = 1;
 {
     NSArray *fields = [NSArray arrayWithArray:_addressRows];
     [fields enumerateObjectsUsingBlock:^(id input, NSUInteger idx, BOOL *stop){
-        NSString *value = [input objectForKey:kCTLFieldValue];
-        NSString *field = [input objectForKey:kCTLFieldName];
-        [_addressDict setValue:value forKey:field];
+        [_addressDict setValue:input[kCTLFieldValue] forKey:input[kCTLFieldName]];
     }];
 }
 
 - (void)addressBookDidChange:(NSNotification *)notification
 {
-    
     CTLABPerson *person = [[CTLABPerson alloc] initWithRecordRef:[self.abPerson recordRef] withAddressBookRef:self.addressBookRef];
     
     //if changes came from app or user has no pending changes, simply reload the form view
@@ -381,45 +387,33 @@ int const CTLOverwriteExternalChangeIndex = 1;
     }
 
     if([self.abPerson recordID]){
-        
-        CTLABPerson *updatedPerson = [self.abPerson updateWithDictionary:_personDict];
-        self.abPerson = updatedPerson;
-        
-        //[[NSNotificationCenter defaultCenter] postNotificationName:CTLContactRowDidChangeNotification object:self.abPerson];
+        self.abPerson = [self.abPerson updateWithDictionary:_personDict];
+        [self.abPerson setAccessDate:[NSDate date]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactRowDidChangeNotification object:self.abPerson];
      }else{
         ABRecordID recordID = kABRecordInvalidID;
-        NSDictionary *newContactDict = [[NSMutableDictionary alloc] initWithCapacity:2];
-        
-
         self.abPerson = [[CTLABPerson alloc] initWithDictionary:_personDict withAddressBookRef:self.addressBookRef];
         recordID = [self.abPerson recordID];
         if(recordID != kABRecordInvalidID){
-            [self.abGroup addMember:recordID];
-            CTLCDPerson *person = [self updateTimestamp:recordID];
-            [self.abPerson setAccessDate:person.lastAccessed];
-            [newContactDict setValue:self.abPerson forKey:@"person"];
-            [newContactDict setValue:person forKey:@"accessed"];
+            [self.abPerson setAccessDate:[NSDate date]];
+            [self.abGroup addMember:self.abPerson];
         }
-        
-        //[[NSNotificationCenter defaultCenter] postNotificationName:CTLNewContactWasAddedNotification object:newContactDict];
+        [[NSNotificationCenter defaultCenter] postNotificationName:CTLNewContactWasAddedNotification object:self.abPerson];
     }
+         
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID=%i", [self.abPerson recordID]];
+    CTLCDPerson *person = [CTLCDPerson MR_findFirstWithPredicate:predicate];
+    if(!person){
+        [CTLCDPerson createFromABPerson:self.abPerson];
+    }else{
+        [person updatePerson:_personDict];
+    }
+    
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     
     //set flag to notifiy that changes came from within the app
     _addressbookChangeDidComeFromApp = YES;
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (CTLCDPerson *)updateTimestamp:(ABRecordID)recordID
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID=%i", recordID];
-    CTLCDPerson *person = [CTLCDPerson MR_findFirstWithPredicate:predicate];
-    if(!person){
-        person = [CTLCDPerson MR_createEntity];
-        person.recordIDValue = recordID;
-    }
-    person.lastAccessed = [NSDate date];
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-    return person;
 }
 
 - (void)formDidChange:(NSNotification *)notification{

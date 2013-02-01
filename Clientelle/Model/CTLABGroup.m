@@ -67,15 +67,15 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
     return _members;
 }
 
-- (void)addMember:(ABRecordID)personID
+- (void)addMember:(CTLABPerson *)person
 {
-    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(self.addressBookRef, personID);
+    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(self.addressBookRef, person.recordID);
     ABRecordRef groupRef = ABAddressBookGetGroupWithRecordID(self.addressBookRef, self.groupID);
     
     CFErrorRef error = NULL;
     if(ABGroupAddMember(groupRef, personRef, &error)){
-        if(!ABAddressBookSave(self.addressBookRef, &error)){
-            //[self alertErrorMessage:error];
+        if(ABAddressBookSave(self.addressBookRef, &error)){
+            //successful
         }
     } else {
         //[self alertErrorMessage:error];
@@ -97,24 +97,7 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
         CFErrorRef error = NULL;
         if(ABGroupAddMember(groupRef, personRef, &error)){
             if(ABAddressBookSave(self.addressBookRef, &error)){
-                
-                CTLCDPerson *cdPerson = [CTLCDPerson MR_createEntity];
-                cdPerson.recordID = @(person.recordID);
-                cdPerson.firstName = person.firstName;
-                cdPerson.lastName = person.lastName;
-                cdPerson.phone = person.phone;
-                cdPerson.email = person.email;
-                cdPerson.jobTitle  = person.jobTitle;
-                cdPerson.organization = person.organization;
-                cdPerson.note = person.note;
-                cdPerson.lastAccessed = [NSDate date];
-                
-                NSDictionary *address = [person addressDict];
-                cdPerson.address = [address objectForKey:@"Street"];
-                cdPerson.city = [address objectForKey:@"City"];
-                cdPerson.state = [address objectForKey:@"State"];
-                cdPerson.zip = [address objectForKey:@"ZIP"];
-            
+                [CTLCDPerson createFromABPerson:person];
             }
         }
     }
