@@ -12,13 +12,15 @@ extern NSString *const CTLFormFieldAddedNotification;
 @class CTLCDFormSchema;
 
 @interface CTLContactFormEditorViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>{
-    CTLCDFormSchema *_formSchema;
     NSArray *_fieldSet;
     NSMutableArray *_enabledFields;
     NSMutableArray *_fieldRows;
 }
 
+@property (nonatomic, weak) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, strong) CTLABGroup *abGroup;
+@property (nonatomic, strong) CTLCDFormSchema *formSchema;
+@property (nonatomic, strong) NSArray *fieldsFromPList;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
 

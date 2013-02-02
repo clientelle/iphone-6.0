@@ -686,12 +686,12 @@
 			isa = PBXGroup;
 			children = (
 				416DD83416AF9C2D00F2F8B3 /* SliderMenu */,
+				41B546DF16B39C2300302652 /* CTLContactImportViewController.h */,
+				41B546E016B39C2400302652 /* CTLContactImportViewController.m */,
 				41848DF616B0D7A7004BFE30 /* CTLContactsListViewController.h */,
 				41848DF716B0D7A7004BFE30 /* CTLContactsListViewController.m */,
 				41B546DD16B39C2300302652 /* CTLContactViewController.h */,
 				41B546DE16B39C2300302652 /* CTLContactViewController.m */,
-				41B546DF16B39C2300302652 /* CTLContactImportViewController.h */,
-				41B546E016B39C2400302652 /* CTLContactImportViewController.m */,
 				41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */,
 				41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */,
 				41B546E316B39C2400302652 /* CTLProspectFormViewController.h */,

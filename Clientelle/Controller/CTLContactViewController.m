@@ -102,7 +102,7 @@ int const CTLOverwriteExternalChangeIndex = 1;
     }
     
     if(!_addressFields){
-        _addressFields = [CTLCDFormSchema fieldsFromPlist:CTLAddressSchemaPlist];
+        _addressFields = [[CTLCDFormSchema fieldsFromPlist:CTLAddressSchemaPlist] mutableCopy];
     }
         
     _showAddress = [self fieldIsVisible:CTLPersonAddressProperty];
@@ -125,12 +125,9 @@ int const CTLOverwriteExternalChangeIndex = 1;
 
         if([self fieldIsVisible:field]){
             inputField = [_formFields[i] mutableCopy];
-            
             label = NSLocalizedString([inputField valueForKey:kCTLFieldName], nil);
-            
             [inputField setValue:label forKey:kCTLFieldLabel];
             [inputField setValue:label forKey:kCTLFieldPlaceHolder];
-            
             
             if(value){
                 [inputField setValue:value forKey:kCTLFieldValue];
@@ -145,6 +142,10 @@ int const CTLOverwriteExternalChangeIndex = 1;
             NSString *field = _addressFields[k][kCTLFieldName];
             NSString *newValue = [_addressDict objectForKey:field];
             NSString *value = nil;
+            NSString *label = NSLocalizedString([inputField valueForKey:kCTLFieldName], nil);
+            
+            [inputField setValue:label forKey:kCTLFieldLabel];
+            [inputField setValue:label forKey:kCTLFieldPlaceHolder];
             
             if(newValue){
                 value = newValue;
@@ -366,6 +367,8 @@ int const CTLOverwriteExternalChangeIndex = 1;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:CTLContactFormEditorSegueIdentifyer]){
         CTLContactFormEditorViewController *formEditorViewController = [segue destinationViewController];
+        [formEditorViewController setFormSchema:_cdFormSchema];
+        [formEditorViewController setFieldsFromPList:_formFields];
         [formEditorViewController setAbGroup:self.abGroup];
     }
 }

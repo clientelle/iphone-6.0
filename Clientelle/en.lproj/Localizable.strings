@@ -26,6 +26,10 @@ e†
 
 "EDIT_CONTACT" = "Edit Contact";
 "ADD_CONTACT" = "Add Contact";
+"EDIT_FORM" = "Edit Form";
+
+"CONTACT_ADDRESS" = "Contact Address";
+"CONTACT_INFO" = "Contact Info";
 
 "firstName" = "First Name";
 "lastName" = "Last Name";
@@ -34,7 +38,7 @@ e†
 "jobTitle" = "Title";
 "organization" = "Organization";
 "note" = "Note";
-"Address" = "Address";
+"address" = "Address";
 "Street" = "Street";
 "City" = "City";
 "ZIP" = "ZIP Code";
@@ -46,8 +50,7 @@ e†
 "OVERWRITE_PROMPT" = "Would you like to take the changes or overwrite it?";
 "TAKE_NEW" = "Take New";
 "OVERWRITE" = "Overwrite";
-"CONTACT_ADDRESS" = "Contact Address";
-"CONTACT_INFO" = "Contact Info";
+
 "CONTACT_INCOMPLETE" = "Contact is incomplete";
 "CONTACT_INCOMPLETE_MSG" = "Name and contact type is required (email or phone number)";
 

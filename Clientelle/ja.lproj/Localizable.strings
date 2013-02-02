@@ -26,6 +26,10 @@
 
 "EDIT_CONTACT" = "合伙";
 "ADD_CONTACT" = "合伙";
+"EDIT_FORM" = "合伙";
+
+"CONTACT_ADDRESS" = "合の";
+"CONTACT_INFO" = "伙人";
 
 "firstName" = "合伙人";
 "lastName" = "絡合伙";
@@ -34,18 +38,35 @@
 "jobTitle" = "絡";
 "organization" = "アカ";
 "note" = "客";
-"Address" = "合伙";
+"address" = "合伙";
 "Street" = "私の";
 "City" = "伙人";
 "ZIP" = "客户";
 "State" = "設定";
 
+"EXTERNAL_CHANGES_DETECTED" = "External Changes Detected";
+"CONTACT_WAS_DELETED" = "%@ contact was deleted";
+"CREATE_AGAIN" = "Create Again";
+"OVERWRITE_PROMPT" = "Would you like to take the changes or overwrite it?";
+"TAKE_NEW" = "Take New";
+"OVERWRITE" = "Overwrite";
+
+"CONTACT_INCOMPLETE" = "Contact is incomplete";
+"CONTACT_INCOMPLETE_MSG" = "Name and contact type is required (email or phone number)";
+
 "CREATE_NEW_GROUP" = "Create New Group";
 "ENTER_GROUP_NAME" = "Enter a Group name";
-"GROUP_EXISTS" = "This group already exist!";
+"GROUP_EXISTS" = "%@ already exist!";
 "GROUP_FAILED_TO_SAVE" = "Could not save group";
 "SEND_GROUP_MESSAGE" = "Send a Group Message";
 "GROUP_SMS" = "Group SMS";
 "GROUP_EMAIL" = "Group Email";
 "GROUP_OPTIONS_INSTRUCTIONS" = "Press and hold to rename a group, swipe to delete.";
 "RENAME_GROUP_TO" = "Rename %@ to:";
+"CANNOT_DELETE_SYSTEM_GROUP" = "%@ is a system group";
+"GROUP_HAS_CONTACTS" = "%@ has %i contact(s). They will be removed from the group.";
+"CONFIRM_DELETE" = "Are you sure you want to delete %@?";
+"FAILED_TO_CREATE_GROUP" = "Failed to create group!";
+"CANNOT_RENAME_GROUP" = "Cannot Rename Group";
+"DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL" = "Device is not configured to send email messages";
+"DEVICE_NOT_CONFIGURED_TO_SEND_SMS" = "Device is not configured to send text messages";

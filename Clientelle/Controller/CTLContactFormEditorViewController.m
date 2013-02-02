@@ -18,20 +18,19 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 - (void)viewDidLoad{
     [super viewDidLoad];
 
-    self.navigationItem.title = [NSString stringWithFormat:@"Edit %@ Form", [self.abGroup name]];
-    
+    self.navBar.topItem.title = NSLocalizedString(@"EDIT_FORM", nil);
     _fieldRows = [[NSMutableArray alloc] init];
-    _formSchema = [CTLCDFormSchema MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"groupID=%i",[self.abGroup groupID]]];
+
+    NSString *addressLabel = NSLocalizedString(@"Address", nil);
+    NSMutableArray *fields = [self.fieldsFromPList mutableCopy];
+    [fields addObject:@{kCTLFieldLabel:addressLabel, kCTLFieldName:@"address"}];
     
-    NSArray *fieldsFromPList = [CTLCDFormSchema fieldsFromPlist:CTLABPersonSchemaPlist];
-    NSMutableArray *fields = [[NSMutableArray alloc] initWithArray:fieldsFromPList];
-    [fields addObject:@{@"label": @"Address", @"name": @"address"}];
-    
-    //copy field from plist into "_fieldRows"
-    for(NSUInteger i=0; i< [fields count]; i++){
-        NSDictionary *field = [fields objectAtIndex:i];
-        NSMutableDictionary *inputField = [field mutableCopy];
-        [inputField setValue:[_formSchema valueForKey:[field objectForKey:kCTLFieldName]] forKey:kCTLFieldEnabled];
+    for(NSInteger i=0; i< [fields count]; i++){
+        NSMutableDictionary *inputField = [fields[i] mutableCopy];
+        NSString *label = NSLocalizedString([inputField valueForKey:kCTLFieldName], nil);
+        [inputField setValue:label forKey:kCTLFieldLabel];
+        [inputField setValue:label forKey:kCTLFieldPlaceHolder];
+        [inputField setValue:[self.formSchema valueForKey:[fields[i] objectForKey:kCTLFieldName]] forKey:kCTLFieldEnabled];
         [_fieldRows addObject:inputField];
     }
 }
@@ -71,10 +70,10 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     NSString *fieldName = [[_fieldRows objectAtIndex:indexPath.row] objectForKey:kCTLFieldName];
     
     if(cell.accessoryType == UITableViewCellAccessoryCheckmark){
-        [_formSchema setValue:@(0) forKey:fieldName];
+        [self.formSchema setValue:@(0) forKey:fieldName];
         [self styleDisabledField:cell];
     }else{
-        [_formSchema setValue:@(1) forKey:fieldName];
+        [self.formSchema setValue:@(1) forKey:fieldName];
         [self styleEnabledField:cell];
     }
  
