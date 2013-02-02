@@ -21,6 +21,24 @@
 "CANCEL" = "Cancel";
 "SAVE" = "Save";
 "CREATE" = "Create";
+"WARNING" = "Warning";
+"DELETE" = "Delete";
+
+"EDIT_CONTACT" = "合伙";
+"ADD_CONTACT" = "合伙";
+
+"firstName" = "合伙人";
+"lastName" = "絡合伙";
+"phone" = "グル";
+"email" = "客户";
+"jobTitle" = "絡";
+"organization" = "アカ";
+"note" = "客";
+"Address" = "合伙";
+"Street" = "私の";
+"City" = "伙人";
+"ZIP" = "客户";
+"State" = "設定";
 
 "CREATE_NEW_GROUP" = "Create New Group";
 "ENTER_GROUP_NAME" = "Enter a Group name";

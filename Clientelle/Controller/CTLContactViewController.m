@@ -42,10 +42,9 @@ int const CTLOverwriteExternalChangeIndex = 1;
     _addressbookChangeDidComeFromApp = NO;
     
     if(self.abPerson){
-        self.navigationItem.title = @"Edit Contact";
+        self.navigationItem.title = NSLocalizedString(@"EDIT_CONTACT", nil);
     }else{
-        NSLog(@"add contact");
-        self.navigationItem.title = @"Add Contact";
+        self.navigationItem.title = NSLocalizedString(@"ADD_CONTACT", nil);
     }
     
     //TODO: how to handle contact form with no group selected
@@ -99,7 +98,7 @@ int const CTLOverwriteExternalChangeIndex = 1;
     }
     
     if(!_formFields){
-        _formFields = [CTLCDFormSchema fieldsFromPlist:CTLABPersonSchemaPlist];
+        _formFields = [[CTLCDFormSchema fieldsFromPlist:CTLABPersonSchemaPlist] mutableCopy];
     }
     
     if(!_addressFields){
@@ -113,6 +112,7 @@ int const CTLOverwriteExternalChangeIndex = 1;
         NSString *field = _formFields[i][kCTLFieldName];
         NSString *newValue = [_personDict objectForKey:field];
         NSString *value = nil;
+        NSString *label = nil;
         
         if(newValue){
             value = newValue;
@@ -125,6 +125,13 @@ int const CTLOverwriteExternalChangeIndex = 1;
 
         if([self fieldIsVisible:field]){
             inputField = [_formFields[i] mutableCopy];
+            
+            label = NSLocalizedString([inputField valueForKey:kCTLFieldName], nil);
+            
+            [inputField setValue:label forKey:kCTLFieldLabel];
+            [inputField setValue:label forKey:kCTLFieldPlaceHolder];
+            
+            
             if(value){
                 [inputField setValue:value forKey:kCTLFieldValue];
             }
@@ -183,21 +190,20 @@ int const CTLOverwriteExternalChangeIndex = 1;
     }
     
     UIAlertView *alert = [[UIAlertView alloc] init];
-    [alert setTitle:@"External Changes Detected"];
+    [alert setTitle:NSLocalizedString(@"EXTERNAL_CHANGES_DETECTED", nil)];
     [alert setDelegate:self];
     
     if(person.recordID == kABRecordInvalidID){
-        NSString *deletedMsg = [NSString stringWithFormat:@"%@ contact was deleted", [self.abPerson firstName]];
+        NSString *deletedMsg = [NSString stringWithFormat:NSLocalizedString(@"CONTACT_WAS_DELETED", nil), [self.abPerson firstName]];
         alert.tag = CTLContactDeletedTag;
         [alert setMessage:deletedMsg];
-        [alert addButtonWithTitle:@"OK"];
-        [alert addButtonWithTitle:@"Create Again"];
+        [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
+        [alert addButtonWithTitle:NSLocalizedString(@"CREATE_AGAIN", nil)];
     }else{
         alert.tag = CTLContactModifiedTag;
-        [alert setTitle:@"External Changes Detected"];
-        [alert setMessage:@"Would you like to take the changes or overwrite it?"];
-        [alert addButtonWithTitle:@"Take New"];
-        [alert addButtonWithTitle:@"Overwrite"];
+        [alert setMessage:NSLocalizedString(@"OVERWRITE_PROMPT", nil)];
+        [alert addButtonWithTitle:NSLocalizedString(@"TAKE_NEW", nil)];
+        [alert addButtonWithTitle:NSLocalizedString(@"OVERWRITE", nil)];
     }
     
     [alert show];
@@ -280,7 +286,7 @@ int const CTLOverwriteExternalChangeIndex = 1;
     if (cell == nil) {
         cell = [[CTLContactFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    
+
     NSMutableDictionary *field = [[NSMutableDictionary alloc] init];
     if(indexPath.section == 0){
         field = [_fieldRows objectAtIndex:indexPath.row];
@@ -313,10 +319,10 @@ int const CTLOverwriteExternalChangeIndex = 1;
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if(section == 1){
-        return @"Contact Address";
+        return NSLocalizedString(@"CONTACT_ADDRESS", nil);
     }
     
-    return @"Contact Info";
+    return NSLocalizedString(@"CONTACT_INFO", nil);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -376,7 +382,7 @@ int const CTLOverwriteExternalChangeIndex = 1;
 {
     [self setPersonDictionary];
     if(![CTLABPerson validateContactInfo:_personDict]){
-        UIAlertView *formAlert = [[UIAlertView alloc] initWithTitle:@"Contact is Incomplete" message:@"Name and contact type is required (email or phone number)" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *formAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"CONTACT_INCOMPLETE", nil) message:NSLocalizedString(@"CONTACT_INCOMPLETE_MSG", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
         [formAlert show];
         return;
     }

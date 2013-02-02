@@ -1,7 +1,7 @@
 /* 
   Localizable.strings
-  Clientelle
-
+  Clientell
+e†
   Created by Kevin Liu on 1/23/13.
   Copyright (c) 2013 Kevin Liu. All rights reserved.
 */
@@ -17,13 +17,39 @@
 "PROSPECTS" = "Prospects";
 "ASSOCIATES" = "Associates";
 
-
 "OK" = "OK";
 "CANCEL" = "Cancel";
 "SAVE" = "Save";
 "CREATE" = "Create";
 "WARNING" = "Warning";
 "DELETE" = "Delete";
+
+"EDIT_CONTACT" = "Edit Contact";
+"ADD_CONTACT" = "Add Contact";
+
+"firstName" = "First Name";
+"lastName" = "Last Name";
+"phone" = "Phone";
+"email" = "Email";
+"jobTitle" = "Title";
+"organization" = "Organization";
+"note" = "Note";
+"Address" = "Address";
+"Street" = "Street";
+"City" = "City";
+"ZIP" = "ZIP Code";
+"State" = "State";
+
+"EXTERNAL_CHANGES_DETECTED" = "External Changes Detected";
+"CONTACT_WAS_DELETED" = "%@ contact was deleted";
+"CREATE_AGAIN" = "Create Again";
+"OVERWRITE_PROMPT" = "Would you like to take the changes or overwrite it?";
+"TAKE_NEW" = "Take New";
+"OVERWRITE" = "Overwrite";
+"CONTACT_ADDRESS" = "Contact Address";
+"CONTACT_INFO" = "Contact Info";
+"CONTACT_INCOMPLETE" = "Contact is incomplete";
+"CONTACT_INCOMPLETE_MSG" = "Name and contact type is required (email or phone number)";
 
 "CREATE_NEW_GROUP" = "Create New Group";
 "ENTER_GROUP_NAME" = "Enter a Group name";
