@@ -346,22 +346,31 @@ int const CTLEmptyContactsTitleTag = 792;
 
 - (void)displayAddContactActionSheet:(id)sender
 {
-    UIActionSheet *actionSheet = nil;
-    if([self.selectedGroup groupID] == CTLAllContactsGroupID){
-        //if Group selector is on "All Contacts" it makes no sense to import from address book since it already shows all contacts in address book.
-        actionSheet = [[UIActionSheet alloc] initWithTitle:@"Add a new Contact" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"New Contact", @"Quick Lead", nil];
-    }else{
-        actionSheet = [[UIActionSheet alloc] initWithTitle:@"Add a new Contact or Group" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"New Contact", @"Quick Lead", @"Import Contact", nil];
-    }
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"ADD_NEW_CONTACT", nil)
+                                                             delegate:self
+                                                    cancelButtonTitle:nil
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:NSLocalizedString(@"NEW_CONTACT", nil), NSLocalizedString(@"QUICK_LEAD", nil), nil];
     actionSheet.tag = CTLAddContactActionSheetTag;
+    
+    if([self.selectedGroup groupID] != CTLAllContactsGroupID){
+        [actionSheet addButtonWithTitle:NSLocalizedString(@"IMPORT_CONTACTS", nil)];
+        actionSheet.cancelButtonIndex = 3;
+    }else{
+        actionSheet.cancelButtonIndex = 2;
+    }
+    
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"CANCEL", nil)];
     [actionSheet showInView:self.view];
 }
 
 - (void)displayShareContactActionSheet:(id)sender
 {
-    UIActionSheet *actionSheet = nil;
-    NSString *title = [NSString stringWithFormat:@"Forward %@'s contact info", [_selectedPerson compositeName]];
-    actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Send via SMS", @"Send via Email", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"FORWARD_CONTACT", nil), [_selectedPerson compositeName]]
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:NSLocalizedString(@"SEND_VIA_SMS", nil), NSLocalizedString(@"SEND_VIA_EMAIL", nil), nil];
     
     actionSheet.tag = CTLShareContactActionSheetTag;
     [actionSheet showInView:self.view];
@@ -543,14 +552,14 @@ int const CTLEmptyContactsTitleTag = 792;
     [messageLabel setTextAlignment:NSTextAlignmentCenter];
     [messageLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0f]];
     [messageLabel setTextColor:textColor];
-    [messageLabel setText:@"This group has no contacts yet."];
+    [messageLabel setText:NSLocalizedString(@"EMPTY_GROUP", nil)];
     
     CGFloat buttonCenter = viewFrame.size.width/2 - 63;
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [addButton setFrame:CGRectMake(buttonCenter, 175.0f, 126.0f, 38.0f)];
     [addButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];    
     [addButton addTarget:self action:@selector(showImporter:) forControlEvents:UIControlEventTouchUpInside];
-    [addButton setTitle:@"Add Contacts" forState:UIControlStateNormal];
+    [addButton setTitle:NSLocalizedString(@"ADD_CONTACTS", nil) forState:UIControlStateNormal];
      
     
     [emptyView addSubview:titleLabel];
@@ -700,8 +709,7 @@ int const CTLEmptyContactsTitleTag = 792;
     }
     
     NSDate *accessDate = [_accessedDictionary objectForKey:@(person.recordID)];
-    NSString *timestampStr = [NSDate dateToString:accessDate];
-    cell.timestampLabel.text = [timestampStr stringByReplacingOccurrencesOfString:@"Today, " withString:@""];
+    cell.timestampLabel.text = [NSDate dateToString:accessDate];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -813,7 +821,7 @@ int const CTLEmptyContactsTitleTag = 792;
 - (void)showEmailForPerson:(id)sender
 {
     if(![MFMailComposeViewController canSendMail]){
-        [self displayAlertMessage:@"Device is not configued to send email messages"];
+        [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL", nil)];
         return;
     }
     
@@ -843,7 +851,7 @@ int const CTLEmptyContactsTitleTag = 792;
 - (void)updateTimestampForActiveCell
 {
     CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-    cell.timestampLabel.text = [[NSDate dateToString:[NSDate date]] stringByReplacingOccurrencesOfString:@"Today, " withString:@""];
+    cell.timestampLabel.text = [NSDate dateToString:[NSDate date]];
     _shouldReorderListOnScroll = YES;
 }
 
@@ -908,14 +916,14 @@ int const CTLEmptyContactsTitleTag = 792;
     }
     
     MFMessageComposeViewController *smsController = [[MFMessageComposeViewController alloc] init];
-    smsController.body = [self generateShareContactMessageString];
     smsController.messageComposeDelegate = self;
+    smsController.body = [self generateShareContactMessageString];
     [self presentViewController:smsController animated:YES completion:nil];
 }
 
 - (void)shareContactViaEmail:(id)sender {
     if(![MFMailComposeViewController canSendMail]){
-        [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL", nil)];
+        [self displayAlertMessage:NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL", nil)];
         return;
     }
     
@@ -925,18 +933,19 @@ int const CTLEmptyContactsTitleTag = 792;
     [self presentViewController:mailController animated:YES completion:nil];
 }
 
-- (NSString *)generateShareContactMessageString {
-    NSString *body = [NSString stringWithFormat:@"Here is %@'s contact info: ", _selectedPerson.firstName];
+- (NSString *)generateShareContactMessageString
+{
+    NSString *body = [NSString stringWithFormat:NSLocalizedString(@"SHARE_CONTACT_MSG", nil), _selectedPerson.firstName];
     
     if([_selectedPerson.phone length] > 0){
-        body = [body stringByAppendingFormat:@"phone: %@", _selectedPerson.phone];
+        body = [body stringByAppendingFormat:NSLocalizedString(@"PHONE_COLON", nil), _selectedPerson.phone];
         if([_selectedPerson.email length] > 0){
             body = [body stringByAppendingString:@", "];
         }
     }
     
     if([_selectedPerson.email length] > 0){
-        body = [body stringByAppendingFormat:@"email: %@ ", _selectedPerson.email];
+        body = [body stringByAppendingFormat:NSLocalizedString(@"EMAIL_COLON", nil), _selectedPerson.email];
     }
     
     return body;

@@ -24,6 +24,13 @@ e†
 "WARNING" = "Warning";
 "DELETE" = "Delete";
 
+"EMPTY_GROUP" = "This group has no contacts yet.";
+"ADD_CONTACTS" = "Add Contacts";
+"SHARE_CONTACT_MSG" = "Here is %@'s contact info: ";
+"PHONE_COLON" = "phone: %@ ";
+"EMAIL_COLON" = "email: %@ ";
+
+
 "EDIT_CONTACT" = "Edit Contact";
 "ADD_CONTACT" = "Add Contact";
 "EDIT_FORM" = "Edit Form";
@@ -44,6 +51,11 @@ e†
 "ZIP" = "ZIP Code";
 "State" = "State";
 
+"ADD_NEW_CONTACT" = "Add a new Contact";
+"NEW_CONTACT" = "New Contact";
+"QUICK_LEAD" = "Quick Lead";
+"IMPORT_CONTACTS" = "Import Contact";
+
 "EXTERNAL_CHANGES_DETECTED" = "External Changes Detected";
 "CONTACT_WAS_DELETED" = "%@ contact was deleted";
 "CREATE_AGAIN" = "Create Again";
@@ -53,6 +65,11 @@ e†
 
 "CONTACT_INCOMPLETE" = "Contact is incomplete";
 "CONTACT_INCOMPLETE_MSG" = "Name and contact type is required (email or phone number)";
+
+
+"FORWARD_CONTACT" = "Forward %@'s contact info";
+"SEND_VIA_SMS" = "Send via SMS";
+"SEND_VIA_EMAIL" = "Send via Email";
 
 "CREATE_NEW_GROUP" = "Create New Group";
 "ENTER_GROUP_NAME" = "Enter a Group name";
