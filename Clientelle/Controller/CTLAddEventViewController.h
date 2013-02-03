@@ -19,10 +19,12 @@
     UITextField *_focusedTextField;
 }
 
-@property (nonatomic, strong) IBOutlet UITextField *titleTextField;
-@property (nonatomic, strong) IBOutlet UITextField *locationTextField;
-@property (nonatomic, strong) IBOutlet UITextField *startTimeTextField;
-@property (nonatomic, strong) IBOutlet UITextField *endTimeTextField;
+@property (nonatomic, weak) IBOutlet UITextField *titleTextField;
+@property (nonatomic, weak) IBOutlet UITextField *locationTextField;
+@property (nonatomic, weak) IBOutlet UITextField *startTimeTextField;
+@property (nonatomic, weak) IBOutlet UITextField *endTimeTextField;
+@property (nonatomic, weak) IBOutlet UILabel *startLabel;
+@property (nonatomic, weak) IBOutlet UILabel *endLabel;
 
 @property (nonatomic, strong) CTLABPerson *contact;
 

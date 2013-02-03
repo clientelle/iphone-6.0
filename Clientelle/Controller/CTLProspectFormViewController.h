@@ -26,6 +26,4 @@
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
 
-- (IBAction)formatPhoneNumber:(id)sender;
-
 @end

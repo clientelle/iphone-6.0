@@ -18,7 +18,6 @@ extern NSString *const CTLContactRowDidChangeNotification;
 @class CTLABPerson;
 @class CTLContactToolbarView;
 @class CTLContactHeaderView;
-@class CTLPhoneNumberFormatter;
 
 @interface CTLContactsListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CTLSlideMenuDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>{
     

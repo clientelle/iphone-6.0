@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4130652816BE4E5E0063AC10 /* PhoneFormats.dat in Resources */ = {isa = PBXBuildFile; fileRef = 4130652716BE4E5E0063AC10 /* PhoneFormats.dat */; };
+		4130652B16BE4F930063AC10 /* RMPhoneFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130652A16BE4F920063AC10 /* RMPhoneFormat.m */; };
+		4130652C16BE50AB0063AC10 /* RMPhoneFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130652A16BE4F920063AC10 /* RMPhoneFormat.m */; };
 		416DD82B16AF966400F2F8B3 /* CTLSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */; };
 		416DD83216AF9C0100F2F8B3 /* CTLAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */; };
 		416DD83716AF9D9C00F2F8B3 /* CTLSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83616AF9D9B00F2F8B3 /* CTLSupportViewController.m */; };
@@ -66,11 +69,9 @@
 		417DC2BE16AE30FA0073199D /* CTLGroupsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2BD16AE30FA0073199D /* CTLGroupsListViewController.m */; };
 		417DC2C516AE46640073199D /* 38-house.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2C316AE46640073199D /* 38-house.png */; };
 		417DC2C616AE46640073199D /* 38-house@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2C416AE46640073199D /* 38-house@2x.png */; };
-		417DC2DB16AE4C060073199D /* CTLPhoneNumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D216AE4C060073199D /* CTLPhoneNumberFormatter.m */; };
 		417DC2DC16AE4C060073199D /* UIColor+CTLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D416AE4C060073199D /* UIColor+CTLColor.m */; };
 		417DC2DD16AE4C060073199D /* NSDate+CTLDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D616AE4C060073199D /* NSDate+CTLDate.m */; };
 		417DC2DE16AE4C060073199D /* NSString+CTLString.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D816AE4C060073199D /* NSString+CTLString.m */; };
-		417DC2E116AE4CFA0073199D /* CTLPhoneNumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D216AE4C060073199D /* CTLPhoneNumberFormatter.m */; };
 		417DC2E216AE4CFA0073199D /* UIColor+CTLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D416AE4C060073199D /* UIColor+CTLColor.m */; };
 		417DC2E316AE4CFA0073199D /* NSDate+CTLDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D616AE4C060073199D /* NSDate+CTLDate.m */; };
 		417DC2E416AE4CFA0073199D /* NSString+CTLString.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2D816AE4C060073199D /* NSString+CTLString.m */; };
@@ -221,6 +222,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4130652716BE4E5E0063AC10 /* PhoneFormats.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = PhoneFormats.dat; sourceTree = "<group>"; };
+		4130652916BE4F920063AC10 /* RMPhoneFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPhoneFormat.h; sourceTree = "<group>"; };
+		4130652A16BE4F920063AC10 /* RMPhoneFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPhoneFormat.m; sourceTree = "<group>"; };
 		416DD82816AF966300F2F8B3 /* CTLSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSlideMenuController.h; sourceTree = "<group>"; };
 		416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLSlideMenuController.m; sourceTree = "<group>"; };
 		416DD82A16AF966400F2F8B3 /* CTLSlideMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSlideMenuDelegate.h; sourceTree = "<group>"; };
@@ -319,8 +323,6 @@
 		417DC2BD16AE30FA0073199D /* CTLGroupsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLGroupsListViewController.m; sourceTree = "<group>"; };
 		417DC2C316AE46640073199D /* 38-house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "38-house.png"; sourceTree = "<group>"; };
 		417DC2C416AE46640073199D /* 38-house@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "38-house@2x.png"; sourceTree = "<group>"; };
-		417DC2D116AE4C060073199D /* CTLPhoneNumberFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLPhoneNumberFormatter.h; sourceTree = "<group>"; };
-		417DC2D216AE4C060073199D /* CTLPhoneNumberFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPhoneNumberFormatter.m; sourceTree = "<group>"; };
 		417DC2D316AE4C060073199D /* UIColor+CTLColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CTLColor.h"; sourceTree = "<group>"; };
 		417DC2D416AE4C060073199D /* UIColor+CTLColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CTLColor.m"; sourceTree = "<group>"; };
 		417DC2D516AE4C060073199D /* NSDate+CTLDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CTLDate.h"; sourceTree = "<group>"; };
@@ -628,6 +630,7 @@
 		417DC24416ADF1140073199D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4130652716BE4E5E0063AC10 /* PhoneFormats.dat */,
 				417DC24916ADF1140073199D /* main.m */,
 				417DC24C16ADF1140073199D /* CTLAppDelegate.h */,
 				417DC24D16ADF1140073199D /* CTLAppDelegate.m */,
@@ -804,8 +807,8 @@
 		417DC2CC16AE4BF30073199D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				417DC2D116AE4C060073199D /* CTLPhoneNumberFormatter.h */,
-				417DC2D216AE4C060073199D /* CTLPhoneNumberFormatter.m */,
+				4130652916BE4F920063AC10 /* RMPhoneFormat.h */,
+				4130652A16BE4F920063AC10 /* RMPhoneFormat.m */,
 				417DC2D316AE4C060073199D /* UIColor+CTLColor.h */,
 				417DC2D416AE4C060073199D /* UIColor+CTLColor.m */,
 				417DC2D516AE4C060073199D /* NSDate+CTLDate.h */,
@@ -991,6 +994,7 @@
 				41E9BA5416B459E100FEF1FE /* ProspectForm.plist in Resources */,
 				41F0059316B8DC92002A5CE0 /* app-icon.png in Resources */,
 				41F0059516B8DC9E002A5CE0 /* app-icon@2x.png in Resources */,
+				4130652816BE4E5E0063AC10 /* PhoneFormats.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1029,6 +1033,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4130652C16BE50AB0063AC10 /* RMPhoneFormat.m in Sources */,
 				41E9BA2716B4580D00FEF1FE /* CTLContactFieldCell.m in Sources */,
 				41E9BA2816B4580D00FEF1FE /* CTLContactViewController.m in Sources */,
 				41E9BA2916B4580D00FEF1FE /* CTLContactImportViewController.m in Sources */,
@@ -1039,7 +1044,6 @@
 				41B546ED16B453D000302652 /* CTLContactHeaderView.m in Sources */,
 				41B546EE16B453D000302652 /* CTLContactToolbarView.m in Sources */,
 				41B546EF16B453D000302652 /* CTLFiveStarRater.m in Sources */,
-				417DC2E116AE4CFA0073199D /* CTLPhoneNumberFormatter.m in Sources */,
 				417DC2E216AE4CFA0073199D /* UIColor+CTLColor.m in Sources */,
 				417DC2E316AE4CFA0073199D /* NSDate+CTLDate.m in Sources */,
 				417DC2E416AE4CFA0073199D /* NSString+CTLString.m in Sources */,
@@ -1133,7 +1137,6 @@
 				41E9BA2316B457E800FEF1FE /* CTLAccountViewController.m in Sources */,
 				41E9BA2416B457E800FEF1FE /* CTLSupportViewController.m in Sources */,
 				41E9BA2516B457E800FEF1FE /* CTLSettingsViewController.m in Sources */,
-				417DC2DB16AE4C060073199D /* CTLPhoneNumberFormatter.m in Sources */,
 				417DC2DC16AE4C060073199D /* UIColor+CTLColor.m in Sources */,
 				417DC2DD16AE4C060073199D /* NSDate+CTLDate.m in Sources */,
 				417DC2DE16AE4C060073199D /* NSString+CTLString.m in Sources */,
@@ -1152,6 +1155,7 @@
 				41B546EB16B39C2600302652 /* CTLAddEventViewController.m in Sources */,
 				41B5473016B4556500302652 /* CTLContactFieldCell.m in Sources */,
 				41B5473416B4559500302652 /* CTLEvent.m in Sources */,
+				4130652B16BE4F930063AC10 /* RMPhoneFormat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

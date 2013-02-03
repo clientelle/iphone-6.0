@@ -87,3 +87,22 @@ e†
 "CANNOT_RENAME_GROUP" = "Cannot Rename Group";
 "DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL" = "Device is not configured to send email messages";
 "DEVICE_NOT_CONFIGURED_TO_SEND_SMS" = "Device is not configured to send text messages";
+
+
+/* Set Appointment */
+
+"SET_APPOINTMENT" = "Set Appointment";
+"MEETING_WITH" = "Meeting with %@";
+"APPOINTMENT_NOTE" = "Appointment Note";
+"START_TIME" = "Start Time";
+"END_TIME" = "End Time";
+"LOCATION" = "Location";
+"START" = "Start";
+"END" = "End";
+"APPOINTMENT_MSG" = "This appointment will be added to the calendar on this device";
+
+
+
+
+
+

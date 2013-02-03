@@ -701,7 +701,7 @@ int const CTLEmptyContactsTitleTag = 792;
     cell.nameLabel.text = [person compositeName];
     
     if([[person phone] length] > 0){
-        cell.detailsLabel.text = [person phone];//[self formatPhoneNumber:[person phone]];
+        cell.detailsLabel.text = [NSString formatPhoneNumber:[person phone]];
     }else if([[person email] length] > 0){
         cell.detailsLabel.text = [person email];
     }else{
@@ -782,7 +782,7 @@ int const CTLEmptyContactsTitleTag = 792;
     }else{
         _selectedPerson = [_contacts objectAtIndex:indexPath.row];
     }
-    
+
     _selectedIndexPath = indexPath;
     [self enterContactMode];
 }

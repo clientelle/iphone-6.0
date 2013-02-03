@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "UIColor+CTLColor.h"
-#import "CTLPhoneNumberFormatter.h"
+#import "NSString+CTLString.h"
 
 #import "CTLContactsListViewController.h"
 #import "CTLContactImportViewController.h"
@@ -443,8 +443,7 @@ int const CTLOverwriteExternalChangeIndex = 1;
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if(textField.keyboardType == UIKeyboardTypePhonePad){
-        CTLPhoneNumberFormatter *formatter = [[CTLPhoneNumberFormatter alloc] init];
-        textField.text = [formatter formatPhone:textField.text];
+        textField.text = [NSString formatPhoneNumber:textField.text];
     }
     
     NSInteger fieldCount = [_fieldRows count];

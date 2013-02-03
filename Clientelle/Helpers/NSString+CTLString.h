@@ -11,6 +11,7 @@
 @interface NSString (CTLString)
 
 + (NSString *)cleanPhoneNumber:(NSString *)phoneNumber;
++ (NSString *)formatPhoneNumber:(NSString *)phoneNumber;
 + (NSString *)trim:(NSString *)string;
 
 @end

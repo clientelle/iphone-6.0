@@ -28,13 +28,22 @@ int CTLEndTimeInputTag = 81;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.title = NSLocalizedString(@"SET_APPOINTMENT", nil);
 	
     _event = [[CTLEvent alloc] initForEvents];
     _appointment = [EKEvent eventWithEventStore:_event.store];
     _appointment.calendar = [_event.store defaultCalendarForNewEvents];
-
+    
+    self.titleTextField.placeholder = NSLocalizedString(@"APPOINTMENT_NOTE", nil);
+    self.locationTextField.placeholder = NSLocalizedString(@"APPOINTMENT_NOTE", nil);
+    self.startTimeTextField.placeholder = NSLocalizedString(@"START_TIME", nil);
+    self.endTimeTextField.placeholder = NSLocalizedString(@"END_TIME", nil);
+    self.startLabel.text = NSLocalizedString(@"START", nil);
+    self.endLabel.text = NSLocalizedString(@"END", nil);
+    
     if(self.contact){
-        _appointment.title = [NSString stringWithFormat:@"Meeting with %@", [self.contact compositeName]];
+        _appointment.title = [NSString stringWithFormat:NSLocalizedString(@"MEETING_WITH", nil), [self.contact compositeName]];
         self.titleTextField.text = _appointment.title;
     }
     
@@ -53,6 +62,11 @@ int CTLEndTimeInputTag = 81;
     
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissInputViews:)]];
 
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    return NSLocalizedString(@"APPOINTMENT_MSG", nil);
 }
 
 #pragma mark - Calendar PickerView
@@ -214,7 +228,7 @@ int CTLEndTimeInputTag = 81;
     [[_event store] saveEvent:_appointment span:EKSpanThisEvent commit:YES error:&error];
     
     if (error){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops :(" message:[error description] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[error description] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }else{
         [self dismissAppointmentSetter:sender];

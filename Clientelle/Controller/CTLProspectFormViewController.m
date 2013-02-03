@@ -7,7 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "CTLPhoneNumberFormatter.h"
+#import "NSString+CTLString.h"
 
 #import "CTLContactsListViewController.h"
 #import "CTLProspectFormViewController.h"
@@ -183,15 +183,6 @@ int const CTLNotesFieldTag = 4;
 
 - (IBAction)cancel:(id)sender{
    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-//- (void)textFieldDidEndEditing:(UITextField *)textField {
-- (IBAction)formatPhoneNumber:(id)sender {
-    UITextField *textField = sender;
-    if([textField.text rangeOfString:@"@"].location == NSNotFound){
-        //CTLPhoneNumberFormatter *formatter = [[CTLPhoneNumberFormatter alloc] init];
-        //textField.text = [formatter format:textField.text withLocale:_countryCode];
-    }
 }
 
 

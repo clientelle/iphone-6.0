@@ -456,9 +456,6 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
-                                                    <connections>
-                                                        <action selector="formatPhoneNumber:" destination="0dO-LC-1We" eventType="editingDidEnd" id="7cv-8e-vbw"/>
-                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -685,7 +682,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.88797331199999996" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
-                            <tableViewSection footerTitle="This appointment will be added to the calendar on this device." id="ReR-e4-gxx">
+                            <tableViewSection id="ReR-e4-gxx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="aId-u4-qXf">
                                         <rect key="frame" x="0.0" y="10" width="320" height="45"/>
@@ -723,7 +720,7 @@
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Start Time" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Nxo-9v-K9x">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="230" id="hck-Jm-tWY"/>
+                                                        <constraint firstAttribute="width" constant="190" id="DX3-Rr-GGt"/>
                                                         <constraint firstAttribute="height" constant="30" id="xdT-md-wgv"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -735,7 +732,7 @@
                                                 </textField>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Start:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t5u-v8-AOd">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="36" id="6OY-Aq-Kac"/>
+                                                        <constraint firstAttribute="width" constant="74" id="29p-B6-hwg"/>
                                                         <constraint firstAttribute="height" constant="21" id="Plm-Bc-p95"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -747,9 +744,9 @@
                                         </view>
                                         <constraints>
                                             <constraint firstItem="t5u-v8-AOd" firstAttribute="leading" secondItem="PBm-Yb-Kwq" secondAttribute="leading" constant="23" id="16Z-7B-bkn"/>
-                                            <constraint firstItem="t5u-v8-AOd" firstAttribute="centerY" secondItem="PBm-Yb-Kwq" secondAttribute="centerY" type="default" id="Eib-8u-eMG"/>
+                                            <constraint firstItem="Nxo-9v-K9x" firstAttribute="leading" secondItem="t5u-v8-AOd" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="9gq-Hi-pai"/>
+                                            <constraint firstItem="Nxo-9v-K9x" firstAttribute="centerY" secondItem="PBm-Yb-Kwq" secondAttribute="centerY" type="default" id="MiV-bQ-5A2"/>
                                             <constraint firstItem="t5u-v8-AOd" firstAttribute="centerY" secondItem="Nxo-9v-K9x" secondAttribute="centerY" type="default" id="pTD-B3-Qmn"/>
-                                            <constraint firstItem="Nxo-9v-K9x" firstAttribute="leading" secondItem="t5u-v8-AOd" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="qQy-5q-tjY"/>
                                             <constraint firstItem="t5u-v8-AOd" firstAttribute="baseline" secondItem="Nxo-9v-K9x" secondAttribute="baseline" type="default" id="yvN-Da-2Vc"/>
                                         </constraints>
                                     </tableViewCell>
@@ -763,7 +760,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="End Time" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mOk-92-rON">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="95y-Gh-l4d"/>
-                                                        <constraint firstAttribute="width" constant="230" id="GUh-2p-K6n"/>
+                                                        <constraint firstAttribute="width" constant="190" id="Qq7-TV-d1e"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -774,7 +771,7 @@
                                                 </textField>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="End:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiT-v5-Fjw">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="36" id="2Mv-dw-aWD"/>
+                                                        <constraint firstAttribute="width" constant="74" id="7Fq-Rm-VEO"/>
                                                         <constraint firstAttribute="height" constant="20" id="lKi-GB-25s"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -785,10 +782,10 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
+                                            <constraint firstItem="mOk-92-rON" firstAttribute="leading" secondItem="hiT-v5-Fjw" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="6sn-ho-ARY"/>
+                                            <constraint firstItem="hiT-v5-Fjw" firstAttribute="centerY" secondItem="BsC-7S-Hma" secondAttribute="centerY" type="default" id="8ht-Vi-C4U"/>
                                             <constraint firstItem="hiT-v5-Fjw" firstAttribute="centerY" secondItem="mOk-92-rON" secondAttribute="centerY" type="default" id="EAK-Lg-I8O"/>
                                             <constraint firstItem="hiT-v5-Fjw" firstAttribute="leading" secondItem="BsC-7S-Hma" secondAttribute="leading" constant="23" id="O5b-30-d8s"/>
-                                            <constraint firstItem="mOk-92-rON" firstAttribute="centerY" secondItem="BsC-7S-Hma" secondAttribute="centerY" type="default" id="P7w-Wh-5KY"/>
-                                            <constraint firstItem="mOk-92-rON" firstAttribute="leading" secondItem="hiT-v5-Fjw" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="iOq-nG-uNh"/>
                                             <constraint firstItem="mOk-92-rON" firstAttribute="baseline" secondItem="hiT-v5-Fjw" secondAttribute="baseline" type="default" id="vwV-R2-NaI"/>
                                         </constraints>
                                     </tableViewCell>
@@ -836,8 +833,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="endLabel" destination="hiT-v5-Fjw" id="i2W-Lw-EzW"/>
                         <outlet property="endTimeTextField" destination="mOk-92-rON" id="jMR-8o-FbM"/>
                         <outlet property="locationTextField" destination="lpa-dK-6Ie" id="I7o-T5-ZXi"/>
+                        <outlet property="startLabel" destination="t5u-v8-AOd" id="qtB-Nf-d6d"/>
                         <outlet property="startTimeTextField" destination="Nxo-9v-K9x" id="g1j-TZ-sDA"/>
                         <outlet property="titleTextField" destination="3wB-3z-eEk" id="eKf-M3-s24"/>
                     </connections>
@@ -1103,116 +1102,6 @@
         <image name="plus.png" width="19" height="19"/>
         <image name="star-empty.png" width="25" height="25"/>
     </resources>
-    <classes>
-        <class className="CTLAccountViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAccountViewController.h"/>
-        </class>
-        <class className="CTLAddEventViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAddEventViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissAppointmentSetter:"/>
-                <relationship kind="action" name="highlightTextField:"/>
-                <relationship kind="action" name="saveAppointment:"/>
-                <relationship kind="action" name="saveLocation:"/>
-                <relationship kind="action" name="saveTitle:"/>
-                <relationship kind="action" name="showDatePicker:"/>
-                <relationship kind="outlet" name="endTimeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="locationTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="startTimeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="titleTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLContactCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="detailsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timestampLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CTLContactFieldCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactFieldCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="fieldLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="textInput" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLContactFormEditorViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactFormEditorViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="save:"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLContactImportViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactImportViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelImport:"/>
-                <relationship kind="action" name="importContacts:"/>
-                <relationship kind="outlet" name="busyIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLContactViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="dismissKeyboard:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="submit:"/>
-                <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="saveContactButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLContactsListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactsListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissGroupPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLFiveStarRater" superclassName="UIControl">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLFiveStarRater.h"/>
-            <relationships>
-                <relationship kind="action" name="starButtonTapped:"/>
-                <relationship kind="outletCollection" name="starButtons" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="CTLGroupsListViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLGroupsListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="newGroupPrompt:"/>
-            </relationships>
-        </class>
-        <class className="CTLMainMenuViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMainMenuViewController.h"/>
-        </class>
-        <class className="CTLProspectFormViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLProspectFormViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="formatPhoneNumber:"/>
-                <relationship kind="action" name="save:"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSettingsViewController.h"/>
-        </class>
-        <class className="CTLSupportViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSupportViewController.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

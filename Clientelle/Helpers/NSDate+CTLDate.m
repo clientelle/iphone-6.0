@@ -13,11 +13,9 @@
 + (NSDateFormatter *)dateFormatter {
     static NSDateFormatter *formatter = nil;
     static dispatch_once_t onceToken;
-    
     dispatch_once(&onceToken, ^{
-        NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
         formatter = [[NSDateFormatter alloc] init];
-        [formatter setLocale:usLocale];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale currentLocale] objectForKey:NSLocaleIdentifier]]];
         [formatter setTimeStyle:NSDateFormatterShortStyle];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
         [formatter setDoesRelativeDateFormatting:YES];
@@ -31,9 +29,8 @@
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
-        NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
         formatter = [[NSDateFormatter alloc] init];
-        [formatter setLocale:usLocale];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale currentLocale] objectForKey:NSLocaleIdentifier]]];
         [formatter setTimeStyle:NSDateFormatterNoStyle];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
         [formatter setDoesRelativeDateFormatting:YES];
@@ -48,9 +45,8 @@
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
-        NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
         formatter = [[NSDateFormatter alloc] init];
-        [formatter setLocale:usLocale];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale currentLocale] objectForKey:NSLocaleIdentifier]]];
         [formatter setTimeStyle:NSDateFormatterNoStyle];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
         [formatter setDoesRelativeDateFormatting:YES];
