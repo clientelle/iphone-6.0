@@ -19,6 +19,7 @@ extern NSString *const CTLPersonPhoneProperty;
 extern NSString *const CTLPersonNoteProperty;
 extern NSString *const CTLPersonCreatedDateProperty;
 extern NSString *const CTLPersonAddressProperty;
+extern NSString *const CTLPersonRatingProperty;
 
 @interface CTLABPerson : NSObject
 

@@ -14,6 +14,7 @@ const struct CTLCDPersonAttributes CTLCDPersonAttributes = {
 	.note = @"note",
 	.organization = @"organization",
 	.phone = @"phone",
+	.rating = @"rating",
 	.recordID = @"recordID",
 	.state = @"state",
 	.zip = @"zip",
@@ -51,6 +52,10 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"ratingValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"rating"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"recordIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"recordID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -127,6 +132,32 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 
 @dynamic phone;
 
+
+
+
+
+
+@dynamic rating;
+
+
+
+- (int16_t)ratingValue {
+	NSNumber *result = [self rating];
+	return [result shortValue];
+}
+
+- (void)setRatingValue:(int16_t)value_ {
+	[self setRating:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveRatingValue {
+	NSNumber *result = [self primitiveRating];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveRatingValue:(int16_t)value_ {
+	[self setPrimitiveRating:[NSNumber numberWithShort:value_]];
+}
 
 
 

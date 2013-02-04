@@ -18,6 +18,7 @@ NSString *const CTLPersonPhoneProperty = @"phone";
 NSString *const CTLPersonNoteProperty = @"note";
 NSString *const CTLPersonCreatedDateProperty = @"creationDate";
 NSString *const CTLPersonAddressProperty = @"address";
+NSString *const CTLPersonRatingProperty = @"rating";
 
 @interface CTLABPerson()
     id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef labelKey);

@@ -24,15 +24,14 @@
 
 + (NSString *)formatPhoneNumber:(NSString *)phoneNumber
 {
-   
     static RMPhoneFormat *formatter = nil;
     static NSString *formattedNumber;
-    
     static dispatch_once_t onceToken;
+    
     dispatch_once(&onceToken, ^{
-         NSLog(@"got here");
         formatter = [[RMPhoneFormat alloc] init];
     });
+    
     formattedNumber = [formatter format:phoneNumber];
     return formattedNumber;
    

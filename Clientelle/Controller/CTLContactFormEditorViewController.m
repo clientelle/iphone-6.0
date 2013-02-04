@@ -19,6 +19,7 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     [super viewDidLoad];
 
     self.navBar.topItem.title = NSLocalizedString(@"EDIT_FORM", nil);
+        
     _fieldRows = [[NSMutableArray alloc] init];
 
     NSString *addressLabel = NSLocalizedString(@"Address", nil);

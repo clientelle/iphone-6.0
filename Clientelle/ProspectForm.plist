@@ -3,26 +3,26 @@
 <plist version="1.0">
 <array>
 	<dict>
-		<key>cellIdentifyer</key>
-		<string>nameRow</string>
+		<key>labelKey</key>
+		<string>CONTACT_NAME</string>
 		<key>tag</key>
 		<integer>1</integer>
 	</dict>
 	<dict>
-		<key>cellIdentifyer</key>
-		<string>contactRow</string>
+		<key>labelKey</key>
+		<string>PHONE_OR_EMAIL</string>
 		<key>tag</key>
 		<integer>2</integer>
 	</dict>
 	<dict>
-		<key>cellIdentifyer</key>
-		<string>rateRow</string>
+		<key>labelKey</key>
+		<string>POTENTIAL</string>
 		<key>tag</key>
-		<integer>3</integer>
+		<string>3</string>
 	</dict>
 	<dict>
-		<key>cellIdentifyer</key>
-		<string>notesRow</string>
+		<key>labelKey</key>
+		<string>NOTES</string>
 		<key>tag</key>
 		<integer>4</integer>
 	</dict>

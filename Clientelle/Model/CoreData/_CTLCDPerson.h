@@ -15,6 +15,7 @@ extern const struct CTLCDPersonAttributes {
 	__unsafe_unretained NSString *note;
 	__unsafe_unretained NSString *organization;
 	__unsafe_unretained NSString *phone;
+	__unsafe_unretained NSString *rating;
 	__unsafe_unretained NSString *recordID;
 	__unsafe_unretained NSString *state;
 	__unsafe_unretained NSString *zip;
@@ -25,6 +26,7 @@ extern const struct CTLCDPersonRelationships {
 
 extern const struct CTLCDPersonFetchedProperties {
 } CTLCDPersonFetchedProperties;
+
 
 
 
@@ -133,6 +135,18 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* rating;
+
+
+@property int16_t ratingValue;
+- (int16_t)ratingValue;
+- (void)setRatingValue:(int16_t)value_;
+
+//- (BOOL)validateRating:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSNumber* recordID;
 
 
@@ -228,6 +242,15 @@ extern const struct CTLCDPersonFetchedProperties {
 
 - (NSString*)primitivePhone;
 - (void)setPrimitivePhone:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveRating;
+- (void)setPrimitiveRating:(NSNumber*)value;
+
+- (int16_t)primitiveRatingValue;
+- (void)setPrimitiveRatingValue:(int16_t)value_;
 
 
 

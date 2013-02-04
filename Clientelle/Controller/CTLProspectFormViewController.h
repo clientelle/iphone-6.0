@@ -7,14 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CTLFiveStarRater.h"
 
-@class CTLFiveStarRater;
-
-@interface CTLProspectFormViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate>{
-    NSArray *_fields;
+@interface CTLProspectFormViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate, CTLFiveStarRaterDelegate>{
+    NSArray *_formSchema;
     NSMutableDictionary *_prospectDict;
     CTLFiveStarRater *_rater;
-    NSString *_countryCode;
     ABAddressBookRef _addressBookRef;
 }
 

@@ -15,7 +15,7 @@
     cdPerson.organization = person.organization;
     cdPerson.note = person.note;
     cdPerson.lastAccessed = [NSDate date];
-
+    
     NSDictionary *address = person.addressDict;
     cdPerson.address = address[@"Street"];
     cdPerson.city = address[@"City"];

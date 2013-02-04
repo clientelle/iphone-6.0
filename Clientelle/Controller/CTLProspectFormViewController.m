@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "NSString+CTLString.h"
-
+#import "CTLFiveStarRater.h"
 #import "CTLContactsListViewController.h"
 #import "CTLProspectFormViewController.h"
 #import "CTLABPerson.h"
@@ -17,41 +17,36 @@
 
 int const CTLNameFieldTag = 1;
 int const CTLPhoneFieldTag = 2;
+int const CTLPotentialLabelTag = 3;
 int const CTLNotesFieldTag = 4;
+int const CTLFiveStarTag = 5;
 
 @implementation CTLProspectFormViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSLocale *locale = [NSLocale currentLocale];
-    _countryCode = [locale objectForKey: NSLocaleCountryCode];
-   
-    _fields = [[NSArray alloc]initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ProspectForm" ofType:@"plist"]];
-    _prospectDict = [[NSMutableDictionary alloc] initWithCapacity:[_fields count]];
+    self.navigationBar.topItem.title = NSLocalizedString(@"QUICK_LEAD", nil);
     
-    for(NSUInteger i=0; i < [_fields count];i++){
-        NSMutableDictionary *field = [[_fields objectAtIndex:i] mutableCopy];
-        [field setValue:@"" forKey:@"value"];
-        [_prospectDict setValue:field forKey:[field objectForKey:@"tag"]];
-    }
-}
-
-
-- (void)viewDidAppear:(BOOL)animated {
+    _formSchema = @[@{@"tag":@(CTLNameFieldTag),        @"labelKey":@"CONTACT_NAME"},
+                    @{@"tag":@(CTLPhoneFieldTag),       @"labelKey":@"PHONE_OR_EMAIL"},
+                    @{@"tag":@(CTLPotentialLabelTag),   @"labelKey":@"POTENTIAL"},
+                    @{@"tag":@(CTLNotesFieldTag),       @"labelKey":@"NOTES"}];
     
-    UITextField *textField = (UITextField *)[self.view viewWithTag:CTLNameFieldTag];
-    [textField becomeFirstResponder];
+    _prospectDict = [[NSMutableDictionary alloc] initWithCapacity:[_formSchema count]];
+    
+    _rater = (CTLFiveStarRater *)[self.view viewWithTag:CTLFiveStarTag];
+    [[self.view viewWithTag:CTLNameFieldTag] becomeFirstResponder];
 }
 
 #pragma mark - TableViewController Delegate Methods
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_fields count];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [_formSchema count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -60,13 +55,57 @@ int const CTLNotesFieldTag = 4;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    NSString *cellIdentifier = [[_fields objectAtIndex:indexPath.row] objectForKey:@"cellIdentifyer"];
+    NSString *cellIdentifier = _formSchema[indexPath.row][@"labelKey"];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    int tag = [_formSchema[indexPath.row][@"tag"] intValue];
+    NSString *localizedLabel = NSLocalizedString(cellIdentifier, nil);
+    
+    if([[cell viewWithTag:tag] isKindOfClass:[UITextField class]]){
+        UITextField *textfield = (UITextField *)[cell viewWithTag:tag];
+        textfield.placeholder = localizedLabel;
+    }else{
+        UILabel *potentialLabel = (UILabel *)[cell viewWithTag:tag];
+        potentialLabel.text = localizedLabel;
+    }
+    
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
     return cell;
+}
+
+#pragma mark - Form Handler
+
+- (IBAction)save:(id)sender
+{
+    [self populateFormValues];
+    
+    if([self validateForm]){
+        [self createProspect];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (BOOL)validateForm
+{
+    if([[_prospectDict objectForKey:[@(CTLNameFieldTag) stringValue]] length] == 0){
+        [self alertFormError:CTLNameFieldTag withMessage:NSLocalizedString(@"CONTACT_IS_BLANK", nil)];
+        return NO;
+    }
+
+    if([[_prospectDict objectForKey:[@(CTLPhoneFieldTag) stringValue]] length] == 0){
+        [self alertFormError:CTLPhoneFieldTag withMessage:NSLocalizedString(@"PHONE_EMAIL_IS_BLANK", nil)];
+        return NO;
+    }
+    
+    if([[_prospectDict objectForKey:[@(CTLNotesFieldTag) stringValue]] length] == 0){
+        [self alertFormError:CTLNotesFieldTag withMessage:NSLocalizedString(@"ADD_NOTE", nil)];
+        return NO;
+    }
+    
+    return YES;
 }
 
 - (void)alertFormError:(int)tag withMessage:(NSString *)message
@@ -78,49 +117,21 @@ int const CTLNotesFieldTag = 4;
     [alert show];
 }
 
-- (IBAction)save:(id)sender {
-   
-    [self populateFormValues];
-    
-    if([self validateForm]){
-        [self createProspect];
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
-- (BOOL)validateForm {
-    
-    if([[[_prospectDict objectForKey:@(CTLNameFieldTag)] objectForKey:@"value"] length] == 0){
-        [self alertFormError:CTLNameFieldTag withMessage:@"Contact Name cannot be blank"];
-        return NO;
-    }
-    
-    if([[[_prospectDict objectForKey:@(CTLPhoneFieldTag)] objectForKey:@"value"] length] == 0){
-        [self alertFormError:CTLPhoneFieldTag withMessage:@"Phone or Email cannot be blank"];
-        return NO;
-    }
-    
-    if([[[_prospectDict objectForKey:@(CTLNotesFieldTag)] objectForKey:@"value"] length] == 0){
-        [self alertFormError:CTLNotesFieldTag withMessage:@"Add a note about this lead"];
-        return NO;
-    }
-    
-    return YES;
-}
-
-- (void)populateFormValues {
-    
+- (void)populateFormValues
+{
     [self setValueForInputTag:CTLNameFieldTag];
     [self setValueForInputTag:CTLPhoneFieldTag];
     [self setValueForInputTag:CTLNotesFieldTag];
-    
-   // _rater = (CTLFiveStarRater *)[self.tableView viewWithTag:CTLRaterViewTag];
-   // [[_prospectDict objectForKey:@(CTLRaterViewTag)] setValue:[_rater starValue] forKey:@"value"];
 }
 
 - (void)setValueForInputTag:(int)tag {
     UITextField *textField = (UITextField *)[self.view viewWithTag:tag];
-    [[_prospectDict objectForKey:@(tag)] setValue:textField.text forKey:@"value"];
+    [_prospectDict setValue:textField.text forKey:[@(tag) stringValue]];
+}
+
+- (void)ratingDidChange:(CTLFiveStarRater *)rater
+{
+    [_prospectDict setValue:[rater starValue] forKey:[@(CTLFiveStarTag) stringValue]];
 }
 
 - (void)createProspect
@@ -128,11 +139,10 @@ int const CTLNotesFieldTag = 4;
     [self.view endEditing:YES];
     
     NSMutableDictionary *fields = [[NSMutableDictionary alloc] init];
-
-    NSString *nameStr = [[_prospectDict objectForKey:@(CTLNameFieldTag)] objectForKey:@"value"];
-    NSString *contactStr = [[_prospectDict objectForKey:@(CTLPhoneFieldTag)] objectForKey:@"value"];
-    NSString *noteStr = [[_prospectDict objectForKey:@(CTLNotesFieldTag)] objectForKey:@"value"];
-    
+    NSString *nameStr = [_prospectDict objectForKey:[@(CTLNameFieldTag) stringValue]];
+    NSString *contactStr = [_prospectDict objectForKey:[@(CTLPhoneFieldTag) stringValue]];
+    NSString *noteStr = [_prospectDict objectForKey:[@(CTLNotesFieldTag) stringValue]];
+        
     //try to determine first and last name from name field
     NSMutableArray *nameParts = [[NSMutableArray alloc] initWithArray:[nameStr componentsSeparatedByString:@" "]];
     
@@ -153,7 +163,7 @@ int const CTLNotesFieldTag = 4;
     }
     
     [fields setValue:noteStr forKey:CTLPersonNoteProperty];
-    
+        
     ABRecordID recordID = kABRecordInvalidID;
         
     CTLABPerson *abPerson = [[CTLABPerson alloc] initWithDictionary:fields withAddressBookRef:self.addressBookRef];
@@ -163,22 +173,21 @@ int const CTLNotesFieldTag = 4;
         [prospectGroup addMember:abPerson];
     }
     
+    NSNumber *rate = [_prospectDict objectForKey:[@(CTLFiveStarTag) stringValue]];
+    if(rate){
+        [fields setValue:rate forKey:CTLPersonRatingProperty];
+    }
     
-    //Add accessed date to new prospect to float them up the list
-    /*
     CTLCDPerson *person = [CTLCDPerson MR_createEntity];
-    person.recordIDValue = recordID;
-    person.lastAccessed = [NSDate date];
-    
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    
-    [context MR_save];
-*/
+    [person safeSetValuesForKeysWithDictionary:fields];
+
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveOnlySelfAndWait];
+
     //reload contact list view with prospects selected
     ABRecordID prospectGroupID = [CTLABGroup prospectGroupID];
-    [[NSUserDefaults standardUserDefaults] setInteger:prospectGroupID forKey:CTLDefaultSelectedGroupIDKey];
-    //[[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:@(prospectGroupID)];
+    [CTLABGroup saveDefaultGroupID:prospectGroupID];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:CTLNewContactWasAddedNotification object:abPerson];
 }
 
 - (IBAction)cancel:(id)sender{

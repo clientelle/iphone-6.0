@@ -101,8 +101,15 @@ e†
 "END" = "End";
 "APPOINTMENT_MSG" = "This appointment will be added to the calendar on this device";
 
-
-
+/* Prospect Form */
+"QUICK_LEAD" = "eQuick Lead";
+"CONTACT_NAME" = "eContact Name";
+"PHONE_OR_EMAIL" = "ePhone or Email";
+"POTENTIAL" = "ePotential";
+"NOTES" = "eNotes";
+"CONTACT_IS_BLANK" = "Contact name cannot be blank";
+"PHONE_EMAIL_IS_BLANK" = "Phone or Email cannot be blank";
+"ADD_NOTE" = "Add a note about this lead";
 
 
 

@@ -502,6 +502,12 @@ int const CTLEmptyContactsTitleTag = 792;
         return;
     }
     
+    if ([[segue identifier] isEqualToString:CTLProspectFormSegueIdentifyer]) {
+        CTLProspectFormViewController *viewController = [segue destinationViewController];
+        [viewController setAddressBookRef:self.addressBookRef];
+        return;
+    }
+    
     if([[segue identifier] isEqualToString:CTLAppointmentSegueIdentifyer]){
         UINavigationController *navigationController = [segue destinationViewController];
         CTLAddEventViewController *appointmentViewController = (CTLAddEventViewController *)navigationController.topViewController;
