@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 
+extern int const CTLAllContactsGroupID;
+
 extern NSString *const CTLContactListReloadNotification;
 extern NSString *const CTLTimestampForRowNotification;
 extern NSString *const CTLNewContactWasAddedNotification;

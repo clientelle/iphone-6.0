@@ -240,7 +240,7 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
     CTLABGroup *abGroup = [self groupFromIndexPath:indexPath];
     
     //User cannot delete client or prospect groups
-    if(abGroup.groupID == [CTLABGroup clientGroupID] || abGroup.groupID == [CTLABGroup prospectGroupID]){
+    if(abGroup.groupID == [CTLABGroup clientGroupID]){
         NSString *permissionErrorStr = [NSString stringWithFormat:NSLocalizedString(@"CANNOT_DELETE_SYSTEM_GROUP", nil), abGroup.name];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:permissionErrorStr delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
         [alert show];
@@ -287,9 +287,15 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
      * if the active contact list (group) was deleted.
      * reset the contact list to"clients" (default)
      */
-    
     if(deletedGroupID == [CTLABGroup defaultGroupID]){
-        [CTLABGroup saveDefaultGroupID:[CTLABGroup clientGroupID]];
+        ABRecordID clientGroupID = [CTLABGroup clientGroupID];
+        if([CTLABGroup groupDoesExist:clientGroupID addressBookRef:_addressBookRef]){
+            [CTLABGroup saveDefaultGroupID:clientGroupID];
+        }else{
+            //Client group was removed :(
+            [CTLABGroup saveDefaultGroupID:CTLAllContactsGroupID];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCTLClientGroupID];
+        }
     }
 }
 

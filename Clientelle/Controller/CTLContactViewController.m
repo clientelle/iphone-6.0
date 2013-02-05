@@ -47,9 +47,14 @@ int const CTLOverwriteExternalChangeIndex = 1;
         self.navigationItem.title = NSLocalizedString(@"ADD_CONTACT", nil);
     }
     
-    //TODO: how to handle contact form with no group selected
-    if(!self.abGroup){
-        self.abGroup = [[CTLABGroup alloc] initWithGroupID:[CTLABGroup clientGroupID] addressBook:self.addressBookRef];
+    if([self.abGroup groupID] == CTLAllContactsGroupID){
+        ABRecordID defaultGroupID = [CTLABGroup clientGroupID];
+        //check to make sure this group isn't nuked
+        if([CTLABGroup groupDoesExist:defaultGroupID addressBookRef:_addressBookRef]){
+            self.abGroup = [[CTLABGroup alloc] initWithGroupID:defaultGroupID addressBook:self.addressBookRef];
+        }else{
+            self.abGroup = [CTLABGroup getAnyGroup:self.addressBookRef];
+        }
     }
     
     if(!_cdFormSchema){

@@ -165,29 +165,35 @@ int const CTLFiveStarTag = 5;
     [fields setValue:noteStr forKey:CTLPersonNoteProperty];
         
     ABRecordID recordID = kABRecordInvalidID;
-        
     CTLABPerson *abPerson = [[CTLABPerson alloc] initWithDictionary:fields withAddressBookRef:self.addressBookRef];
     recordID = abPerson.recordID;
+        
     if(recordID != kABRecordInvalidID){
-        CTLABGroup *prospectGroup = [[CTLABGroup alloc] initWithGroupID:[CTLABGroup prospectGroupID] addressBook:self.addressBookRef];
-        [prospectGroup addMember:abPerson];
+        [fields setValue:@(recordID) forKey:CTLPersonRecordIDProperty];
+        [fields setValue:[NSDate date] forKey:@"lastAccessed"];
+        
+        NSNumber *rate = [_prospectDict objectForKey:[@(CTLFiveStarTag) stringValue]];
+        if(rate){
+            [fields setValue:rate forKey:CTLPersonRatingProperty];
+        }
+        
+        CTLCDPerson *person = [CTLCDPerson MR_createEntity];
+        [person safeSetValuesForKeysWithDictionary:fields];
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveOnlySelfAndWait];
+        
+        //reload contact list view with prospects selected
+        ABRecordID prospectGroupID = [CTLABGroup prospectGroupID];
+        if(![CTLABGroup groupDoesExist:prospectGroupID addressBookRef:self.addressBookRef]){
+            //Prospect group was removed :(
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCTLProspectGroupID];
+        }else{
+            CTLABGroup *prospectGroup = [[CTLABGroup alloc] initWithGroupID:prospectGroupID addressBook:self.addressBookRef];
+            [prospectGroup addMember:abPerson];
+            [CTLABGroup saveDefaultGroupID:prospectGroupID];
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:CTLNewContactWasAddedNotification object:abPerson];
     }
-    
-    NSNumber *rate = [_prospectDict objectForKey:[@(CTLFiveStarTag) stringValue]];
-    if(rate){
-        [fields setValue:rate forKey:CTLPersonRatingProperty];
-    }
-    
-    CTLCDPerson *person = [CTLCDPerson MR_createEntity];
-    [person safeSetValuesForKeysWithDictionary:fields];
-
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveOnlySelfAndWait];
-
-    //reload contact list view with prospects selected
-    ABRecordID prospectGroupID = [CTLABGroup prospectGroupID];
-    [CTLABGroup saveDefaultGroupID:prospectGroupID];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:CTLNewContactWasAddedNotification object:abPerson];
 }
 
 - (IBAction)cancel:(id)sender{

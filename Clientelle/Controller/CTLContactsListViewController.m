@@ -129,7 +129,9 @@ int const CTLEmptyContactsTitleTag = 792;
         _accessedDictionary = [[NSMutableDictionary alloc] initWithCapacity:[storedContacts count]];
         for(NSInteger i=0;i<[storedContacts count];i++){
             CTLCDPerson *contact = [storedContacts objectAtIndex:i];
-            [_accessedDictionary setObject:contact.lastAccessed forKey:@([contact recordIDValue])];
+            if(contact.lastAccessed){
+                [_accessedDictionary setObject:contact.lastAccessed forKey:@([contact recordIDValue])];
+            }
         }
     }
     

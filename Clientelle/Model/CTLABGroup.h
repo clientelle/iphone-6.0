@@ -48,7 +48,8 @@ extern NSString *const CTLDefaultSelectedGroupIDKey;
 + (void)createDefaultGroups:(ABAddressBookRef)addressBookRef;
 + (ABRecordID)createGroup:(NSString *)groupName addressBookRef:(ABAddressBookRef)addressBookRef;
 + (NSArray *)groupsFromSourceType:(ABSourceType)sourceType addressBookRef:(ABAddressBookRef)addressBookRef;
-
++ (BOOL)groupDoesExist:(ABRecordID)groupID addressBookRef:(ABAddressBookRef)addressBookRef;
++ (CTLABGroup *)getAnyGroup:(ABAddressBookRef)addressBookRef;
 + (void)saveDefaultGroupID:(int)groupID;
 + (ABRecordID)defaultGroupID;
 + (ABRecordID)prospectGroupID;

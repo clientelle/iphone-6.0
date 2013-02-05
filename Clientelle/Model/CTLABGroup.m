@@ -232,7 +232,7 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
 }
 
 
-+ (NSMutableArray *)groupsInLocalSource:(ABAddressBookRef)addressBookRef;
++ (NSMutableArray *)groupsInLocalSource:(ABAddressBookRef)addressBookRef
 {
     NSMutableArray *groups = [NSMutableArray array];
     NSArray *groupsArray = [CTLABGroup groupsFromSourceType:kABSourceTypeLocal addressBookRef:addressBookRef];
@@ -243,6 +243,19 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
     }
     
     return groups;
+}
+
++ (CTLABGroup *)getAnyGroup:(ABAddressBookRef)addressBookRef
+{
+    NSArray *groups = [CTLABGroup groupsInLocalSource:addressBookRef];
+    if([groups count] == 0){
+        //create a group
+        NSString *clientsGroupName = NSLocalizedString(CTLGroupTypeClient, nil);
+        ABRecordID groupID = [CTLABGroup createGroup:clientsGroupName addressBookRef:addressBookRef];
+        return [[CTLABGroup alloc] initWithGroupID:groupID addressBook:addressBookRef];
+    }else{
+        return [groups objectAtIndex:0];
+    }
 }
 
 
@@ -314,6 +327,11 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
     ABRecordID groupID = ABRecordGetRecordID(newGroupRef); 
     CFRelease(newGroupRef);
     return groupID;
+}
+
++ (BOOL)groupDoesExist:(ABRecordID)groupID addressBookRef:(ABAddressBookRef)addressBookRef
+{
+    return ABAddressBookGetGroupWithRecordID(addressBookRef, groupID);
 }
 
 + (void)saveDefaultGroupID:(int)groupID
