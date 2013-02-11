@@ -65,7 +65,6 @@ const CGFloat CTLMainMenuWidth = 170.0f;
 
 - (void)setMainView:(NSString *)navigationControllerName
 {
-    
     UINavigationController *navigationController = (UINavigationController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:navigationControllerName];
     
     if(self.mainViewNavController){
@@ -108,6 +107,7 @@ const CGFloat CTLMainMenuWidth = 170.0f;
 
 -(void)showMenu
 {
+    [self.view endEditing:YES];
     CGRect mainFrame = self.mainViewNavController.view.frame;
     CGRect movedFrame = CGRectMake(self.panel.view.frame.size.width, mainFrame.origin.y, mainFrame.size.width, mainFrame.size.height);
     [UIView animateWithDuration:0.3 animations:^{

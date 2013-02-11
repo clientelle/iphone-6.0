@@ -12,7 +12,7 @@
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>GROUP_MESSAGING</string>
+		<string>GROUPS</string>
 		<key>identifier</key>
 		<string>groupsNavigationController</string>
 		<key>icon</key>

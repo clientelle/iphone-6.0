@@ -22,8 +22,22 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
     self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter.png"]];
     self.tableView.separatorColor = [UIColor clearColor];
     
+    
+    _offWhite = [UIColor colorFromUnNormalizedRGB:200 green:200 blue:200 alpha:1.0f];
+    _topBevelColor = [UIColor colorFromUnNormalizedRGB:15.0f green:15.0f blue:15.0f alpha:1.0f];
+    _bottomBevelColor = [UIColor colorFromUnNormalizedRGB:51.0f green:51.0f blue:51.0f alpha:1.0f];
+
+    
     _menuItems = [[NSArray alloc]initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:CTLMenuPlistName ofType:@"plist"]];
     
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if(!_selectedIndexPath){
+        _selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self styleActiveCell];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,7 +87,7 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 33.0f;
+    return 40.0f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -84,22 +98,24 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+     
     NSDictionary *menuItem = [_menuItems objectAtIndex:indexPath.row];
     
     //cell.imageView.image = [UIImage imageNamed:menuItem[@"icon"]];
     cell.textLabel.text = NSLocalizedString(menuItem[@"title"], nil);
     
     [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13.0f]];
-    [cell.textLabel setTextColor:[UIColor whiteColor]];
+    [cell.textLabel setTextColor:_offWhite];
  
     CALayer *bevelTopLine = [CALayer layer];
     bevelTopLine.frame = CGRectMake(0.0f, 0.0f, cell.frame.size.width, 1.0f);
-    bevelTopLine.backgroundColor = [UIColor colorFromUnNormalizedRGB:15.0f green:15.0f blue:15.0f alpha:1.0f].CGColor;
+    bevelTopLine.backgroundColor = _topBevelColor.CGColor;
     [cell.layer addSublayer:bevelTopLine];
     
     CALayer *bevelLine = [CALayer layer];
     bevelLine.frame = CGRectMake(0.0f, 1.0f, cell.frame.size.width, 1.0f);
-    bevelLine.backgroundColor = [UIColor colorFromUnNormalizedRGB:51.0f green:51.0f blue:51.0f alpha:1.0f].CGColor;
+    bevelLine.backgroundColor = _bottomBevelColor.CGColor;
     [cell.layer addSublayer:bevelLine];
 
     return cell;
@@ -112,6 +128,33 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *menuItem = [_menuItems objectAtIndex:indexPath.row];
     [self.menuController setMainView:menuItem[@"identifier"]];
+    
+    [self removeStyleFromPreviouslyActiveCell];
+    _selectedIndexPath = indexPath;
+    [self styleActiveCell];
+}
+
+- (void)styleActiveCell
+{
+    UITableViewCell *cell = (UITableViewCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    UIImageView *accessory = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"white-indicator-right.png"]];
+    [cell setAccessoryView:accessory];
+    cell.textLabel.textColor = [UIColor whiteColor];
+}
+
+- (void)removeStyleFromPreviouslyActiveCell
+{
+    UITableViewCell *cell = (UITableViewCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
+    [cell setAccessoryView:nil];
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.textLabel.textColor = _offWhite;
+    _selectedIndexPath = nil;
+}
+
+- (void)resetOtherCells
+{
+    
 }
 
 @end

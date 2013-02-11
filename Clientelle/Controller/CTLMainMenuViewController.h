@@ -12,6 +12,12 @@ extern NSString *const CTLMenuPlistName;
 
 @interface CTLMainMenuViewController : UITableViewController<CTLSlideMenuDelegate>{
     NSArray *_menuItems;
+    NSIndexPath *_selectedIndexPath;
+    
+    UIColor *_offWhite;
+    UIColor *_topBevelColor;
+    UIColor *_bottomBevelColor;
+
 }
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;

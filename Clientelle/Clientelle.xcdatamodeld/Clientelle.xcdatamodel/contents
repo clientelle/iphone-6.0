@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Account" representedClassName="CTLCDAccount" syncable="YES">
+        <attribute name="access_token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="industry" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="FormSchema" representedClassName="CTLCDFormSchema" syncable="YES">
         <attribute name="address" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="email" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
@@ -28,7 +37,8 @@
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="FormSchema" positionX="27" positionY="-18" width="128" height="180"/>
-        <element name="Person" positionX="-198" positionY="-36" width="128" height="253"/>
+        <element name="FormSchema" positionX="-0" positionY="-198" width="128" height="180"/>
+        <element name="Person" positionX="-326" positionY="-361" width="128" height="253"/>
+        <element name="Account" positionX="-171" positionY="-495" width="128" height="148"/>
     </elements>
 </model>
