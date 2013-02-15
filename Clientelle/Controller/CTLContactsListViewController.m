@@ -80,6 +80,8 @@ int const CTLEmptyContactsTitleTag = 792;
     
     _emptyView = [self noContactsView];
     
+    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"paper.png"]];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -550,6 +552,7 @@ int const CTLEmptyContactsTitleTag = 792;
     UIColor *textColor = [UIColor colorFromUnNormalizedRGB:76.0f green:91.0f blue:130.0f alpha:1.0f];
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 90.0f, viewFrame.size.width, 25.0f)];
+    [titleLabel setBackgroundColor:[UIColor clearColor]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20.0f]];
     [titleLabel setTextColor:textColor];
@@ -557,6 +560,7 @@ int const CTLEmptyContactsTitleTag = 792;
     titleLabel.tag = CTLEmptyContactsTitleTag;
     
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 120.0f, viewFrame.size.width, 25.0f)];
+    [messageLabel setBackgroundColor:[UIColor clearColor]];
     [messageLabel setTextAlignment:NSTextAlignmentCenter];
     [messageLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0f]];
     [messageLabel setTextColor:textColor];
