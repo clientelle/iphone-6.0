@@ -119,12 +119,27 @@ int const CTLEmptyContactsTitleTag = 792;
             [_contactsDictionary setObject:[importedContacts objectForKey:recordID] forKey:recordID];
         }
     }
+    
+    [self handleUIRestrictions];
 
     [self sortContactListByAccessDate:[_contactsDictionary allValues]];
 }
 
+- (void)handleUIRestrictions
+{
+    if([_contactsDictionary count] == 0){
+        self.searchBar.hidden = YES;
+        self.tableView.scrollEnabled = NO;
+    }else{
+        self.searchBar.hidden = NO;
+        self.tableView.scrollEnabled = YES;
+    }
+}
+
 - (void)setContactList
 {
+    [self handleUIRestrictions];
+    
     //map saved contacts to address book contacts and float most recent to the top
     if(!_accessedDictionary){
         NSArray *storedContacts = [CTLCDPerson MR_findAll];

@@ -22,14 +22,16 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
     self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter.png"]];
     self.tableView.separatorColor = [UIColor clearColor];
     
-    
     _offWhite = [UIColor colorFromUnNormalizedRGB:200 green:200 blue:200 alpha:1.0f];
     _topBevelColor = [UIColor colorFromUnNormalizedRGB:15.0f green:15.0f blue:15.0f alpha:1.0f];
     _bottomBevelColor = [UIColor colorFromUnNormalizedRGB:51.0f green:51.0f blue:51.0f alpha:1.0f];
-
-    
     _menuItems = [[NSArray alloc]initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:CTLMenuPlistName ofType:@"plist"]];
-    
+
+//TODO: save this to nsuser defaults
+self.menuController.hasPro = NO;
+self.menuController.hasAccount = NO;
+self.menuController.hasInbox = NO;
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -46,9 +48,15 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
     // Dispose of any resources that can be recreated.
 }
 
+/*
+ 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 30.0f;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    return @"Clientelle";
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -72,6 +80,7 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
     
     return headerView;
 }
+ */
 
 #pragma mark - Table view data source
 
@@ -87,7 +96,7 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 40.0f;
+    return 35.0f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -127,11 +136,31 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *menuItem = [_menuItems objectAtIndex:indexPath.row];
-    [self.menuController setMainView:menuItem[@"identifier"]];
+    
+    NSString *navControllerName = [self handleInboxSelection:menuItem[@"identifier"]];
+    [self.menuController setMainView:navControllerName];
     
     [self removeStyleFromPreviouslyActiveCell];
     _selectedIndexPath = indexPath;
     [self styleActiveCell];
+}
+
+- (NSString *)handleInboxSelection:(NSString *)navControllerName
+{
+    if([navControllerName isEqualToString:@"inboxNavigationController"]){
+        if(!self.menuController.hasPro || !self.menuController.hasAccount){
+            return @"accountInterstitialNavigationController";
+        }
+        
+        if(!self.menuController.hasInbox){
+            return @"inboxInterstitialNavigationController";
+        }
+        
+        return @"inboxNavigationController";
+    }
+    
+    return navControllerName;
+    
 }
 
 - (void)styleActiveCell
@@ -150,11 +179,6 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.textLabel.textColor = _offWhite;
     _selectedIndexPath = nil;
-}
-
-- (void)resetOtherCells
-{
-    
 }
 
 @end

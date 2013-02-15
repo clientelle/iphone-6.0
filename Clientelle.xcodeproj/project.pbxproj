@@ -25,6 +25,12 @@
 		4130654916C2CF7E0063AC10 /* white-indicator-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4130654516C2CF7E0063AC10 /* white-indicator-right@2x.png */; };
 		4130654C16C8A8B20063AC10 /* irongrip.png in Resources */ = {isa = PBXBuildFile; fileRef = 4130654A16C8A8B20063AC10 /* irongrip.png */; };
 		4130654D16C8A8B20063AC10 /* irongrip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4130654B16C8A8B20063AC10 /* irongrip@2x.png */; };
+		4130655016C8ACDF0063AC10 /* navbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 4130654E16C8ACDF0063AC10 /* navbar.png */; };
+		4130655116C8ACDF0063AC10 /* navbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4130654F16C8ACDF0063AC10 /* navbar@2x.png */; };
+		41468DA916C930BE0015DE18 /* Navigation-Toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 41468DA716C930BE0015DE18 /* Navigation-Toolbar.png */; };
+		41468DAA16C930BE0015DE18 /* Navigation-Toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41468DA816C930BE0015DE18 /* Navigation-Toolbar@2x.png */; };
+		41468DAD16C934840015DE18 /* paper@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 41468DAB16C934840015DE18 /* paper@2X.png */; };
+		41468DAE16C934840015DE18 /* paper.png in Resources */ = {isa = PBXBuildFile; fileRef = 41468DAC16C934840015DE18 /* paper.png */; };
 		416DD82B16AF966400F2F8B3 /* CTLSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */; };
 		416DD83216AF9C0100F2F8B3 /* CTLAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */; };
 		416DD83716AF9D9C00F2F8B3 /* CTLSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83616AF9D9B00F2F8B3 /* CTLSupportViewController.m */; };
@@ -168,6 +174,18 @@
 		41B5473316B4559500302652 /* CTLEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B5473216B4559500302652 /* CTLEvent.m */; };
 		41B5473416B4559500302652 /* CTLEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B5473216B4559500302652 /* CTLEvent.m */; };
 		41B5473616B4562D00302652 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B5473516B4562D00302652 /* EventKit.framework */; };
+		41DA1DA816CB13F40017F71F /* CTLInboxControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */; };
+		41DA1DA916CB14C00017F71F /* CTLAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130653116C148A10063AC10 /* CTLAPI.m */; };
+		41DA1DAA16CB14C00017F71F /* _CTLCDAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130653416C149D90063AC10 /* _CTLCDAccount.m */; };
+		41DA1DAB16CB14C00017F71F /* CTLCDAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130653616C149D90063AC10 /* CTLCDAccount.m */; };
+		41DA1DAC16CB14D70017F71F /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41FEEE5016AFD13700094A70 /* AddressBook.framework */; };
+		41DA1DAD16CB14D70017F71F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416DDAED16AFAB8200F2F8B3 /* CoreData.framework */; };
+		41DA1DAE16CB156A0017F71F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC2AC16AE17560073199D /* QuartzCore.framework */; };
+		41DA1DAF16CB15B60017F71F /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B5473516B4562D00302652 /* EventKit.framework */; };
+		41DA1DB216CB15CA0017F71F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC24116ADF1140073199D /* CoreGraphics.framework */; };
+		41DA1DB316CB15E40017F71F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41848E0E16B1D211004BFE30 /* MessageUI.framework */; };
+		41DA1DB616CC57ED0017F71F /* CTLAccountInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */; };
+		41DA1DB916CC8B4E0017F71F /* CTLInboxInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */; };
 		41E9BA1916B457E800FEF1FE /* _CTLCDFormSchema.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DC916B0271B004BFE30 /* _CTLCDFormSchema.m */; };
 		41E9BA1A16B457E800FEF1FE /* _CTLCDPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DCB16B0271B004BFE30 /* _CTLCDPerson.m */; };
 		41E9BA1B16B457E800FEF1FE /* CTLCDFormSchema.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DCD16B0271B004BFE30 /* CTLCDFormSchema.m */; };
@@ -255,6 +273,12 @@
 		4130654516C2CF7E0063AC10 /* white-indicator-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-indicator-right@2x.png"; sourceTree = "<group>"; };
 		4130654A16C8A8B20063AC10 /* irongrip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irongrip.png; sourceTree = "<group>"; };
 		4130654B16C8A8B20063AC10 /* irongrip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "irongrip@2x.png"; sourceTree = "<group>"; };
+		4130654E16C8ACDF0063AC10 /* navbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbar.png; sourceTree = "<group>"; };
+		4130654F16C8ACDF0063AC10 /* navbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar@2x.png"; sourceTree = "<group>"; };
+		41468DA716C930BE0015DE18 /* Navigation-Toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Navigation-Toolbar.png"; sourceTree = "<group>"; };
+		41468DA816C930BE0015DE18 /* Navigation-Toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Navigation-Toolbar@2x.png"; sourceTree = "<group>"; };
+		41468DAB16C934840015DE18 /* paper@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paper@2X.png"; sourceTree = "<group>"; };
+		41468DAC16C934840015DE18 /* paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper.png; sourceTree = "<group>"; };
 		416DD82816AF966300F2F8B3 /* CTLSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSlideMenuController.h; sourceTree = "<group>"; };
 		416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLSlideMenuController.m; sourceTree = "<group>"; };
 		416DD82A16AF966400F2F8B3 /* CTLSlideMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSlideMenuDelegate.h; sourceTree = "<group>"; };
@@ -446,6 +470,12 @@
 		41B5473116B4559500302652 /* CTLEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLEvent.h; sourceTree = "<group>"; };
 		41B5473216B4559500302652 /* CTLEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLEvent.m; sourceTree = "<group>"; };
 		41B5473516B4562D00302652 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		41DA1DA616CB13F40017F71F /* CTLInboxControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInboxControllerTest.h; sourceTree = "<group>"; };
+		41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInboxControllerTest.m; sourceTree = "<group>"; };
+		41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAccountInterstitialViewController.h; sourceTree = "<group>"; };
+		41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAccountInterstitialViewController.m; sourceTree = "<group>"; };
+		41DA1DB716CC8B4D0017F71F /* CTLInboxInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInboxInterstitialViewController.h; sourceTree = "<group>"; };
+		41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInboxInterstitialViewController.m; sourceTree = "<group>"; };
 		41E9BA4D16B459E100FEF1FE /* ABPersonSchema.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ABPersonSchema.plist; sourceTree = "<group>"; };
 		41E9BA4E16B459E100FEF1FE /* AddressFields.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AddressFields.plist; sourceTree = "<group>"; };
 		41E9BA4F16B459E100FEF1FE /* DevConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DevConfig.plist; sourceTree = "<group>"; };
@@ -486,6 +516,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41DA1DB316CB15E40017F71F /* MessageUI.framework in Frameworks */,
+				41DA1DB216CB15CA0017F71F /* CoreGraphics.framework in Frameworks */,
+				41DA1DAF16CB15B60017F71F /* EventKit.framework in Frameworks */,
+				41DA1DAE16CB156A0017F71F /* QuartzCore.framework in Frameworks */,
+				41DA1DAC16CB14D70017F71F /* AddressBook.framework in Frameworks */,
+				41DA1DAD16CB14D70017F71F /* CoreData.framework in Frameworks */,
 				417DC26216ADF1140073199D /* SenTestingKit.framework in Frameworks */,
 				417DC26316ADF1140073199D /* UIKit.framework in Frameworks */,
 				417DC26416ADF1140073199D /* Foundation.framework in Frameworks */,
@@ -689,6 +725,8 @@
 			isa = PBXGroup;
 			children = (
 				417DC26816ADF1140073199D /* Supporting Files */,
+				41DA1DA616CB13F40017F71F /* CTLInboxControllerTest.h */,
+				41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */,
 				417DC30816AF10BE0073199D /* CTLMainMenuViewControllerTest.h */,
 				417DC30916AF10BE0073199D /* CTLMainMenuViewControllerTest.m */,
 				41FEEE5D16AFD3F600094A70 /* CTLAddressBookTest.h */,
@@ -742,6 +780,10 @@
 				416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */,
 				4130653D16C14A950063AC10 /* CTLRegisterViewController.h */,
 				4130653E16C14A960063AC10 /* CTLRegisterViewController.m */,
+				41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */,
+				41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */,
+				41DA1DB716CC8B4D0017F71F /* CTLInboxInterstitialViewController.h */,
+				41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -777,6 +819,12 @@
 		417DC2A716AE16220073199D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				41468DAB16C934840015DE18 /* paper@2X.png */,
+				41468DAC16C934840015DE18 /* paper.png */,
+				41468DA716C930BE0015DE18 /* Navigation-Toolbar.png */,
+				41468DA816C930BE0015DE18 /* Navigation-Toolbar@2x.png */,
+				4130654E16C8ACDF0063AC10 /* navbar.png */,
+				4130654F16C8ACDF0063AC10 /* navbar@2x.png */,
 				4130654A16C8A8B20063AC10 /* irongrip.png */,
 				4130654B16C8A8B20063AC10 /* irongrip@2x.png */,
 				4130654416C2CF7E0063AC10 /* white-indicator-right.png */,
@@ -1045,6 +1093,12 @@
 				4130654816C2CF7E0063AC10 /* white-indicator-right@2x.png in Resources */,
 				4130654C16C8A8B20063AC10 /* irongrip.png in Resources */,
 				4130654D16C8A8B20063AC10 /* irongrip@2x.png in Resources */,
+				4130655016C8ACDF0063AC10 /* navbar.png in Resources */,
+				4130655116C8ACDF0063AC10 /* navbar@2x.png in Resources */,
+				41468DA916C930BE0015DE18 /* Navigation-Toolbar.png in Resources */,
+				41468DAA16C930BE0015DE18 /* Navigation-Toolbar@2x.png in Resources */,
+				41468DAD16C934840015DE18 /* paper@2X.png in Resources */,
+				41468DAE16C934840015DE18 /* paper.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1148,6 +1202,8 @@
 				4130653816C149D90063AC10 /* CTLCDAccount.m in Sources */,
 				4130653B16C14A300063AC10 /* GOHTTPOperation.m in Sources */,
 				4130653F16C14A980063AC10 /* CTLRegisterViewController.m in Sources */,
+				41DA1DB616CC57ED0017F71F /* CTLAccountInterstitialViewController.m in Sources */,
+				41DA1DB916CC8B4E0017F71F /* CTLInboxInterstitialViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1155,6 +1211,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41DA1DA916CB14C00017F71F /* CTLAPI.m in Sources */,
+				41DA1DAA16CB14C00017F71F /* _CTLCDAccount.m in Sources */,
+				41DA1DAB16CB14C00017F71F /* CTLCDAccount.m in Sources */,
 				41E9BA3916B458B900FEF1FE /* NSManagedObject+MagicalRecord.m in Sources */,
 				41E9BA3A16B458B900FEF1FE /* NSManagedObject+MagicalRequests.m in Sources */,
 				41E9BA3B16B458B900FEF1FE /* NSManagedObjectContext+MagicalObserving.m in Sources */,
@@ -1216,6 +1275,7 @@
 				4130652B16BE4F930063AC10 /* RMPhoneFormat.m in Sources */,
 				4130653C16C14A300063AC10 /* GOHTTPOperation.m in Sources */,
 				4130654016C14A980063AC10 /* CTLRegisterViewController.m in Sources */,
+				41DA1DA816CB13F40017F71F /* CTLInboxControllerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

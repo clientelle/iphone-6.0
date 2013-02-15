@@ -34,13 +34,16 @@ CGFloat const CTLContactModeToolbarViewHeight = 70;
     CGFloat topMargin = 8.0f;
     CGFloat leftPosition = (buttonWidth * index) + 5;
     
+    UIImage *buttonIcon = [UIImage imageNamed:imageName];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    [button setImage:buttonIcon forState:UIControlStateNormal];
     [button setFrame:CGRectMake(leftPosition, topMargin, buttonWidth, buttonHeight)];
-    [button setTintColor:[UIColor redColor]];
+   
     [self addSubview:button];
     return button;
 }
+
+
 
 -(void)drawRect:(CGRect)rect {
     
@@ -60,13 +63,19 @@ CGFloat const CTLContactModeToolbarViewHeight = 70;
 
     CGPathCloseSubpath(path);
     CGContextAddPath(context, path);
-        
-    self.layer.shadowOpacity = 0.75f;
+    
+    self.layer.shadowOpacity = 1.0f;
     self.layer.shadowRadius = 2.0f;
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
     self.layer.shadowOffset = CGSizeMake(0, 0);
-        
-    CGContextSetFillColorWithColor(context, [UIColor colorFromUnNormalizedRGB:177.0f green:204.0f blue:187.0f alpha:1.0f].CGColor);
-
+    
+    //177.0f green:204.0f blue:187.0f
+    //75.0f green:75.0f blue:75.0f
+    
+    UIColor *toolbarColor = [UIColor colorFromUnNormalizedRGB:72.0f green:70.0f blue:62.0f alpha:0.85f];
+    
+    CGContextSetFillColorWithColor(context, toolbarColor.CGColor);
+    
     CGContextFillPath(context);
     CGContextSaveGState(context);
     CGPathRelease(path);

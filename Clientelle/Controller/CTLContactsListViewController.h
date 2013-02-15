@@ -46,6 +46,7 @@ extern NSString *const CTLContactRowDidChangeNotification;
 @property (nonatomic, assign) ABAddressBookRef addressBookRef;
 @property (nonatomic, strong) CTLContactHeaderView *contactHeader;
 @property (nonatomic, strong) CTLContactToolbarView *contactToolbar;
+@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 - (IBAction)dismissGroupPickerFromTap:(UITapGestureRecognizer *)recognizer;

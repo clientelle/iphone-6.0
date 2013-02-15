@@ -20,9 +20,9 @@
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>MY_ACCOUNT</string>
+		<string>INBOX</string>
 		<key>identifier</key>
-		<string>accountNavigationController</string>
+		<string>inboxNavigationController</string>
 		<key>icon</key>
 		<string>21-wrench.png</string>
 	</dict>
@@ -31,14 +31,6 @@
 		<string>SETTINGS</string>
 		<key>identifier</key>
 		<string>settingsNavigationController</string>
-		<key>icon</key>
-		<string>21-wrench.png</string>
-	</dict>
-	<dict>
-		<key>title</key>
-		<string>SUPPORT</string>
-		<key>identifier</key>
-		<string>supportNavigationController</string>
 		<key>icon</key>
 		<string>21-wrench.png</string>
 	</dict>

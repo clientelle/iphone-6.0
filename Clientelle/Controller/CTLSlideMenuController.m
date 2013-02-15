@@ -27,6 +27,8 @@ const CGFloat CTLMainMenuWidth = 170.0f;
 {
     [super viewDidLoad];
     
+    self.rightSwipeEnabled = YES;
+    
     UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
     [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
     [self.view addGestureRecognizer:swipeLeft];
@@ -45,11 +47,10 @@ const CGFloat CTLMainMenuWidth = 170.0f;
 
 -(void)handleSwipeRight:(UISwipeGestureRecognizer*)recognizer
 {
-    if(self.mainViewNavController.view.frame.origin.x == 0){
+    if(self.rightSwipeEnabled && self.mainViewNavController.view.frame.origin.x == 0){
         [self showMenu];
     }
 }
-
 
 #pragma mark - Set Panels
 
@@ -67,28 +68,47 @@ const CGFloat CTLMainMenuWidth = 170.0f;
 {
     UINavigationController *navigationController = (UINavigationController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:navigationControllerName];
     
+    CGFloat width = CGRectGetWidth(self.view.bounds);
+    CGFloat height = CGRectGetHeight(self.view.bounds);
+    
     if(self.mainViewNavController){
         [self.mainViewNavController removeFromParentViewController];
         [self.mainViewNavController.view removeFromSuperview];
     }
     
-    CGFloat width = CGRectGetWidth(self.view.bounds);
-    CGFloat height = CGRectGetHeight(self.view.bounds);
     [self setRightPanel:navigationController withFrame:CGRectMake(CTLMainMenuWidth, 0.0f, width, height)];
     [UIView animateWithDuration:0.3 animations:^{
         self.mainViewNavController.view.frame = CGRectMake(0.0f, 0.0f, width, height);
     }];
+    
+}
+
+- (void)flipToView:(UIViewController<CTLSlideMenuDelegate> *)mainViewController
+{
+    [mainViewController setMenuController:self];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration: 1];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
+    [self.mainViewNavController pushViewController:mainViewController animated:NO];
+    [UIView commitAnimations];
+
+}
+
+- (void)renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)mainViewController
+{
+    mainViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"38-house.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(toggleMenu:)];
 }
 
 - (void)setRightPanel:(UINavigationController *)rightNavigationController withFrame:(CGRect)frame
 {
     UIViewController<CTLSlideMenuDelegate> *mainViewController = (UIViewController<CTLSlideMenuDelegate> *)rightNavigationController.topViewController;
     
-    //set view main menu button
-    mainViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"38-house.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(toggleMenu:)];
-    
+    [self renderMenuButton:mainViewController];
+           
     [mainViewController setMenuController:self];
     self.mainViewNavController = rightNavigationController;
+    
     [self addChildViewController:self.mainViewNavController];
     self.mainViewNavController.view.frame = frame;
     [self.view addSubview:self.mainViewNavController.view];

@@ -40,7 +40,7 @@
     }
 }
 
-- (void) testTableHasCorrectRowsAndSections
+- (void)testTableHasCorrectRowsAndSections
 {
     CTLMainMenuViewController *mainMenuViewController = [_storyboard instantiateInitialViewController];
     STAssertEquals(1,[mainMenuViewController numberOfSectionsInTableView:nil],@"");

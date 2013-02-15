@@ -7,20 +7,24 @@
 //
 
 #import "CTLAPI.h"
-#import "CTLSlideMenuController.h"
+
 #import "CTLRegisterViewController.h"
 #import "CTLCDAccount.h"
 
+#import "CTLMainMenuViewController.h"
+#import "CTLSlideMenuController.h"
+
+#import "CTLSupportViewController.h"
+
+
 NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.reloadInbox";
-
-@interface CTLRegisterViewController ()
-
-@end
 
 @implementation CTLRegisterViewController
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
+    self.overrideBackButtonWithMenuButton = YES;
     
     _api = [CTLAPI sharedAPI];
     
@@ -53,8 +57,13 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissEditing:)];
-    
     [self.view addGestureRecognizer:tapGesture];
+    
+    if(self.overrideBackButtonWithMenuButton){
+    
+        [self.menuController renderMenuButton:self];
+        [self.navigationItem setHidesBackButton:YES animated:YES];
+    }
 
 }
 
@@ -103,7 +112,30 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 	return 1;
 }
 
-- (IBAction)submit:(id)sender{
+- (IBAction)submit:(id)sender
+{
+    [self.menuController setHasPro:YES];
+    [self.menuController setHasAccount:YES];
+    [self.menuController setRightSwipeEnabled:YES];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
+    
+    UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"inboxInterstitialNavigationController"];
+    
+    
+    UIViewController<CTLSlideMenuDelegate> *mainViewController = (UIViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
+    
+    
+    
+    [self.menuController flipToView:mainViewController];
+    
+}
+
+- (void)toggleMenu:(id)sender{
+    [self.menuController toggleMenu:sender];
+}
+
+- (IBAction)submit1:(id)sender{
     
     if([self.emailTextField.text length] == 0){
         return;
