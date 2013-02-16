@@ -7,7 +7,7 @@
 //
 
 #import "CTLInboxInterstitialViewController.h"
-#import "CTLMainMenuViewController.h"
+#import "CTLEnterFormCodeViewController.h"
 #import "CTLSlideMenuController.h"
 
 @implementation CTLInboxInterstitialViewController
@@ -26,6 +26,16 @@
 - (IBAction)continueToEnterFormCode:(id)sender
 {
     [self performSegueWithIdentifier:@"enterFormCode" sender:sender];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier] isEqualToString:@"enterFormCode"]){
+        CTLEnterFormCodeViewController *viewController = [segue destinationViewController];
+        
+        [viewController setMenuController:self.menuController];
+        return;
+    }
 }
 
 - (void)didReceiveMemoryWarning

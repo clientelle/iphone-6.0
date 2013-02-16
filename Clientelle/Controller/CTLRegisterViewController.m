@@ -11,10 +11,10 @@
 #import "CTLRegisterViewController.h"
 #import "CTLCDAccount.h"
 
-#import "CTLMainMenuViewController.h"
 #import "CTLSlideMenuController.h"
+#import "CTLInboxInterstitialViewController.h"
 
-#import "CTLSupportViewController.h"
+#import "CTLInboxViewController.h"
 
 
 NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.reloadInbox";
@@ -123,11 +123,11 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"inboxInterstitialNavigationController"];
     
     
-    UIViewController<CTLSlideMenuDelegate> *mainViewController = (UIViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
+    CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *inboxInterstitial = (CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
     
+    [inboxInterstitial setMenuController:self.menuController];
     
-    
-    [self.menuController flipToView:mainViewController];
+    [self.menuController flipToView:inboxInterstitial];
     
 }
 

@@ -8,8 +8,6 @@
 
 #import "CTLContactsListViewController.h"
 #import "CTLGroupsListViewController.h"
-
-#import "CTLMainMenuViewController.h"
 #import "CTLSlideMenuController.h"
 
 #import "CTLABGroup.h"

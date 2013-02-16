@@ -1,5 +1,5 @@
 //
-//  CTLSupportViewController.h
+//  CTLInboxViewController.h
 //  Clientelle
 //
 //  Created by Kevin Liu on 1/22/13.
@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTLSupportViewController : UITableViewController<CTLSlideMenuDelegate>
+@class CTLCDInbox;
+
+@interface CTLInboxViewController : UITableViewController<CTLSlideMenuDelegate>
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
+
+@property (nonatomic, strong) CTLCDInbox *inbox;
 
 @end

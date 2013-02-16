@@ -20,6 +20,12 @@
         <attribute name="organization" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="phone" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
     </entity>
+    <entity name="Inbox" representedClassName="CTLCDInbox" syncable="YES">
+        <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="form_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="install_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schema" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Person" representedClassName="CTLCDPerson" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
@@ -37,8 +43,9 @@
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Account" positionX="-171" positionY="-495" width="128" height="148"/>
         <element name="FormSchema" positionX="-0" positionY="-198" width="128" height="180"/>
         <element name="Person" positionX="-326" positionY="-361" width="128" height="253"/>
-        <element name="Account" positionX="-171" positionY="-495" width="128" height="148"/>
+        <element name="Inbox" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>

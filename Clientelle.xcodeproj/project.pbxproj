@@ -33,7 +33,7 @@
 		41468DAE16C934840015DE18 /* paper.png in Resources */ = {isa = PBXBuildFile; fileRef = 41468DAC16C934840015DE18 /* paper.png */; };
 		416DD82B16AF966400F2F8B3 /* CTLSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */; };
 		416DD83216AF9C0100F2F8B3 /* CTLAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */; };
-		416DD83716AF9D9C00F2F8B3 /* CTLSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83616AF9D9B00F2F8B3 /* CTLSupportViewController.m */; };
+		416DD83716AF9D9C00F2F8B3 /* CTLInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83616AF9D9B00F2F8B3 /* CTLInboxViewController.m */; };
 		416DD83A16AF9E9000F2F8B3 /* CTLSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */; };
 		416DDACF16AFA9F100F2F8B3 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DDA9716AFA9F100F2F8B3 /* MagicalImportFunctions.m */; };
 		416DDAD016AFA9F100F2F8B3 /* NSAttributeDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DDA9916AFA9F100F2F8B3 /* NSAttributeDescription+MagicalDataImport.m */; };
@@ -187,6 +187,12 @@
 		41DA1DB616CC57ED0017F71F /* CTLAccountInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */; };
 		41DA1DB916CC8B4E0017F71F /* CTLInboxInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */; };
 		41DA1DBC16CE781C0017F71F /* CTLEnterFormCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DBB16CE781B0017F71F /* CTLEnterFormCodeViewController.m */; };
+		41DA1DBF16CF25A80017F71F /* fabric_plaid.png in Resources */ = {isa = PBXBuildFile; fileRef = 41DA1DBD16CF25A80017F71F /* fabric_plaid.png */; };
+		41DA1DC016CF25A80017F71F /* fabric_plaid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41DA1DBE16CF25A80017F71F /* fabric_plaid@2x.png */; };
+		41DA1DC816CF30A10017F71F /* gray_jean.png in Resources */ = {isa = PBXBuildFile; fileRef = 41DA1DC616CF30A10017F71F /* gray_jean.png */; };
+		41DA1DCA16CF313A0017F71F /* gray_jean@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 41DA1DC916CF313A0017F71F /* gray_jean@2x.jpg */; };
+		41DA1DCF16D003DC0017F71F /* _CTLCDInbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DCC16D003DC0017F71F /* _CTLCDInbox.m */; };
+		41DA1DD016D003DC0017F71F /* CTLCDInbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DCE16D003DC0017F71F /* CTLCDInbox.m */; };
 		41E9BA1916B457E800FEF1FE /* _CTLCDFormSchema.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DC916B0271B004BFE30 /* _CTLCDFormSchema.m */; };
 		41E9BA1A16B457E800FEF1FE /* _CTLCDPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DCB16B0271B004BFE30 /* _CTLCDPerson.m */; };
 		41E9BA1B16B457E800FEF1FE /* CTLCDFormSchema.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DCD16B0271B004BFE30 /* CTLCDFormSchema.m */; };
@@ -197,7 +203,7 @@
 		41E9BA2116B457E800FEF1FE /* CTLContactsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DF716B0D7A7004BFE30 /* CTLContactsListViewController.m */; };
 		41E9BA2216B457E800FEF1FE /* CTLGroupsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC2BD16AE30FA0073199D /* CTLGroupsListViewController.m */; };
 		41E9BA2316B457E800FEF1FE /* CTLAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */; };
-		41E9BA2416B457E800FEF1FE /* CTLSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83616AF9D9B00F2F8B3 /* CTLSupportViewController.m */; };
+		41E9BA2416B457E800FEF1FE /* CTLInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83616AF9D9B00F2F8B3 /* CTLInboxViewController.m */; };
 		41E9BA2516B457E800FEF1FE /* CTLSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */; };
 		41E9BA2716B4580D00FEF1FE /* CTLContactFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B5472F16B4556500302652 /* CTLContactFieldCell.m */; };
 		41E9BA2816B4580D00FEF1FE /* CTLContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546DE16B39C2300302652 /* CTLContactViewController.m */; };
@@ -285,8 +291,8 @@
 		416DD82A16AF966400F2F8B3 /* CTLSlideMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSlideMenuDelegate.h; sourceTree = "<group>"; };
 		416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAccountViewController.h; sourceTree = "<group>"; };
 		416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAccountViewController.m; sourceTree = "<group>"; };
-		416DD83516AF9D9B00F2F8B3 /* CTLSupportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSupportViewController.h; sourceTree = "<group>"; };
-		416DD83616AF9D9B00F2F8B3 /* CTLSupportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLSupportViewController.m; sourceTree = "<group>"; };
+		416DD83516AF9D9B00F2F8B3 /* CTLInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInboxViewController.h; sourceTree = "<group>"; };
+		416DD83616AF9D9B00F2F8B3 /* CTLInboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInboxViewController.m; sourceTree = "<group>"; };
 		416DD83816AF9E9000F2F8B3 /* CTLSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSettingsViewController.h; sourceTree = "<group>"; };
 		416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLSettingsViewController.m; sourceTree = "<group>"; };
 		416DDA9616AFA9F100F2F8B3 /* MagicalImportFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalImportFunctions.h; sourceTree = "<group>"; };
@@ -479,6 +485,14 @@
 		41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInboxInterstitialViewController.m; sourceTree = "<group>"; };
 		41DA1DBA16CE781B0017F71F /* CTLEnterFormCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLEnterFormCodeViewController.h; sourceTree = "<group>"; };
 		41DA1DBB16CE781B0017F71F /* CTLEnterFormCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLEnterFormCodeViewController.m; sourceTree = "<group>"; };
+		41DA1DBD16CF25A80017F71F /* fabric_plaid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fabric_plaid.png; sourceTree = "<group>"; };
+		41DA1DBE16CF25A80017F71F /* fabric_plaid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fabric_plaid@2x.png"; sourceTree = "<group>"; };
+		41DA1DC616CF30A10017F71F /* gray_jean.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gray_jean.png; sourceTree = "<group>"; };
+		41DA1DC916CF313A0017F71F /* gray_jean@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "gray_jean@2x.jpg"; sourceTree = "<group>"; };
+		41DA1DCB16D003DC0017F71F /* _CTLCDInbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CTLCDInbox.h; sourceTree = "<group>"; };
+		41DA1DCC16D003DC0017F71F /* _CTLCDInbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CTLCDInbox.m; sourceTree = "<group>"; };
+		41DA1DCD16D003DC0017F71F /* CTLCDInbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLCDInbox.h; sourceTree = "<group>"; };
+		41DA1DCE16D003DC0017F71F /* CTLCDInbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLCDInbox.m; sourceTree = "<group>"; };
 		41E9BA4D16B459E100FEF1FE /* ABPersonSchema.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ABPersonSchema.plist; sourceTree = "<group>"; };
 		41E9BA4E16B459E100FEF1FE /* AddressFields.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AddressFields.plist; sourceTree = "<group>"; };
 		41E9BA4F16B459E100FEF1FE /* DevConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DevConfig.plist; sourceTree = "<group>"; };
@@ -777,8 +791,6 @@
 				417DC2BD16AE30FA0073199D /* CTLGroupsListViewController.m */,
 				416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */,
 				416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */,
-				416DD83516AF9D9B00F2F8B3 /* CTLSupportViewController.h */,
-				416DD83616AF9D9B00F2F8B3 /* CTLSupportViewController.m */,
 				416DD83816AF9E9000F2F8B3 /* CTLSettingsViewController.h */,
 				416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */,
 				4130653D16C14A950063AC10 /* CTLRegisterViewController.h */,
@@ -787,6 +799,8 @@
 				41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */,
 				41DA1DB716CC8B4D0017F71F /* CTLInboxInterstitialViewController.h */,
 				41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */,
+				416DD83516AF9D9B00F2F8B3 /* CTLInboxViewController.h */,
+				416DD83616AF9D9B00F2F8B3 /* CTLInboxViewController.m */,
 				41DA1DBA16CE781B0017F71F /* CTLEnterFormCodeViewController.h */,
 				41DA1DBB16CE781B0017F71F /* CTLEnterFormCodeViewController.m */,
 			);
@@ -824,6 +838,10 @@
 		417DC2A716AE16220073199D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				41DA1DC916CF313A0017F71F /* gray_jean@2x.jpg */,
+				41DA1DC616CF30A10017F71F /* gray_jean.png */,
+				41DA1DBD16CF25A80017F71F /* fabric_plaid.png */,
+				41DA1DBE16CF25A80017F71F /* fabric_plaid@2x.png */,
 				41468DAB16C934840015DE18 /* paper@2X.png */,
 				41468DAC16C934840015DE18 /* paper.png */,
 				41468DA716C930BE0015DE18 /* Navigation-Toolbar.png */,
@@ -916,6 +934,8 @@
 		41848DC716B0271B004BFE30 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				41DA1DCB16D003DC0017F71F /* _CTLCDInbox.h */,
+				41DA1DCC16D003DC0017F71F /* _CTLCDInbox.m */,
 				4130653316C149D90063AC10 /* _CTLCDAccount.h */,
 				4130653416C149D90063AC10 /* _CTLCDAccount.m */,
 				41848DC816B0271B004BFE30 /* _CTLCDFormSchema.h */,
@@ -928,6 +948,8 @@
 				41848DCF16B0271B004BFE30 /* CTLCDPerson.m */,
 				4130653516C149D90063AC10 /* CTLCDAccount.h */,
 				4130653616C149D90063AC10 /* CTLCDAccount.m */,
+				41DA1DCD16D003DC0017F71F /* CTLCDInbox.h */,
+				41DA1DCE16D003DC0017F71F /* CTLCDInbox.m */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -1104,6 +1126,10 @@
 				41468DAA16C930BE0015DE18 /* Navigation-Toolbar@2x.png in Resources */,
 				41468DAD16C934840015DE18 /* paper@2X.png in Resources */,
 				41468DAE16C934840015DE18 /* paper.png in Resources */,
+				41DA1DBF16CF25A80017F71F /* fabric_plaid.png in Resources */,
+				41DA1DC016CF25A80017F71F /* fabric_plaid@2x.png in Resources */,
+				41DA1DC816CF30A10017F71F /* gray_jean.png in Resources */,
+				41DA1DCA16CF313A0017F71F /* gray_jean@2x.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1165,7 +1191,7 @@
 				417DC2BE16AE30FA0073199D /* CTLGroupsListViewController.m in Sources */,
 				416DD82B16AF966400F2F8B3 /* CTLSlideMenuController.m in Sources */,
 				416DD83216AF9C0100F2F8B3 /* CTLAccountViewController.m in Sources */,
-				416DD83716AF9D9C00F2F8B3 /* CTLSupportViewController.m in Sources */,
+				416DD83716AF9D9C00F2F8B3 /* CTLInboxViewController.m in Sources */,
 				416DD83A16AF9E9000F2F8B3 /* CTLSettingsViewController.m in Sources */,
 				416DDACF16AFA9F100F2F8B3 /* MagicalImportFunctions.m in Sources */,
 				416DDAD016AFA9F100F2F8B3 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
@@ -1210,6 +1236,8 @@
 				41DA1DB616CC57ED0017F71F /* CTLAccountInterstitialViewController.m in Sources */,
 				41DA1DB916CC8B4E0017F71F /* CTLInboxInterstitialViewController.m in Sources */,
 				41DA1DBC16CE781C0017F71F /* CTLEnterFormCodeViewController.m in Sources */,
+				41DA1DCF16D003DC0017F71F /* _CTLCDInbox.m in Sources */,
+				41DA1DD016D003DC0017F71F /* CTLCDInbox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1258,7 +1286,7 @@
 				41E9BA2116B457E800FEF1FE /* CTLContactsListViewController.m in Sources */,
 				41E9BA2216B457E800FEF1FE /* CTLGroupsListViewController.m in Sources */,
 				41E9BA2316B457E800FEF1FE /* CTLAccountViewController.m in Sources */,
-				41E9BA2416B457E800FEF1FE /* CTLSupportViewController.m in Sources */,
+				41E9BA2416B457E800FEF1FE /* CTLInboxViewController.m in Sources */,
 				41E9BA2516B457E800FEF1FE /* CTLSettingsViewController.m in Sources */,
 				417DC2DC16AE4C060073199D /* UIColor+CTLColor.m in Sources */,
 				417DC2DD16AE4C060073199D /* NSDate+CTLDate.m in Sources */,
