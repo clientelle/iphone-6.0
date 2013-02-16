@@ -12,4 +12,8 @@
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
 
+@property (nonatomic, weak) IBOutlet UIButton *continueButton;
+
+- (IBAction)continueToEnterFormCode:(id)sender;
+
 @end

@@ -23,6 +23,11 @@
     
 }
 
+- (IBAction)continueToEnterFormCode:(id)sender
+{
+    [self performSegueWithIdentifier:@"enterFormCode" sender:sender];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
