@@ -7,15 +7,12 @@
 //
 
 #import "CTLAPI.h"
-
-#import "CTLRegisterViewController.h"
 #import "CTLCDAccount.h"
 
+#import "CTLRegisterViewController.h"
+#import "CTLLoginViewController.h"
 #import "CTLSlideMenuController.h"
 #import "CTLInboxInterstitialViewController.h"
-
-#import "CTLInboxViewController.h"
-
 
 NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.reloadInbox";
 
@@ -53,6 +50,8 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
         self.industryTextField.text = [self.cdAccount industry];
         self.emailTextField.text = [self.cdAccount email];
         self.passwordTextField.text = [self.cdAccount password];
+    }else{
+        self.navigationItem.title = @"Register";
     }
     
     
@@ -64,6 +63,9 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
         [self.menuController renderMenuButton:self];
         [self.navigationItem setHidesBackButton:YES animated:YES];
     }
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem: backButton];
 
 }
 
@@ -112,30 +114,12 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 	return 1;
 }
 
-- (IBAction)submit:(id)sender
-{
-    [self.menuController setHasPro:YES];
-    [self.menuController setHasAccount:YES];
-    [self.menuController setRightSwipeEnabled:YES];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
-    
-    UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"inboxInterstitialNavigationController"];
-    
-    
-    CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *inboxInterstitial = (CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
-    
-    [inboxInterstitial setMenuController:self.menuController];
-    
-    [self.menuController flipToView:inboxInterstitial];
-    
-}
 
 - (void)toggleMenu:(id)sender{
     [self.menuController toggleMenu:sender];
 }
 
-- (IBAction)submit1:(id)sender{
+- (IBAction)submit:(id)sender{
     
     if([self.emailTextField.text length] == 0){
         return;
@@ -148,111 +132,82 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     account.password = self.passwordTextField.text;
     account.dateCreated = [NSDate date];
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-
-        //create dictionary from coredata "account" entity
-        NSMutableDictionary *personDict = [[NSMutableDictionary alloc] initWithDictionary:[account dictionaryWithValuesForKeys:@[@"email",@"password",@"company",@"industry"]]];
+    //create dictionary from coredata "account" entity
+    NSMutableDictionary *personDict = [[NSMutableDictionary alloc] initWithDictionary:[account dictionaryWithValuesForKeys:@[@"email", @"password", @"company", @"industry"]]];
+    
         
-        //add some meta data
-        NSString *locale = [[NSLocale currentLocale] localeIdentifier];
-        [personDict setValue:locale forKey:@"locale"];
-        [personDict setValue:@"iphone" forKey:@"source"];
+    //add some meta data
+    NSString *locale = [[NSLocale currentLocale] localeIdentifier];
+    [personDict setValue:locale forKey:@"locale"];
+    [personDict setValue:@"iphone" forKey:@"source"];
+    
+    //?XDEBUG_SESSION_START=ECLIPSE_DBGP
+    [_api makeRequest:@"/register" withParams:personDict withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
         
-        [self createDefaultInboxes];
-        
-[[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadInboxNotifiyer object:account];
-[self.navigationController popViewControllerAnimated:YES];
-        
-        
-        /*
-        [_api makeRequest:@"/register" withParams:personDict withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
-            if(requestSucceeded){
-                 
-                 NSLog(@"RESPONSE %@", response);
-                //[self createDefaultInboxes];
-                 
+         if(requestSucceeded){
+            
+            NSDictionary *user = response[@"user"];
+            
+            account.access_token = response[kCTLAccessTokenKey];
+            account.user_idValue = [user[@"user_id"] intValue];
+            account.company_idValue = [user[@"company_id"] intValue];
+            account.industry_idValue = [user[@"industry_id"] intValue];
+            
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){ 
+                            
                 [[NSUserDefaults standardUserDefaults] setValue:[response objectForKey:kCTLAccessTokenKey] forKey:kCTLAccountAccessToken];
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadInboxNotifiyer object:account];
-                [self.navigationController popViewControllerAnimated:YES];
+                [self.menuController setHasPro:YES];
+                [self.menuController setHasAccount:YES];
+                [self.menuController setRightSwipeEnabled:YES];
+                
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
+                UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"inboxInterstitialNavigationController"];
+                
+                CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *inboxInterstitial = (CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
+                
+                [inboxInterstitial setMenuController:self.menuController];
+                [self.menuController flipToView:inboxInterstitial];
+            }];
                                   
-            }else{
-                NSLog(@"RESPONSE %@", response);
-                NSString *message = [CTLAPI messageFromResponse:response];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops :(" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        }else{
+            
+            if([response[@"code"] intValue] == 2){
+                NSString *message = @"This email address is already registered. Would you like to login?";
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
                 [alert show];
-        
-            }
-         }];
-         */
-    }];
-}
 
-- (IBAction)seeActivity:(id)sender {
-    
-    CTLAPI *api = [CTLAPI sharedAPI];
-    [api makeRequest:@"/activity" withParams:@{} withBlock:^(BOOL result, NSDictionary *response) {
-        if(result){
-            NSLog(@"RESULT %@", response);
+            }else{
+            
+                NSString *message = [CTLAPI messageFromResponse:response];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops :(" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+            }
         }
     }];
 }
 
-- (void)createDefaultInboxes {
-    /*
-    CTLCDWebForm *leadsForm = [CTLCDWebForm MR_createEntity];
-    leadsForm.title = @"Contact Us";
-    leadsForm.inboxName = @"Leads";
-    leadsForm.url = @"https://api.clientelle.com/43430323";
-    
-     */
-     
-    /* CREATE LEAD FORM */
-    
-    /*
-    NSDictionary *nameField = @{@"type":@"text",@"name":@"name",@"label":@"Name",@"placeholder":@"Full Name"};
-    NSDictionary *emailField = @{@"type":@"text",@"name":@"email",@"label":@"Email",@"placeholder":@"Email Address"};
-    NSDictionary *questionField = @{@"type":@"textView",@"name":@"question",@"label":@"Question",@"placeholder":@"Question"};
-
-
-    NSArray *leadFormFields = [[NSMutableArray alloc] initWithObjects:nameField, emailField, questionField, nil];
-    
-    
-    NSError *leadFormError = nil;
-    leadsForm.formJSON = [NSJSONSerialization dataWithJSONObject:leadFormFields options:0 error:&leadFormError];
-*/
-       
-    /* CREATE APPOINTMENT FORM */
-
-/*
-    CTLCDWebForm *appointmentForm = [CTLCDWebForm MR_createEntity];
-    appointmentForm.title = @"Request an Appointment";
-    appointmentForm.inboxName = @"Appointments";
-    appointmentForm.url = @"https://api.clientelle.com/43430323";
-    
-
-    NSDictionary *contactField = @{@"type":@"text",@"name":@"name",@"label":@"Name",@"placeholder":@"Full Name"};
-    NSDictionary *timeField = @{@"type":@"text",@"name":@"email",@"label":@"Time",@"placeholder":@"Time to meet"};
-   
-    
-    NSArray *apptFormFields = [[NSMutableArray alloc] initWithObjects:contactField, timeField, nil];
-    
-    
-    NSError *apptFormError = nil;
-    appointmentForm.formJSON = [NSJSONSerialization dataWithJSONObject:apptFormFields options:0 error:&apptFormError];
-    
-*/
-    
-    /*
-         
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveErrorHandler:^(NSError *error) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed to create account!" message:[[error userInfo] description] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
-        
-        NSLog(@"ERRLOG %@", [[error userInfo] description]);
-        [alert show];
-    }];
-*/
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1){
+        [self performSegueWithIdentifier:@"toLogin" sender:alertView];
+    }
 }
+
+- (IBAction)segueToLogin:(id)sender
+{
+    [self performSegueWithIdentifier:@"toLogin" sender:sender];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier] isEqualToString:@"toLogin"]){
+        CTLLoginViewController *viewController = [segue destinationViewController];
+        [viewController setEmailAddress:self.emailTextField.text];
+        return;
+    }
+}
+
+
 
 @end

@@ -82,19 +82,16 @@ CGFloat const CTLContactViewHeaderHeight = 68.0f;
     self.pictureView.image = [abPerson picture];
     
     if([[abPerson phone] length] > 0){
-        self.phoneLabel.text = [abPerson phone];//[self formatPhoneNumber:[abPerson phone]];
+        self.phoneLabel.text = [abPerson phone];
     }else if([[abPerson email] length] > 0){
         self.phoneLabel.text = [abPerson email];
     }
 }
 
 -(void)drawRect:(CGRect)rect {
-       
-    
     self.layer.shadowOpacity = 0.75f;
     self.layer.shadowRadius = 2.0f;
     self.layer.shadowOffset = CGSizeMake(0, 0);
-    
 }
 
 @end

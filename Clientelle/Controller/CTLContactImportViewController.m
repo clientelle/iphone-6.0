@@ -24,7 +24,11 @@
     _contacts = [NSArray array];
     _selectedPeople = [[NSMutableDictionary alloc] init];
     _filteredContacts = [NSMutableArray arrayWithCapacity:[_contacts count]];
-    
+        
+    _textColor = [UIColor colorFromUnNormalizedRGB:48.0f green:48.0f blue:48.0f alpha:1.0f];
+    _selectedBackgroundColor = [UIColor colorFromUnNormalizedRGB:234.0f green:244.0f blue:227.0f alpha:1.0f];
+    _disabledTextColor = [UIColor colorFromUnNormalizedRGB:78.0f green:78.0f blue:78.0f alpha:1.0f];
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [self loadAddressBookContacts];
     });
@@ -91,12 +95,33 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    CTLABPerson *person = nil;
+    if (tableView == self.searchDisplayController.searchResultsTableView){
+        person = [_filteredContacts objectAtIndex:indexPath.row];
+    }else{
+        person = [_contacts objectAtIndex:indexPath.row];
+    }
+    
+    //if person has been selected to be imported
+    if([_selectedPeople objectForKey:@(person.recordID)]){
+        [self styleEnabledField:cell];
+    }else{
+        [self styleDisabledField:cell];
+    }
+
+    
+}
+
+
+
 - (void)styleEnabledField:(UITableViewCell *)cell {
     [cell setAccessoryView:nil];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    cell.textLabel.textColor = [UIColor colorFromUnNormalizedRGB:48.0f green:48.0f blue:48.0f alpha:1.0f];
-    cell.detailTextLabel.textColor = [UIColor colorFromUnNormalizedRGB:48.0f green:48.0f blue:48.0f alpha:1.0f];
-    cell.backgroundColor = [UIColor colorFromUnNormalizedRGB:245.0f green:245.0f blue:245.0f alpha:1.0f];
+    cell.textLabel.textColor = _textColor;
+    cell.detailTextLabel.textColor = _textColor;
+    cell.backgroundColor = _selectedBackgroundColor;
 }
 
 - (void)styleDisabledField:(UITableViewCell *)cell {
@@ -104,8 +129,8 @@
     [accessory setUserInteractionEnabled:NO];
     [cell setAccessoryView:accessory];
     cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.detailTextLabel.textColor = [UIColor colorFromUnNormalizedRGB:78.0f green:78.0f blue:78.0f alpha:1.0f];
-    cell.textLabel.textColor = [UIColor colorFromUnNormalizedRGB:78.0f green:78.0f blue:78.0f alpha:1.0f];
+    cell.detailTextLabel.textColor = _disabledTextColor;
+    cell.textLabel.textColor = _disabledTextColor;
     cell.backgroundColor = [UIColor whiteColor];
 }
 

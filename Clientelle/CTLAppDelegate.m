@@ -42,7 +42,7 @@ typedef void (^CTLABRefBlock)(ABAddressBookRef addressBookRef);
     
     //setup global appearance
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackOpaque];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"Navigation-Toolbar.png"] forBarMetrics:UIBarMetricsDefault];
+    //[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"Navigation-Toolbar.png"] forBarMetrics:UIBarMetricsDefault];
     
     //init main menu controller
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
@@ -58,7 +58,7 @@ typedef void (^CTLABRefBlock)(ABAddressBookRef addressBookRef);
 
 void addressBookChanged(ABAddressBookRef reference, CFDictionaryRef dictionary, void *context) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAddressBookDidChange object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kAddressBookDidChange object:(__bridge id)(reference)];
     });
 }
 

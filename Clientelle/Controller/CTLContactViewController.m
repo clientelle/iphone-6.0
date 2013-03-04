@@ -82,7 +82,7 @@ int const CTLOverwriteExternalChangeIndex = 1;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:CTLAddressBookChanged object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
@@ -316,6 +316,10 @@ int const CTLOverwriteExternalChangeIndex = 1;
         cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     }
     
+    if([[field objectForKey:kCTLFieldName] isEqualToString:@"State"]){
+        cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+    }
+    
     [cell.textInput setKeyboardType:keyboardType];
     [cell.textInput addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingChanged];
     
@@ -477,7 +481,7 @@ CGRect CTLSubtractRect(CGRect viewFrame, CGRect keyboardFrame){
     CGFloat width1 = CGRectGetWidth(viewFrame);
     CGFloat width2 = CGRectGetWidth(keyboardFrame);
     if(width1 != width2){
-        NSLog(@"%@", @"This doesn't work if the rectangles aren't the same width!");
+        NSLog(@"This doesn't work if the rectangles aren't the same width! %f %f", width1, width2);
     }
     
     CGFloat viewHeight = CGRectGetHeight(viewFrame);

@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Clientelle Ltd.. All rights reserved.
 //
 #import "CTLABPerson.h"
+#import "NSString+CTLString.h"
 
 NSString *const CTLPersonCompositeNameProperty = @"compositeName";
 NSString *const CTLPersonRecordIDProperty = @"recordID";
@@ -211,7 +212,7 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
         }
         if(phoneData){
             NSString *phoneNumber = [phoneData objectForKey:CTLFieldKey];
-            self.phone = phoneNumber;
+            self.phone = [NSString formatPhoneNumber:phoneNumber];
             self.phoneLabel = [phoneData objectForKey:CTLLabelKey];
         }
         CFRelease(phone);

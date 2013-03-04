@@ -77,9 +77,19 @@ const CGFloat CTLMainMenuWidth = 170.0f;
     }
     
     [self setRightPanel:navigationController withFrame:CGRectMake(CTLMainMenuWidth, 0.0f, width, height)];
+    
     [UIView animateWithDuration:0.3 animations:^{
         self.mainViewNavController.view.frame = CGRectMake(0.0f, 0.0f, width, height);
     }];
+    
+    /*
+     completion:^(BOOL finished){
+     if(finished){
+     self.mainViewNavController.view.layer.shadowOpacity = 0.85f;
+     self.mainViewNavController.view.layer.shadowRadius = 5.0f;
+     self.mainViewNavController.view.layer.shadowOffset = CGSizeMake(-3, 0);
+     }
+     }*/
     
 }
 
@@ -111,6 +121,8 @@ const CGFloat CTLMainMenuWidth = 170.0f;
     
     [self addChildViewController:self.mainViewNavController];
     self.mainViewNavController.view.frame = frame;
+    
+   
     [self.view addSubview:self.mainViewNavController.view];
 }
 

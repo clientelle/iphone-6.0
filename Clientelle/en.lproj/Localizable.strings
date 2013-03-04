@@ -55,7 +55,6 @@ e†
 
 "ADD_NEW_CONTACT" = "Add a new Contact";
 "NEW_CONTACT" = "New Contact";
-"QUICK_LEAD" = "Quick Lead";
 "IMPORT_CONTACTS" = "Import Contact";
 
 "EXTERNAL_CHANGES_DETECTED" = "External Changes Detected";
@@ -102,16 +101,5 @@ e†
 "START" = "Start:";
 "END" = "End:";
 "APPOINTMENT_MSG" = "This appointment will be added to the calendar on this device";
-
-/* Prospect Form */
-"QUICK_LEAD" = "Quick Lead";
-"CONTACT_NAME" = "Contact Name";
-"PHONE_OR_EMAIL" = "Phone or Email";
-"POTENTIAL" = "Potential";
-"NOTES" = "Notes";
-"CONTACT_IS_BLANK" = "Contact name cannot be blank";
-"PHONE_EMAIL_IS_BLANK" = "Phone or Email cannot be blank";
-"ADD_NOTE" = "Add a note about this lead";
-
 
 

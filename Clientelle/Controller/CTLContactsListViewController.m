@@ -16,7 +16,6 @@
 #import "CTLContactsListViewController.h"
 
 #import "CTLContactViewController.h"
-#import "CTLProspectFormViewController.h"
 #import "CTLContactImportViewController.h"
 #import "CTLGroupsListViewController.h"
 #import "CTLAddEventViewController.h"
@@ -39,7 +38,6 @@ NSString *const CTLContactRowDidChangeNotification = @"com.clientelle.com.notifi
 NSString *const CTLImporterSegueIdentifyer = @"toImporter";
 NSString *const CTLContactListSegueIdentifyer = @"toContacts";
 NSString *const CTLContactFormSegueIdentifyer = @"toContactForm";
-NSString *const CTLProspectFormSegueIdentifyer = @"toProspectForm";
 NSString *const CTLGroupListSegueIdentifyer = @"toGroupList";
 NSString *const CTLAppointmentSegueIdentifyer = @"toSetAppointment";
 
@@ -80,7 +78,7 @@ int const CTLEmptyContactsTitleTag = 792;
     
     _emptyView = [self noContactsView];
     
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"paper.png"]];
+    //self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"paper.png"]];
     
 }
 
@@ -91,6 +89,7 @@ int const CTLEmptyContactsTitleTag = 792;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timestampForRowDidChange:) name:CTLTimestampForRowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newContactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactRowDidChange:) name:CTLContactRowDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
 }
 
 #pragma mark - Loading Contact List
@@ -102,6 +101,29 @@ int const CTLEmptyContactsTitleTag = 792;
     }];
     
     [self setContactList];
+}
+
+- (void)addressBookDidChange:(NSNotification *)notification
+{
+    CFErrorRef error;
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
+    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef reqError) {
+        if(granted){
+            self.addressBookRef = addressBookRef;
+            CTLABGroup *selectedGroup = [[CTLABGroup alloc] initWithGroupID:[CTLABGroup defaultGroupID] addressBook:self.addressBookRef];
+            [self loadGroup:selectedGroup];
+            
+            
+            if(_inContactMode){
+                
+                [self.contactHeader populateViewData:_selectedPerson];
+                [self determineToolbarAbilities];
+            }
+            
+        }else{
+            
+        }
+    });
 }
 
 - (void)loadGroup:(CTLABGroup *)group
@@ -369,14 +391,14 @@ int const CTLEmptyContactsTitleTag = 792;
                                                              delegate:self
                                                     cancelButtonTitle:nil
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"NEW_CONTACT", nil), NSLocalizedString(@"QUICK_LEAD", nil), nil];
+                                                    otherButtonTitles:NSLocalizedString(@"NEW_CONTACT", nil), nil];
     actionSheet.tag = CTLAddContactActionSheetTag;
     
     if([self.selectedGroup groupID] != CTLAllContactsGroupID){
         [actionSheet addButtonWithTitle:NSLocalizedString(@"IMPORT_CONTACTS", nil)];
-        actionSheet.cancelButtonIndex = 3;
-    }else{
         actionSheet.cancelButtonIndex = 2;
+    }else{
+        actionSheet.cancelButtonIndex = 1;
     }
     
     [actionSheet addButtonWithTitle:NSLocalizedString(@"CANCEL", nil)];
@@ -404,9 +426,6 @@ int const CTLEmptyContactsTitleTag = 792;
                     [self performSegueWithIdentifier:CTLContactFormSegueIdentifyer sender:self];
                     break;
                 case 1:
-                    [self performSegueWithIdentifier:CTLProspectFormSegueIdentifyer sender:self];
-                    break;
-                case 2:
                     //if group selector is set to "all contacts" the import button is hidden
                     //because all the importer shows all contacts so you can import to itself.
                     if([self.selectedGroup groupID] != CTLAllContactsGroupID){
@@ -521,12 +540,6 @@ int const CTLEmptyContactsTitleTag = 792;
         return;
     }
     
-    if ([[segue identifier] isEqualToString:CTLProspectFormSegueIdentifyer]) {
-        CTLProspectFormViewController *viewController = [segue destinationViewController];
-        [viewController setAddressBookRef:self.addressBookRef];
-        return;
-    }
-    
     if([[segue identifier] isEqualToString:CTLAppointmentSegueIdentifyer]){
         UINavigationController *navigationController = [segue destinationViewController];
         CTLAddEventViewController *appointmentViewController = (CTLAddEventViewController *)navigationController.topViewController;
@@ -587,7 +600,6 @@ int const CTLEmptyContactsTitleTag = 792;
     [addButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];    
     [addButton addTarget:self action:@selector(showImporter:) forControlEvents:UIControlEventTouchUpInside];
     [addButton setTitle:NSLocalizedString(@"ADD_CONTACTS", nil) forState:UIControlStateNormal];
-     
     
     [emptyView addSubview:titleLabel];
     [emptyView addSubview:messageLabel];
@@ -728,15 +740,15 @@ int const CTLEmptyContactsTitleTag = 792;
     cell.nameLabel.text = [person compositeName];
     
     if([[person phone] length] > 0){
-        cell.detailsLabel.text = [NSString formatPhoneNumber:[person phone]];
+        cell.detailsLabel.text = person.phone;
     }else if([[person email] length] > 0){
-        cell.detailsLabel.text = [person email];
+        cell.detailsLabel.text = person.email;
     }else{
         cell.detailsLabel.text = @"";
     }
     
     NSDate *accessDate = [_accessedDictionary objectForKey:@(person.recordID)];
-    cell.timestampLabel.text = [NSDate dateToString:accessDate];
+    cell.timestampLabel.text = [NSString stringWithFormat:@"%@  ", [NSDate dateToString:accessDate]];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -995,10 +1007,10 @@ int const CTLEmptyContactsTitleTag = 792;
         [_contactsDictionary setObject:_selectedPerson forKey:@(_selectedPerson.recordID)];
         [_accessedDictionary setObject:[NSDate date] forKey:@(_selectedPerson.recordID)];
         _contacts = [[_contactsDictionary allValues] mutableCopy];
-        [self enterContactMode];
-        
-        [self.tableView reloadData];
 
+        [self enterContactMode];
+        [self.tableView reloadData];
+        [self handleUIRestrictions];
     }
 }
 

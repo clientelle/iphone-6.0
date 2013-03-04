@@ -15,6 +15,11 @@
     NSMutableArray *_filteredContacts;
     NSMutableDictionary *_selectedPeople;
     ABAddressBookRef _addressBookRef;
+    
+    UIColor *_textColor;
+    UIColor *_disabledTextColor;
+    UIColor *_selectedBackgroundColor;
+
 }
 
 @property(nonatomic, assign) ABAddressBookRef addressBookRef;

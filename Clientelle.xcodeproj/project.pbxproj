@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		412C3C7F16E3DD90009E662E /* CTLPotentialMeterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412C3C7E16E3DD90009E662E /* CTLPotentialMeterView.m */; };
 		4130652816BE4E5E0063AC10 /* PhoneFormats.dat in Resources */ = {isa = PBXBuildFile; fileRef = 4130652716BE4E5E0063AC10 /* PhoneFormats.dat */; };
 		4130652B16BE4F930063AC10 /* RMPhoneFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130652A16BE4F920063AC10 /* RMPhoneFormat.m */; };
 		4130652C16BE50AB0063AC10 /* RMPhoneFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130652A16BE4F920063AC10 /* RMPhoneFormat.m */; };
@@ -31,6 +32,7 @@
 		41468DAA16C930BE0015DE18 /* Navigation-Toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41468DA816C930BE0015DE18 /* Navigation-Toolbar@2x.png */; };
 		41468DAD16C934840015DE18 /* paper@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 41468DAB16C934840015DE18 /* paper@2X.png */; };
 		41468DAE16C934840015DE18 /* paper.png in Resources */ = {isa = PBXBuildFile; fileRef = 41468DAC16C934840015DE18 /* paper.png */; };
+		4167F5BC16D6FDA6005B7B08 /* CTLLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */; };
 		416DD82B16AF966400F2F8B3 /* CTLSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */; };
 		416DD83216AF9C0100F2F8B3 /* CTLAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */; };
 		416DD83716AF9D9C00F2F8B3 /* CTLInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83616AF9D9B00F2F8B3 /* CTLInboxViewController.m */; };
@@ -136,7 +138,6 @@
 		41B546E716B39C2600302652 /* CTLContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546DE16B39C2300302652 /* CTLContactViewController.m */; };
 		41B546E816B39C2600302652 /* CTLContactImportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E016B39C2400302652 /* CTLContactImportViewController.m */; };
 		41B546E916B39C2600302652 /* CTLContactFormEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */; };
-		41B546EA16B39C2600302652 /* CTLProspectFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E416B39C2400302652 /* CTLProspectFormViewController.m */; };
 		41B546EB16B39C2600302652 /* CTLAddEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E616B39C2500302652 /* CTLAddEventViewController.m */; };
 		41B546EC16B453D000302652 /* CTLContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546D016B39A9F00302652 /* CTLContactCell.m */; };
 		41B546ED16B453D000302652 /* CTLContactHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546D316B39BC500302652 /* CTLContactHeaderView.m */; };
@@ -209,7 +210,6 @@
 		41E9BA2816B4580D00FEF1FE /* CTLContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546DE16B39C2300302652 /* CTLContactViewController.m */; };
 		41E9BA2916B4580D00FEF1FE /* CTLContactImportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E016B39C2400302652 /* CTLContactImportViewController.m */; };
 		41E9BA2A16B4580D00FEF1FE /* CTLContactFormEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */; };
-		41E9BA2B16B4580D00FEF1FE /* CTLProspectFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E416B39C2400302652 /* CTLProspectFormViewController.m */; };
 		41E9BA2C16B4580D00FEF1FE /* CTLAddEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E616B39C2500302652 /* CTLAddEventViewController.m */; };
 		41E9BA2D16B4589B00FEF1FE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC24916ADF1140073199D /* main.m */; };
 		41E9BA2E16B4589B00FEF1FE /* CTLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC24D16ADF1140073199D /* CTLAppDelegate.m */; };
@@ -242,7 +242,6 @@
 		41E9BA5116B459E100FEF1FE /* ABPersonSchema.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E9BA4D16B459E100FEF1FE /* ABPersonSchema.plist */; };
 		41E9BA5216B459E100FEF1FE /* AddressFields.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E9BA4E16B459E100FEF1FE /* AddressFields.plist */; };
 		41E9BA5316B459E100FEF1FE /* DevConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E9BA4F16B459E100FEF1FE /* DevConfig.plist */; };
-		41E9BA5416B459E100FEF1FE /* ProspectForm.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E9BA5016B459E100FEF1FE /* ProspectForm.plist */; };
 		41F0059316B8DC92002A5CE0 /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F0059216B8DC92002A5CE0 /* app-icon.png */; };
 		41F0059516B8DC9E002A5CE0 /* app-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F0059416B8DC9E002A5CE0 /* app-icon@2x.png */; };
 		41FEEE4216AFC7FE00094A70 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41FEEE4416AFC7FE00094A70 /* Localizable.strings */; };
@@ -262,6 +261,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		412C3C7D16E3DD90009E662E /* CTLPotentialMeterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLPotentialMeterView.h; sourceTree = "<group>"; };
+		412C3C7E16E3DD90009E662E /* CTLPotentialMeterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPotentialMeterView.m; sourceTree = "<group>"; };
 		4130652716BE4E5E0063AC10 /* PhoneFormats.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = PhoneFormats.dat; sourceTree = "<group>"; };
 		4130652916BE4F920063AC10 /* RMPhoneFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPhoneFormat.h; sourceTree = "<group>"; };
 		4130652A16BE4F920063AC10 /* RMPhoneFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPhoneFormat.m; sourceTree = "<group>"; };
@@ -286,6 +287,8 @@
 		41468DA816C930BE0015DE18 /* Navigation-Toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Navigation-Toolbar@2x.png"; sourceTree = "<group>"; };
 		41468DAB16C934840015DE18 /* paper@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paper@2X.png"; sourceTree = "<group>"; };
 		41468DAC16C934840015DE18 /* paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper.png; sourceTree = "<group>"; };
+		4167F5BA16D6FDA6005B7B08 /* CTLLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLLoginViewController.h; sourceTree = "<group>"; };
+		4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLLoginViewController.m; sourceTree = "<group>"; };
 		416DD82816AF966300F2F8B3 /* CTLSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSlideMenuController.h; sourceTree = "<group>"; };
 		416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLSlideMenuController.m; sourceTree = "<group>"; };
 		416DD82A16AF966400F2F8B3 /* CTLSlideMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSlideMenuDelegate.h; sourceTree = "<group>"; };
@@ -440,8 +443,6 @@
 		41B546E016B39C2400302652 /* CTLContactImportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactImportViewController.m; sourceTree = "<group>"; };
 		41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactFormEditorViewController.h; sourceTree = "<group>"; };
 		41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactFormEditorViewController.m; sourceTree = "<group>"; };
-		41B546E316B39C2400302652 /* CTLProspectFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLProspectFormViewController.h; sourceTree = "<group>"; };
-		41B546E416B39C2400302652 /* CTLProspectFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLProspectFormViewController.m; sourceTree = "<group>"; };
 		41B546E516B39C2500302652 /* CTLAddEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAddEventViewController.h; sourceTree = "<group>"; };
 		41B546E616B39C2500302652 /* CTLAddEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAddEventViewController.m; sourceTree = "<group>"; };
 		41B546F016B454DF00302652 /* 07-map-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "07-map-marker.png"; sourceTree = "<group>"; };
@@ -496,7 +497,6 @@
 		41E9BA4D16B459E100FEF1FE /* ABPersonSchema.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ABPersonSchema.plist; sourceTree = "<group>"; };
 		41E9BA4E16B459E100FEF1FE /* AddressFields.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AddressFields.plist; sourceTree = "<group>"; };
 		41E9BA4F16B459E100FEF1FE /* DevConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DevConfig.plist; sourceTree = "<group>"; };
-		41E9BA5016B459E100FEF1FE /* ProspectForm.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ProspectForm.plist; sourceTree = "<group>"; };
 		41F0059216B8DC92002A5CE0 /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon.png"; path = "../app-icon.png"; sourceTree = "<group>"; };
 		41F0059416B8DC9E002A5CE0 /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon@2x.png"; path = "../app-icon@2x.png"; sourceTree = "<group>"; };
 		41FEEE4316AFC7FE00094A70 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -731,7 +731,6 @@
 				41F0059416B8DC9E002A5CE0 /* app-icon@2x.png */,
 				41F0059216B8DC92002A5CE0 /* app-icon.png */,
 				41E9BA4F16B459E100FEF1FE /* DevConfig.plist */,
-				41E9BA5016B459E100FEF1FE /* ProspectForm.plist */,
 				41E9BA4D16B459E100FEF1FE /* ABPersonSchema.plist */,
 				41E9BA4E16B459E100FEF1FE /* AddressFields.plist */,
 			);
@@ -783,8 +782,6 @@
 				41B546DE16B39C2300302652 /* CTLContactViewController.m */,
 				41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */,
 				41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */,
-				41B546E316B39C2400302652 /* CTLProspectFormViewController.h */,
-				41B546E416B39C2400302652 /* CTLProspectFormViewController.m */,
 				41B546E516B39C2500302652 /* CTLAddEventViewController.h */,
 				41B546E616B39C2500302652 /* CTLAddEventViewController.m */,
 				417DC2BC16AE30F90073199D /* CTLGroupsListViewController.h */,
@@ -795,6 +792,8 @@
 				416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */,
 				4130653D16C14A950063AC10 /* CTLRegisterViewController.h */,
 				4130653E16C14A960063AC10 /* CTLRegisterViewController.m */,
+				4167F5BA16D6FDA6005B7B08 /* CTLLoginViewController.h */,
+				4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */,
 				41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */,
 				41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */,
 				41DA1DB716CC8B4D0017F71F /* CTLInboxInterstitialViewController.h */,
@@ -831,6 +830,8 @@
 				41B546D516B39BC500302652 /* CTLContactToolbarView.m */,
 				41B546D616B39BC500302652 /* CTLFiveStarRater.h */,
 				41B546D716B39BC500302652 /* CTLFiveStarRater.m */,
+				412C3C7D16E3DD90009E662E /* CTLPotentialMeterView.h */,
+				412C3C7E16E3DD90009E662E /* CTLPotentialMeterView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1111,7 +1112,6 @@
 				41E9BA5116B459E100FEF1FE /* ABPersonSchema.plist in Resources */,
 				41E9BA5216B459E100FEF1FE /* AddressFields.plist in Resources */,
 				41E9BA5316B459E100FEF1FE /* DevConfig.plist in Resources */,
-				41E9BA5416B459E100FEF1FE /* ProspectForm.plist in Resources */,
 				41F0059316B8DC92002A5CE0 /* app-icon.png in Resources */,
 				41F0059516B8DC9E002A5CE0 /* app-icon@2x.png in Resources */,
 				4130652816BE4E5E0063AC10 /* PhoneFormats.dat in Resources */,
@@ -1176,7 +1176,6 @@
 				41E9BA2816B4580D00FEF1FE /* CTLContactViewController.m in Sources */,
 				41E9BA2916B4580D00FEF1FE /* CTLContactImportViewController.m in Sources */,
 				41E9BA2A16B4580D00FEF1FE /* CTLContactFormEditorViewController.m in Sources */,
-				41E9BA2B16B4580D00FEF1FE /* CTLProspectFormViewController.m in Sources */,
 				41E9BA2C16B4580D00FEF1FE /* CTLAddEventViewController.m in Sources */,
 				41B546EC16B453D000302652 /* CTLContactCell.m in Sources */,
 				41B546ED16B453D000302652 /* CTLContactHeaderView.m in Sources */,
@@ -1238,6 +1237,8 @@
 				41DA1DBC16CE781C0017F71F /* CTLEnterFormCodeViewController.m in Sources */,
 				41DA1DCF16D003DC0017F71F /* _CTLCDInbox.m in Sources */,
 				41DA1DD016D003DC0017F71F /* CTLCDInbox.m in Sources */,
+				4167F5BC16D6FDA6005B7B08 /* CTLLoginViewController.m in Sources */,
+				412C3C7F16E3DD90009E662E /* CTLPotentialMeterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1302,7 +1303,6 @@
 				41B546E716B39C2600302652 /* CTLContactViewController.m in Sources */,
 				41B546E816B39C2600302652 /* CTLContactImportViewController.m in Sources */,
 				41B546E916B39C2600302652 /* CTLContactFormEditorViewController.m in Sources */,
-				41B546EA16B39C2600302652 /* CTLProspectFormViewController.m in Sources */,
 				41B546EB16B39C2600302652 /* CTLAddEventViewController.m in Sources */,
 				41B5473016B4556500302652 /* CTLContactFieldCell.m in Sources */,
 				41B5473416B4559500302652 /* CTLEvent.m in Sources */,

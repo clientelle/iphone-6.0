@@ -19,7 +19,9 @@ NSString *const CTLMenuPlistName = @"Clientelle-Menu";
 {
     [super viewDidLoad];
     
-    self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter.png"]];
+    //self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter.png"]];
+    
+    self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:40 green:40 blue:40 alpha:1.0f];
     self.tableView.separatorColor = [UIColor clearColor];
     
     _offWhite = [UIColor colorFromUnNormalizedRGB:200 green:200 blue:200 alpha:1.0f];

@@ -19,6 +19,7 @@ extern NSString *const CTLReloadInboxNotifiyer;
     NSArray *_industries;
     CTLAPI *_api;
     NSNumber *_industryID;
+    BOOL _overrideBackButtonWithMenuButton;
     
 }
 
@@ -34,6 +35,6 @@ extern NSString *const CTLReloadInboxNotifiyer;
 
 - (IBAction)submit:(id)sender;
 
-- (IBAction)seeActivity:(id)sender;
+- (IBAction)segueToLogin:(id)sender;
 
 @end

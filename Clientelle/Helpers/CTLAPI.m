@@ -10,6 +10,8 @@
 #import "CTLAPI.h"
 #import "GOHTTPOperation.h"
 
+BOOL const DEBUG_MODE = YES;
+
 // Error messages
 NSString *const kServerErrorGeneric = @"Sorry... internet trouble";
 
@@ -62,9 +64,8 @@ typedef enum{
 #pragma mark Helper methods
 
 - (NSString *)urlStringForAPIMethod:(NSString *)method{
-    //NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"DevConfig" ofType:@"plist"]];
-    //return [NSString stringWithFormat:@"http://%@.api.ctldev.com/%@", [plist objectForKey:@"server"], method];
-    return [NSString stringWithFormat:@"http://api.ctldev.com/%@", method];
+    NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"DevConfig" ofType:@"plist"]];
+    return [NSString stringWithFormat:@"%@%@", [plist objectForKey:@"server"], method];
 }
 
 - (void)setUserDictionary:(NSDictionary *)user{
@@ -80,8 +81,10 @@ typedef enum{
         NSError *error = nil;
         NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&error];
         if(!responseDict){
-            NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-            NSLog(@"Response string: %@", responseString);
+            if(DEBUG_MODE){
+                NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+                NSLog(@"Response string: %@", responseString);
+            }
             block(NO, responseDict);
             return;
         }
@@ -104,8 +107,8 @@ typedef enum{
         NSError *error = nil;
         NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&error];
         if(!responseDict){
-            NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-            NSLog(@"Response string: %@", responseString);
+            //NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+            //NSLog(@"Response string: %@", responseString);
             block(NO, responseDict);
             return;
         }

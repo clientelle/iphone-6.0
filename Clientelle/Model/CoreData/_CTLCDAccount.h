@@ -7,9 +7,13 @@
 extern const struct CTLCDAccountAttributes {
 	__unsafe_unretained NSString *access_token;
 	__unsafe_unretained NSString *company;
+	__unsafe_unretained NSString *company_id;
 	__unsafe_unretained NSString *dateCreated;
 	__unsafe_unretained NSString *email;
+	__unsafe_unretained NSString *first_name;
 	__unsafe_unretained NSString *industry;
+	__unsafe_unretained NSString *industry_id;
+	__unsafe_unretained NSString *last_name;
 	__unsafe_unretained NSString *password;
 	__unsafe_unretained NSString *user_id;
 } CTLCDAccountAttributes;
@@ -19,6 +23,10 @@ extern const struct CTLCDAccountRelationships {
 
 extern const struct CTLCDAccountFetchedProperties {
 } CTLCDAccountFetchedProperties;
+
+
+
+
 
 
 
@@ -57,6 +65,18 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* company_id;
+
+
+@property int16_t company_idValue;
+- (int16_t)company_idValue;
+- (void)setCompany_idValue:(int16_t)value_;
+
+//- (BOOL)validateCompany_id:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSDate* dateCreated;
 
 
@@ -73,10 +93,38 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* first_name;
+
+
+//- (BOOL)validateFirst_name:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSString* industry;
 
 
 //- (BOOL)validateIndustry:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* industry_id;
+
+
+@property int16_t industry_idValue;
+- (int16_t)industry_idValue;
+- (void)setIndustry_idValue:(int16_t)value_;
+
+//- (BOOL)validateIndustry_id:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* last_name;
+
+
+//- (BOOL)validateLast_name:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -124,6 +172,15 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+- (NSNumber*)primitiveCompany_id;
+- (void)setPrimitiveCompany_id:(NSNumber*)value;
+
+- (int16_t)primitiveCompany_idValue;
+- (void)setPrimitiveCompany_idValue:(int16_t)value_;
+
+
+
+
 - (NSDate*)primitiveDateCreated;
 - (void)setPrimitiveDateCreated:(NSDate*)value;
 
@@ -136,8 +193,29 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+- (NSString*)primitiveFirst_name;
+- (void)setPrimitiveFirst_name:(NSString*)value;
+
+
+
+
 - (NSString*)primitiveIndustry;
 - (void)setPrimitiveIndustry:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveIndustry_id;
+- (void)setPrimitiveIndustry_id:(NSNumber*)value;
+
+- (int16_t)primitiveIndustry_idValue;
+- (void)setPrimitiveIndustry_idValue:(int16_t)value_;
+
+
+
+
+- (NSString*)primitiveLast_name;
+- (void)setPrimitiveLast_name:(NSString*)value;
 
 
 
