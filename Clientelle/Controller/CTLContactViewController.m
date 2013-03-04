@@ -302,7 +302,6 @@ int const CTLOverwriteExternalChangeIndex = 1;
         cell.textInput.tag = indexPath.row + [_fieldRows count];
     }
     
-    cell.fieldLabel.text = [field objectForKey:kCTLFieldLabel];
     cell.textInput.placeholder = [field objectForKey:kCTLFieldPlaceHolder];
     cell.textInput.text = [field objectForKey:kCTLFieldValue];
         

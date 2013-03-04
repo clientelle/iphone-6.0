@@ -10,7 +10,6 @@
 
 @interface CTLContactFieldCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *fieldLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textInput;
 
 @end

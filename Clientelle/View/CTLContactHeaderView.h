@@ -8,15 +8,23 @@
 
 @class CTLABPerson;
 
+@class UIMenuController;
+
+extern NSString *const CTLShareContactNotification;
 extern CGFloat const CTLContactViewHeaderHeight;
 
-@interface CTLContactHeaderView : UIView
+@interface CTLContactHeaderView : UIView{
+    BOOL _menuIsVisible;
+    UIMenuController * _menuController;
+}
 
-@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
-@property (nonatomic, weak) IBOutlet UILabel *phoneLabel;
-@property (nonatomic, weak) IBOutlet UIImageView *pictureView;
-@property(nonatomic, weak)IBOutlet UIButton *editButton;
+@property (nonatomic, weak) UILabel *nameLabel;
+@property (nonatomic, weak) UILabel *phoneLabel;
+@property (nonatomic, weak) UIImageView *pictureView;
+@property (nonatomic, weak) UIButton *editButton;
 
 - (void)populateViewData:(CTLABPerson *)abPerson;
+
+- (void)reset;
 
 @end

@@ -90,6 +90,18 @@ int const CTLEmptyContactsTitleTag = 792;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newContactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactRowDidChange:) name:CTLContactRowDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayShareContactActionSheet:) name:CTLShareContactNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLShareContactNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLContactListReloadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLTimestampForRowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLNewContactWasAddedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLContactRowDidChangeNotification object:nil];
 }
 
 #pragma mark - Loading Contact List
@@ -309,12 +321,8 @@ int const CTLEmptyContactsTitleTag = 792;
         return;
     }
     
-    if(_inContactMode){
-        [self rightTitlebarWithContactViewButton];
-    }else{
-        [self rightTitlebarWithAddContactButton];
-    }
-    
+    [self rightTitlebarWithAddContactButton];
+      
     CGRect pickerFrame = _groupPickerView.frame;
     pickerFrame.origin.y = -pickerFrame.size.height;
     
@@ -375,11 +383,6 @@ int const CTLEmptyContactsTitleTag = 792;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus.png"] style:UIBarButtonItemStylePlain target:self action:@selector(displayAddContactActionSheet:)];
 }
 
-- (void)rightTitlebarWithContactViewButton
-{
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"31-paper-airplane.png"] style:UIBarButtonItemStylePlain target:self action:@selector(displayShareContactActionSheet:)];
-}
-
 - (void)rightTitlebarWithGroupViewButton
 {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus.png"] style:UIBarButtonItemStylePlain target:self action:@selector(displayAddGroupPrompt:)];
@@ -405,6 +408,7 @@ int const CTLEmptyContactsTitleTag = 792;
     [actionSheet showInView:self.view];
 }
 
+
 - (void)displayShareContactActionSheet:(id)sender
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"FORWARD_CONTACT", nil), [_selectedPerson compositeName]]
@@ -419,7 +423,8 @@ int const CTLEmptyContactsTitleTag = 792;
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch(actionSheet.tag){
+
+     switch(actionSheet.tag){
         case CTLAddContactActionSheetTag:
             switch(buttonIndex){
                 case 0:
@@ -442,8 +447,12 @@ int const CTLEmptyContactsTitleTag = 792;
                 case 1:
                     [self shareContactViaEmail:self];
                     break;
+                case 2:
+                    [self.contactHeader reset];
+                    break;
             }
             break;
+            
     }
 }
 
@@ -618,7 +627,6 @@ int const CTLEmptyContactsTitleTag = 792;
     }
     
     _inContactMode = true;
-    [self rightTitlebarWithContactViewButton];
     
     CGRect headerFrame = self.contactHeader.frame;
     CGRect toolbarFrame = self.contactToolbar.frame;
