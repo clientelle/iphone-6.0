@@ -11,7 +11,6 @@
 #import "NSString+CTLString.h"
 #import "CTLContactHeaderView.h"
 #import "CTLABPerson.h"
-#import "CTLCopyableLabel.h"
 
 NSString *const CTLShareContactNotification = @"com.clientelle.com.notifications.shareContact";
 CGFloat const CTLContactViewHeaderHeight = 68.0f;
@@ -72,12 +71,20 @@ int CTLPhoneLabelTag = 602;
         
         [editProfileButton.layer addSublayer:border1];
         
-                                
-        CGFloat indicatorPositionX = self.bounds.size.width - 25;
-        CGFloat indicatorPositionY = (CTLContactViewHeaderHeight/2) - (13.0f/2);
+        /*
+        CALayer *border2 = [CALayer layer];
+        border2.borderColor = [UIColor whiteColor].CGColor;
+        border2.borderWidth = 1;
+        border2.frame = CGRectMake(1.0f, 0, 1.0f, viewSize.height);
         
-        UIImageView *editIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(indicatorPositionX,  indicatorPositionY, 10, 13)];
-        [editIndicator setImage:[UIImage imageNamed:@"cell-indicator.png"]];
+        [editProfileButton.layer addSublayer:border2];
+        */
+                                
+        CGFloat indicatorPositionX = self.bounds.size.width - 30;
+        CGFloat indicatorPositionY = (CTLContactViewHeaderHeight/2) - (19.0f/2);
+        
+        UIImageView *editIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(indicatorPositionX,  indicatorPositionY, 19.0f, 19.0f)];
+        [editIndicator setImage:[UIImage imageNamed:@"cell-arrow.png"]];
         
         [self addSubview:pictureView];
         [self addSubview:nameLabel];

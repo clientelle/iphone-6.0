@@ -22,6 +22,7 @@ extern CGFloat const CTLContactViewHeaderHeight;
 @property (nonatomic, weak) UILabel *phoneLabel;
 @property (nonatomic, weak) UIImageView *pictureView;
 @property (nonatomic, weak) UIButton *editButton;
+@property (nonatomic, weak) UIImageView *indicator;
 
 - (void)populateViewData:(CTLABPerson *)abPerson;
 

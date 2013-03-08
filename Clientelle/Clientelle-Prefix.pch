@@ -19,3 +19,4 @@
 
 
 #define kAddressBookDidChange @"com.clientelle.addressBook.change"
+#define kApplicationDidGoInactive @"com.clientelle.applicationDidGoInactive"

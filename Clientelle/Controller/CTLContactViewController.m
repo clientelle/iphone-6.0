@@ -24,13 +24,6 @@
 
 NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
-int const CTLContactModifiedTag = 1234;
-int const CTLContactDeletedTag = 4321;
-int const CTLConfirmExternalDeleteIndex = 0;
-int const CTLRecreateContactIndex = 1;
-int const CTLTakeExternalChangesIndex = 0;
-int const CTLOverwriteExternalChangeIndex = 1;
-
 @implementation CTLContactViewController
 
 #pragma mark
@@ -74,8 +67,7 @@ int const CTLOverwriteExternalChangeIndex = 1;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:CTLAddressBookChanged object:nil];
-     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
 }
@@ -83,7 +75,6 @@ int const CTLOverwriteExternalChangeIndex = 1;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
-   
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
@@ -187,70 +178,48 @@ int const CTLOverwriteExternalChangeIndex = 1;
 
 - (void)addressBookDidChange:(NSNotification *)notification
 {
-    CTLABPerson *person = [[CTLABPerson alloc] initWithRecordRef:[self.abPerson recordRef] withAddressBookRef:self.addressBookRef];
-    
     //if changes came from app or user has no pending changes, simply reload the form view
     if(_addressbookChangeDidComeFromApp){
         [self reloadFormViewAfterAddressBookChange];
         return;
     }
     
-    UIAlertView *alert = [[UIAlertView alloc] init];
-    [alert setTitle:NSLocalizedString(@"EXTERNAL_CHANGES_DETECTED", nil)];
-    [alert setDelegate:self];
+    ABRecordID personID = [self.abPerson recordID];
+    NSString *personName = [self.abPerson compositeName];
     
-    if(person.recordID == kABRecordInvalidID){
-        NSString *deletedMsg = [NSString stringWithFormat:NSLocalizedString(@"CONTACT_WAS_DELETED", nil), [self.abPerson firstName]];
-        alert.tag = CTLContactDeletedTag;
-        [alert setMessage:deletedMsg];
+    CFErrorRef error;
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
+    self.addressBookRef = addressBookRef;
+    self.abPerson = [[CTLABPerson alloc] initWithRecordID:personID withAddressBookRef:addressBookRef];
+        
+    if(!self.abPerson){
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID=%i", personID];
+        //CTLCDPerson *person = [CTLCDPerson MR_findFirstWithPredicate:predicate];
+        
+        [CTLCDPerson deleteAllMatchingPredicate:predicate];
+        
+        UIAlertView *alert = [[UIAlertView alloc] init];
+        [alert setTitle:nil];
+        [alert setDelegate:self];
+        [alert setMessage:[NSString stringWithFormat:NSLocalizedString(@"CONTACT_WAS_DELETED", nil), personName]];
         [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
-        [alert addButtonWithTitle:NSLocalizedString(@"CREATE_AGAIN", nil)];
+        [alert show];
     }else{
-        alert.tag = CTLContactModifiedTag;
-        [alert setMessage:NSLocalizedString(@"OVERWRITE_PROMPT", nil)];
-        [alert addButtonWithTitle:NSLocalizedString(@"TAKE_NEW", nil)];
-        [alert addButtonWithTitle:NSLocalizedString(@"OVERWRITE", nil)];
+        [self reloadFormViewAfterAddressBookChange];
     }
-    
-    [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    if(alertView.tag == CTLContactDeletedTag){
-        if(buttonIndex == CTLConfirmExternalDeleteIndex){
-            //accept the fact that contact was deleted
-            [self dismissViewControllerAnimated:YES completion:^{
-                //[[NSNotificationCenter defaultCenter] postNotificationName:CTLContactDeletedNotification object:nil];
-            }];
-        }
-        if(buttonIndex == CTLRecreateContactIndex){
-            //recreate the contact by setting the recordID is invalid
-            [self.abPerson setRecordID:kABRecordInvalidID];
-            [self saveContactInfo];
-        }
-    }
-    
-    if(alertView.tag == CTLContactModifiedTag){
-        if(buttonIndex == CTLTakeExternalChangesIndex){
-            //revert changes to take address book data
-            [self reloadFormViewAfterAddressBookChange];
-        }
-        
-        if(buttonIndex == CTLOverwriteExternalChangeIndex){
-            //overwrite addressbook changes
-            [self saveContactInfo];
-        }
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)reloadFormViewAfterAddressBookChange {
+     
+    [_personDict removeAllObjects];
+    [_addressDict removeAllObjects];
     
-    self.abPerson = [[CTLABPerson alloc] initWithRecordRef:[self.abPerson recordRef] withAddressBookRef:self.addressBookRef];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"groupID=%i", [self.abGroup groupID]];
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    _formSchema = [CTLCDFormSchema MR_findFirstWithPredicate:predicate inContext:context];
     [self buildSchema];
     [self.tableView reloadData];
 }

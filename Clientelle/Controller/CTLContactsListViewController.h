@@ -11,6 +11,7 @@
 
 extern int const CTLAllContactsGroupID;
 
+extern NSString *const CTLContactWereImportedNotification;
 extern NSString *const CTLContactListReloadNotification;
 extern NSString *const CTLTimestampForRowNotification;
 extern NSString *const CTLNewContactWasAddedNotification;

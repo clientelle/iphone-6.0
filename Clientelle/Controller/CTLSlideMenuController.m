@@ -5,6 +5,7 @@
 //
 
 #import "CTLSlideMenuController.h"
+#import "CTLContactsListViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
 const CGFloat CTLMainMenuWidth = 170.0f;
@@ -107,7 +108,7 @@ const CGFloat CTLMainMenuWidth = 170.0f;
 
 - (void)renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)mainViewController
 {
-    mainViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"38-house.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(toggleMenu:)];
+    mainViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(toggleMenu:)];
 }
 
 - (void)setRightPanel:(UINavigationController *)rightNavigationController withFrame:(CGRect)frame

@@ -29,7 +29,7 @@
 #import "CTLCDPerson.h"
 #import "CTLCDFormSchema.h"
 
-
+NSString *const CTLContactWereImportedNotification = @"com.clientelle.notifications.contactsWereImported";
 NSString *const CTLContactListReloadNotification = @"com.clientelle.notifications.reloadContacts";
 NSString *const CTLTimestampForRowNotification = @"com.clientelle.notifications.updateContactTimestamp";
 NSString *const CTLNewContactWasAddedNotification = @"com.clientelle.com.notifications.contactWasAdded";
@@ -78,19 +78,25 @@ int const CTLEmptyContactsTitleTag = 792;
     
     _emptyView = [self noContactsView];
     
+    //If you want to enable background image
     //self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"paper.png"]];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactListAfterImport:) name:CTLContactWereImportedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactList:) name:CTLContactListReloadNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timestampForRowDidChange:) name:CTLTimestampForRowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newContactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactRowDidChange:) name:CTLContactRowDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayShareContactActionSheet:) name:CTLShareContactNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidGoInactive:) name:kApplicationDidGoInactive object:nil];
+}
+
+- (void)applicationDidGoInactive:(NSNotification *)notification{
+    [self exitContactMode];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -98,10 +104,6 @@ int const CTLEmptyContactsTitleTag = 792;
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLShareContactNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLContactListReloadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLTimestampForRowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLNewContactWasAddedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLContactRowDidChangeNotification object:nil];
 }
 
 #pragma mark - Loading Contact List
@@ -117,25 +119,16 @@ int const CTLEmptyContactsTitleTag = 792;
 
 - (void)addressBookDidChange:(NSNotification *)notification
 {
-    CFErrorRef error;
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
-    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef reqError) {
-        if(granted){
-            self.addressBookRef = addressBookRef;
-            CTLABGroup *selectedGroup = [[CTLABGroup alloc] initWithGroupID:[CTLABGroup defaultGroupID] addressBook:self.addressBookRef];
-            [self loadGroup:selectedGroup];
-            
-            
-            if(_inContactMode){
-                
-                [self.contactHeader populateViewData:_selectedPerson];
-                [self determineToolbarAbilities];
-            }
-            
-        }else{
-            
-        }
-    });
+    CFErrorRef error = NULL;
+    self.addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
+    CTLABGroup *selectedGroup = [[CTLABGroup alloc] initWithGroupID:[CTLABGroup defaultGroupID] addressBook:self.addressBookRef];
+    [self loadGroup:selectedGroup];
+     
+    if(_inContactMode){
+        _selectedPerson = [[CTLABPerson alloc] initWithRecordID:_selectedPerson.recordID withAddressBookRef:self.addressBookRef];
+        [self.contactHeader populateViewData:_selectedPerson];
+        [self determineToolbarAbilities];
+    }
 }
 
 - (void)loadGroup:(CTLABGroup *)group
@@ -144,7 +137,7 @@ int const CTLEmptyContactsTitleTag = 792;
     [self setContactList];
 }
 
-- (void)reloadContactList:(NSNotification *)notification
+- (void)reloadContactListAfterImport:(NSNotification *)notification
 {
     NSMutableDictionary *importedContacts = [notification object];
     if([importedContacts count] > 0 ){
@@ -155,8 +148,25 @@ int const CTLEmptyContactsTitleTag = 792;
     }
     
     [self handleUIRestrictions];
-
     [self sortContactListByAccessDate:[_contactsDictionary allValues]];
+}
+
+- (void)reloadContactList:(NSNotification *)notification
+{
+    CFErrorRef error;
+    self.addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
+    CTLABGroup *selectedGroup = [[CTLABGroup alloc] initWithGroupID:[CTLABGroup defaultGroupID] addressBook:self.addressBookRef];
+    
+    _accessedDictionary = nil;
+    _contactsDictionary = nil;
+    _contacts = nil;
+    
+    if([selectedGroup.members count] == 0){
+        [self.tableView reloadData];
+    }else{
+        _contactsDictionary = selectedGroup.members;
+        [self setContactList];
+    }
 }
 
 - (void)handleUIRestrictions
@@ -411,11 +421,7 @@ int const CTLEmptyContactsTitleTag = 792;
 
 - (void)displayShareContactActionSheet:(id)sender
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"FORWARD_CONTACT", nil), [_selectedPerson compositeName]]
-                                                             delegate:self
-                                                    cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"SEND_VIA_SMS", nil), NSLocalizedString(@"SEND_VIA_EMAIL", nil), nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"FORWARD_CONTACT", nil), [_selectedPerson compositeName]] delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"SEND_VIA_SMS", nil), NSLocalizedString(@"SEND_VIA_EMAIL", nil), nil];
     
     actionSheet.tag = CTLShareContactActionSheetTag;
     [actionSheet showInView:self.view];
@@ -428,11 +434,11 @@ int const CTLEmptyContactsTitleTag = 792;
         case CTLAddContactActionSheetTag:
             switch(buttonIndex){
                 case 0:
+                    _selectedPerson = nil;
                     [self performSegueWithIdentifier:CTLContactFormSegueIdentifyer sender:self];
                     break;
                 case 1:
-                    //if group selector is set to "all contacts" the import button is hidden
-                    //because all the importer shows all contacts so you can import to itself.
+                    //if group selector is set to "all contacts" the import button is hidden because it doesnt make sense
                     if([self.selectedGroup groupID] != CTLAllContactsGroupID){
                         [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
                     }

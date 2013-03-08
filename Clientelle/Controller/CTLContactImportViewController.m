@@ -110,11 +110,7 @@
     }else{
         [self styleDisabledField:cell];
     }
-
-    
 }
-
-
 
 - (void)styleEnabledField:(UITableViewCell *)cell {
     [cell setAccessoryView:nil];

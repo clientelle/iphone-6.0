@@ -245,6 +245,9 @@ int CTLEndTimeInputTag = 81;
     
     [self dismissViewControllerAnimated:YES completion:^{
         [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
+        NSString *successMessage = @"An event has been added to your calendar";
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:successMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
     }];
 }
 
