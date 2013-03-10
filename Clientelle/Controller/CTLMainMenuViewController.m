@@ -113,7 +113,7 @@ self.menuController.hasInbox = NO;
      
     NSDictionary *menuItem = [_menuItems objectAtIndex:indexPath.row];
     
-    //cell.imageView.image = [UIImage imageNamed:menuItem[@"icon"]];
+    cell.imageView.image = [UIImage imageNamed:menuItem[@"icon"]];
     cell.textLabel.text = NSLocalizedString(menuItem[@"title"], nil);
     
     [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13.0f]];
@@ -138,10 +138,8 @@ self.menuController.hasInbox = NO;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *menuItem = [_menuItems objectAtIndex:indexPath.row];
-    
     NSString *navControllerName = [self handleInboxSelection:menuItem[@"identifier"]];
     [self.menuController setMainView:navControllerName];
-    
     [self removeStyleFromPreviouslyActiveCell];
     _selectedIndexPath = indexPath;
     [self styleActiveCell];
@@ -162,24 +160,22 @@ self.menuController.hasInbox = NO;
     }
     
     return navControllerName;
-    
 }
 
 - (void)styleActiveCell
 {
     UITableViewCell *cell = (UITableViewCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    UIImageView *accessory = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"white-indicator-right.png"]];
-    [cell setAccessoryView:accessory];
     cell.textLabel.textColor = [UIColor whiteColor];
+    [cell setAccessoryType:UITableViewCellAccessoryNone];
+    [cell setAccessoryView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"white-indicator-right.png"]]];
 }
 
 - (void)removeStyleFromPreviouslyActiveCell
 {
     UITableViewCell *cell = (UITableViewCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-    [cell setAccessoryView:nil];
-    cell.accessoryType = UITableViewCellAccessoryNone;
     cell.textLabel.textColor = _offWhite;
+    [cell setAccessoryView:nil];
+    [cell setAccessoryType:UITableViewCellAccessoryNone];
     _selectedIndexPath = nil;
 }
 

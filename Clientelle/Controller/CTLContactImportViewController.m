@@ -24,9 +24,9 @@
     _contacts = [NSArray array];
     _selectedPeople = [[NSMutableDictionary alloc] init];
     _filteredContacts = [NSMutableArray arrayWithCapacity:[_contacts count]];
-        
-    _textColor = [UIColor colorFromUnNormalizedRGB:48.0f green:48.0f blue:48.0f alpha:1.0f];
-    _selectedBackgroundColor = [UIColor colorFromUnNormalizedRGB:234.0f green:244.0f blue:227.0f alpha:1.0f];
+        									
+    _textColor = [UIColor ctlDarkGray];
+    _selectedBackgroundColor = [UIColor ctlLightGray];
     _disabledTextColor = [UIColor colorFromUnNormalizedRGB:78.0f green:78.0f blue:78.0f alpha:1.0f];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{

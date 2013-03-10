@@ -243,7 +243,6 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsMultipleSelection="YES" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xug-Fu-cx0">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="372" id="Jdh-Jn-2ay"/>
                                 </constraints>
@@ -270,7 +269,7 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" red="0.91771156183515645" green="0.96709582270408168" blue="0.88938673017098613" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.72479266891139904" green="0.75472337372448983" blue="0.74517309853951286" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -485,7 +484,7 @@
                     <navigationItem key="navigationItem" title="Set Appointment" id="lzh-qs-mUm">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Ovn-B1-YGA">
                             <connections>
-                                <action selector="dismissAppointmentSetter:" destination="4Ud-sL-cmd" id="mbX-jL-1Ko"/>
+                                <action selector="cancel:" destination="4Ud-sL-cmd" id="NUj-MS-gBf"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="0Ig-3K-zPi">
@@ -516,6 +515,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="63" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ru9-mV-weG">
+                                <color key="separatorColor" red="0.86986142113095244" green="0.86500186011904767" blue="0.87472098214285721" alpha="1" colorSpace="calibratedRGB"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" barStyle="blackTranslucent" id="2GW-XM-GmG">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -541,7 +541,7 @@
                                                     <color key="textColor" red="0.38823533059999998" green="0.38823533059999998" blue="0.38823533059999998" alpha="1" colorSpace="deviceRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="topRight" text="date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhV-lf-buh">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="topRight" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhV-lf-buh">
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="28" id="8FD-Ba-Sd7"/>
@@ -1425,7 +1425,7 @@
         <class className="CTLAddEventViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAddEventViewController.h"/>
             <relationships>
-                <relationship kind="action" name="dismissAppointmentSetter:"/>
+                <relationship kind="action" name="cancel:"/>
                 <relationship kind="action" name="highlightTextField:"/>
                 <relationship kind="action" name="saveAppointment:"/>
                 <relationship kind="action" name="saveLocation:"/>

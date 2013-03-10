@@ -231,24 +231,24 @@ int CTLEndTimeInputTag = 81;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[error description] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }else{
-        [self dismissAppointmentSetter:sender];
+        [self.titleTextField setBackgroundColor:[UIColor clearColor]];
+        [self.startTimeTextField setBackgroundColor:[UIColor clearColor]];
+        [self.endTimeTextField setBackgroundColor:[UIColor clearColor]];
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
+            
+        }];
     }
 }
 
 #pragma mark - Outlet Controls
 
-- (IBAction)dismissAppointmentSetter:(id)sender
-{
+- (IBAction)cancel:(id)sender{
     [self.titleTextField setBackgroundColor:[UIColor clearColor]];
     [self.startTimeTextField setBackgroundColor:[UIColor clearColor]];
     [self.endTimeTextField setBackgroundColor:[UIColor clearColor]];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
-        NSString *successMessage = @"An event has been added to your calendar";
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:successMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Cleanup

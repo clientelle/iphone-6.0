@@ -90,8 +90,8 @@ int const CTLEmptyContactsTitleTag = 792;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timestampForRowDidChange:) name:CTLTimestampForRowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newContactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactRowDidChange:) name:CTLContactRowDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayShareContactActionSheet:) name:CTLShareContactNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidGoInactive:) name:kApplicationDidGoInactive object:nil];
 }
 
@@ -636,14 +636,14 @@ int const CTLEmptyContactsTitleTag = 792;
     
     CGRect headerFrame = self.contactHeader.frame;
     CGRect toolbarFrame = self.contactToolbar.frame;
-    
+     
     headerFrame.origin.y = 0;
     toolbarFrame.origin.y = CGRectGetHeight(self.view.bounds) - CGRectGetHeight(toolbarFrame) + 5;
     
     [UIView animateWithDuration:0.3 animations:^{
         self.contactHeader.frame = headerFrame;
         self.contactToolbar.frame = toolbarFrame;
-        [self.view setBackgroundColor:[UIColor ctlLightGray]];
+        //[self.view setBackgroundColor:[UIColor ctlMediumGray]];
     }];
 }
 
@@ -762,7 +762,9 @@ int const CTLEmptyContactsTitleTag = 792;
     }
     
     NSDate *accessDate = [_accessedDictionary objectForKey:@(person.recordID)];
-    cell.timestampLabel.text = [NSString stringWithFormat:@"%@  ", [NSDate dateToString:accessDate]];
+    if(accessDate){
+        cell.timestampLabel.text = [NSString stringWithFormat:@"%@  ", [NSDate dateToString:accessDate]];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

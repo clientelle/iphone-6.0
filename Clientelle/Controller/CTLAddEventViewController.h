@@ -28,11 +28,11 @@
 
 @property (nonatomic, strong) CTLABPerson *contact;
 
-- (IBAction)dismissAppointmentSetter:(id)sender;
 - (IBAction)highlightTextField:(id)sender;
 - (IBAction)saveTitle:(id)sender;
 - (IBAction)saveLocation:(id)sender;
 - (IBAction)showDatePicker:(id)sender;
 - (IBAction)saveAppointment:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end

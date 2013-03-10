@@ -17,4 +17,8 @@
 
 + (UIColor *)ctlLightGray;
 
++ (UIColor *)ctlMediumGray;
+
++ (UIColor *)ctlDarkGray;
+
 @end

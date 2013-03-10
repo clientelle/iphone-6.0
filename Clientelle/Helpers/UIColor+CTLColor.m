@@ -26,4 +26,12 @@
     return [UIColor colorFromUnNormalizedRGB:238.0f green:238.0f blue:238.0f alpha:1.0f];
 }
 
++ (UIColor *)ctlMediumGray{
+    return [UIColor colorFromUnNormalizedRGB:234.0f green:234.0f blue:234.0f alpha:1.0f];
+}
+
++ (UIColor *)ctlDarkGray{
+    return [UIColor colorFromUnNormalizedRGB:48.0f green:48.0f blue:48.0f alpha:1.0f];
+}
+
 @end
