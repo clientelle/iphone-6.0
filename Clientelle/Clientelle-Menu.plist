@@ -8,27 +8,35 @@
 		<key>identifier</key>
 		<string>contactsNavigationController</string>
 		<key>icon</key>
-		<string>112-group.png</string>
+		<string>24-person.png</string>
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>GROUPS</string>
+		<string>GROUP_MESSAGING</string>
 		<key>identifier</key>
 		<string>groupsNavigationController</string>
 		<key>icon</key>
-		<string>group-message.png</string>
+		<string>20-chat.png</string>
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>INBOX</string>
+		<string>APPOINTMENTS</string>
+		<key>identifier</key>
+		<string>appointmentsNavigationController</string>
+		<key>icon</key>
+		<string>19-clock.png</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>WEB_INBOX</string>
 		<key>identifier</key>
 		<string>inboxNavigationController</string>
 		<key>icon</key>
-		<string>21-wrench.png</string>
+		<string>25-box.png</string>
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>SETTINGS</string>
+		<string>PREFERENCES</string>
 		<key>identifier</key>
 		<string>settingsNavigationController</string>
 		<key>icon</key>

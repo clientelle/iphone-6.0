@@ -13,6 +13,10 @@
 
 + (UIColor *)textInputHighlightBackgroundColor;
 
++ (UIColor *)ctlGreen;
+
++ (UIColor *)ctlLightGreen;
+
 + (UIColor *)ctlTorquoise;
 
 + (UIColor *)ctlLightGray;
@@ -20,5 +24,7 @@
 + (UIColor *)ctlMediumGray;
 
 + (UIColor *)ctlDarkGray;
+
++ (UIColor *)ctlOrange;
 
 @end

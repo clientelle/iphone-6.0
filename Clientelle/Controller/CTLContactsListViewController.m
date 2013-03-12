@@ -79,7 +79,7 @@ int const CTLEmptyContactsTitleTag = 792;
     _emptyView = [self noContactsView];
     
     //If you want to enable background image
-    //self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"paper.png"]];
+    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"groovepaper.png"]];
     
 }
 
@@ -612,7 +612,7 @@ int const CTLEmptyContactsTitleTag = 792;
     CGFloat buttonCenter = viewFrame.size.width/2 - 63;
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [addButton setFrame:CGRectMake(buttonCenter, 175.0f, 126.0f, 38.0f)];
-    [addButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];    
+    [addButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
     [addButton addTarget:self action:@selector(showImporter:) forControlEvents:UIControlEventTouchUpInside];
     [addButton setTitle:NSLocalizedString(@"ADD_CONTACTS", nil) forState:UIControlStateNormal];
     
@@ -763,7 +763,7 @@ int const CTLEmptyContactsTitleTag = 792;
     
     NSDate *accessDate = [_accessedDictionary objectForKey:@(person.recordID)];
     if(accessDate){
-        cell.timestampLabel.text = [NSString stringWithFormat:@"%@  ", [NSDate dateToString:accessDate]];
+        cell.timestampLabel.text = [NSString stringWithFormat:@"%@", [NSDate dateToString:accessDate]];
     }
 }
 
@@ -1016,14 +1016,11 @@ int const CTLEmptyContactsTitleTag = 792;
 - (void)newContactWasAdded:(NSNotification *)notification
 {
     if([notification.object isKindOfClass:[CTLABPerson class]]){
-        
         _selectedPerson = notification.object;
         _shouldReorderListOnScroll = YES;
-        
         [_contactsDictionary setObject:_selectedPerson forKey:@(_selectedPerson.recordID)];
         [_accessedDictionary setObject:[NSDate date] forKey:@(_selectedPerson.recordID)];
         _contacts = [[_contactsDictionary allValues] mutableCopy];
-
         [self enterContactMode];
         [self.tableView reloadData];
         [self handleUIRestrictions];
@@ -1033,19 +1030,14 @@ int const CTLEmptyContactsTitleTag = 792;
 - (void)contactRowDidChange:(NSNotification *)notification
 {
     if([notification.object isKindOfClass:[CTLABPerson class]]){
-        
         _selectedPerson = notification.object;
         _shouldReorderListOnScroll = YES;
-        
         [_contactsDictionary setObject:_selectedPerson forKey:@(_selectedPerson.recordID)];
         [_accessedDictionary setObject:[NSDate date] forKey:@(_selectedPerson.recordID)];
         _contacts = [[_contactsDictionary allValues] mutableCopy];
-        
         [self.contactHeader populateViewData:_selectedPerson];
         CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-        
         [cell.indicatorLayer removeFromSuperlayer];
-        
         [self.tableView reloadData];
     }
 }

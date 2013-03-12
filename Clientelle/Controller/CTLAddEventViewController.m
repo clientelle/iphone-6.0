@@ -12,9 +12,11 @@
 #import "CTLABPerson.h"
 #import "CTLABGroup.h"
 #import "CTLCDPerson.h"
-
 #import "CTLAddEventViewController.h"
 #import "CTLContactsListViewController.h"
+#import "CTLAppointmentsViewController.h"
+
+#import "CTLCDAppointment.h"
 
 int CTLStartTimeInputTag = 18;
 int CTLEndTimeInputTag = 81;
@@ -32,27 +34,38 @@ int CTLEndTimeInputTag = 81;
     self.navigationItem.title = NSLocalizedString(@"SET_APPOINTMENT", nil);
 	
     _event = [[CTLEvent alloc] initForEvents];
-    _appointment = [EKEvent eventWithEventStore:_event.store];
-    _appointment.calendar = [_event.store defaultCalendarForNewEvents];
-    
+        
     self.titleTextField.placeholder = NSLocalizedString(@"APPOINTMENT_NOTE", nil);
-    self.locationTextField.placeholder = NSLocalizedString(@"APPOINTMENT_NOTE", nil);
+    self.locationTextField.placeholder = NSLocalizedString(@"LOCATION", nil);
     self.startTimeTextField.placeholder = NSLocalizedString(@"START_TIME", nil);
     self.endTimeTextField.placeholder = NSLocalizedString(@"END_TIME", nil);
     self.startLabel.text = NSLocalizedString(@"START", nil);
     self.endLabel.text = NSLocalizedString(@"END", nil);
     
     if(self.contact){
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+        
         _appointment.title = [NSString stringWithFormat:NSLocalizedString(@"MEETING_WITH", nil), [self.contact compositeName]];
         self.titleTextField.text = _appointment.title;
     }
     
-    [self.titleTextField becomeFirstResponder];
+    if(self.cdAppointment){
+        _appointment = [_event.store eventWithIdentifier:[self.cdAppointment eventID]];
+        if(_appointment){
+            self.titleTextField.text = _appointment.title;
+            self.startTimeTextField.text = [NSDate dateToString:_appointment.startDate];
+            self.endTimeTextField.text = [NSDate dateToString:_appointment.endDate];
+            self.locationTextField.text = _appointment.location;
+        }
+    }else{
+        _appointment = [EKEvent eventWithEventStore:_event.store];
+        _appointment.calendar = [_event.store defaultCalendarForNewEvents];
+        [self.titleTextField becomeFirstResponder];
+    }
        
     _datePicker = [[UIDatePicker alloc] init];
     _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     [_datePicker addTarget:self action:@selector(setDate:) forControlEvents:UIControlEventValueChanged];
-    
     _datePicker.date = [NSDate hoursFrom:[NSDate date] numberOfHours:1];
     
     self.startTimeTextField.inputView = _datePicker;
@@ -64,10 +77,6 @@ int CTLEndTimeInputTag = 81;
 
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-    return NSLocalizedString(@"APPOINTMENT_MSG", nil);
-}
 
 #pragma mark - Calendar PickerView
 
@@ -231,24 +240,47 @@ int CTLEndTimeInputTag = 81;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[error description] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }else{
-        [self.titleTextField setBackgroundColor:[UIColor clearColor]];
-        [self.startTimeTextField setBackgroundColor:[UIColor clearColor]];
-        [self.endTimeTextField setBackgroundColor:[UIColor clearColor]];
         
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
-            
-        }];
+        if(!self.cdAppointment){
+            CTLCDAppointment *appointment = [CTLCDAppointment MR_createEntity];
+            appointment.eventID = _appointment.eventIdentifier;
+            appointment.title = _appointment.title;
+            appointment.startDate = _appointment.startDate;
+            appointment.endDate = _appointment.endDate;
+            appointment.location = _appointment.location;
+        }else{
+            self.cdAppointment.title = _appointment.title;
+            self.cdAppointment.startDate = _appointment.startDate;
+            self.cdAppointment.endDate = _appointment.endDate;
+            self.cdAppointment.location = _appointment.location;
+        }
+                
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+        [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadAppointmentsNotification object:nil];
+        
+        [self resetForm];
+        if(self.contact){
+            [self dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
+            }];
+        }else{
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
 }
 
 #pragma mark - Outlet Controls
 
-- (IBAction)cancel:(id)sender{
+- (void)cancel:(id)sender{
+    [self resetForm];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)resetForm
+{
     [self.titleTextField setBackgroundColor:[UIColor clearColor]];
     [self.startTimeTextField setBackgroundColor:[UIColor clearColor]];
     [self.endTimeTextField setBackgroundColor:[UIColor clearColor]];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Cleanup

@@ -13,6 +13,14 @@
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="Appointment" representedClassName="CTLCDAppointment" syncable="YES">
+        <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="eventID" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="FormSchema" representedClassName="CTLCDFormSchema" syncable="YES">
         <attribute name="address" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="email" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
@@ -51,5 +59,6 @@
         <element name="FormSchema" positionX="-0" positionY="-198" width="128" height="180"/>
         <element name="Inbox" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Person" positionX="-326" positionY="-361" width="128" height="253"/>
+        <element name="Appointment" positionX="160" positionY="192" width="128" height="135"/>
     </elements>
 </model>

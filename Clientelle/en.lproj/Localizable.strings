@@ -7,11 +7,10 @@ e†
 */
 
 "CONTACTS" = "Contacts";
-"GROUPS" = "Groups";
-"MY_ACCOUNT" = "My Account";
-"SETTINGS" = "Settings";
-"SUPPORT" = "Support";
-"INBOX" = "Inbox";
+"GROUP_MESSAGING" = "Group Messaging";
+"APPOINTMENTS" = "Appointments";
+"WEB_INBOX" = "Web Inbox";
+"PREFERENCES" = "Preferences";
 
 
 "ALL_CONTACTS" = "All Contacts";
@@ -97,8 +96,3 @@ e†
 "START_TIME" = "Start Time";
 "END_TIME" = "End Time";
 "LOCATION" = "Location";
-"START" = "Start:";
-"END" = "End:";
-"APPOINTMENT_MSG" = "This appointment will be added to the calendar on this device";
-
-

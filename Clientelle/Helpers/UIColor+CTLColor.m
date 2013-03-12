@@ -18,6 +18,14 @@
     return [self colorFromUnNormalizedRGB:240.0f green:240.0f blue:240.0f alpha:1.0f];
 }
 
++ (UIColor *)ctlGreen{
+   return [UIColor colorFromUnNormalizedRGB:232.0f green:237.0f blue:228.0f alpha:1.0f];
+}
+
++ (UIColor *)ctlLightGreen{
+    return [UIColor colorFromUnNormalizedRGB:115.0f green:168.0f blue:83.0f alpha:1.0f];
+}
+
 + (UIColor *)ctlTorquoise{
     return [UIColor colorFromUnNormalizedRGB:177.0f green:204.0f blue:187.0f alpha:1.0f];
 }
@@ -27,11 +35,16 @@
 }
 
 + (UIColor *)ctlMediumGray{
-    return [UIColor colorFromUnNormalizedRGB:234.0f green:234.0f blue:234.0f alpha:1.0f];
+    return [UIColor colorFromUnNormalizedRGB:180.0f green:180.0f blue:180.0f alpha:1.0f];
 }
 
 + (UIColor *)ctlDarkGray{
     return [UIColor colorFromUnNormalizedRGB:48.0f green:48.0f blue:48.0f alpha:1.0f];
+}
+
+
++ (UIColor *)ctlOrange{
+    return [UIColor colorFromUnNormalizedRGB:255.0f green:169.0f blue:71.0f alpha:0.85f];
 }
 
 @end

@@ -8,7 +8,7 @@
 #import "CTLContactsListViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-const CGFloat CTLMainMenuWidth = 170.0f;
+const CGFloat CTLMainMenuWidth = 190.0f;
 
 @implementation CTLSlideMenuController
 

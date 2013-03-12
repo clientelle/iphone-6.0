@@ -10,6 +10,7 @@
 
 @class CTLABPerson;
 @class CTLEvent;
+@class CTLCDAppointment;
 
 @interface CTLAddEventViewController : UITableViewController<UITextFieldDelegate, UIGestureRecognizerDelegate>{
     UIDatePicker *_datePicker;
@@ -26,6 +27,8 @@
 @property (nonatomic, weak) IBOutlet UILabel *startLabel;
 @property (nonatomic, weak) IBOutlet UILabel *endLabel;
 
+
+@property (nonatomic, strong) CTLCDAppointment *cdAppointment;
 @property (nonatomic, strong) CTLABPerson *contact;
 
 - (IBAction)highlightTextField:(id)sender;
@@ -33,6 +36,6 @@
 - (IBAction)saveLocation:(id)sender;
 - (IBAction)showDatePicker:(id)sender;
 - (IBAction)saveAppointment:(id)sender;
-- (IBAction)cancel:(id)sender;
+- (void)cancel:(id)sender;
 
 @end

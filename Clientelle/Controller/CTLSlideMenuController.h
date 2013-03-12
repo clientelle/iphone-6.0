@@ -6,6 +6,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern const CGFloat CTLMainMenuWidth;
+
 @interface CTLSlideMenuController : UIViewController{
     UIStoryboard *_mainStoryboard;
     ABAddressBookRef _addressBookRef;

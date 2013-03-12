@@ -26,8 +26,10 @@ int CTLPhoneLabelTag = 602;
         _menuIsVisible = NO;
         _menuController = [UIMenuController sharedMenuController];
         
+        [self setBackgroundColor:[UIColor whiteColor]];
         // Initialization code
-        [self setBackgroundColor:[UIColor colorFromUnNormalizedRGB:245.0f green:245.0f blue:245.0f alpha:1.0f]];
+        //[self setBackgroundColor:[UIColor colorFromUnNormalizedRGB:218.0f green:218.0f blue:218.0f alpha:1.0f]];
+        //[self setBackgroundColor:[UIColor ctlGreen]];
         
         CGFloat padding = 10.0f;
         CGSize viewSize = self.bounds.size;
@@ -71,14 +73,14 @@ int CTLPhoneLabelTag = 602;
         
         [editProfileButton.layer addSublayer:border1];
         
+        /*
         CALayer *border2 = [CALayer layer];
         border2.borderColor = [UIColor whiteColor].CGColor;
         border2.borderWidth = 1;
         border2.frame = CGRectMake(1.0f, 0, 1.0f, viewSize.height);
-        
         [editProfileButton.layer addSublayer:border2];
-        
-                                
+        */
+         
         CGFloat indicatorPositionX = self.bounds.size.width - 30;
         CGFloat indicatorPositionY = (CTLContactViewHeaderHeight/2) - (19.0f/2);
         
