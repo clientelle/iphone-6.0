@@ -5,7 +5,8 @@
 //  Created by Kevin Liu on 9/25/12.
 //  Copyright (c) 2012 Clientelle Leads LLC. All rights reserved.
 //
-
+#import <QuartzCore/QuartzCore.h>
+#import "UIColor+CTLColor.h"
 #import "CTLContactsListViewController.h"
 #import "CTLGroupsListViewController.h"
 #import "CTLSlideMenuController.h"
@@ -30,7 +31,6 @@ int const CTLDeleteGroupAlertViewTag = 3;
     
     _abGroups = [CTLABGroup groupsFromSourceType:kABSourceTypeLocal addressBookRef:_addressBookRef];
     _groupRecipients = [NSMutableArray array];
-    
     _groupsDict = [NSMutableDictionary dictionary];
     
     for(NSInteger i=0;i<[_abGroups count];i++){
@@ -47,7 +47,12 @@ int const CTLDeleteGroupAlertViewTag = 3;
     }
     
     _groupMessageActionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"SEND_GROUP_MESSAGE", nil)
-delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"GROUP_SMS", nil), NSLocalizedString(@"GROUP_EMAIL", nil), nil];
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                                             destructiveButtonTitle:nil
+                                                  otherButtonTitles:NSLocalizedString(@"GROUP_SMS", nil), NSLocalizedString(@"GROUP_EMAIL", nil), nil];
+    
+    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"groovepaper.png"]];
 }
 
 - (CTLABGroup *)groupFromIndexPath:(NSIndexPath *)indexPath
@@ -64,6 +69,11 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
     return 1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 63.0f;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [_abGroups count];
@@ -76,14 +86,56 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
     UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.textLabel.text = abGroup.name;
     
+    __block NSMutableArray *nameArray = [NSMutableArray array];
+    
+    int limit = 15;
+    int i = 0;
+    for(NSNumber *recordID in abGroup.members){
+        CTLABPerson *person = [abGroup.members objectForKey:recordID];
+        [nameArray addObject: person.compositeName];
+        i++;
+        
+        if(i > limit){
+            break;
+        }
+    }
+    
+    NSString *groupMembersStr = @"No members";
+    
+    if([nameArray count]> 0){
+        groupMembersStr = [nameArray componentsJoinedByString:@", "];
+    }
+
+    cell.detailTextLabel.text = groupMembersStr;
+    
     UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToRenameGroup:)];
     [cell addGestureRecognizer:longPressGesture];
     
-    
+    /*
     NSString *imageName = ([abGroup.members count] == 0) ? @"09-chat-gray-disabled.png" : @"09-chat-gray.png";
         
     cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
     cell.accessoryType = UITableViewCellAccessoryNone;
+    */
+           
+    cell.contentView.backgroundColor = [UIColor clearColor];
+    
+    UIColor *fill = [UIColor ctlMediumGray];
+    CAShapeLayer *shapelayer = [CAShapeLayer layer];
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    //draw a line
+    [path moveToPoint:CGPointMake(0.0, cell.frame.size.height)]; //add yourStartPoint here
+    [path addLineToPoint:CGPointMake(cell.frame.size.width, cell.frame.size.height)];// add yourEndPoint here
+    
+    shapelayer.strokeStart = 0.0;
+    shapelayer.strokeColor = fill.CGColor;
+    shapelayer.lineWidth = 1.0;
+    shapelayer.lineJoin = kCALineJoinRound;
+    shapelayer.lineDashPattern = @[@(1), @(3)];
+    shapelayer.path = path.CGPath;
+    
+    [cell.contentView.layer addSublayer:shapelayer];
+     
     return cell;
 }
 
@@ -96,11 +148,11 @@ delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveBut
         [_groupMessageActionSheet showInView:self.view];
     }
 }
-
+/*
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     return NSLocalizedString(@"SEND_GROUP_MESSAGE", nil);
-}
+}*/
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {

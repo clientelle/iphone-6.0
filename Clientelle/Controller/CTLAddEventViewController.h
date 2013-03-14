@@ -13,6 +13,7 @@
 @class CTLCDAppointment;
 
 @interface CTLAddEventViewController : UITableViewController<UITextFieldDelegate, UIGestureRecognizerDelegate>{
+    
     UIDatePicker *_datePicker;
     NSInteger _activeInputTag;
     EKEvent *_appointment;
@@ -24,9 +25,6 @@
 @property (nonatomic, weak) IBOutlet UITextField *locationTextField;
 @property (nonatomic, weak) IBOutlet UITextField *startTimeTextField;
 @property (nonatomic, weak) IBOutlet UITextField *endTimeTextField;
-@property (nonatomic, weak) IBOutlet UILabel *startLabel;
-@property (nonatomic, weak) IBOutlet UILabel *endLabel;
-
 
 @property (nonatomic, strong) CTLCDAppointment *cdAppointment;
 @property (nonatomic, strong) CTLABPerson *contact;

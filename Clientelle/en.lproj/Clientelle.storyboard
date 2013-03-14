@@ -175,7 +175,7 @@
                                 <color key="separatorColor" red="0.80000007149999997" green="0.80000007149999997" blue="0.80000007149999997" alpha="1" colorSpace="deviceRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fieldRow" textLabel="fvi-q2-uCb" style="IBUITableViewCellStyleDefault" id="HJu-O1-HnZ">
-                                        <rect key="frame" x="0.0" y="46" width="320" height="46"/>
+                                        <rect key="frame" x="0.0" y="46" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -1459,6 +1459,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="gbl-Ja-p9n" id="C1p-Yd-In5"/>
                                     <outlet property="delegate" destination="gbl-Ja-p9n" id="XCc-Gx-JX7"/>
+                                    <outletCollection property="gestureRecognizers" destination="Spv-Le-eb6" appends="YES" id="SMN-bS-Pao"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -1482,6 +1483,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qqr-Sx-a6N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Spv-Le-eb6">
+                    <connections>
+                        <action selector="dismissPickerFromTap:" destination="gbl-Ja-p9n" id="a85-RT-FCl"/>
+                        <outlet property="delegate" destination="gbl-Ja-p9n" id="Tx9-nI-ery"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-3999" y="-1288"/>
         </scene>
@@ -1508,10 +1515,8 @@
                 <relationship kind="action" name="saveLocation:"/>
                 <relationship kind="action" name="saveTitle:"/>
                 <relationship kind="action" name="showDatePicker:"/>
-                <relationship kind="outlet" name="endLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="endTimeTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="locationTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="startLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="startTimeTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="titleTextField" candidateClass="UITextField"/>
             </relationships>
@@ -1526,6 +1531,7 @@
         <class className="CTLAppointmentsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="dismissPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>

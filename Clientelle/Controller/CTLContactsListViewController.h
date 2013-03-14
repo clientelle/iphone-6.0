@@ -21,13 +21,14 @@ extern NSString *const CTLContactRowDidChangeNotification;
 @class CTLABPerson;
 @class CTLContactToolbarView;
 @class CTLContactHeaderView;
+@class CTLPickerView;
 
 @interface CTLContactsListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CTLSlideMenuDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>{
     
     ABAddressBookRef _addressBookRef;
     
-    BOOL _groupPickerIsVisible;
-    UIPickerView *_groupPickerView;
+
+    CTLPickerView *_groupPickerView;
     NSMutableArray *_groupArray;
         
     NSMutableArray *_contacts;

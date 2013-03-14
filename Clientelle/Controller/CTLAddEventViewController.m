@@ -39,8 +39,7 @@ int CTLEndTimeInputTag = 81;
     self.locationTextField.placeholder = NSLocalizedString(@"LOCATION", nil);
     self.startTimeTextField.placeholder = NSLocalizedString(@"START_TIME", nil);
     self.endTimeTextField.placeholder = NSLocalizedString(@"END_TIME", nil);
-    self.startLabel.text = NSLocalizedString(@"START", nil);
-    self.endLabel.text = NSLocalizedString(@"END", nil);
+
     
     if(self.contact){
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
@@ -74,7 +73,6 @@ int CTLEndTimeInputTag = 81;
     self.endTimeTextField.tag = CTLEndTimeInputTag;
     
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissInputViews:)]];
-
 }
 
 
@@ -282,6 +280,7 @@ int CTLEndTimeInputTag = 81;
     [self.startTimeTextField setBackgroundColor:[UIColor clearColor]];
     [self.endTimeTextField setBackgroundColor:[UIColor clearColor]];
 }
+
 
 #pragma mark - Cleanup
 

@@ -29,6 +29,9 @@
 #import "CTLCDPerson.h"
 #import "CTLCDFormSchema.h"
 
+#import "CTLPickerView.h"
+#import "CTLPickerButton.h"
+
 NSString *const CTLContactWereImportedNotification = @"com.clientelle.notifications.contactsWereImported";
 NSString *const CTLContactListReloadNotification = @"com.clientelle.notifications.reloadContacts";
 NSString *const CTLTimestampForRowNotification = @"com.clientelle.notifications.updateContactTimestamp";
@@ -227,23 +230,15 @@ int const CTLEmptyContactsTitleTag = 792;
 
 - (UIButton *)groupPickerButtonWithTitle:(NSString *)selectedGroupName
 {
-    UIButton *uiButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [uiButton setFrame:CGRectMake(0, 0, 210.0f, 40.0f)];
-    [uiButton.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
-    [uiButton setTitle:selectedGroupName forState:UIControlStateNormal];
+    CTLPickerButton *uiButton = [[CTLPickerButton alloc] initWithTitle:selectedGroupName];
     [uiButton addTarget:self action:@selector(togglePicker:) forControlEvents:UIControlEventTouchUpInside];
-    [uiButton setImage:[UIImage imageNamed:@"wht-arrow-dwn.png"] forState:UIControlStateNormal];
-    CGSize titleSize = [[uiButton titleForState:UIControlStateNormal] sizeWithFont:uiButton.titleLabel.font];
-    uiButton.imageEdgeInsets = UIEdgeInsetsMake(uiButton.imageView.frame.size.height, (titleSize.width + 20.0f), 0, -titleSize.width);
     return uiButton;
 }
 
 - (void)updateGroupPickerButtonWithTitle:(NSString *)groupName
 {
-    UIButton *uiButton = (UIButton *)self.navigationItem.titleView;
-    [uiButton setTitle:groupName forState:UIControlStateNormal];
-    CGSize titleSize = [[uiButton titleForState:UIControlStateNormal] sizeWithFont:uiButton.titleLabel.font];
-    uiButton.imageEdgeInsets = UIEdgeInsetsMake(uiButton.imageView.frame.size.height, (titleSize.width + 20.0f), 0, -titleSize.width);
+    CTLPickerButton *uiButton = (CTLPickerButton *)self.navigationItem.titleView;
+    [uiButton updateTitle:groupName];
     self.navigationItem.titleView = uiButton;
 }
 
@@ -267,86 +262,31 @@ int const CTLEmptyContactsTitleTag = 792;
     }
 }
 
-- (UIPickerView *)createGroupPickerView
+- (CTLPickerView *)createGroupPickerView
 {
-    //configure UIPickerView
-    UIPickerView *groupPicker = [[UIPickerView alloc] init];
+    CTLPickerView *groupPicker = [[CTLPickerView alloc] initWithWidth:self.view.bounds.size.width];
     groupPicker.delegate = self;
     groupPicker.dataSource = self;
-    groupPicker.showsSelectionIndicator = YES;
+    //force a filter select if user taps twice
+    //[groupPicker addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideGroupPicker:)]];
     
-    CGRect groupPickerFrame = groupPicker.frame;
-    groupPickerFrame.size.height = 162.0f;
-    groupPickerFrame.origin.y = -169.0f;
-    groupPicker.frame = groupPickerFrame;
+    [self.view addSubview:groupPicker];
     
-    //add a drop shadow
-    UIView *pickerFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, groupPicker.frame.size.height, groupPicker.frame.size.width, 7.0f)];
-    pickerFooterView.backgroundColor = [UIColor colorFromUnNormalizedRGB:43.0f green:44.0f blue:57.0f alpha:1.0f];
-    pickerFooterView.layer.shadowOpacity = 1.0f;
-    pickerFooterView.layer.shadowRadius = 3.0f;
-    pickerFooterView.layer.shadowOffset = CGSizeMake(0,0);
     
-    CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0.0f, pickerFooterView.bounds.size.height-1.0f, pickerFooterView.frame.size.width, 1.0f);
-    bottomBorder.backgroundColor = [UIColor colorFromUnNormalizedRGB:27.0f green:27.0f blue:27.0f alpha:1.0f].CGColor;
-    [pickerFooterView.layer addSublayer:bottomBorder];
-    [groupPicker addSubview:pickerFooterView];
-    
-    //force a group select if user taps twice
-    [groupPicker addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideGroupPicker:)]];
     return groupPicker;
 }
 
 - (void)togglePicker:(id)sender {
-    if(_groupPickerIsVisible){
-        [self hideGroupPicker:nil];
+    if(_groupPickerView.isVisible){
+        [_groupPickerView hidePicker];
     }else{
-        [self showGroupPicker];
+        [_groupPickerView showPicker];
     }
-}
-
-- (void)showGroupPicker
-{
-    if(_inContactMode){
-        [self exitContactMode];
-    }
-    
-    [self rightTitlebarWithGroupViewButton];
-    
-    [self.view addSubview:_groupPickerView];
-    CGRect pickerFrame = _groupPickerView.frame;
-    pickerFrame.origin.y = 0;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        _groupPickerView.frame = pickerFrame;
-    } completion:^(BOOL finished){
-        _groupPickerIsVisible = YES;
-    }];
-}
-
-- (void)hideGroupPicker:(id)sender {
-    
-    if(!_groupPickerIsVisible){
-        return;
-    }
-    
-    [self rightTitlebarWithAddContactButton];
-      
-    CGRect pickerFrame = _groupPickerView.frame;
-    pickerFrame.origin.y = -pickerFrame.size.height;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        _groupPickerView.frame = pickerFrame;
-    } completion:^(BOOL finished) {
-        [_groupPickerView removeFromSuperview];
-        _groupPickerIsVisible = NO;
-    }];
 }
 
 - (IBAction)dismissGroupPickerFromTap:(UITapGestureRecognizer *)recognizer
 {
-    [self hideGroupPicker:nil];
+    [_groupPickerView hidePicker];
 }
 
 - (CTLABGroup *)selectedGroup
@@ -512,7 +452,7 @@ int const CTLEmptyContactsTitleTag = 792;
         [_groupPickerView selectRow:selectedIndex inComponent:0 animated:YES];
         [self loadGroup:newGroup];
         [self updateGroupPickerButtonWithTitle:newGroupName];
-        [self hideGroupPicker:alertView];
+        [_groupPickerView hidePicker];
     }
 }
 
@@ -526,13 +466,13 @@ int const CTLEmptyContactsTitleTag = 792;
 
 - (IBAction)showImporter:(id)sender
 {
-    [self hideGroupPicker:nil];
+    [_groupPickerView hidePicker];
     [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
 }
 
 - (void)showGroupList:(id)sender
 {
-    [self hideGroupPicker:nil];
+    [_groupPickerView hidePicker];
     [self performSegueWithIdentifier:CTLGroupListSegueIdentifyer sender:nil];
 }
 
@@ -681,8 +621,8 @@ int const CTLEmptyContactsTitleTag = 792;
         [self exitContactMode];
     }
     
-    if(_groupPickerIsVisible){
-        [self hideGroupPicker:nil];
+    if(_groupPickerView.isVisible){
+        [_groupPickerView hidePicker];
     }
 }
 
@@ -816,8 +756,8 @@ int const CTLEmptyContactsTitleTag = 792;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //if groupPicker is open dismiss it and do nothing else.
-    if(_groupPickerIsVisible){
-        [self hideGroupPicker:nil];
+    if(_groupPickerView.isVisible){
+        [_groupPickerView hidePicker];
         return;
     }
     
