@@ -82,7 +82,8 @@ int const CTLEmptyContactsTitleTag = 792;
     _emptyView = [self noContactsView];
     
     //If you want to enable background image
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"groovepaper.png"]];
+    
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
     
 }
 
@@ -267,26 +268,38 @@ int const CTLEmptyContactsTitleTag = 792;
     CTLPickerView *groupPicker = [[CTLPickerView alloc] initWithWidth:self.view.bounds.size.width];
     groupPicker.delegate = self;
     groupPicker.dataSource = self;
-    //force a filter select if user taps twice
-    //[groupPicker addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideGroupPicker:)]];
-    
     [self.view addSubview:groupPicker];
-    
-    
     return groupPicker;
 }
 
 - (void)togglePicker:(id)sender {
-    if(_groupPickerView.isVisible){
-        [_groupPickerView hidePicker];
-    }else{
-        [_groupPickerView showPicker];
+    
+    if(_inContactMode){
+        [self exitContactMode];
     }
+    
+    if(_groupPickerView.isVisible){
+        [self hideGroupPicker];
+    }else{
+        [self showGroupPicker];
+    }
+}
+
+- (void)hideGroupPicker
+{
+    [_groupPickerView hidePicker];
+    [self rightTitlebarWithAddContactButton];
+}
+
+- (void)showGroupPicker
+{
+    [_groupPickerView showPicker];
+    [self rightTitlebarWithGroupViewButton];
 }
 
 - (IBAction)dismissGroupPickerFromTap:(UITapGestureRecognizer *)recognizer
 {
-    [_groupPickerView hidePicker];
+    [self hideGroupPicker];
 }
 
 - (CTLABGroup *)selectedGroup
@@ -430,8 +443,11 @@ int const CTLEmptyContactsTitleTag = 792;
 
     ABRecordRef  existingGroupRef = [CTLABGroup findByName:newGroupName addressBookRef:self.addressBookRef];
     if(existingGroupRef){
-        NSString *dupMessage = [NSString stringWithFormat:NSLocalizedString(@"GROUP_EXISTS", nil), newGroupName];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:dupMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:[NSString stringWithFormat:NSLocalizedString(@"GROUP_EXISTS", nil), newGroupName]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
         [alert show];
         return;
     }
@@ -452,7 +468,7 @@ int const CTLEmptyContactsTitleTag = 792;
         [_groupPickerView selectRow:selectedIndex inComponent:0 animated:YES];
         [self loadGroup:newGroup];
         [self updateGroupPickerButtonWithTitle:newGroupName];
-        [_groupPickerView hidePicker];
+        [self hideGroupPicker];
     }
 }
 
@@ -466,13 +482,13 @@ int const CTLEmptyContactsTitleTag = 792;
 
 - (IBAction)showImporter:(id)sender
 {
-    [_groupPickerView hidePicker];
+    [self hideGroupPicker];
     [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
 }
 
 - (void)showGroupList:(id)sender
 {
-    [_groupPickerView hidePicker];
+    [self hideGroupPicker];
     [self performSegueWithIdentifier:CTLGroupListSegueIdentifyer sender:nil];
 }
 
@@ -550,11 +566,28 @@ int const CTLEmptyContactsTitleTag = 792;
     [messageLabel setText:NSLocalizedString(@"EMPTY_GROUP", nil)];
     
     CGFloat buttonCenter = viewFrame.size.width/2 - 63;
-    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    
+    // Set the background for any states you plan to use
+    [addButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [addButton setTitleColor:[UIColor colorFromUnNormalizedRGB:81.0f green:91.0f blue:130.0f alpha:1.0f] forState:UIControlStateNormal];
+    
+    [addButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    [addButton setTitleColor:[UIColor colorFromUnNormalizedRGB:61.0f green:71.0f blue:110.0f alpha:1.0f] forState:UIControlStateHighlighted];
+    
+    
     [addButton setFrame:CGRectMake(buttonCenter, 175.0f, 126.0f, 38.0f)];
     [addButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
     [addButton addTarget:self action:@selector(showImporter:) forControlEvents:UIControlEventTouchUpInside];
     [addButton setTitle:NSLocalizedString(@"ADD_CONTACTS", nil) forState:UIControlStateNormal];
+    
+    addButton.layer.shadowOpacity = 0.2f;
+    addButton.layer.shadowRadius = 1.0f;
+    addButton.layer.shadowOffset = CGSizeMake(0,0);
+    
     
     [emptyView addSubview:titleLabel];
     [emptyView addSubview:messageLabel];
@@ -622,7 +655,7 @@ int const CTLEmptyContactsTitleTag = 792;
     }
     
     if(_groupPickerView.isVisible){
-        [_groupPickerView hidePicker];
+        [self hideGroupPicker];
     }
 }
 
@@ -757,7 +790,7 @@ int const CTLEmptyContactsTitleTag = 792;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //if groupPicker is open dismiss it and do nothing else.
     if(_groupPickerView.isVisible){
-        [_groupPickerView hidePicker];
+        [self hideGroupPicker];
         return;
     }
     
@@ -948,7 +981,7 @@ int const CTLEmptyContactsTitleTag = 792;
 
 - (void)displayAlertMessage:(NSString *)message
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
 }
 

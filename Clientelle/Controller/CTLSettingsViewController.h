@@ -10,19 +10,15 @@
 
 @class CTLCDAccount;
 
-@interface CTLSettingsViewController : UITableViewController<CTLSlideMenuDelegate, UIGestureRecognizerDelegate>{
+@interface CTLSettingsViewController : UITableViewController<CTLSlideMenuDelegate>{
     CTLCDAccount *_account;
     UIAlertView *_purchaseAlertView;
 }
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
 @property (nonatomic, strong) IBOutlet UISwitch *notificationSwitch;
-@property (nonatomic, strong) IBOutlet UIButton *changeAccountTypeButton;
 @property (nonatomic, strong) IBOutlet UITableViewCell *accountTypeCell;
-
 @property (nonatomic, strong) UIBarButtonItem *actionButton;
-
-- (IBAction)dismissKeyboard:(UITapGestureRecognizer *)recognizer;
 
 - (IBAction)toggleNotificationSetting:(UITapGestureRecognizer *)recognizer;
 

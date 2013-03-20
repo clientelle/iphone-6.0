@@ -33,7 +33,6 @@ extern NSString *const kCTLAccessTokenKey;
 
 - (void)makeRequest:(NSString *)path withBlock:(CTLResultBlock)block;
 - (void)makeRequest:(NSString *)path withParams:(NSDictionary *)params withBlock:(CTLResultBlock)block;
-
 - (void)makeRequest:(NSString *)path withParams:(NSDictionary *)params andWait:(CTLResultBlock)block;
 - (void)makeRequest:(NSString *)path andWait:(CTLResultBlock)block;
 

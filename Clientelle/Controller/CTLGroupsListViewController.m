@@ -15,6 +15,7 @@
 #import "CTLABPerson.h"
 #import "CTLCDFormSchema.h"
 #import "CTLCDPerson.h"
+#import "CTLViewDecorator.h"
 
 int const CTLNewGroupAlertViewTag    = 1;
 int const CTLRenameGroupAlertViewTag = 2;
@@ -25,8 +26,7 @@ int const CTLDeleteGroupAlertViewTag = 3;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
+
     _addressBookRef = [self.menuController addressBookRef];
     
     _abGroups = [CTLABGroup groupsFromSourceType:kABSourceTypeLocal addressBookRef:_addressBookRef];
@@ -52,7 +52,10 @@ int const CTLDeleteGroupAlertViewTag = 3;
                                              destructiveButtonTitle:nil
                                                   otherButtonTitles:NSLocalizedString(@"GROUP_SMS", nil), NSLocalizedString(@"GROUP_EMAIL", nil), nil];
     
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"groovepaper.png"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    
+    self.footerLabel.text = NSLocalizedString(@"GROUP_OPTIONS_INSTRUCTIONS", nil);
+
 }
 
 - (CTLABGroup *)groupFromIndexPath:(NSIndexPath *)indexPath
@@ -100,7 +103,7 @@ int const CTLDeleteGroupAlertViewTag = 3;
         }
     }
     
-    NSString *groupMembersStr = @"No members";
+    NSString *groupMembersStr = NSLocalizedString(@"NO_CONTACTS", nil);
     
     if([nameArray count]> 0){
         groupMembersStr = [nameArray componentsJoinedByString:@", "];
@@ -110,31 +113,12 @@ int const CTLDeleteGroupAlertViewTag = 3;
     
     UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToRenameGroup:)];
     [cell addGestureRecognizer:longPressGesture];
-    
-    /*
-    NSString *imageName = ([abGroup.members count] == 0) ? @"09-chat-gray-disabled.png" : @"09-chat-gray.png";
-        
-    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    */
-           
     cell.contentView.backgroundColor = [UIColor clearColor];
+     
+    CTLViewDecorator *decorator = [[CTLViewDecorator alloc] init];
+    CAShapeLayer *dottedLine = [decorator createDottedLine:cell.frame];
     
-    UIColor *fill = [UIColor ctlMediumGray];
-    CAShapeLayer *shapelayer = [CAShapeLayer layer];
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    //draw a line
-    [path moveToPoint:CGPointMake(0.0, cell.frame.size.height)]; //add yourStartPoint here
-    [path addLineToPoint:CGPointMake(cell.frame.size.width, cell.frame.size.height)];// add yourEndPoint here
-    
-    shapelayer.strokeStart = 0.0;
-    shapelayer.strokeColor = fill.CGColor;
-    shapelayer.lineWidth = 1.0;
-    shapelayer.lineJoin = kCALineJoinRound;
-    shapelayer.lineDashPattern = @[@(1), @(3)];
-    shapelayer.path = path.CGPath;
-    
-    [cell.contentView.layer addSublayer:shapelayer];
+    [cell.contentView.layer addSublayer:dottedLine];
      
     return cell;
 }
@@ -147,29 +131,6 @@ int const CTLDeleteGroupAlertViewTag = 3;
     if([_selectedGroup.members count] > 0){
         [_groupMessageActionSheet showInView:self.view];
     }
-}
-/*
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return NSLocalizedString(@"SEND_GROUP_MESSAGE", nil);
-}*/
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 60.0f;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    UILabel *instructions = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, self.tableView.bounds.size.width-20, 30.0f)];
-    [instructions setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
-    [instructions setBackgroundColor:[UIColor clearColor]];
-    [instructions setTextAlignment:NSTextAlignmentCenter];
-    instructions.text = NSLocalizedString(@"GROUP_OPTIONS_INSTRUCTIONS", nil);
-    
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 60.0f)];
-    [footerView addSubview:instructions];
-    return footerView;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -267,8 +228,11 @@ int const CTLDeleteGroupAlertViewTag = 3;
     ABRecordRef  existingGroupRef = [CTLABGroup findByName:newGroupName addressBookRef:_addressBookRef];
 
     if(existingGroupRef){
-        NSString *dupMessage = [NSString stringWithFormat:NSLocalizedString(@"GROUP_EXISTS", nil), newGroupName];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:dupMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:[NSString stringWithFormat:NSLocalizedString(@"GROUP_EXISTS", nil), newGroupName]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
         [alert show];
         return;
     }
@@ -284,15 +248,17 @@ int const CTLDeleteGroupAlertViewTag = 3;
     }
 }
 
-
 - (void)deleteGroupAtIndexPath:(NSIndexPath *)indexPath
 {
     CTLABGroup *abGroup = [self groupFromIndexPath:indexPath];
     
     //User cannot delete client or prospect groups
     if(abGroup.groupID == [CTLABGroup clientGroupID]){
-        NSString *permissionErrorStr = [NSString stringWithFormat:NSLocalizedString(@"CANNOT_DELETE_SYSTEM_GROUP", nil), abGroup.name];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:permissionErrorStr delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:[NSString stringWithFormat:NSLocalizedString(@"CANNOT_DELETE_SYSTEM_GROUP", nil), abGroup.name]
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
         [alert show];
         return;
     }
@@ -369,8 +335,11 @@ int const CTLDeleteGroupAlertViewTag = 3;
     }
         
     if([CTLABGroup findByName:newGroupName addressBookRef:_addressBookRef]){
-        NSString *dupMessage = [NSString stringWithFormat:NSLocalizedString(@"GROUP_EXISTS", nil), newGroupName];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"CANNOT_RENAME_GROUP", nil) message:dupMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"CANNOT_RENAME_GROUP", nil)
+                                                        message:[NSString stringWithFormat:NSLocalizedString(@"GROUP_EXISTS", nil), newGroupName]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
         [alert show];
     }else{
         if([_selectedGroup renameTo:newGroupName]){
@@ -467,22 +436,24 @@ int const CTLDeleteGroupAlertViewTag = 3;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID=%i", recordID];
             CTLCDPerson *person = [CTLCDPerson MR_findFirstWithPredicate:predicate];
             if(!person.recordID){
-                person = [CTLCDPerson MR_createEntity];
-                person.recordIDValue = recordID;
+                CTLABPerson *abPerson = [_selectedGroup.members objectForKey:@(recordID)];
+                person = [CTLCDPerson createFromABPerson:abPerson];
+            }else{
+                person.lastAccessed = [NSDate date];
             }
-            person.lastAccessed = [NSDate date];
         }
         
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-        [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-            //[[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:@(_selectedGroup.groupID)];
-        }];
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveOnlySelfAndWait];
     }
 }
 
 - (void)displayAlertMessage:(NSString *)message
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil, nil];
     [alert show];
 }
 

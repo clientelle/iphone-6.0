@@ -17,13 +17,12 @@
 #import "CTLAppointmentsViewController.h"
 
 #import "CTLCDAppointment.h"
+#import "CTLCellBackground.h"
+#import "UITableViewCell+CellShadows.h"
+#import "CTLViewDecorator.h"
 
 int CTLStartTimeInputTag = 18;
 int CTLEndTimeInputTag = 81;
-
-@interface CTLAddEventViewController ()
-
-@end
 
 @implementation CTLAddEventViewController
 
@@ -32,14 +31,12 @@ int CTLEndTimeInputTag = 81;
     [super viewDidLoad];
     
     self.navigationItem.title = NSLocalizedString(@"SET_APPOINTMENT", nil);
-	
-    _event = [[CTLEvent alloc] initForEvents];
-        
     self.titleTextField.placeholder = NSLocalizedString(@"APPOINTMENT_NOTE", nil);
-    self.locationTextField.placeholder = NSLocalizedString(@"LOCATION", nil);
     self.startTimeTextField.placeholder = NSLocalizedString(@"START_TIME", nil);
     self.endTimeTextField.placeholder = NSLocalizedString(@"END_TIME", nil);
-
+    self.locationTextField.placeholder = NSLocalizedString(@"LOCATION", nil);
+    
+    _event = [[CTLEvent alloc] initForEvents];
     
     if(self.contact){
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
@@ -64,8 +61,8 @@ int CTLEndTimeInputTag = 81;
        
     _datePicker = [[UIDatePicker alloc] init];
     _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-    [_datePicker addTarget:self action:@selector(setDate:) forControlEvents:UIControlEventValueChanged];
     _datePicker.date = [NSDate hoursFrom:[NSDate date] numberOfHours:1];
+    [_datePicker addTarget:self action:@selector(setDate:) forControlEvents:UIControlEventValueChanged];
     
     self.startTimeTextField.inputView = _datePicker;
     self.endTimeTextField.inputView = _datePicker;
@@ -73,8 +70,52 @@ int CTLEndTimeInputTag = 81;
     self.endTimeTextField.tag = CTLEndTimeInputTag;
     
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissInputViews:)]];
+    
+    /*** GENERATE FAKE APPOINTMENTS ***/
+    /*
+    [self createAppointmentsForMonth:[NSDate monthsAgo:1]];
+    [self createAppointmentsForMonth:[NSDate date]];
+    [self createAppointmentsForMonth:[NSDate monthsFromNow:1]];
+     
+    [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadAppointmentsNotification object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+    */
 }
 
+- (void)decorateInput:(UITextField *)textField
+{
+    textField.backgroundColor = [UIColor clearColor];
+    CTLViewDecorator *decorator = [[CTLViewDecorator alloc] init];
+    CAShapeLayer *dottedLine = [decorator createDottedLine:textField.frame];
+    [textField.layer addSublayer:dottedLine];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self decorateInput:self.titleTextField];
+    [self decorateInput:self.startTimeTextField];
+    [self decorateInput:self.endTimeTextField];
+    [self decorateInput:self.locationTextField];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    [cell addShadowToCellInTableView:self.tableView atIndexPath:indexPath];
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 4;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44.0;
+}
 
 #pragma mark - Calendar PickerView
 
@@ -158,7 +199,7 @@ int CTLEndTimeInputTag = 81;
 {
     [_focusedTextField setBackgroundColor:[UIColor clearColor]];
     UITextField *textField = (UITextField *)sender;
-    [textField setBackgroundColor:[UIColor textInputHighlightBackgroundColor]];
+    [textField setBackgroundColor:[UIColor ctlFadedGray]];
     _focusedTextField = textField;
 }
 
@@ -205,7 +246,7 @@ int CTLEndTimeInputTag = 81;
 - (BOOL)validateAppointment:(EKEvent *)appointment
 {
     BOOL isValid = YES;
-    UIColor *errorColor = [UIColor colorFromUnNormalizedRGB:249.0f green:235.0f blue:231.0f alpha:1.0f];
+    UIColor *errorColor = [UIColor ctlInputErrorBackground];
     
     if([appointment.title length] == 0){
         [self.titleTextField setBackgroundColor:errorColor];
@@ -235,7 +276,10 @@ int CTLEndTimeInputTag = 81;
     [[_event store] saveEvent:_appointment span:EKSpanThisEvent commit:YES error:&error];
     
     if (error){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[error description] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[error description]
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
         [alert show];
     }else{
         

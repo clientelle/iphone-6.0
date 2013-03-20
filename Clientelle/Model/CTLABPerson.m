@@ -19,17 +19,19 @@ NSString *const CTLPersonPhoneProperty = @"phone";
 NSString *const CTLPersonNoteProperty = @"note";
 NSString *const CTLPersonCreatedDateProperty = @"creationDate";
 NSString *const CTLPersonAddressProperty = @"address";
-NSString *const CTLPersonRatingProperty = @"rating";
+NSString *const CTLAddressStreetProperty = @"Street";
+NSString *const CTLAddressCityProperty = @"City";
+NSString *const CTLAddressStateProperty = @"State";
+NSString *const CTLAddressZIPProperty = @"ZIP";
+
+NSString *const CTLLabelKey = @"label";
+NSString *const CTLFieldKey = @"field";
 
 @interface CTLABPerson()
     id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef labelKey);
 @end
 
-
 @implementation CTLABPerson
-
-NSString *const CTLLabelKey = @"label";
-NSString *const CTLFieldKey = @"field";
 
 id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef labelKey) {
     CFIndex count = ABMultiValueGetCount(multi);
@@ -52,9 +54,7 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
             CFRelease(labelRef);
         }
         return result;
-
     }else{
-
         for(CFIndex i = 0; i < count; i++){
             CFTypeRef valueRef = ABMultiValueCopyValueAtIndex(multi, i);
             CFStringRef labelRef = ABMultiValueCopyLabelAtIndex(multi, i);
@@ -86,7 +86,6 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
                 CFRelease(labelKey);
             }
         }
-        
         return nil;
     }
 }
@@ -104,7 +103,6 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
         self.recordRef = recordRef;
         [self personFromRef:recordRef];
     }
-    
     return self;
 }
 
@@ -207,7 +205,8 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
         if(!phoneData){
             phoneData = copyValueFromMultiValueWithLabelKey(phone, kABPersonPhoneIPhoneLabel);
         }
-        if(!phoneData){ //take anything!
+        if(!phoneData){
+            //take anything!
             phoneData = copyValueFromMultiValueWithLabelKey(phone, nil);
         }
         if(phoneData){
@@ -371,8 +370,8 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
 
 + (BOOL)validateContactInfo:(NSDictionary *)fieldsDict
 {
-    BOOL isValid = YES;
     int validityScore = 0;
+    BOOL isValid = YES;
     
     if(([fieldsDict objectForKey:CTLPersonFirstNameProperty] && [[fieldsDict objectForKey:CTLPersonFirstNameProperty] length] > 0) ||
        ([fieldsDict objectForKey:CTLPersonLastNameProperty] && [[fieldsDict objectForKey:CTLPersonLastNameProperty] length] > 0)){
@@ -440,7 +439,6 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
     }
     
     CFRelease(sourcesRef);
-    
     return nil;
 }
 

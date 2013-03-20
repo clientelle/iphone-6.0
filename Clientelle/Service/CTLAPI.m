@@ -57,15 +57,20 @@ typedef enum{
 }
 
 - (BOOL)hasInternetConnection {
-    return NO;
+    return [GOHTTPOperation hasConnection];
 }
 
-#pragma mark -
-#pragma mark Helper methods
+#pragma mark - Helper methods
 
 - (NSString *)urlStringForAPIMethod:(NSString *)method{
     NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"DevConfig" ofType:@"plist"]];
-    return [NSString stringWithFormat:@"%@%@", [plist objectForKey:@"server"], method];
+    NSString *url = [NSString stringWithFormat:@"%@%@", [plist objectForKey:@"server"], method];
+    
+    if(DEBUG_MODE){
+        NSLog(@"URL: %@", url);
+    }
+    
+    return url;
 }
 
 - (void)setUserDictionary:(NSDictionary *)user{
@@ -157,11 +162,17 @@ typedef enum{
         NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&error];
         if(!responseDict){
             NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-            NSLog(@"Response string: %@", responseString);
+            if(DEBUG_MODE){
+                NSLog(@"Response string: %@", responseString);
+            }
             block(NO, responseDict);
             return;
         }
-        NSLog(@"Response dict: %@", responseDict);
+        
+        if(DEBUG_MODE){
+            NSLog(@"Response dict: %@", responseDict);
+        }
+        
         NSNumber *loginResult = [responseDict objectForKey:kCTLStatusKey];
         if([loginResult intValue] == CTLFailure){
             block(NO, responseDict);

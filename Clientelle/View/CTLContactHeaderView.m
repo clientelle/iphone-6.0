@@ -12,6 +12,9 @@
 #import "CTLContactHeaderView.h"
 #import "CTLABPerson.h"
 
+NSString *const CTLFontName = @"HelveticaNeue";
+NSString *const CTLFontNameBold = @"HelveticaNeue-Bold";
+
 NSString *const CTLShareContactNotification = @"com.clientelle.com.notifications.shareContact";
 CGFloat const CTLContactViewHeaderHeight = 68.0f;
 int CTLNameLabelTag = 664;
@@ -26,11 +29,8 @@ int CTLPhoneLabelTag = 602;
         _menuIsVisible = NO;
         _menuController = [UIMenuController sharedMenuController];
         
-        [self setBackgroundColor:[UIColor whiteColor]];
-        // Initialization code
-        //[self setBackgroundColor:[UIColor colorFromUnNormalizedRGB:218.0f green:218.0f blue:218.0f alpha:1.0f]];
-        //[self setBackgroundColor:[UIColor ctlGreen]];
-        
+        [self setBackgroundColor:[UIColor ctlOffWhite]];
+          
         CGFloat padding = 10.0f;
         CGSize viewSize = self.bounds.size;
         
@@ -47,21 +47,20 @@ int CTLPhoneLabelTag = 602;
         CGFloat labelWidth = viewSize.width - (pictureView.frame.size.width + 50);
         
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, padding, labelWidth, 20.0f)];
-        
-        [nameLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:16]];
+        [nameLabel setFont:[UIFont fontWithName:CTLFontNameBold size:16]];
         [nameLabel setTextColor:[UIColor darkGrayColor]];
         [nameLabel setUserInteractionEnabled:YES];
         nameLabel.tag = CTLNameLabelTag;
         
-        
         UILabel *phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, nameLabel.frame.size.height + 10, labelWidth, 20.0f)];
-        [phoneLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:15]];
+        [phoneLabel setFont:[UIFont fontWithName:CTLFontName size:15]];
         [phoneLabel setTextColor:[UIColor darkGrayColor]];
         [phoneLabel setUserInteractionEnabled:YES];
         phoneLabel.tag = CTLPhoneLabelTag;
         
         CGFloat editButtonWidth = 50.0f;
         CGFloat rightOffset = viewSize.width - editButtonWidth;
+        
         UIButton *editProfileButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [editProfileButton setFrame:CGRectMake(rightOffset, 0, editButtonWidth, viewSize.height)];
         [editProfileButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
@@ -70,17 +69,14 @@ int CTLPhoneLabelTag = 602;
         border1.borderColor = [UIColor colorFromUnNormalizedRGB:200.0f green:200.0f blue:200.0f alpha:1.0f].CGColor;
         border1.borderWidth = 1;
         border1.frame = CGRectMake(0, 0, 1.0f, viewSize.height);
-        
         [editProfileButton.layer addSublayer:border1];
         
-        /*
         CALayer *border2 = [CALayer layer];
         border2.borderColor = [UIColor whiteColor].CGColor;
         border2.borderWidth = 1;
         border2.frame = CGRectMake(1.0f, 0, 1.0f, viewSize.height);
         [editProfileButton.layer addSublayer:border2];
-        */
-         
+                 
         CGFloat indicatorPositionX = self.bounds.size.width - 30;
         CGFloat indicatorPositionY = (CTLContactViewHeaderHeight/2) - (19.0f/2);
         
@@ -101,7 +97,6 @@ int CTLPhoneLabelTag = 602;
     return self;
 }
 
-
 -(BOOL)canBecomeFirstResponder
 {
 	return  YES;
@@ -109,7 +104,6 @@ int CTLPhoneLabelTag = 602;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
     [self reset];
     
     if(_menuIsVisible == YES){
@@ -121,7 +115,7 @@ int CTLPhoneLabelTag = 602;
     }
         
     UITouch *touch = [touches anyObject];
-    UIMenuItem *copy = [[UIMenuItem alloc] initWithTitle:@"Copy" action:@selector(copyContactInfo)];
+    UIMenuItem *copy = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"COPY", nil) action:@selector(copyContactInfo)];
       
     if([[touch view] isKindOfClass:[UILabel class]]){
         UILabel *label = (UILabel *)[touch view];
@@ -131,14 +125,15 @@ int CTLPhoneLabelTag = 602;
         }
     }
     
-    UIMenuItem *share = [[UIMenuItem alloc] initWithTitle:@"Share" action:@selector(shareContact)];
+    UIMenuItem *share = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"SHARE", nil) action:@selector(shareContact)];
     [self showMenuPopupForLabel:self.phoneLabel menuItems:@[copy, share]];
     
 }
 
 - (void)showMenuPopupForLabel:(UILabel *)label menuItems:(NSArray *)menuItems
 {
-    [self decorateLabel:label];
+    label.backgroundColor = [UIColor iOSHighlightedTextColor];
+    
     [_menuController setMenuItems:menuItems];
     
     if([self canBecomeFirstResponder]){
@@ -183,14 +178,14 @@ int CTLPhoneLabelTag = 602;
         self.phoneLabel.text = [abPerson email];
     }
     
-    CGSize nameLabelSize = [self.nameLabel.text sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:16]];
+    CGSize nameLabelSize = [self.nameLabel.text sizeWithFont:[UIFont fontWithName:CTLFontNameBold size:16]];
     [self.nameLabel.text sizeWithFont:self.nameLabel.font];
     
     CGRect nameLabelFrame = self.nameLabel.frame;
     nameLabelFrame.size.width = nameLabelSize.width;
     self.nameLabel.frame = nameLabelFrame;
     
-    CGSize phoneLabelSize = [self.phoneLabel.text sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:15]];
+    CGSize phoneLabelSize = [self.phoneLabel.text sizeWithFont:[UIFont fontWithName:CTLFontName size:15]];
     [self.phoneLabel.text sizeWithFont:self.phoneLabel.font];
     
     CGRect phoneLabelFrame = self.phoneLabel.frame;
@@ -202,11 +197,7 @@ int CTLPhoneLabelTag = 602;
     self.layer.shadowOpacity = 0.75f;
     self.layer.shadowRadius = 2.0f;
     self.layer.shadowOffset = CGSizeMake(0, 0);
-}
-
-- (void)decorateLabel:(UILabel *)label
-{
-    label.backgroundColor = [UIColor colorFromUnNormalizedRGB:208 green:220 blue:236 alpha:1.0f];
+    self.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.bounds].CGPath;
 }
 
 - (void)reset{

@@ -13,14 +13,14 @@ extern NSString *const CTLReloadAppointmentsNotification;
 @class CTLPickerView;
 
 @interface CTLAppointmentsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, CTLSlideMenuDelegate, UIPickerViewDataSource, UIPickerViewDelegate>{
-    
+    UIView *_emptyView;
     CTLPickerView *_filterPickerView;
     NSArray *_filterArray;
+    NSArray *_appointments;
 }
 
-
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) CTLSlideMenuController *menuController;
 
 - (IBAction)dismissPickerFromTap:(UITapGestureRecognizer *)recognizer;
 

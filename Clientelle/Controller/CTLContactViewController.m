@@ -22,6 +22,8 @@
 #import "CTLABGroup.h"
 #import "CTLCDPerson.h"
 
+#import "UITableViewCell+CellShadows.h"
+
 NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 @implementation CTLContactViewController
@@ -65,14 +67,16 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(formDidChange:) name:CTLFormFieldAddedNotification object: nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated
+{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
@@ -156,7 +160,8 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     }
 }
 
-- (BOOL)fieldIsVisible:(NSString *)fieldName{
+- (BOOL)fieldIsVisible:(NSString *)fieldName
+{
     return [[_cdFormSchema valueForKey:fieldName] isEqualToNumber:[NSNumber numberWithBool:YES]];
 }
 
@@ -193,43 +198,33 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     self.abPerson = [[CTLABPerson alloc] initWithRecordID:personID withAddressBookRef:addressBookRef];
         
     if(!self.abPerson){
+        [CTLCDPerson deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"recordID=%i", personID]];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID=%i", personID];
-        //CTLCDPerson *person = [CTLCDPerson MR_findFirstWithPredicate:predicate];
-        
-        [CTLCDPerson deleteAllMatchingPredicate:predicate];
-        
-        UIAlertView *alert = [[UIAlertView alloc] init];
-        [alert setTitle:nil];
-        [alert setDelegate:self];
-        [alert setMessage:[NSString stringWithFormat:NSLocalizedString(@"CONTACT_WAS_DELETED", nil), personName]];
-        [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:[NSString stringWithFormat:NSLocalizedString(@"CONTACT_WAS_DELETED", nil), personName]
+                                                       delegate:self
+                                              cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
     }else{
         [self reloadFormViewAfterAddressBookChange];
     }
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
     [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)reloadFormViewAfterAddressBookChange {
-     
+- (void)reloadFormViewAfterAddressBookChange
+{
     [_personDict removeAllObjects];
     [_addressDict removeAllObjects];
-    
     [self buildSchema];
     [self.tableView reloadData];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
-    return NO;
-}
-
 #pragma mark - TableViewController Delegate Methods
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -249,18 +244,20 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45.0f;
+    return 50.0f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSString *cellIdentifier = @"inputRow";
+    static NSString *cellIdentifier = @"inputRow";
     CTLContactFieldCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
+            
     if (cell == nil) {
         cell = [[CTLContactFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    
+    [cell addShadowToCellInTableView:tableView atIndexPath:indexPath];
 
     NSMutableDictionary *field = [[NSMutableDictionary alloc] init];
     if(indexPath.section == 0){
@@ -292,15 +289,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     [cell.textInput addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingChanged];
     
     return cell;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if(section == 1){
-        return NSLocalizedString(@"CONTACT_ADDRESS", nil);
-    }
-    
-    return NSLocalizedString(@"CONTACT_INFO", nil);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -339,6 +327,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     return nil;
 }
 
+
 #pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -350,7 +339,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     }
 }
 
-- (IBAction)cancel:(id)sender {
+- (void)cancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -362,7 +351,11 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 {
     [self setPersonDictionary];
     if(![CTLABPerson validateContactInfo:_personDict]){
-        UIAlertView *formAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"CONTACT_INCOMPLETE", nil) message:NSLocalizedString(@"CONTACT_INCOMPLETE_MSG", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+        UIAlertView *formAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"CONTACT_INCOMPLETE", nil)
+                                                            message:NSLocalizedString(@"CONTACT_INCOMPLETE_MSG", nil)
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
         [formAlert show];
         return;
     }
@@ -439,8 +432,8 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 {
     UITextField *textField = (UITextField *)sender;
     [_focusedTextField setBackgroundColor:[UIColor clearColor]];
-    [textField setBackgroundColor:[UIColor textInputHighlightBackgroundColor]];
-    _focusedTextField = textField;
+    [textField setBackgroundColor:[UIColor ctlFadedGray]];
+     _focusedTextField = textField;
 }
 
 #pragma mark - Resize view in keyboard mode
@@ -462,15 +455,12 @@ CGRect CTLSubtractRect(CGRect viewFrame, CGRect keyboardFrame){
     return CGRectMake(fminf(x1, x2), fminf(y1, y2), width1, fabsf(viewHeight-keyboardHeight));
 }
 
-- (void)keyboardWillAppear:(NSNotification *)notification {
+- (void)keyboardWillAppear:(NSNotification *)notification
+{
     NSDictionary *userInfo = [notification userInfo];
-    
     UIViewAnimationOptions options = [userInfo[UIKeyboardAnimationCurveUserInfoKey] unsignedIntegerValue];
     
     CGRect viewFrame = [self.view frame];
-    viewFrame.origin.y = self.navigationBar.frame.size.height;
-    viewFrame.size.height -= self.navigationBar.frame.size.height;
-    
     CGRect keyboardFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect resizedFrame = CTLSubtractRect(viewFrame, keyboardFrame);
     
@@ -480,11 +470,9 @@ CGRect CTLSubtractRect(CGRect viewFrame, CGRect keyboardFrame){
     } completion:nil];
 }
 
-- (void)keyboardWillDisappear:(NSNotification *)notification {
+- (void)keyboardWillDisappear:(NSNotification *)notification
+{
     CGRect viewFrame = [self.view frame];
-    viewFrame.origin.y = self.navigationBar.frame.size.height;
-    viewFrame.size.height += self.navigationBar.frame.size.height;
-    
     NSDictionary *userInfo = [notification userInfo];
     NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     UIViewAnimationOptions options = [userInfo[UIKeyboardAnimationCurveUserInfoKey] unsignedIntegerValue];
@@ -494,7 +482,8 @@ CGRect CTLSubtractRect(CGRect viewFrame, CGRect keyboardFrame){
     } completion:nil];
 }
 
-- (void)showAddFieldsModal:(id)sender {
+- (void)showAddFieldsModal:(id)sender
+{
     [self performSegueWithIdentifier:CTLContactFormEditorSegueIdentifyer sender:self];
 }
 

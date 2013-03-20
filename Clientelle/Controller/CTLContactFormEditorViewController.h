@@ -18,11 +18,12 @@ extern NSString *const CTLFormFieldAddedNotification;
 }
 
 @property (nonatomic, weak) IBOutlet UINavigationBar *navBar;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
+
 @property (nonatomic, strong) CTLABGroup *abGroup;
 @property (nonatomic, strong) CTLCDFormSchema *formSchema;
 @property (nonatomic, strong) NSArray *fieldsFromPList;
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
 
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;

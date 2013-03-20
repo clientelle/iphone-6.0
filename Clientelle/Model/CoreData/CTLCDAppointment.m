@@ -9,9 +9,10 @@
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[self entityInManagedObjectContext:context]];
-    [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:CTLCDAppointmentAttributes.startDate ascending:NO]]];
+    [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:CTLCDAppointmentAttributes.startDate ascending:YES]]];
 
-    request.predicate = [NSPredicate predicateWithFormat:@"startDate >= %@ AND endDate =< %@", [NSDate date], [NSDate nextMonth]];
+    //only get appointments in this range
+    //request.predicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (endDate =< %@)", [NSDate monthsAgo:1], [NSDate monthsFromNow:1]];
     
     NSFetchedResultsController *fetchController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
     

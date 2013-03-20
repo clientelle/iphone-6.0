@@ -44,12 +44,13 @@ extern NSString *const CTLContactRowDidChangeNotification;
     BOOL _shouldReorderListOnScroll;
 }
 
+@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
 @property (nonatomic, assign) ABAddressBookRef addressBookRef;
 @property (nonatomic, strong) CTLContactHeaderView *contactHeader;
 @property (nonatomic, strong) CTLContactToolbarView *contactToolbar;
-@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 - (IBAction)dismissGroupPickerFromTap:(UITapGestureRecognizer *)recognizer;
 

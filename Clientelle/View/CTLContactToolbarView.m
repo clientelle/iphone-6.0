@@ -43,8 +43,6 @@ CGFloat const CTLContactModeToolbarViewHeight = 70;
     return button;
 }
 
-
-
 -(void)drawRect:(CGRect)rect {
     
     CGFloat bumpHeight = 8.0f;
@@ -64,22 +62,14 @@ CGFloat const CTLContactModeToolbarViewHeight = 70;
     CGPathCloseSubpath(path);
     CGContextAddPath(context, path);
     
-    
     self.layer.shadowOpacity = 1.0f;
     self.layer.shadowRadius = 2.0f;
     self.layer.shadowColor = [UIColor blackColor].CGColor;
     self.layer.shadowOffset = CGSizeMake(0, 0);
-     
-    
-    //177.0f green:204.0f blue:187.0f
-    //75.0f green:75.0f blue:75.0f
-    
-    //UIColor *toolbarColor = [UIColor colorFromUnNormalizedRGB:102.0f green:100.0f blue:96.0f alpha:1.0f];
     
     UIColor *toolbarColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter.png"]];
     
     CGContextSetFillColorWithColor(context, toolbarColor.CGColor);
-    
     CGContextFillPath(context);
     CGContextSaveGState(context);
     CGPathRelease(path);

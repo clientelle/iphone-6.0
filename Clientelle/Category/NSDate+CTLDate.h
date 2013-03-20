@@ -13,8 +13,17 @@
 + (NSDate *)hoursFrom:(NSDate *)date numberOfHours:(NSInteger)hours;
 + (NSDate *)hoursBefore:(NSDate *)date numberOfHours:(NSInteger)hours;
 + (NSDate *)nextMonth;
-+ (NSDate *)threeMonthsAgo;
-+ (NSDate *)threeMonthsFromNow;
++ (NSDate *)monthsAgo:(int)num;
++ (NSDate *)monthsFromNow:(int)num;
+
++ (NSDate *)firstDayOfCurrentWeek;
++ (NSDate *)lastDayOfCurrentWeek;
++ (NSDate *)firstDateOfCurrentMonth;
++ (NSDate *)lastDateOfCurrentMonth;
+
++ (NSDate *)zeroHour:(NSCalendar *)calendar date:(NSDate *)date;
++ (NSDate *)today;
++ (NSDate *)tomorrow;
 
 + (NSDateFormatter *)dateFormatter;
 

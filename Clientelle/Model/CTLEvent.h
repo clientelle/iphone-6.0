@@ -18,9 +18,6 @@ typedef void (^CTLVoidBlock)(void);
 @property (nonatomic, strong) EKEventStore *store;
 @property (nonatomic, strong) EKCalendar *calendar;
 
-//- (id)initWithForReminders;
 - (id)initForEvents;
-
-//+ (void)performBlockAndWait:(CTLVoidBlock)block withErrorHandler:(void(^)(NSError *))errorCallback;
 
 @end

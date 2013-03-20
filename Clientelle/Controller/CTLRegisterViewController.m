@@ -88,7 +88,11 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
         }else{
             NSLog(@"RESPONSE %@", response);
             NSString *message = [CTLAPI messageFromResponse:response];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops :(" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops :("
+                                                            message:message
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil, nil];
             [alert show];
         }
     }];
@@ -142,7 +146,7 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     [personDict setValue:@"iphone" forKey:@"source"];
     
     //?XDEBUG_SESSION_START=ECLIPSE_DBGP
-    [_api makeRequest:@"/register" withParams:personDict withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
+    [_api makeRequest:@"/register?XDEBUG_SESSION_START=ECLIPSE_DBGP" withParams:personDict withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
         
          if(requestSucceeded){
             
@@ -180,7 +184,11 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
             }else{
             
                 NSString *message = [CTLAPI messageFromResponse:response];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops :(" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops :("
+                                                                message:message
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil, nil];
                 [alert show];
             }
         }

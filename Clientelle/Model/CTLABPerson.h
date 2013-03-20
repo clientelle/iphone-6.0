@@ -19,14 +19,16 @@ extern NSString *const CTLPersonPhoneProperty;
 extern NSString *const CTLPersonNoteProperty;
 extern NSString *const CTLPersonCreatedDateProperty;
 extern NSString *const CTLPersonAddressProperty;
-extern NSString *const CTLPersonRatingProperty;
+extern NSString *const CTLAddressStreetProperty;
+extern NSString *const CTLAddressCityProperty;
+extern NSString *const CTLAddressStateProperty;
+extern NSString *const CTLAddressZIPProperty;
 
 @interface CTLABPerson : NSObject
 
 @property (nonatomic, assign) ABAddressBookRef addressBookRef;
 @property (nonatomic, assign) ABRecordID recordID;
 @property (nonatomic, assign) ABRecordRef recordRef;
-
 @property (nonatomic, copy) NSString *compositeName;
 @property (nonatomic, copy) NSString *firstName;
 @property (nonatomic, copy) NSString *lastName;
@@ -51,11 +53,8 @@ extern NSString *const CTLPersonRatingProperty;
 
 - (CTLABPerson *)updateWithDictionary:(NSDictionary *)fields;
 + (BOOL)validateContactInfo:(NSDictionary *)fieldsDict;
-
 + (void)peopleFromAddressBook:(ABAddressBookRef)addressBookRef withBlock:(CTLDictionayBlock)block;
-
 + (ABRecordRef)sourceByType:(ABSourceType)sourceType addessBookRef:(ABAddressBookRef)addressBookRef;
-
 - (NSString *)description;
 
 @end

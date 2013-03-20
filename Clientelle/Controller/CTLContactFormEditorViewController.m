@@ -9,23 +9,23 @@
 #import "CTLContactFormEditorViewController.h"
 #import "CTLCDFormSchema.h"
 #import "CTLABGroup.h"
+#import "UITableViewCell+CellShadows.h"
 
 NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 
-
 @implementation CTLContactFormEditorViewController
 
-- (void)viewDidLoad{
+- (void)viewDidLoad
+{
     [super viewDidLoad];
 
     self.navBar.topItem.title = NSLocalizedString(@"EDIT_FORM", nil);
-        
-    _fieldRows = [[NSMutableArray alloc] init];
-
-    NSString *addressLabel = NSLocalizedString(@"Address", nil);
-    NSMutableArray *fields = [self.fieldsFromPList mutableCopy];
-    [fields addObject:@{kCTLFieldLabel:addressLabel, kCTLFieldName:@"address"}];
+    self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:206.0f green:206.0f blue:206.0f alpha:1.0f];
     
+    _fieldRows = [[NSMutableArray alloc] init];
+    NSMutableArray *fields = [self.fieldsFromPList mutableCopy];
+    [fields addObject:@{kCTLFieldLabel:NSLocalizedString(@"address", nil), kCTLFieldName:@"address"}];
+        
     for(NSInteger i=0; i< [fields count]; i++){
         NSMutableDictionary *inputField = [fields[i] mutableCopy];
         NSString *label = NSLocalizedString([inputField valueForKey:kCTLFieldName], nil);
@@ -36,15 +36,15 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     }
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return [_fieldRows count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     static NSString *cellIdentifier = @"fieldRow";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
     NSMutableDictionary *field = [_fieldRows objectAtIndex:indexPath.row];
     cell.textLabel.text = [field objectForKey:kCTLFieldLabel];
     
@@ -52,16 +52,19 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
+    [cell addShadowToCellInGroupedTableView:self.tableView atIndexPath:indexPath];
+    
     if([[field valueForKey:kCTLFieldEnabled] isEqualToNumber:[NSNumber numberWithBool:NO]]){
         [self styleDisabledField:cell];
     }else{
         [self styleEnabledField:cell];
     }
 
-    return cell;    
+    return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     [self setFieldAtIndexPath:indexPath];
 }
 
@@ -81,27 +84,26 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     [self.doneButton setStyle:UIBarButtonItemStyleDone];
 }
 
-- (void)styleEnabledField:(UITableViewCell *)cell {
+- (void)styleEnabledField:(UITableViewCell *)cell
+{
     [cell setAccessoryView:nil];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     cell.textLabel.textColor = [UIColor blackColor];
-    cell.backgroundColor = [UIColor colorFromUnNormalizedRGB:245.0f green:245.0f blue:245.0f alpha:1.0f];
+    cell.backgroundColor = [UIColor ctlLightGray];
 }
 
-- (void)styleDisabledField:(UITableViewCell *)cell {
+- (void)styleDisabledField:(UITableViewCell *)cell
+{
     UIButton *accessory = [UIButton buttonWithType:UIButtonTypeContactAdd];
     [accessory setUserInteractionEnabled:NO];
     [cell setAccessoryView:accessory];
     cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.textLabel.textColor = [UIColor darkGrayColor];
+    cell.textLabel.textColor = [UIColor lightGrayColor];
     cell.backgroundColor = [UIColor whiteColor];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
-    return NO;
-}
-
-- (IBAction)save:(id)sender{
+- (IBAction)save:(id)sender
+{
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     [[NSNotificationCenter defaultCenter] postNotificationName:CTLFormFieldAddedNotification object:nil];
     [self dismissViewControllerAnimated:YES completion:nil];

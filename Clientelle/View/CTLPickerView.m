@@ -17,11 +17,9 @@ int const CTLPickerHeight = 162.0f;
 {
     self = [super initWithFrame:CGRectMake(0, -179.0f, width, CTLPickerHeight)];
     
-     if (self) {
-        // Initialization code
+    if (self) {
         self.isVisible = NO;
         self.showsSelectionIndicator = YES;
-         
         [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidePicker)]];
     }
     return self;

@@ -20,6 +20,8 @@ const CGFloat CTLMainMenuWidth = 190.0f;
         CGRect frame = self.view.bounds;
         [self setLeftPanel:menuView withFrame:frame];
         [self setRightPanel:mainView withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(frame), CGRectGetHeight(frame))];
+        
+        [self setShadow:mainView];
     }
     return self;
 }
@@ -69,6 +71,8 @@ const CGFloat CTLMainMenuWidth = 190.0f;
 {
     UINavigationController *navigationController = (UINavigationController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:navigationControllerName];
     
+    [self setShadow:navigationController];
+    
     CGFloat width = CGRectGetWidth(self.view.bounds);
     CGFloat height = CGRectGetHeight(self.view.bounds);
     
@@ -83,15 +87,16 @@ const CGFloat CTLMainMenuWidth = 190.0f;
         self.mainViewNavController.view.frame = CGRectMake(0.0f, 0.0f, width, height);
     }];
     
-    /*
-     completion:^(BOOL finished){
-     if(finished){
-     self.mainViewNavController.view.layer.shadowOpacity = 0.85f;
-     self.mainViewNavController.view.layer.shadowRadius = 5.0f;
-     self.mainViewNavController.view.layer.shadowOffset = CGSizeMake(-3, 0);
-     }
-     }*/
+}
+
+- (void)setShadow:(UINavigationController *)mainView
+{
+    CGPathRef shadowPath = [UIBezierPath bezierPathWithRect:mainView.view.bounds].CGPath;
+    [mainView.view.layer setShadowPath:shadowPath];
     
+    mainView.view.layer.shadowOpacity = 0.85f;
+    mainView.view.layer.shadowRadius = 5.0f;
+    mainView.view.layer.shadowOffset = CGSizeMake(-3, 0);
 }
 
 - (void)flipToView:(UIViewController<CTLSlideMenuDelegate> *)mainViewController

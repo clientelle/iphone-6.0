@@ -30,36 +30,99 @@ NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BACK", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
     [self.navigationItem setBackBarButtonItem: backButton];
     
+    //default to show current week
     self.resultsController = [CTLCDAppointment fetchedResultsController];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadAppointments:) name:CTLReloadAppointmentsNotification object:nil];
     
-  
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"groovepaper.png"]];
+    NSLog(@"TODAY: (startDate >= %@) AND (startDate  < %@)", [NSDate today], [NSDate tomorrow]);
+    NSLog(@"WEEK:  (startDate >= %@) AND (startDate  < %@)", [NSDate firstDayOfCurrentWeek], [NSDate lastDayOfCurrentWeek]);
+    NSLog(@"MONTH: (startDate >= %@) AND (startDate  < %@)", [NSDate firstDateOfCurrentMonth], [NSDate lastDateOfCurrentMonth]);
 
+    NSPredicate *todayPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (startDate  < %@)", [NSDate today], [NSDate tomorrow]];
+
+    NSPredicate *thisWeekPredicate = [NSPredicate predicateWithFormat:@"(startDate > %@) AND (startDate =< %@)", [NSDate firstDayOfCurrentWeek], [NSDate lastDayOfCurrentWeek]];
     
-    _filterPickerView = [self createFilterPickerView];
-    _filterArray = @[@"Today", @"Tomorrow", @"This Week", @"Last Week"];
+    NSPredicate *thisMonthPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (startDate =< %@)", [NSDate firstDateOfCurrentMonth], [NSDate lastDateOfCurrentMonth]];
     
-    self.navigationItem.titleView = [self filterPickerButtonWithTitle:_filterArray[0]];
+    NSDictionary *today     = @{@"title":NSLocalizedString(@"TODAY", nil),      @"predicate":todayPredicate};
+    NSDictionary *thisWeek  = @{@"title":NSLocalizedString(@"THIS_WEEK", nil),  @"predicate":thisWeekPredicate};
+    NSDictionary *thisMonth = @{@"title":NSLocalizedString(@"THIS_MONTH", nil), @"predicate":thisMonthPredicate};
+    
+    _filterArray = @[today, thisWeek, thisMonth];
+    _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:thisWeek[@"predicate"]];
+ 
+    //TODO: Remember last setting
+    int defaultRow = 1;
+     _filterPickerView = [self createFilterPickerView];
+    [_filterPickerView selectRow:defaultRow inComponent:0 animated:NO];
+    self.navigationItem.titleView = [self filterPickerButtonWithTitle:_filterArray[defaultRow][@"title"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    
+    _emptyView = [self buildEmptyView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadAppointments:) name:CTLReloadAppointmentsNotification object:nil];
 }
 
+- (UIView *)buildEmptyView
+{
+    CGRect viewFrame = self.view.frame;
+    
+    UIView *emptyView = [[UIView alloc] initWithFrame:viewFrame];
+    UIColor *textColor = [UIColor colorFromUnNormalizedRGB:76.0f green:91.0f blue:130.0f alpha:1.0f];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 90.0f, viewFrame.size.width, 25.0f)];
+    [titleLabel setBackgroundColor:[UIColor clearColor]];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20.0f]];
+    [titleLabel setTextColor:textColor];
+    [titleLabel setText:NSLocalizedString(@"NO_APPOINTMENTS", nil)];
+       
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 120.0f, viewFrame.size.width, 25.0f)];
+    [messageLabel setBackgroundColor:[UIColor clearColor]];
+    [messageLabel setTextAlignment:NSTextAlignmentCenter];
+    [messageLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0f]];
+    [messageLabel setTextColor:textColor];
+    [messageLabel setText:NSLocalizedString(@"NO_APPOINTMENTS_FOUND", nil)];
+    
+    [emptyView addSubview:titleLabel];
+    [emptyView addSubview:messageLabel];
+    
+    return emptyView;
+}
 
-- (void)reloadAppointments:(NSNotification *)notification {
+- (void)reloadAppointments:(NSNotification *)notification
+{
     self.resultsController = [CTLCDAppointment fetchedResultsController];
+    NSInteger selectedRow = [_filterPickerView selectedRowInComponent:0];
+    NSDictionary *filter = [_filterArray objectAtIndex:selectedRow];
+    _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:filter[@"predicate"]];
     [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if([_appointments count] == 0){
+        return self.view.bounds.size.height;
+    }
+    return 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if([_appointments count] == 0){
+        return _emptyView;
+    }
+    return nil;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id<NSFetchedResultsSectionInfo> info = [[self.resultsController sections] objectAtIndex:section];
-    return [info numberOfObjects];
+    return [_appointments count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -68,7 +131,7 @@ NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
     CTLAppointmentCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     [cell setSelectionStyle:UITableViewCellEditingStyleNone];
     
-    CTLCDAppointment *appointment = [self.resultsController objectAtIndexPath:indexPath];
+    CTLCDAppointment *appointment = [_appointments objectAtIndex:indexPath.row];
     cell.titleLabel.text = appointment.title;
     
     NSString *location = [NSString stringWithFormat:@"%@", [NSDate dateToString:appointment.startDate]];
@@ -89,7 +152,12 @@ NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CTLCDAppointment *appointment = [self.resultsController objectAtIndexPath:indexPath];
+    if(_filterPickerView.isVisible){
+        [_filterPickerView hidePicker];
+        return;
+    }
+    
+    CTLCDAppointment *appointment = [_appointments objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:CTLAppointmentFormSegueIdentifyer sender:appointment];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -130,13 +198,20 @@ NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
     return filterPicker;
 }
 
-- (void)togglePicker:(id)sender {
+- (void)togglePicker:(id)sender
+{
     if(_filterPickerView.isHidden){
         [_filterPickerView hidePicker];
-        
     }else{
         [_filterPickerView showPicker];
     }
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint touchPoint = [gestureRecognizer locationInView:self.view];
+    UIView *touchedView = [self.view hitTest:touchPoint withEvent:nil];
+    return (touchedView == self.tableView || touchedView == _emptyView);
 }
 
 - (IBAction)dismissPickerFromTap:(UITapGestureRecognizer *)recognizer
@@ -153,19 +228,20 @@ NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    NSString *filterName = [_filterArray objectAtIndex:[_filterPickerView selectedRowInComponent:0]];
-    [self updateFilterPickerButtonWithTitle:filterName];
-    //TODO: filter appointments
-    
-    
+    NSDictionary *filter = [_filterArray objectAtIndex:[_filterPickerView selectedRowInComponent:0]];
+    [self updateFilterPickerButtonWithTitle:filter[@"title"]];
+        
+    _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:filter[@"predicate"]];
+    [self.tableView reloadData];
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-     return [_filterArray objectAtIndex:row];
+     return [_filterArray objectAtIndex:row][@"title"];
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
 	return [_filterArray count];
 }
 

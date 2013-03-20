@@ -5,6 +5,7 @@
 //  Created by Samuel Goodwin on 12/30/11.
 //
 
+#import "SystemConfiguration/SystemConfiguration.h"
 #import "GOHTTPOperation.h"
 
 @interface GOHTTPOperation()
@@ -16,7 +17,6 @@
 
 + (NSString *)addParameters:(NSDictionary *)params toURLString:(NSString *)urlString{
     NSMutableString *mutableURLString = [urlString mutableCopy];
-    
     [mutableURLString appendString:@"?"];
     [params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         [mutableURLString stringByAppendingFormat:@"%@=%@&", key, [obj description]];
@@ -154,6 +154,15 @@
         block(self.data);
     }];
     [self finish];
+}
+
++ (BOOL)hasConnection{
+    BOOL receivedFlags;
+    SCNetworkReachabilityFlags flags;
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(CFAllocatorGetDefault(), [@"dipinkrishna.com" UTF8String]);
+    receivedFlags = SCNetworkReachabilityGetFlags(reachability, &flags);
+    CFRelease(reachability);
+    return (receivedFlags && flags == 0);
 }
 
 @end

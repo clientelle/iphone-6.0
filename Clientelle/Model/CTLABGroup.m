@@ -14,12 +14,9 @@
 NSString *const CTLGroupTypeClient = @"CLIENTS";
 NSString *const CTLGroupTypeProspect = @"PROSPECTS";
 NSString *const CTLGroupTypeAssociate = @"ASSOCIATES";
-
 NSString *const kCTLClientGroupID = @"ClientGroupID";
 NSString *const kCTLProspectGroupID = @"ProspectGroupID";
-
 NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
-
 
 @implementation CTLABGroup
 
@@ -165,12 +162,7 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
     return result;
 }
 
-
-
 #pragma mark - Class Methods
-
-
-
 + (void)createDefaultGroups:(ABAddressBookRef)addressBookRef
 {
     
@@ -231,7 +223,6 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
     [[NSUserDefaults standardUserDefaults] setInteger:clientsGroupID forKey:CTLDefaultSelectedGroupIDKey];
 }
 
-
 + (NSMutableArray *)groupsInLocalSource:(ABAddressBookRef)addressBookRef
 {
     NSMutableArray *groups = [NSMutableArray array];
@@ -257,7 +248,6 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
         return [groups objectAtIndex:0];
     }
 }
-
 
 + (NSArray *)groupsFromSourceType:(ABSourceType)sourceType addressBookRef:(ABAddressBookRef)addressBookRef
 {
@@ -295,8 +285,8 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
         existingGroupRef = (__bridge ABRecordRef)([groupsInSource objectAtIndex:i]);
         CFTypeRef groupNameRef = ABRecordCopyValue(existingGroupRef, kABGroupNameProperty);
         NSString *groupNameStr = (__bridge NSString *)(groupNameRef);
+        //Group already exists
         if([groupName isEqualToString:groupNameStr]){
-            //Group already exists
             CFRelease(groupNameRef);
             break;
         }
@@ -355,7 +345,8 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
     return [[NSUserDefaults standardUserDefaults] integerForKey:kCTLClientGroupID];
 }
 
-- (NSString *)description{
+- (NSString *)description
+{
     return [NSString stringWithFormat:@"<%@: %@, groupID:%i>", [self class], [self name], [self groupID]];
 }
 

@@ -23,7 +23,7 @@
     UIActionSheet *_groupMessageActionSheet;
 }
 
-
+@property (nonatomic, weak) IBOutlet UILabel *footerLabel;
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
 
 - (IBAction)newGroupPrompt:(id)sender;

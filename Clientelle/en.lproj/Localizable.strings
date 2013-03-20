@@ -24,6 +24,9 @@ e†
 "CREATE" = "Create";
 "WARNING" = "Warning";
 "DELETE" = "Delete";
+"COPY" = "Copy";
+"SHARE" = "Share";
+"Back" = "Back";
 
 "EMPTY_GROUP" = "This group has no contacts yet.";
 "ADD_CONTACTS" = "Add Contacts";
@@ -31,13 +34,10 @@ e†
 "PHONE_COLON" = "phone: %@ ";
 "EMAIL_COLON" = "email: %@ ";
 
-
 "EDIT_CONTACT" = "Edit Contact";
 "ADD_CONTACT" = "Add Contact";
 "EDIT_FORM" = "Edit Form";
 
-"CONTACT_ADDRESS" = "Contact Address";
-"CONTACT_INFO" = "Contact Info";
 
 "firstName" = "First Name";
 "lastName" = "Last Name";
@@ -65,6 +65,9 @@ e†
 "CONTACT_INCOMPLETE" = "Contact is incomplete";
 "CONTACT_INCOMPLETE_MSG" = "Name and contact type is required (email or phone number)";
 
+/* Group Messaging */
+
+"NO_CONTACTS" = "No Contacts";
 
 "FORWARD_CONTACT" = "Forward %@'s contact info";
 "SEND_VIA_SMS" = "Send via SMS";
@@ -77,7 +80,7 @@ e†
 "SEND_GROUP_MESSAGE" = "Send a Group Message";
 "GROUP_SMS" = "Group SMS";
 "GROUP_EMAIL" = "Group Email";
-"GROUP_OPTIONS_INSTRUCTIONS" = "Press and hold to rename a group, swipe to delete.";
+"GROUP_OPTIONS_INSTRUCTIONS" = "Press and hold to rename. Swipe to delete.";
 "RENAME_GROUP_TO" = "Rename %@ to:";
 "CANNOT_DELETE_SYSTEM_GROUP" = "%@ is a system group";
 "GROUP_HAS_CONTACTS" = "%@ has %i contact(s). They will be removed from the group.";
@@ -87,6 +90,21 @@ e†
 "DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL" = "Device is not configured to send email messages";
 "DEVICE_NOT_CONFIGURED_TO_SEND_SMS" = "Device is not configured to send text messages";
 
+/* Preferences */
+"ACCOUNT_TYPE" = "Account Type";
+"FREE" = "Free";
+"PAID" = "Paid";
+"NOTIFICATIONS" = "Notifications";
+"SUPPORT_FEATURES" = "Support / Request Features";
+"RATE_APP" = "Rate in App Store";
+"TELL_A_FRIEND" = "Tell a Friend about Clientelle";
+
+/* Appointments */
+"TODAY" = "Today";
+"THIS_WEEK" = "This Week";
+"THIS_MONTH" = "This Month";
+"NO_APPOINTMENTS" = "No Appointments";
+"NO_APPOINTMENTS_FOUND" = "There were no appointments found";
 
 /* Set Appointment */
 

@@ -15,22 +15,19 @@
     NSMutableArray *_filteredContacts;
     NSMutableDictionary *_selectedPeople;
     ABAddressBookRef _addressBookRef;
-    
     UIColor *_textColor;
     UIColor *_disabledTextColor;
     UIColor *_selectedBackgroundColor;
-
 }
-
-@property(nonatomic, assign) ABAddressBookRef addressBookRef;
-@property(nonatomic, strong) CTLABGroup *selectedGroup;
 
 @property(nonatomic, strong) IBOutlet UITableView *tableView;
 @property(nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
 @property(nonatomic, strong) IBOutlet UIActivityIndicatorView *busyIndicator;
 
+@property(nonatomic, assign) ABAddressBookRef addressBookRef;
+@property(nonatomic, strong) CTLABGroup *selectedGroup;
+
 - (IBAction)importContacts:(id)sender;
 - (IBAction)cancelImport:(id)sender;
-
 
 @end

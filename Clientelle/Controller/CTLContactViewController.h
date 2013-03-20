@@ -30,18 +30,18 @@
     UITextField *_focusedTextField;
 }
 
+@property(nonatomic, weak) IBOutlet UITableView *tableView;
+@property(nonatomic, weak) IBOutlet UIBarButtonItem *saveContactButton;
+
 @property(nonatomic, assign) ABAddressBookRef addressBookRef;
 @property(nonatomic, strong) CTLABPerson *abPerson;
 @property(nonatomic, strong) CTLABGroup *abGroup;
-@property(nonatomic, weak) IBOutlet UINavigationBar *navigationBar;
-@property(nonatomic, weak) IBOutlet UITableView *tableView;
-@property(nonatomic, weak) IBOutlet UIBarButtonItem *saveContactButton;
-@property(nonatomic, weak) IBOutlet UIBarButtonItem *cancelButton;
+
 
 - (IBAction)submit:(id)sender;
-- (IBAction)cancel:(id)sender;
-
+- (IBAction)highlightTextField:(id)sender;
 - (IBAction)dismissKeyboard:(UITapGestureRecognizer *)recognizer;
+
 - (void)reloadFormViewAfterAddressBookChange;
 
 @end

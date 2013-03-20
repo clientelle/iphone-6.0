@@ -13,7 +13,6 @@
 @class CTLCDAppointment;
 
 @interface CTLAddEventViewController : UITableViewController<UITextFieldDelegate, UIGestureRecognizerDelegate>{
-    
     UIDatePicker *_datePicker;
     NSInteger _activeInputTag;
     EKEvent *_appointment;
@@ -34,6 +33,5 @@
 - (IBAction)saveLocation:(id)sender;
 - (IBAction)showDatePicker:(id)sender;
 - (IBAction)saveAppointment:(id)sender;
-- (void)cancel:(id)sender;
 
 @end

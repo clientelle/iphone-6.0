@@ -15,10 +15,10 @@ typedef enum{
 typedef void (^GODataBlock)(NSData* data);
 
 @interface GOHTTPOperation : NSOperation<NSURLConnectionDelegate>
+
 @property (assign, getter=isExecuting) BOOL executing;
 @property (assign, getter=isFinished) BOOL finished;
 @property (strong) NSMutableData *data;
-
 @property (retain) NSMutableArray *completions;
 @property (strong) NSURLRequest *request;
 
@@ -27,4 +27,6 @@ typedef void (^GODataBlock)(NSData* data);
 + (id)POSToperationWithURL:(NSString *)urlString andJSONData:(NSData *)jsonData;
 
 - (void)addCompletion:(GODataBlock)block;
++ (BOOL)hasConnection;
+
 @end

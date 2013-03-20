@@ -37,11 +37,10 @@
         UIImageView *indicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"white-indicator-right.png"]];
         CGRect frame = indicator.frame;
         frame.origin.x = CTLMainMenuWidth - (indicator.image.size.width + 10.0f);
-        frame.origin.y = 18.0f;
+        frame.origin.y = 17.0f;
         indicator.frame = frame;
         
         [self addSubview:indicator];
-        
         [self resetBorders];
     }
     

@@ -9,22 +9,20 @@
 
 @interface UIColor(CTLColor)
 
-+(UIColor *)colorFromUnNormalizedRGB:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
++ (UIColor *)colorFromUnNormalizedRGB:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 
-+ (UIColor *)textInputHighlightBackgroundColor;
-
+/* CTL Styles */
++ (UIColor *)ctlOffWhite;
 + (UIColor *)ctlGreen;
-
 + (UIColor *)ctlLightGreen;
-
++ (UIColor *)ctlFadedGray;
 + (UIColor *)ctlTorquoise;
-
 + (UIColor *)ctlLightGray;
-
 + (UIColor *)ctlMediumGray;
-
 + (UIColor *)ctlDarkGray;
-
 + (UIColor *)ctlOrange;
++ (UIColor *)iOSHighlightedTextColor;
++ (UIColor *)ctlInputErrorBackground;
++ (UIColor *)ctlGroupedTableBackgroundColor;
 
 @end

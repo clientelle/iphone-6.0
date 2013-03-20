@@ -42,7 +42,7 @@ typedef void (^CTLABRefBlock)(ABAddressBookRef addressBookRef);
     
     //setup global appearance
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackOpaque];
-    //[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"Navigation-Toolbar.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar.png"] forBarMetrics:UIBarMetricsDefault];
     
     //init main menu controller
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
