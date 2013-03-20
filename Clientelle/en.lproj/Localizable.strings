@@ -26,7 +26,7 @@ e†
 "DELETE" = "Delete";
 "COPY" = "Copy";
 "SHARE" = "Share";
-"Back" = "Back";
+"BACK" = "Back";
 
 "EMPTY_GROUP" = "This group has no contacts yet.";
 "ADD_CONTACTS" = "Add Contacts";
@@ -113,4 +113,4 @@ e†
 "APPOINTMENT_NOTE" = "Appointment Note";
 "START_TIME" = "Start Time";
 "END_TIME" = "End Time";
-"LOCATION" = "Location";
+"LOCATION" = "Location (example: \"My Office\")";

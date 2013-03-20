@@ -80,11 +80,7 @@ int const CTLEmptyContactsTitleTag = 792;
     [self prepareContactViewMode];
     
     _emptyView = [self noContactsView];
-    
-    //If you want to enable background image
-    
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

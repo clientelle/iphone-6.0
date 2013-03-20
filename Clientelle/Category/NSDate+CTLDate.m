@@ -111,7 +111,12 @@
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDate *today = [NSDate zeroHour:calendar date:[NSDate date]];
     
+    //if today is sunday
     NSDateComponents *weekdayComponents = [calendar components:NSWeekdayCalendarUnit fromDate:today];
+    if([weekdayComponents weekday] == 2){
+        return today;
+    }
+
     NSDateComponents *componentsToSubtract = [[NSDateComponents alloc] init];
     [componentsToSubtract setDay: - ([weekdayComponents weekday] - ([calendar firstWeekday]+1))];
     NSDate *beginningOfWeek = [calendar dateByAddingComponents:componentsToSubtract toDate:today options:0];
@@ -127,12 +132,12 @@
     NSDateComponents *weekdayComponents = [calendar components:NSWeekdayCalendarUnit fromDate:today];
     NSDateComponents *componentsToAdd = [[NSDateComponents alloc] init];
     
+    //if today is sunday
     if([weekdayComponents weekday] == 1){
         return today;
     }
-
-    [componentsToAdd setDay: + ([weekdayComponents weekday] - [calendar firstWeekday])];
     
+    [componentsToAdd setDay: 7 - ([weekdayComponents weekday] - [calendar firstWeekday])];
     NSDate *endOfWeek = [calendar dateByAddingComponents:componentsToAdd toDate:today options:0];
     NSDateComponents *components = [calendar components: (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:endOfWeek];
     return [calendar dateFromComponents: components];

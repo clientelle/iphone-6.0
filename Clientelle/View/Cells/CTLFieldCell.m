@@ -8,10 +8,10 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "UIColor+CTLColor.h"
-#import "CTLContactFieldCell.h"
+#import "CTLFieldCell.h"
 #import "CTLViewDecorator.h"
 
-@implementation CTLContactFieldCell
+@implementation CTLFieldCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

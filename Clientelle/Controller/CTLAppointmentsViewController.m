@@ -19,6 +19,8 @@
 
 NSString *const CTLReloadAppointmentsNotification = @"com.clientelle.notifications.reloadAppointments";
 NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
+NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.appointmentFilter";
+
 
 @interface CTLAppointmentsViewController ()
 @property (nonatomic, strong) NSFetchedResultsController *resultsController;
@@ -37,14 +39,9 @@ NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
     //default to show current week
     self.resultsController = [CTLCDAppointment fetchedResultsController];
     
-    NSLog(@"TODAY: (startDate >= %@) AND (startDate  < %@)", [NSDate today], [NSDate tomorrow]);
-    NSLog(@"WEEK:  (startDate >= %@) AND (startDate  < %@)", [NSDate firstDayOfCurrentWeek], [NSDate lastDayOfCurrentWeek]);
-    NSLog(@"MONTH: (startDate >= %@) AND (startDate  < %@)", [NSDate firstDateOfCurrentMonth], [NSDate lastDateOfCurrentMonth]);
 
     NSPredicate *todayPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (startDate  < %@)", [NSDate today], [NSDate tomorrow]];
-
     NSPredicate *thisWeekPredicate = [NSPredicate predicateWithFormat:@"(startDate > %@) AND (startDate =< %@)", [NSDate firstDayOfCurrentWeek], [NSDate lastDayOfCurrentWeek]];
-    
     NSPredicate *thisMonthPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (startDate =< %@)", [NSDate firstDateOfCurrentMonth], [NSDate lastDateOfCurrentMonth]];
     
     NSDictionary *today     = @{@"title":NSLocalizedString(@"TODAY", nil),      @"predicate":todayPredicate};
@@ -64,6 +61,12 @@ NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
     _emptyView = [self buildEmptyView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadAppointments:) name:CTLReloadAppointmentsNotification object:nil];
+}
+
+- (void)rememberAppointmentFilter:(int)index
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:index forKey:CTLDefaultSelectedCalendarFilter];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (UIView *)buildEmptyView
@@ -139,9 +142,9 @@ NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
         location = [location stringByAppendingFormat:@" @ %@", appointment.location];
     }
     
-    //if appointment is past due, decorate label with redColor
+    //if appointment is in the past, de-emphasize with gray color
     if([appointment.startDate compare:[NSDate date]] == NSOrderedAscending){
-        cell.locationLabel.textColor = [UIColor redColor];
+        cell.locationLabel.textColor = [UIColor grayColor];
     }else{
         cell.locationLabel.textColor = [UIColor ctlLightGreen];
     }

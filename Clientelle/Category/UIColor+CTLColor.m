@@ -39,7 +39,7 @@
 }
 
 + (UIColor *)ctlMediumGray{
-    return [self colorFromUnNormalizedRGB:180.0f green:180.0f blue:180.0f alpha:1.0f];
+    return [self colorFromUnNormalizedRGB:160.0f green:160.0f blue:160.0f alpha:1.0f];
 }
 
 + (UIColor *)ctlDarkGray{

@@ -38,13 +38,6 @@ int CTLEndTimeInputTag = 81;
     
     _event = [[CTLEvent alloc] initForEvents];
     
-    if(self.contact){
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
-        
-        _appointment.title = [NSString stringWithFormat:NSLocalizedString(@"MEETING_WITH", nil), [self.contact compositeName]];
-        self.titleTextField.text = _appointment.title;
-    }
-    
     if(self.cdAppointment){
         _appointment = [_event.store eventWithIdentifier:[self.cdAppointment eventID]];
         if(_appointment){
@@ -57,6 +50,12 @@ int CTLEndTimeInputTag = 81;
         _appointment = [EKEvent eventWithEventStore:_event.store];
         _appointment.calendar = [_event.store defaultCalendarForNewEvents];
         [self.titleTextField becomeFirstResponder];
+    }
+    
+    if(self.contact){
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+        _appointment.title = [NSString stringWithFormat:NSLocalizedString(@"MEETING_WITH", nil), [self.contact compositeName]];
+        self.titleTextField.text = _appointment.title;
     }
        
     _datePicker = [[UIDatePicker alloc] init];
@@ -82,22 +81,6 @@ int CTLEndTimeInputTag = 81;
     */
 }
 
-- (void)decorateInput:(UITextField *)textField
-{
-    textField.backgroundColor = [UIColor clearColor];
-    CTLViewDecorator *decorator = [[CTLViewDecorator alloc] init];
-    CAShapeLayer *dottedLine = [decorator createDottedLine:textField.frame];
-    [textField.layer addSublayer:dottedLine];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self decorateInput:self.titleTextField];
-    [self decorateInput:self.startTimeTextField];
-    [self decorateInput:self.endTimeTextField];
-    [self decorateInput:self.locationTextField];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
@@ -105,16 +88,16 @@ int CTLEndTimeInputTag = 81;
     return cell;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44.0;
+    return 48.0;
 }
 
 #pragma mark - Calendar PickerView
@@ -302,18 +285,17 @@ int CTLEndTimeInputTag = 81;
         
         [self resetForm];
         if(self.contact){
-            [self dismissViewControllerAnimated:YES completion:^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
-            }];
-        }else{
-            [self.navigationController popViewControllerAnimated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
         }
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
 #pragma mark - Outlet Controls
 
-- (void)cancel:(id)sender{
+- (void)cancel:(id)sender
+{
     [self resetForm];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -324,7 +306,6 @@ int CTLEndTimeInputTag = 81;
     [self.startTimeTextField setBackgroundColor:[UIColor clearColor]];
     [self.endTimeTextField setBackgroundColor:[UIColor clearColor]];
 }
-
 
 #pragma mark - Cleanup
 

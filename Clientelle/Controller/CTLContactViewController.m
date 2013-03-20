@@ -16,7 +16,7 @@
 
 #import "CTLContactViewController.h"
 #import "CTLCDFormSchema.h"
-#import "CTLContactFieldCell.h"
+#import "CTLFieldCell.h"
 
 #import "CTLABPerson.h"
 #import "CTLABGroup.h"
@@ -251,10 +251,10 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 {
     
     static NSString *cellIdentifier = @"inputRow";
-    CTLContactFieldCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    CTLFieldCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
     if (cell == nil) {
-        cell = [[CTLContactFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[CTLFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
     [cell addShadowToCellInTableView:tableView atIndexPath:indexPath];

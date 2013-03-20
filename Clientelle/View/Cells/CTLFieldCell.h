@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTLContactFieldCell : UITableViewCell
+@interface CTLFieldCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UITextField *textInput;
 
