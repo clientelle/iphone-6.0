@@ -51,8 +51,10 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     _filterArray = @[today, thisWeek, thisMonth];
     _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:thisWeek[@"predicate"]];
  
-    //TODO: Remember last setting
-    int defaultRow = 1;
+    
+    
+    int defaultRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLDefaultSelectedCalendarFilter];
+    
      _filterPickerView = [self createFilterPickerView];
     [_filterPickerView selectRow:defaultRow inComponent:0 animated:NO];
     self.navigationItem.titleView = [self filterPickerButtonWithTitle:_filterArray[defaultRow][@"title"]];

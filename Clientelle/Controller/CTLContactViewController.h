@@ -11,7 +11,7 @@
 @class CTLABPerson;
 @class CTLCDFormSchema;
 
-@interface CTLContactViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate>{
+@interface CTLContactViewController : UITableViewController<UITextFieldDelegate, UIGestureRecognizerDelegate>{
     BOOL _addressbookChangeDidComeFromApp;
     ABAddressBookRef _addressBookRef;
     CTLCDFormSchema *_cdFormSchema;
@@ -31,7 +31,7 @@
     UITextField *_focusedTextField;
 }
 
-@property(nonatomic, weak) IBOutlet UITableView *tableView;
+
 @property(nonatomic, weak) IBOutlet UIBarButtonItem *saveContactButton;
 
 @property(nonatomic, assign) ABAddressBookRef addressBookRef;

@@ -72,16 +72,12 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)buildSchema
@@ -282,7 +278,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     }
     
-    if([field[kCTLFieldName] isEqualToString:@"State"]){
+    if([field[kCTLFieldName] isEqualToString:CTLAddressStateProperty]){
         cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
     }
     
@@ -458,67 +454,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     [_focusedTextField setBackgroundColor:[UIColor clearColor]];
     [textField setBackgroundColor:[UIColor ctlFadedGray]];
      _focusedTextField = textField;
-}
-
-#pragma mark - Resize view in keyboard mode
-
-CGRect CTLSubtractRect(CGRect viewFrame, CGRect keyboardFrame){
-    CGFloat width1 = CGRectGetWidth(viewFrame);
-    CGFloat width2 = CGRectGetWidth(keyboardFrame);
-    if(width1 != width2){
-        NSLog(@"This doesn't work if the rectangles aren't the same width! %f %f", width1, width2);
-    }
-    
-    CGFloat viewHeight = CGRectGetHeight(viewFrame);
-    CGFloat keyboardHeight = CGRectGetHeight(keyboardFrame);
-    CGFloat x1 = CGRectGetMinX(viewFrame);
-    CGFloat x2 = CGRectGetMinX(keyboardFrame);
-    CGFloat y1 = CGRectGetMinY(viewFrame);
-    CGFloat y2 = CGRectGetMinY(keyboardFrame);
-    
-    return CGRectMake(fminf(x1, x2), fminf(y1, y2), width1, fabsf(viewHeight-keyboardHeight));
-}
-
-- (void)keyboardWillAppear:(NSNotification *)notification
-{
-    NSDictionary *userInfo = [notification userInfo];
-    UIViewAnimationOptions options = [userInfo[UIKeyboardAnimationCurveUserInfoKey] unsignedIntegerValue];
-    
-    CGRect viewFrame = [self.view frame];
-    CGRect keyboardFrame = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGRect resizedFrame = CTLSubtractRect(viewFrame, keyboardFrame);
-    
-    __block BOOL shouldScrollToTextFieldPosition = NO;
-    CGRect textFieldRect = [_focusedTextField bounds];
-    
-    CTLFieldCell *parentView = (CTLFieldCell *)[_focusedTextField.superview superview];
-    if((parentView.frame.origin.y + parentView.frame.size.height + 66) > keyboardFrame.origin.y){
-        shouldScrollToTextFieldPosition = YES;
-        textFieldRect = [_focusedTextField convertRect:textFieldRect toView:self.view];
-        textFieldRect.origin.y -= 10 ;
-        textFieldRect.size.height = resizedFrame.size.height;
-    } 
-    
-    NSTimeInterval duration = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
-        [self.tableView setFrame:resizedFrame];
-    } completion:^(BOOL finished){
-        if(shouldScrollToTextFieldPosition){
-            [self.tableView scrollRectToVisible:textFieldRect animated:YES];
-        }
-    }];
-}
-
-- (void)keyboardWillDisappear:(NSNotification *)notification
-{
-    CGRect viewFrame = [self.view frame];
-    NSDictionary *userInfo = [notification userInfo];
-    NSTimeInterval duration = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    UIViewAnimationOptions options = [userInfo[UIKeyboardAnimationCurveUserInfoKey] unsignedIntegerValue];
-    
-    [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
-        [self.tableView setFrame:viewFrame];
-    } completion:nil];
 }
 
 - (void)showAddFieldsModal:(id)sender
