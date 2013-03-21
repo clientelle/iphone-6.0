@@ -37,7 +37,8 @@ int CTLEndTimeInputTag = 81;
     self.locationTextField.placeholder = NSLocalizedString(@"LOCATION", nil);
     
     _event = [[CTLEvent alloc] initForEvents];
-    
+       
+    //segued from an appointment row
     if(self.cdAppointment){
         _appointment = [_event.store eventWithIdentifier:[self.cdAppointment eventID]];
         if(_appointment){
@@ -47,17 +48,17 @@ int CTLEndTimeInputTag = 81;
             self.locationTextField.text = _appointment.location;
         }
     }else{
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
         _appointment = [EKEvent eventWithEventStore:_event.store];
         _appointment.calendar = [_event.store defaultCalendarForNewEvents];
         [self.titleTextField becomeFirstResponder];
     }
     
     if(self.contact){
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
         _appointment.title = [NSString stringWithFormat:NSLocalizedString(@"MEETING_WITH", nil), [self.contact compositeName]];
         self.titleTextField.text = _appointment.title;
     }
-       
+    
     _datePicker = [[UIDatePicker alloc] init];
     _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     _datePicker.date = [NSDate hoursFrom:[NSDate date] numberOfHours:1];

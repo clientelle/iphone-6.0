@@ -28,7 +28,6 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 
 @implementation CTLAppointmentsViewController
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -39,7 +38,8 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     //default to show current week
     self.resultsController = [CTLCDAppointment fetchedResultsController];
     
-
+    int defaultRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLDefaultSelectedCalendarFilter];
+    
     NSPredicate *todayPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (startDate  < %@)", [NSDate today], [NSDate tomorrow]];
     NSPredicate *thisWeekPredicate = [NSPredicate predicateWithFormat:@"(startDate > %@) AND (startDate =< %@)", [NSDate firstDayOfCurrentWeek], [NSDate lastDayOfCurrentWeek]];
     NSPredicate *thisMonthPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (startDate =< %@)", [NSDate firstDateOfCurrentMonth], [NSDate lastDateOfCurrentMonth]];
@@ -49,12 +49,8 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     NSDictionary *thisMonth = @{@"title":NSLocalizedString(@"THIS_MONTH", nil), @"predicate":thisMonthPredicate};
     
     _filterArray = @[today, thisWeek, thisMonth];
-    _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:thisWeek[@"predicate"]];
- 
-    
-    
-    int defaultRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLDefaultSelectedCalendarFilter];
-    
+    _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:_filterArray[defaultRow][@"predicate"]];
+     
      _filterPickerView = [self createFilterPickerView];
     [_filterPickerView selectRow:defaultRow inComponent:0 animated:NO];
     self.navigationItem.titleView = [self filterPickerButtonWithTitle:_filterArray[defaultRow][@"title"]];
@@ -224,7 +220,6 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     [_filterPickerView hidePicker];
 }
 
-
 #pragma mark - Filter Picker Delegate
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -233,11 +228,13 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    NSDictionary *filter = [_filterArray objectAtIndex:[_filterPickerView selectedRowInComponent:0]];
+    int selectedIndex = [_filterPickerView selectedRowInComponent:0];
+    NSDictionary *filter = [_filterArray objectAtIndex:selectedIndex];
+    
     [self updateFilterPickerButtonWithTitle:filter[@"title"]];
-        
     _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:filter[@"predicate"]];
     [self.tableView reloadData];
+    [self rememberAppointmentFilter:selectedIndex];
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -248,12 +245,6 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
 	return [_filterArray count];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
