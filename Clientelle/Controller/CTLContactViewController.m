@@ -63,6 +63,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     }
     
     [self buildSchema];
+    _textFieldsDict = [NSMutableDictionary dictionary];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(formDidChange:) name:CTLFormFieldAddedNotification object: nil];
 }
@@ -110,7 +111,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     for(NSUInteger i=0; i < [_formFields count]; i++){
         NSMutableDictionary *inputField = nil;
         NSString *field = _formFields[i][kCTLFieldName];
-        NSString *newValue = [_personDict objectForKey:field];
+        NSString *newValue = _personDict[field];
         NSString *value = nil;
         NSString *label = nil;
         
@@ -140,7 +141,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         for(NSInteger k=0; k < [_addressFields count]; k++){
             NSMutableDictionary *inputField = [_addressFields[k] mutableCopy];
             NSString *field = _addressFields[k][kCTLFieldName];
-            NSString *newValue = [_addressDict objectForKey:field];
+            NSString *newValue = _addressDict[field];
             NSString *value = nil;
             NSString *label = NSLocalizedString([inputField valueForKey:kCTLFieldName], nil);
             
@@ -259,34 +260,36 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     
     [cell addShadowToCellInTableView:tableView atIndexPath:indexPath];
 
-    NSMutableDictionary *field = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *field = [NSMutableDictionary dictionary];
     if(indexPath.section == 0){
-        field = [_fieldRows objectAtIndex:indexPath.row];
+        field = _fieldRows[indexPath.row];
         cell.textInput.tag = indexPath.row;
     }else{
-        field = [_addressRows objectAtIndex:indexPath.row];
+        field = _addressRows[indexPath.row];
         cell.textInput.tag = indexPath.row + [_fieldRows count];
     }
     
-    cell.textInput.placeholder = [field objectForKey:kCTLFieldPlaceHolder];
-    cell.textInput.text = [field objectForKey:kCTLFieldValue];
+    cell.textInput.placeholder = field[kCTLFieldPlaceHolder];
+    cell.textInput.text = field[kCTLFieldValue];
         
-    UIKeyboardType keyboardType = (UIKeyboardType)[[field objectForKey:kCTLFieldKeyboardType] intValue];
+    UIKeyboardType keyboardType = (UIKeyboardType)[field[kCTLFieldKeyboardType] intValue];
     if(keyboardType != UIKeyboardTypeEmailAddress){
         cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeWords;
         cell.textInput.autocorrectionType = UITextAutocorrectionTypeYes;
     }
 
-    if([[field objectForKey:kCTLFieldName] isEqualToString:CTLPersonNoteProperty]){
+    if([field[kCTLFieldName] isEqualToString:CTLPersonNoteProperty]){
         cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     }
     
-    if([[field objectForKey:kCTLFieldName] isEqualToString:@"State"]){
+    if([field[kCTLFieldName] isEqualToString:@"State"]){
         cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
     }
     
     [cell.textInput setKeyboardType:keyboardType];
     [cell.textInput addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingChanged];
+    
+    [_textFieldsDict setValue:cell.textInput forKey:field[kCTLFieldName]];
     
     return cell;
 }
@@ -330,7 +333,8 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 #pragma mark - Segue
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     if ([[segue identifier] isEqualToString:CTLContactFormEditorSegueIdentifyer]){
         CTLContactFormEditorViewController *formEditorViewController = [segue destinationViewController];
         [formEditorViewController setFormSchema:_cdFormSchema];
@@ -339,24 +343,37 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     }
 }
 
-- (void)cancel:(id)sender {
+- (void)cancel:(id)sender
+{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)submit:(id)sender {
+- (IBAction)submit:(id)sender
+{
     [self saveContactInfo];
 }
 
 - (void)saveContactInfo
 {
     [self setPersonDictionary];
+    
     if(![CTLABPerson validateContactInfo:_personDict]){
-        UIAlertView *formAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"CONTACT_INCOMPLETE", nil)
-                                                            message:NSLocalizedString(@"CONTACT_INCOMPLETE_MSG", nil)
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [formAlert show];
+        NSArray *fields = [NSArray arrayWithArray:_fieldRows];
+        [fields enumerateObjectsUsingBlock:^(id input, NSUInteger idx, BOOL *stop){
+            NSString *fieldKey = input[kCTLFieldName];
+            //light up required fields
+            if([fieldKey isEqualToString:CTLPersonFirstNameProperty] ||
+               [fieldKey isEqualToString:CTLPersonLastNameProperty] ||
+               [fieldKey isEqualToString:CTLPersonEmailProperty] ||
+               [fieldKey isEqualToString:CTLPersonPhoneProperty]){
+                
+                UITextField *textField = (UITextField *)_textFieldsDict[fieldKey];
+                if([textField.text length] == 0){
+                    textField.backgroundColor = [UIColor ctlInputErrorBackground];
+                }
+            }
+        }];
+        [self.view endEditing:YES];
         return;
     }
     
@@ -403,7 +420,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     [self.tableView reloadData];
 }
 
-
 - (IBAction)dismissKeyboard:(UITapGestureRecognizer *)recognizer
 {
     [self.view endEditing:YES];
@@ -412,6 +428,13 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    //clear all inputs of error background
+    NSArray *fields = [NSArray arrayWithArray:_fieldRows];
+    [fields enumerateObjectsUsingBlock:^(id input, NSUInteger idx, BOOL *stop){
+        UITextField *textField = (UITextField *)_textFieldsDict[input[kCTLFieldName]];
+        textField.backgroundColor = [UIColor clearColor];
+    }];
+    
     if(textField.keyboardType == UIKeyboardTypePhonePad){
         textField.text = [NSString formatPhoneNumber:textField.text];
     }
@@ -420,16 +443,17 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     NSInteger inputIndex = textField.tag;
     if(textField.tag > (fieldCount -1)){
         inputIndex -= fieldCount;
-        [[_addressRows objectAtIndex:inputIndex] setValue:textField.text forKey:kCTLFieldValue];
+        [_addressRows[inputIndex] setValue:textField.text forKey:kCTLFieldValue];
         [self setAddressDictionary];
     }else{
-        [[_fieldRows objectAtIndex:inputIndex] setValue:textField.text forKey:kCTLFieldValue];
+        [_fieldRows[inputIndex] setValue:textField.text forKey:kCTLFieldValue];
         [self setPersonDictionary];
     }
 }
 
 - (IBAction)highlightTextField:(id)sender
 {
+    //TODO: highlight error text field 232	204	203	
     UITextField *textField = (UITextField *)sender;
     [_focusedTextField setBackgroundColor:[UIColor clearColor]];
     [textField setBackgroundColor:[UIColor ctlFadedGray]];
@@ -461,20 +485,35 @@ CGRect CTLSubtractRect(CGRect viewFrame, CGRect keyboardFrame){
     UIViewAnimationOptions options = [userInfo[UIKeyboardAnimationCurveUserInfoKey] unsignedIntegerValue];
     
     CGRect viewFrame = [self.view frame];
-    CGRect keyboardFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect keyboardFrame = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect resizedFrame = CTLSubtractRect(viewFrame, keyboardFrame);
     
-    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    __block BOOL shouldScrollToTextFieldPosition = NO;
+    CGRect textFieldRect = [_focusedTextField bounds];
+    
+    CTLFieldCell *parentView = (CTLFieldCell *)[_focusedTextField.superview superview];
+    if((parentView.frame.origin.y + parentView.frame.size.height + 66) > keyboardFrame.origin.y){
+        shouldScrollToTextFieldPosition = YES;
+        textFieldRect = [_focusedTextField convertRect:textFieldRect toView:self.view];
+        textFieldRect.origin.y -= 10 ;
+        textFieldRect.size.height = resizedFrame.size.height;
+    } 
+    
+    NSTimeInterval duration = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
         [self.tableView setFrame:resizedFrame];
-    } completion:nil];
+    } completion:^(BOOL finished){
+        if(shouldScrollToTextFieldPosition){
+            [self.tableView scrollRectToVisible:textFieldRect animated:YES];
+        }
+    }];
 }
 
 - (void)keyboardWillDisappear:(NSNotification *)notification
 {
     CGRect viewFrame = [self.view frame];
     NSDictionary *userInfo = [notification userInfo];
-    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    NSTimeInterval duration = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     UIViewAnimationOptions options = [userInfo[UIKeyboardAnimationCurveUserInfoKey] unsignedIntegerValue];
     
     [UIView animateWithDuration:duration delay:0.0 options:options animations:^{

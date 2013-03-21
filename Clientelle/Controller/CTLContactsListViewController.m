@@ -612,7 +612,6 @@ int const CTLEmptyContactsTitleTag = 792;
     [UIView animateWithDuration:0.3 animations:^{
         self.contactHeader.frame = headerFrame;
         self.contactToolbar.frame = toolbarFrame;
-        //[self.view setBackgroundColor:[UIColor ctlMediumGray]];
     }];
 }
 

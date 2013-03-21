@@ -21,6 +21,7 @@
     NSArray *_formFields;
     NSMutableArray *_formSchema;
     NSMutableArray *_fieldRows;
+    NSDictionary *_textFieldsDict;
     
     BOOL _showAddress;
     NSArray *_addressFields;

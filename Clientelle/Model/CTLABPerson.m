@@ -298,7 +298,7 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
     CFStringRef phonePropertyLabel = NULL;
     CFStringRef addressPropertyLabel = NULL;
     
-    if(self.recordID == kABRecordInvalidID){
+    if(!self.recordID){
         //new user; default phone and email label keys
         emailPropertyLabel = kABWorkLabel;
         phonePropertyLabel = kABPersonPhoneMainLabel;
@@ -323,17 +323,16 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
                 CFErrorRef error = NULL;
                 ABMutableMultiValueRef multiRef = ABMultiValueCreateMutable(kABDictionaryPropertyType);
                 ABMultiValueAddValueAndLabel(multiRef, (__bridge CFDictionaryRef)(propertyValue), addressPropertyLabel, NULL);
-                 
-                if(!ABRecordSetValue(self.recordRef, propertyKey, multiRef, &error)){
-                    //[self alertErrorMessage:error];
-                    NSLog(@"Couldn't save addressDict");
+                
+                if(ABRecordSetValue(self.recordRef, propertyKey, multiRef, &error)){
+                    contactDidChange = YES;
                 }
+
                 CFRelease(multiRef);
 
             }else{
                 //only save fields that changed
                 if(propertyValue != [self valueForKey:fieldName]){
-                    contactDidChange = YES;
                     CFErrorRef error = NULL;
                     ABMutableMultiValueRef multiRef = NULL;
                     
@@ -348,16 +347,14 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
                     }
 
                     if(multiRef){
-                        if(!ABRecordSetValue(self.recordRef, propertyKey, multiRef, &error)){
-                            //[self alertErrorMessage:error];
-                            NSLog(@"Couldn't save multi");
+                        if(ABRecordSetValue(self.recordRef, propertyKey, multiRef, &error)){
+                            contactDidChange = YES;
                         }
                         CFRelease(multiRef);
                     }else{
                         CFErrorRef setValError = NULL;
-                        if(!ABRecordSetValue(self.recordRef, propertyKey, (__bridge CFStringRef)propertyValue, &setValError)){
-                            //[self alertErrorMessage:setValError];
-                            NSLog(@"Couldn't save non-multi");
+                        if(ABRecordSetValue(self.recordRef, propertyKey, (__bridge CFStringRef)propertyValue, &setValError)){
+                           contactDidChange = YES;
                         }
                     }
                 }
@@ -373,16 +370,16 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
     int validityScore = 0;
     BOOL isValid = YES;
     
-    if(([fieldsDict objectForKey:CTLPersonFirstNameProperty] && [[fieldsDict objectForKey:CTLPersonFirstNameProperty] length] > 0) ||
-       ([fieldsDict objectForKey:CTLPersonLastNameProperty] && [[fieldsDict objectForKey:CTLPersonLastNameProperty] length] > 0)){
+    if((fieldsDict[CTLPersonFirstNameProperty] && [fieldsDict[CTLPersonFirstNameProperty] length] > 0) ||
+       (fieldsDict[CTLPersonLastNameProperty] && [fieldsDict[CTLPersonLastNameProperty] length] > 0)){
         validityScore++;
     }
     
-    if([fieldsDict objectForKey:CTLPersonEmailProperty] && [[fieldsDict objectForKey:CTLPersonEmailProperty] length] > 0){
+    if(fieldsDict[CTLPersonEmailProperty] && [fieldsDict[CTLPersonEmailProperty] length] > 0){
         validityScore++;
     }
     
-    if([fieldsDict objectForKey:CTLPersonPhoneProperty] && [[fieldsDict objectForKey:CTLPersonPhoneProperty] length] > 0){
+    if(fieldsDict[CTLPersonPhoneProperty] && [fieldsDict[CTLPersonPhoneProperty] length] > 0){
         validityScore++;
     }
     

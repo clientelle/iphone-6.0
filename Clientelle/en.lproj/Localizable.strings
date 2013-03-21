@@ -56,14 +56,6 @@ e†
 "NEW_CONTACT" = "New Contact";
 "IMPORT_CONTACTS" = "Import Contact";
 
-"CONTACT_WAS_DELETED" = "%@ has been deleted from your address book";
-"CREATE_AGAIN" = "Create Again";
-"OVERWRITE_PROMPT" = "Would you like to take the changes or overwrite it?";
-"TAKE_NEW" = "Take New";
-"OVERWRITE" = "Overwrite";
-
-"CONTACT_INCOMPLETE" = "Contact is incomplete";
-"CONTACT_INCOMPLETE_MSG" = "Name and contact type is required (email or phone number)";
 
 /* Group Messaging */
 
