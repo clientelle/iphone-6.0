@@ -48,6 +48,7 @@ int const CTLAllContactsGroupID = 0;
 int const CTLShareContactActionSheetTag = 234;
 int const CTLAddContactActionSheetTag = 424;
 int const CTLEmptyContactsTitleTag = 792;
+int const CTLEmptyContactsMessageTag = 793;
 
 @implementation CTLContactsListViewController
 
@@ -58,12 +59,52 @@ int const CTLEmptyContactsTitleTag = 792;
     _inContactMode = NO;
     _shouldReorderListOnScroll = NO;
     
-    [self rightTitlebarWithAddContactButton];
+    _emptyView = [self noContactsView];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
     
-    _addressBookRef = [self.menuController addressBookRef];
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+            // First time access has been granted, add the contact
+            if(granted){
+                self.addressBookRef = addressBookRef;
+                [self.menuController setAddressBookRef:self.addressBookRef];
+                [CTLABGroup createDefaultGroups:addressBookRef completion:^(void){
+                    [self doStuff];
+                }];
+            }else{
+                [self displayPermissionPrompt];
+            }
+        });
+    } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        // The user has previously given access, add the contact
+        self.addressBookRef = addressBookRef;
+        [self doStuff];
+    } else {
+        // The user has previously denied access
+        [self displayPermissionPrompt];
+    }
+}
+
+- (void)displayPermissionPrompt
+{
+    UIAlertView *requirePermission = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"REQUIRES_ACCESS_TO_CONTACTS", nil)
+                                                                message:NSLocalizedString(@"GO_TO_SETTINGS", nil)
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil, nil];
+    
+    [requirePermission show];
+}
+
+- (void)doStuff
+{
+    [self rightTitlebarWithAddContactButton];
     int defaultGroupID = [CTLABGroup defaultGroupID];
     
     [self buildGroupSelector:defaultGroupID];
+    [self prepareContactViewMode];
     
     _contacts = [NSArray array];
     _filteredContacts = [NSMutableArray array];
@@ -76,11 +117,6 @@ int const CTLEmptyContactsTitleTag = 792;
         self.navigationItem.titleView = [self groupPickerButtonWithTitle:[selectedGroup name]];
         [self loadGroup:selectedGroup];
     }
-    
-    [self prepareContactViewMode];
-    
-    _emptyView = [self noContactsView];
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -476,10 +512,14 @@ int const CTLEmptyContactsTitleTag = 792;
     [self performSegueWithIdentifier:CTLContactFormSegueIdentifyer sender:self];
 }
 
-- (IBAction)showImporter:(id)sender
+- (void)showImporter:(id)sender
 {
-    [self hideGroupPicker];
-    [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
+    if(!self.addressBookRef){
+        [self displayPermissionPrompt];
+    }else{
+        [self hideGroupPicker];
+        [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
+    }
 }
 
 - (void)showGroupList:(id)sender
@@ -560,6 +600,7 @@ int const CTLEmptyContactsTitleTag = 792;
     [messageLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0f]];
     [messageLabel setTextColor:textColor];
     [messageLabel setText:NSLocalizedString(@"EMPTY_GROUP", nil)];
+    messageLabel.tag = CTLEmptyContactsMessageTag;
     
     CGFloat buttonCenter = viewFrame.size.width/2 - 63;
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -574,7 +615,6 @@ int const CTLEmptyContactsTitleTag = 792;
     [addButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
     [addButton setTitleColor:[UIColor colorFromUnNormalizedRGB:61.0f green:71.0f blue:110.0f alpha:1.0f] forState:UIControlStateHighlighted];
     
-    
     [addButton setFrame:CGRectMake(buttonCenter, 175.0f, 126.0f, 38.0f)];
     [addButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
     [addButton addTarget:self action:@selector(showImporter:) forControlEvents:UIControlEventTouchUpInside];
@@ -583,7 +623,6 @@ int const CTLEmptyContactsTitleTag = 792;
     addButton.layer.shadowOpacity = 0.2f;
     addButton.layer.shadowRadius = 1.0f;
     addButton.layer.shadowOffset = CGSizeMake(0,0);
-    
     
     [emptyView addSubview:titleLabel];
     [emptyView addSubview:messageLabel];
@@ -745,7 +784,17 @@ int const CTLEmptyContactsTitleTag = 792;
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if([_contacts count] == 0){
         UILabel *titleLabel = (UILabel*)[_emptyView viewWithTag:CTLEmptyContactsTitleTag];
-        titleLabel.text = [self.selectedGroup name];
+        UILabel *messageLabel = (UILabel*)[_emptyView viewWithTag:CTLEmptyContactsMessageTag];
+        
+        if(!_addressBookRef){
+            [titleLabel setText:NSLocalizedString(@"NO_CONTACTS", nil)];
+            [messageLabel setText:NSLocalizedString(@"ALLOW_ACCESS_TO_CONTACTS", nil)];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView setContentOffset:CGPointMake(0.0f, CGRectGetHeight(self.searchDisplayController.searchBar.bounds))];
+            });
+        }else{
+            [titleLabel setText:[self.selectedGroup name]];
+        }
         return _emptyView;
     }
     return nil;

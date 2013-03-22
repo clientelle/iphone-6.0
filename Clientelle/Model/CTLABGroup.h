@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+
+typedef void (^CTLSaveCompletionHandler)(void);
+
 @class CTLABPerson;
 
 extern NSString *const kCTLClientGroupID;
@@ -45,7 +48,7 @@ extern NSString *const CTLDefaultSelectedGroupIDKey;
 
 + (ABRecordRef)findByName:(NSString *)groupName addressBookRef:(ABAddressBookRef)addressBookRef;
 + (NSMutableArray *)groupsInLocalSource:(ABAddressBookRef)addressBookRef;
-+ (void)createDefaultGroups:(ABAddressBookRef)addressBookRef;
++ (void)createDefaultGroups:(ABAddressBookRef)addressBookRef completion:(CTLSaveCompletionHandler)completion;
 + (ABRecordID)createGroup:(NSString *)groupName addressBookRef:(ABAddressBookRef)addressBookRef;
 + (NSArray *)groupsFromSourceType:(ABSourceType)sourceType addressBookRef:(ABAddressBookRef)addressBookRef;
 + (BOOL)groupDoesExist:(ABRecordID)groupID addressBookRef:(ABAddressBookRef)addressBookRef;

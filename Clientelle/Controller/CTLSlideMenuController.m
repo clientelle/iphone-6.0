@@ -20,7 +20,6 @@ const CGFloat CTLMainMenuWidth = 190.0f;
         CGRect frame = self.view.bounds;
         [self setLeftPanel:menuView withFrame:frame];
         [self setRightPanel:mainView withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(frame), CGRectGetHeight(frame))];
-        
         [self setShadow:mainView];
     }
     return self;

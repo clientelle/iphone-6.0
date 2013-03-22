@@ -28,6 +28,11 @@ e†
 "SHARE" = "Share";
 "BACK" = "Back";
 
+/* PERMISSIONS */
+"REQUIRES_ACCESS_TO_CONTACTS" = "To continue, please allow access to contacts:";
+"ALLOW_ACCESS_TO_CONTACTS" = "Clientelle requires access to your contacts.";
+"GO_TO_SETTINGS" = "Settings > Privacy > Contacts";
+
 "EMPTY_GROUP" = "This group has no contacts yet.";
 "ADD_CONTACTS" = "Add Contacts";
 "SHARE_CONTACT_MSG" = "Here is %@'s contact info: ";

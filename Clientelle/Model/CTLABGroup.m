@@ -163,9 +163,8 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
 }
 
 #pragma mark - Class Methods
-+ (void)createDefaultGroups:(ABAddressBookRef)addressBookRef
++ (void)createDefaultGroups:(ABAddressBookRef)addressBookRef completion:(CTLSaveCompletionHandler)completion
 {
-    
     NSArray *abGroups = [CTLABGroup groupsFromSourceType:kABSourceTypeLocal addressBookRef:addressBookRef];
     
     ABRecordID clientsGroupID = kABRecordInvalidID;
@@ -221,6 +220,12 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
     [[NSUserDefaults standardUserDefaults] setInteger:clientsGroupID forKey:kCTLClientGroupID];
     [[NSUserDefaults standardUserDefaults] setInteger:prospectsGroupID forKey:kCTLProspectGroupID];
     [[NSUserDefaults standardUserDefaults] setInteger:clientsGroupID forKey:CTLDefaultSelectedGroupIDKey];
+    
+    if (completion){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion();
+        });
+    }
 }
 
 + (NSMutableArray *)groupsInLocalSource:(ABAddressBookRef)addressBookRef
