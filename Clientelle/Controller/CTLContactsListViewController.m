@@ -90,7 +90,7 @@ int const CTLEmptyContactsMessageTag = 793;
 - (void)displayPermissionPrompt
 {
     UIAlertView *requirePermission = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"REQUIRES_ACCESS_TO_CONTACTS", nil)
-                                                                message:NSLocalizedString(@"GO_TO_SETTINGS", nil)
+                                                                message:NSLocalizedString(@"GO_TO_SETTINGS_CONTACTS", nil)
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil, nil];

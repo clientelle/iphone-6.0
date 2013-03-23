@@ -172,6 +172,14 @@
 		41D0D4CA16FC062B00D343CA /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D0D4C916FC062B00D343CA /* AddressBookUI.framework */; };
 		41D0D4CD16FC0F8500D343CA /* wht-down-arw.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4CB16FC0F8500D343CA /* wht-down-arw.png */; };
 		41D0D4CE16FC0F8500D343CA /* wht-down-arw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4CC16FC0F8500D343CA /* wht-down-arw@2x.png */; };
+		41D0D4D316FC8CB200D343CA /* orangeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4CF16FC8CB200D343CA /* orangeButton.png */; };
+		41D0D4D416FC8CB200D343CA /* orangeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4D016FC8CB200D343CA /* orangeButton@2x.png */; };
+		41D0D4D516FC8CB200D343CA /* orangeButtonHighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4D116FC8CB200D343CA /* orangeButtonHighlight.png */; };
+		41D0D4D616FC8CB200D343CA /* orangeButtonHighlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4D216FC8CB200D343CA /* orangeButtonHighlight@2x.png */; };
+		41D0D4DB16FE220500D343CA /* redButtonHighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4D716FE220500D343CA /* redButtonHighlight.png */; };
+		41D0D4DC16FE220500D343CA /* redButtonHighlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4D816FE220500D343CA /* redButtonHighlight@2x.png */; };
+		41D0D4DD16FE220500D343CA /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4D916FE220500D343CA /* redButton.png */; };
+		41D0D4DE16FE220500D343CA /* redButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4DA16FE220500D343CA /* redButton@2x.png */; };
 		41DA1DA816CB13F40017F71F /* CTLInboxControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */; };
 		41DA1DAA16CB14C00017F71F /* _CTLCDAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130653416C149D90063AC10 /* _CTLCDAccount.m */; };
 		41DA1DAB16CB14C00017F71F /* CTLCDAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130653616C149D90063AC10 /* CTLCDAccount.m */; };
@@ -482,6 +490,14 @@
 		41D0D4C916FC062B00D343CA /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		41D0D4CB16FC0F8500D343CA /* wht-down-arw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wht-down-arw.png"; sourceTree = "<group>"; };
 		41D0D4CC16FC0F8500D343CA /* wht-down-arw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wht-down-arw@2x.png"; sourceTree = "<group>"; };
+		41D0D4CF16FC8CB200D343CA /* orangeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orangeButton.png; sourceTree = "<group>"; };
+		41D0D4D016FC8CB200D343CA /* orangeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orangeButton@2x.png"; sourceTree = "<group>"; };
+		41D0D4D116FC8CB200D343CA /* orangeButtonHighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orangeButtonHighlight.png; sourceTree = "<group>"; };
+		41D0D4D216FC8CB200D343CA /* orangeButtonHighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orangeButtonHighlight@2x.png"; sourceTree = "<group>"; };
+		41D0D4D716FE220500D343CA /* redButtonHighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButtonHighlight.png; sourceTree = "<group>"; };
+		41D0D4D816FE220500D343CA /* redButtonHighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redButtonHighlight@2x.png"; sourceTree = "<group>"; };
+		41D0D4D916FE220500D343CA /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
+		41D0D4DA16FE220500D343CA /* redButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redButton@2x.png"; sourceTree = "<group>"; };
 		41DA1DA616CB13F40017F71F /* CTLInboxControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInboxControllerTest.h; sourceTree = "<group>"; };
 		41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInboxControllerTest.m; sourceTree = "<group>"; };
 		41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAccountInterstitialViewController.h; sourceTree = "<group>"; };
@@ -914,6 +930,14 @@
 		417DC2A716AE16220073199D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				41D0D4D716FE220500D343CA /* redButtonHighlight.png */,
+				41D0D4D816FE220500D343CA /* redButtonHighlight@2x.png */,
+				41D0D4D916FE220500D343CA /* redButton.png */,
+				41D0D4DA16FE220500D343CA /* redButton@2x.png */,
+				41D0D4CF16FC8CB200D343CA /* orangeButton.png */,
+				41D0D4D016FC8CB200D343CA /* orangeButton@2x.png */,
+				41D0D4D116FC8CB200D343CA /* orangeButtonHighlight.png */,
+				41D0D4D216FC8CB200D343CA /* orangeButtonHighlight@2x.png */,
 				41D0D4CB16FC0F8500D343CA /* wht-down-arw.png */,
 				41D0D4CC16FC0F8500D343CA /* wht-down-arw@2x.png */,
 				41B47EFB16F967F4000B08E1 /* map-marker.png */,
@@ -1162,6 +1186,14 @@
 				41B47EFE16F967F4000B08E1 /* map-marker@2x.png in Resources */,
 				41D0D4CD16FC0F8500D343CA /* wht-down-arw.png in Resources */,
 				41D0D4CE16FC0F8500D343CA /* wht-down-arw@2x.png in Resources */,
+				41D0D4D316FC8CB200D343CA /* orangeButton.png in Resources */,
+				41D0D4D416FC8CB200D343CA /* orangeButton@2x.png in Resources */,
+				41D0D4D516FC8CB200D343CA /* orangeButtonHighlight.png in Resources */,
+				41D0D4D616FC8CB200D343CA /* orangeButtonHighlight@2x.png in Resources */,
+				41D0D4DB16FE220500D343CA /* redButtonHighlight.png in Resources */,
+				41D0D4DC16FE220500D343CA /* redButtonHighlight@2x.png in Resources */,
+				41D0D4DD16FE220500D343CA /* redButton.png in Resources */,
+				41D0D4DE16FE220500D343CA /* redButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

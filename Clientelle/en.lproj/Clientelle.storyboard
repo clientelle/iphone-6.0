@@ -251,7 +251,7 @@
                                 <color key="separatorColor" red="0.80000007149999997" green="0.80000007149999997" blue="0.80000007149999997" alpha="1" colorSpace="deviceRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fieldRow" textLabel="fvi-q2-uCb" style="IBUITableViewCellStyleDefault" id="HJu-O1-HnZ">
-                                        <rect key="frame" x="0.0" y="46" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="46" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -423,7 +423,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="OgI-rN-wCk">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="0.88797331199999996" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
                             <tableViewSection id="ReR-e4-gxx">
                                 <cells>
@@ -1412,7 +1412,7 @@
                     <navigationItem key="navigationItem" title="Appointments" id="e2r-HX-3nq">
                         <barButtonItem key="rightBarButtonItem" image="plus.png" id="k6O-gz-Glo">
                             <connections>
-                                <segue destination="lvE-fZ-8fX" kind="modal" identifier="openApptModal" id="ZFB-re-F6i"/>
+                                <segue destination="lvE-fZ-8fX" kind="modal" identifier="toAppointmentModal" id="ZFB-re-F6i"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1595,7 +1595,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="iGD-nT-ogT"/>
+        <segue reference="ZFB-re-F6i"/>
         <segue reference="1JI-iC-iph"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -19,6 +19,7 @@
 
 NSString *const CTLReloadAppointmentsNotification = @"com.clientelle.notifications.reloadAppointments";
 NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
+NSString *const CTLAppointmentModalSegueIdentifyer = @"toAppointmentModal";
 NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.appointmentFilter";
 
 
@@ -88,10 +89,38 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     [messageLabel setTextColor:textColor];
     [messageLabel setText:NSLocalizedString(@"NO_APPOINTMENTS_FOUND", nil)];
     
+    CGFloat buttonCenter = viewFrame.size.width/2 - 70;
+    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    
+    // Set the background for any states you plan to use
+    [addButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [addButton setTitleColor:[UIColor colorFromUnNormalizedRGB:81.0f green:91.0f blue:130.0f alpha:1.0f] forState:UIControlStateNormal];
+    
+    [addButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    [addButton setTitleColor:[UIColor colorFromUnNormalizedRGB:61.0f green:71.0f blue:110.0f alpha:1.0f] forState:UIControlStateHighlighted];
+    
+    [addButton setFrame:CGRectMake(buttonCenter, 175.0f, 140.0f, 38.0f)];
+    [addButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
+    [addButton addTarget:self action:@selector(addAppointment:) forControlEvents:UIControlEventTouchUpInside];
+    [addButton setTitle:NSLocalizedString(@"ADD_APPOINTMENT", nil) forState:UIControlStateNormal];
+    
+    addButton.layer.shadowOpacity = 0.2f;
+    addButton.layer.shadowRadius = 1.0f;
+    addButton.layer.shadowOffset = CGSizeMake(0,0);
+    
     [emptyView addSubview:titleLabel];
     [emptyView addSubview:messageLabel];
+    [emptyView addSubview:addButton];
     
     return emptyView;
+}
+
+- (void)addAppointment:(id)sender
+{
+    [self performSegueWithIdentifier:CTLAppointmentModalSegueIdentifyer sender:sender];
 }
 
 - (void)reloadAppointments:(NSNotification *)notification
@@ -163,11 +192,13 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+#pragma mark - Segue
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([[segue identifier] isEqualToString:CTLAppointmentFormSegueIdentifyer]){
         if([sender isKindOfClass:[CTLCDAppointment class]]){
-            CTLCDAppointment *appointment = sender;
+            CTLCDAppointment *appointment = (CTLCDAppointment *)sender;
             CTLAddEventViewController *viewController = [segue destinationViewController];
             [viewController setCdAppointment:appointment];
         }

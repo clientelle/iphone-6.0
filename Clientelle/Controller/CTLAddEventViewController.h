@@ -9,15 +9,15 @@
 #import <EventKit/EventKit.h>
 
 @class CTLABPerson;
-@class CTLEvent;
 @class CTLCDAppointment;
 
 @interface CTLAddEventViewController : UITableViewController<UITextFieldDelegate, UIGestureRecognizerDelegate>{
     UIDatePicker *_datePicker;
     NSInteger _activeInputTag;
     EKEvent *_appointment;
-    CTLEvent *_event;
+    EKEventStore *_eventStore;
     UITextField *_focusedTextField;
+    BOOL _hasCalendarAccess;
 }
 
 @property (nonatomic, weak) IBOutlet UITextField *titleTextField;
