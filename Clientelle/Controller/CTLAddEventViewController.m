@@ -392,29 +392,12 @@ int CTLEndTimeInputTag = 81;
         return;
     }
     
-    NSError *error = nil;
     EKCalendar *defaultCalendar = [_eventStore defaultCalendarForNewEvents];
-    //TODO figure out why defaultCalendar is nil
     
     if(defaultCalendar){
+        NSError *error = nil;
         [_appointment setCalendar:defaultCalendar];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"NO_CALENDAR_FOUND", nil)
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil, nil];
-        [alert show];
-        return;
-    }
-    
-    [_eventStore saveEvent:_appointment span:EKSpanThisEvent commit:YES error:&error];
-    
-    if (error){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[error description]
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil, nil];
-        [alert show];
+        [_eventStore saveEvent:_appointment span:EKSpanThisEvent commit:YES error:&error];
     }
 
     if(!self.cdAppointment){
