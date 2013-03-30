@@ -23,7 +23,8 @@
     return formatter;
 }
 
-+ (NSDateFormatter *)dateShortFormatter {
++ (NSDateFormatter *)dateShortFormatter
+{
     static NSDateFormatter *formatter = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -31,6 +32,34 @@
         [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale currentLocale] objectForKey:NSLocaleIdentifier]]];
         [formatter setTimeStyle:NSDateFormatterNoStyle];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
+        [formatter setDoesRelativeDateFormatting:YES];
+    });
+    return formatter;
+}
+
++ (NSDateFormatter *)dateOnlyFormat
+{
+    static NSDateFormatter *formatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale currentLocale] objectForKey:NSLocaleIdentifier]]];
+        [formatter setTimeStyle:NSDateFormatterNoStyle];
+        [formatter setDateStyle:NSDateFormatterShortStyle];
+        [formatter setDoesRelativeDateFormatting:YES];
+    });
+    return formatter;
+}
+
++ (NSDateFormatter *)timeOnlyFormat
+{
+    static NSDateFormatter *formatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale currentLocale] objectForKey:NSLocaleIdentifier]]];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        [formatter setDateStyle:NSDateFormatterNoStyle];
         [formatter setDoesRelativeDateFormatting:YES];
     });
     return formatter;
@@ -50,8 +79,21 @@
     return formatter;
 }
 
-+ (NSString *)dateShortToString:(NSDate *)date {
++ (NSString *)dateShortToString:(NSDate *)date
+{
     NSDateFormatter *dateFormatter = [NSDate dateShortFormatter];
+    return [dateFormatter stringFromDate:date];
+}
+
++ (NSString *)formatShortDateOnly:(NSDate *)date
+{
+    NSDateFormatter *dateFormatter = [NSDate dateOnlyFormat];
+    return [dateFormatter stringFromDate:date];
+}
+
++ (NSString *)formatShortTimeOnly:(NSDate *)date
+{
+    NSDateFormatter *dateFormatter = [NSDate timeOnlyFormat];
     return [dateFormatter stringFromDate:date];
 }
 

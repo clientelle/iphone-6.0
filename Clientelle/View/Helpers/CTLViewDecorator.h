@@ -11,5 +11,6 @@
 @interface CTLViewDecorator : NSObject
 
 - (CAShapeLayer *)createDottedLine:(CGRect)frame;
+- (CAShapeLayer *)createDottedVerticalLine:(CGRect)frame;
 
 @end

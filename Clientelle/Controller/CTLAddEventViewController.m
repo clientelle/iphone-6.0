@@ -8,6 +8,8 @@
 
 #import "UIColor+CTLColor.h"
 #import "NSDate+CTLDate.h"
+#import "UILabel+CTLLabel.h"
+
 #import "CTLABPerson.h"
 #import "CTLABGroup.h"
 #import "CTLCDPerson.h"
@@ -20,8 +22,10 @@
 #import "UITableViewCell+CellShadows.h"
 #import "CTLViewDecorator.h"
 
-int CTLStartTimeInputTag = 18;
-int CTLEndTimeInputTag = 81;
+#import "CTLFactoryAppointment.h"
+
+int CTLStartTimeInputTag = 2;
+int CTLEndTimeInputTag = 3;
 
 @implementation CTLAddEventViewController
 
@@ -30,55 +34,82 @@ int CTLEndTimeInputTag = 81;
     [super viewDidLoad];
     
     self.navigationItem.title = NSLocalizedString(@"SET_APPOINTMENT", nil);
-    self.titleTextField.placeholder = NSLocalizedString(@"APPOINTMENT_NOTE", nil);
-    self.startTimeTextField.placeholder = NSLocalizedString(@"START_TIME", nil);
-    self.endTimeTextField.placeholder = NSLocalizedString(@"END_TIME", nil);
-    self.locationTextField.placeholder = NSLocalizedString(@"LOCATION", nil);
     
+    if(self.isPresentedAsModal){
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+        self.navigationItem.leftBarButtonItem = cancelButton;
+    }
+    
+    [self configureInputs];
+    [self checkPermission];
+    
+    //IB tags -> Core Data mapping
+    _fields = @[@"", @"title", @"startDate", @"endDate", @"notes", @"address", @"city",  @"state", @"zip"];
+    
+    if(!self.cdAppointment){
+        self.cdAppointment = [CTLCDAppointment MR_createEntity];
+        _appointment = [EKEvent eventWithEventStore:_eventStore];
+        _appointment.calendar = [_eventStore defaultCalendarForNewEvents];
+    }else{
+        _appointment = [_eventStore eventWithIdentifier:[self.cdAppointment eventID]];
+        
+        if(_appointment){
+            self.titleTextField.text = _appointment.title;
+            self.startTimeTextField.text = [NSDate dateToString:_appointment.startDate];
+            self.endTimeTextField.text = [NSDate dateToString:_appointment.endDate];
+            self.notesTextField.text = _appointment.notes;
+            
+            //appointemnt location
+            self.addressTextField.text = [self.cdAppointment address];
+            self.cityTextField.text = [self.cdAppointment city];
+            self.stateTextField.text = [self.cdAppointment state];
+            self.zipTextField.text = [self.cdAppointment zip];
+        }
+    }
+    
+    if(self.contact){
+        NSString *appointmentTitle = [NSString stringWithFormat:NSLocalizedString(@"MEETING_WITH", nil), [self.contact compositeName]];
+        _appointment.title = appointmentTitle;
+        [self.cdAppointment setTitle:appointmentTitle];
+        self.titleTextField.text = appointmentTitle;
+    }
+    
+    [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissInputViews:)]];
+    
+    /*** GENERATE FAKE APPOINTMENTS ***/
+    
+    /*
+    CTLFactoryAppointment *apptFactory = [[CTLFactoryAppointment alloc] init];
+    [apptFactory createAppointments:[NSDate monthsAgo:1]];
+    [apptFactory createAppointments:[NSDate date]];
+    [apptFactory createAppointments:[NSDate monthsFromNow:1]];
+    */
+    
+}
+
+- (void)checkPermission
+{
     _hasCalendarAccess = NO;
-    
     _eventStore = [[EKEventStore alloc] init];
     
-    
     EKAuthorizationStatus EKAuthStatus = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
-    
     if(EKAuthStatus == EKAuthorizationStatusNotDetermined){
         [_eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
             if(granted){
-                NSLog(@"first time access");
                 _hasCalendarAccess = YES;
             } else {
                 [self displayPermissionPrompt];
             }
         }];
     } else if(EKAuthStatus == EKAuthorizationStatusAuthorized){
-        NSLog(@"i has access");
         _hasCalendarAccess = YES;
     } else {
         [self displayPermissionPrompt];
     }
-    
-    //segued from an appointment row
-    if(self.cdAppointment){
-        _appointment = [_eventStore eventWithIdentifier:[self.cdAppointment eventID]];
-        if(_appointment){
-            self.titleTextField.text = _appointment.title;
-            self.startTimeTextField.text = [NSDate dateToString:_appointment.startDate];
-            self.endTimeTextField.text = [NSDate dateToString:_appointment.endDate];
-            self.locationTextField.text = _appointment.location;
-        }
-    }else{
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
-        _appointment = [EKEvent eventWithEventStore:_eventStore];
-        _appointment.calendar = [_eventStore defaultCalendarForNewEvents];
-        [self.titleTextField becomeFirstResponder];
-    }
-    
-    if(self.contact){
-        _appointment.title = [NSString stringWithFormat:NSLocalizedString(@"MEETING_WITH", nil), [self.contact compositeName]];
-        self.titleTextField.text = _appointment.title;
-    }
-    
+}
+
+- (void)configureInputs
+{
     _datePicker = [[UIDatePicker alloc] init];
     _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     _datePicker.date = [NSDate hoursFrom:[NSDate date] numberOfHours:1];
@@ -89,17 +120,15 @@ int CTLEndTimeInputTag = 81;
     self.startTimeTextField.tag = CTLStartTimeInputTag;
     self.endTimeTextField.tag = CTLEndTimeInputTag;
     
-    [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissInputViews:)]];
+    self.titleTextField.placeholder     = NSLocalizedString(@"APPOINTMENT_TITLE", nil);
+    self.startTimeTextField.placeholder = NSLocalizedString(@"START_TIME", nil);
+    self.endTimeTextField.placeholder   = NSLocalizedString(@"END_TIME", nil);
+    self.notesTextField.placeholder     = NSLocalizedString(@"APPOINTMENT_NOTES", nil);
     
-    /*** GENERATE FAKE APPOINTMENTS ***/
-    /*
-    [self createAppointmentsForMonth:[NSDate monthsAgo:1]];
-    [self createAppointmentsForMonth:[NSDate date]];
-    [self createAppointmentsForMonth:[NSDate monthsFromNow:1]];
-     
-    [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadAppointmentsNotification object:nil];
-    [self.navigationController popViewControllerAnimated:YES];
-    */
+    self.addressTextField.placeholder   = NSLocalizedString(@"address", nil);
+    self.cityTextField.placeholder      = NSLocalizedString(@"City", nil);
+    self.stateTextField.placeholder     = NSLocalizedString(@"State", nil);
+    self.zipTextField.placeholder       = NSLocalizedString(@"ZIP", nil);
 }
 
 - (void)displayPermissionPrompt
@@ -121,7 +150,7 @@ int CTLEndTimeInputTag = 81;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -132,108 +161,107 @@ int CTLEndTimeInputTag = 81;
     return 48.0;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(self.cdAppointment){
-        return 50.0f;
+    if(section == 0){
+        return 40.0f;
     }
     
-    return 0;
+    return 30.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    CGFloat width = self.tableView.bounds.size.width - 20.0f;
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10.0f, width, 30.0f)];
+    headerView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 10.0f, width, 20.0f)];
+    headerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15.0f];
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.textColor = [UIColor darkGrayColor];
+    
+    if(section == 0){
+        [headerView setFrame:CGRectMake(0, 10.0f, width, 40.0f)];
+        headerLabel.text = NSLocalizedString(@"APPOINTMENT_INFO", nil);
+    }
+    
+    //Address Section
+    if(section == 1){
+        [headerLabel setFrame:CGRectMake(30.0f, 0, width, 20.0f)];
+        UIImageView *pinImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"06-map-pin.png"]];
+        pinImage.frame = CGRectMake(10.0f, 3.0f, 11.0f, 19.0f);
+        headerLabel.text = NSLocalizedString(@"APPOINTMENT_LOCATION", nil);
+        [UILabel autoWidth:headerLabel];
+        
+        UILabel *optionalLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerLabel.frame.size.width+35.0f, 0, width, 20.0f)];
+        optionalLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0f];
+        optionalLabel.backgroundColor = [UIColor clearColor];
+        optionalLabel.text = NSLocalizedString(@"PARENS_OPTIONAL", nil);
+        optionalLabel.textColor = [UIColor darkGrayColor];
+        [UILabel autoWidth:optionalLabel];
+
+        [headerView addSubview:pinImage];
+        [headerView addSubview:optionalLabel];
+    }
+    
+    [headerView addSubview:headerLabel];
+
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if(section == 0 || [_appointment eventIdentifier] == nil){
+        return 0;
+    }
+
+    return 60.0f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if(!self.cdAppointment){
+    if(section == 0 || [_appointment eventIdentifier] == nil){
         return nil;
     }
     
-    CGRect viewFrame = self.view.frame;
+    CGFloat buttonHeight = 30.0f;
+    CGFloat buttonWidth = 60.0f;
+    CGFloat labelWidth = 100.0f;
+    CGFloat buttonPositionX = self.view.bounds.size.width/2 - buttonWidth/2;
+    CGFloat labelPositionX = self.view.bounds.size.width/2 - labelWidth/2;
     
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewFrame.size.width, 50.0f)];
+    UILabel *dashesLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelPositionX, 5, labelWidth, buttonHeight)];
+    dashesLabel.backgroundColor = [UIColor clearColor];
+    dashesLabel.textAlignment = NSTextAlignmentCenter;
+    dashesLabel.text = @"-       -";
     
-    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPositionX, 5, buttonWidth, buttonHeight)];
+    [settingsButton setImage:[UIImage imageNamed:@"trash-grey.png"] forState:UIControlStateNormal];
+    [settingsButton addTarget:self action:@selector(confirmDelete:) forControlEvents:UIControlEventTouchUpInside];
+    [settingsButton setAlpha:0.75f];
     
-    CGRect buttonFrame = addButton.frame;
-    buttonFrame.size.height = 35.0f;
-    buttonFrame.size.width = viewFrame.size.width - 20.0f;
-    buttonFrame.origin.y += 10.0f;
-    buttonFrame.origin.x += 10.0f;
-    [addButton setFrame:buttonFrame];
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30.0f)];
+    [footerView addSubview:dashesLabel];
+    [footerView addSubview:settingsButton];
+    [footerView setBackgroundColor:[UIColor clearColor]];
     
-    UIImage *buttonImage = [[UIImage imageNamed:@"redButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
-    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"redButtonHighlight.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
-    
-    // Set the background for any states you plan to use
-    [addButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [addButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
-    
-    [addButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
-    [addButton addTarget:self action:@selector(confirmDelete:) forControlEvents:UIControlEventTouchUpInside];
-    [addButton setTitle:NSLocalizedString(@"DELETE_APPOINTMENT", nil) forState:UIControlStateNormal];
-    
-    addButton.layer.shadowOpacity = 0.2f;
-    addButton.layer.shadowRadius = 1.0f;
-    addButton.layer.shadowOffset = CGSizeMake(0,0);
-    
- 
-    [footerView addSubview:addButton];
     return footerView;
 }
 
-#pragma mark - Calendar PickerView
-
-- (void)showPicker:(UIView *)pickerView {
-    
-    [self.view endEditing:YES];
-    [self.view addSubview:pickerView];
-     
-    CGRect pickerFrame = pickerView.frame;
-    CGFloat totalHeight = CGRectGetHeight(self.view.bounds);
-    pickerFrame.origin.y = totalHeight;
-    [pickerView setFrame:pickerFrame];
-    pickerFrame.origin.y = totalHeight - CGRectGetHeight(pickerFrame);
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        pickerView.frame = pickerFrame;
-    }];
-}
-
-- (void)hidePicker:(UIView *)pickerView
-{
-    CGFloat totalHeight = CGRectGetHeight(self.view.bounds);
-    CGRect dateFrame = pickerView.frame;
-    dateFrame.origin.y = totalHeight;
-        
-    [UIView animateWithDuration:0.3 animations:^{
-        pickerView.frame = dateFrame;
-    } completion:^(BOOL finished){
-        if(finished){
-            [pickerView removeFromSuperview];
-        }
-    }];
-}
-
-- (void)dismissInputViews:(UITapGestureRecognizer *)recognizer
-{
-    [self.view endEditing:YES];
-    [self hidePicker:_datePicker];
-    [_focusedTextField setBackgroundColor:[UIColor clearColor]];
-}
 
 #pragma mark - Set Data
 
-- (IBAction)showDatePicker:(id)sender
+- (IBAction)showDatePicker:(UITextField *)textField
 {
-    UITextField *textField = (UITextField *)sender;
-    _activeInputTag = textField.tag;
+    [self highlightTextField:textField];
 
     if(_activeInputTag == CTLStartTimeInputTag){
         if([self.startTimeTextField.text length] == 0){
             self.startTimeTextField.text = [NSDate dateToString:_datePicker.date];
             if(!_appointment.startDate){
                 _appointment.startDate = _datePicker.date;
+                [self.cdAppointment setStartDate:_datePicker.date];
                 EKAlarm *firstReminder = [EKAlarm alarmWithRelativeOffset:-900.0f];
                 EKAlarm *secondReminder = [EKAlarm alarmWithRelativeOffset:-300.0f];
                 _appointment.alarms = @[firstReminder, secondReminder];
@@ -251,6 +279,7 @@ int CTLEndTimeInputTag = 81;
             }
             if(!_appointment.endDate){
                 _appointment.endDate = _datePicker.date;
+                [self.cdAppointment setEndDate:_datePicker.date];
             }
             self.endTimeTextField.text = [NSDate dateToString:_datePicker.date];
         }
@@ -258,24 +287,6 @@ int CTLEndTimeInputTag = 81;
             _datePicker.date = _appointment.endDate;
         }
     }
-}
-
-- (IBAction)highlightTextField:(id)sender
-{
-    [_focusedTextField setBackgroundColor:[UIColor clearColor]];
-    UITextField *textField = (UITextField *)sender;
-    [textField setBackgroundColor:[UIColor ctlFadedGray]];
-    _focusedTextField = textField;
-}
-
-- (IBAction)saveTitle:(id)sender
-{
-    _appointment.title = self.titleTextField.text;
-}
-
-- (IBAction)saveLocation:(id)sender
-{
-    _appointment.location = self.locationTextField.text;
 }
 
 - (void)setDate:(id)sender
@@ -288,8 +299,10 @@ int CTLEndTimeInputTag = 81;
             _appointment.startDate = [_datePicker date];
             if(_appointment.endDate){
                 //do not allow endDate to be before startDate
-                if([_appointment.endDate compare:_appointment.startDate] == NSOrderedAscending) {
-                    _appointment.endDate = [NSDate hoursFrom:_appointment.startDate numberOfHours:1];
+                if([_appointment.endDate compare:_appointment.startDate] == NSOrderedAscending){
+                    NSDate *endDate = [NSDate hoursFrom:_appointment.startDate numberOfHours:1];
+                    _appointment.endDate = endDate;
+                    [self.cdAppointment setEndDate:endDate];
                     self.endTimeTextField.text = [NSDate dateToString:_appointment.endDate];
                 }
             }
@@ -299,13 +312,16 @@ int CTLEndTimeInputTag = 81;
             _appointment.endDate = [_datePicker date];
             if(_appointment.startDate){
                 //do not allow endDate to be before startDate
-                if([_appointment.startDate compare:_appointment.endDate] == NSOrderedDescending) {
-                    _appointment.startDate = [NSDate hoursBefore:_appointment.endDate numberOfHours:1];
+                if([_appointment.startDate compare:_appointment.endDate] == NSOrderedDescending){
+                    NSDate *startDate = [NSDate hoursBefore:_appointment.endDate numberOfHours:1];
+                    _appointment.startDate = startDate;
+                    [self.cdAppointment setStartDate:startDate];
                     self.startTimeTextField.text = [NSDate dateToString:_appointment.startDate];
                 }
             }
         }
     }
+    
 }
 
 - (BOOL)validateAppointment:(EKEvent *)appointment
@@ -361,6 +377,8 @@ int CTLEndTimeInputTag = 81;
 
 - (void)deleteAppointment:(id)sender
 {
+    
+    
     NSString *eventID = [self.cdAppointment eventID];
     [self.cdAppointment MR_deleteEntity];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
@@ -399,21 +417,12 @@ int CTLEndTimeInputTag = 81;
         [_appointment setCalendar:defaultCalendar];
         [_eventStore saveEvent:_appointment span:EKSpanThisEvent commit:YES error:&error];
     }
-
-    if(!self.cdAppointment){
-        CTLCDAppointment *appointment = [CTLCDAppointment MR_createEntity];
-        appointment.eventID = _appointment.eventIdentifier;
-        appointment.title = _appointment.title;
-        appointment.startDate = _appointment.startDate;
-        appointment.endDate = _appointment.endDate;
-        appointment.location = _appointment.location;
-    }else{
-        self.cdAppointment.title = _appointment.title;
-        self.cdAppointment.startDate = _appointment.startDate;
-        self.cdAppointment.endDate = _appointment.endDate;
-        self.cdAppointment.location = _appointment.location;
+    
+    if(![self.cdAppointment eventID] && _appointment.eventIdentifier != nil){
+        self.cdAppointment.eventID = _appointment.eventIdentifier;
     }
-            
+    
+    [self.cdAppointment setHasAddressValue:[self hasAddress]];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadAppointmentsNotification object:nil];
     
@@ -422,7 +431,35 @@ int CTLEndTimeInputTag = 81;
         [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
     }
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if(self.isPresentedAsModal){
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (BOOL)addressIsEmpty
+{
+    if([self.addressTextField.text length] == 0 &&
+       [self.cityTextField.text length] == 0 &&
+       [self.stateTextField.text length] == 0 &&
+       [self.zipTextField.text length] == 0){
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)hasAddress
+{
+    if([self.addressTextField.text length] > 0 ||
+       [self.cityTextField.text length] > 0 ||
+       [self.stateTextField.text length] > 0 ||
+       [self.zipTextField.text length] > 0){
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma mark - Outlet Controls
@@ -438,6 +475,31 @@ int CTLEndTimeInputTag = 81;
     [self.titleTextField setBackgroundColor:[UIColor clearColor]];
     [self.startTimeTextField setBackgroundColor:[UIColor clearColor]];
     [self.endTimeTextField setBackgroundColor:[UIColor clearColor]];
+}
+
+#pragma CTLFieldCellDelegate
+
+- (IBAction)textFieldDidChange:(UITextField *)textField
+{
+    NSString *field = _fields[textField.tag];
+    if([field isEqualToString:@"title"] || [field isEqualToString:@"notes"]){
+       [_appointment setValue:textField.text forKey:field]; 
+    }
+    [self.cdAppointment setValue:textField.text forKey:field];
+}
+
+- (IBAction)highlightTextField:(UITextField *)textField
+{
+    [self.focusedTextField setBackgroundColor:[UIColor clearColor]];
+    [textField setBackgroundColor:[UIColor ctlFadedGray]];
+    self.focusedTextField = textField;
+    _activeInputTag = textField.tag;
+}
+
+- (void)dismissInputViews:(UITapGestureRecognizer *)recognizer
+{
+    [self.view endEditing:YES];
+    [self.focusedTextField setBackgroundColor:[UIColor clearColor]];
 }
 
 @end

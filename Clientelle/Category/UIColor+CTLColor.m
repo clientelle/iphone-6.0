@@ -34,6 +34,10 @@
     return [self colorFromUnNormalizedRGB:177.0f green:204.0f blue:187.0f alpha:1.0f];
 }
 
++ (UIColor *)ctlGray{
+    return [self colorFromUnNormalizedRGB:200.0f green:200.0f blue:200.0f alpha:1.0f];
+}
+
 + (UIColor *)ctlLightGray{
     return [self colorFromUnNormalizedRGB:238.0f green:238.0f blue:238.0f alpha:1.0f];
 }

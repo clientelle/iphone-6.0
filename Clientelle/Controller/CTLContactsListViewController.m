@@ -71,16 +71,25 @@ int const CTLEmptyContactsMessageTag = 793;
                 self.addressBookRef = addressBookRef;
                 [self.menuController setAddressBookRef:self.addressBookRef];
                 [CTLABGroup createDefaultGroups:addressBookRef completion:^(void){
-                    [self doStuff];
+                    [self buildGroupsAndLoadContacts];
                 }];
             }else{
                 [self displayPermissionPrompt];
             }
         });
     } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
-        // The user has previously given access, add the contact
+        // The user has previously given access.
         self.addressBookRef = addressBookRef;
-        [self doStuff];
+        [self.menuController setAddressBookRef:self.addressBookRef];
+        
+        NSNumber *count = [CTLCDFormSchema MR_numberOfEntities];
+        if([count intValue] == 0){
+            [CTLABGroup createDefaultGroups:addressBookRef completion:^(void){
+                [self buildGroupsAndLoadContacts];
+            }];
+        }else{
+            [self buildGroupsAndLoadContacts];
+        }
     } else {
         // The user has previously denied access
         [self displayPermissionPrompt];
@@ -98,7 +107,7 @@ int const CTLEmptyContactsMessageTag = 793;
     [requirePermission show];
 }
 
-- (void)doStuff
+- (void)buildGroupsAndLoadContacts
 {
     [self rightTitlebarWithAddContactButton];
     int defaultGroupID = [CTLABGroup defaultGroupID];
@@ -304,8 +313,8 @@ int const CTLEmptyContactsMessageTag = 793;
     return groupPicker;
 }
 
-- (void)togglePicker:(id)sender {
-    
+- (void)togglePicker:(id)sender
+{
     if(_inContactMode){
         [self exitContactMode];
     }
@@ -550,6 +559,7 @@ int const CTLEmptyContactsMessageTag = 793;
     if([[segue identifier] isEqualToString:CTLAppointmentSegueIdentifyer]){
         UINavigationController *navigationController = [segue destinationViewController];
         CTLAddEventViewController *appointmentViewController = (CTLAddEventViewController *)navigationController.topViewController;
+        [appointmentViewController setIsPresentedAsModal:YES];
         [appointmentViewController setContact:_selectedPerson];
         return;
     }
@@ -800,36 +810,6 @@ int const CTLEmptyContactsMessageTag = 793;
     return nil;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if([self.selectedGroup groupID] == CTLAllContactsGroupID){
-        return false;
-    }
-    //do not allow deleting row in "inContact" Mode
-    return !_inContactMode;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewCellEditingStyleDelete;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(editingStyle == UITableViewCellEditingStyleDelete){
-        CTLABPerson *abPerson = [_contacts objectAtIndex:indexPath.row];
-        [self.selectedGroup removeMember:abPerson.recordID];
-        [_contacts removeObjectAtIndex:indexPath.row];
-        [_accessedDictionary removeObjectForKey:@(abPerson.recordID)];
-        [_contactsDictionary removeObjectForKey:@(abPerson.recordID)];
-        [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView endUpdates];
-        [self.tableView reloadData];
-    }
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //if groupPicker is open dismiss it and do nothing else.

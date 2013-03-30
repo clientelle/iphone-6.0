@@ -11,7 +11,7 @@
 
 @implementation CTLFactoryAppointment
 
-- (void)createAppointmentsForMonth:(NSDate *)date
+- (void)createAppointments:(NSDate *)date
 {
     NSCalendar *currentCalendar = [NSCalendar currentCalendar];
     NSRange daysRange = [currentCalendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:date];
@@ -25,11 +25,11 @@
         [comps setDay:[comps day] + i];
         NSDate *date = [calendar dateFromComponents:comps];
         
-        [self createAppointments:date];
+        [self createAppointmentsForDate:date];
     }
 }
 
-- (void)createAppointments:(NSDate *)date
+- (void)createAppointmentsForDate:(NSDate *)date
 {
     int r = arc4random() % 4;
     
@@ -46,7 +46,8 @@
     }
 }
 
-- (NSString *)withRandomPerson{
+- (NSString *)withRandomPerson
+{
     
     int rV = arc4random() % 3;
     int rF = arc4random() % 10;

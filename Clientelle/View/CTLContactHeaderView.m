@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "UIColor+CTLColor.h"
+#import "UILabel+CTLLabel.h"
 #import "NSString+CTLString.h"
 #import "CTLContactHeaderView.h"
 #import "CTLABPerson.h"
@@ -64,30 +65,25 @@ int CTLPhoneLabelTag = 602;
         UIButton *editProfileButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [editProfileButton setFrame:CGRectMake(rightOffset, 0, editButtonWidth, viewSize.height)];
         [editProfileButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
+        [editProfileButton setImage:[UIImage imageNamed:@"cell-arrow.png"] forState:UIControlStateNormal];
                         
         CALayer *border1 = [CALayer layer];
-        border1.borderColor = [UIColor colorFromUnNormalizedRGB:200.0f green:200.0f blue:200.0f alpha:1.0f].CGColor;
+        border1.borderColor = [UIColor ctlGray].CGColor;
         border1.borderWidth = 1;
         border1.frame = CGRectMake(0, 0, 1.0f, viewSize.height);
-        [editProfileButton.layer addSublayer:border1];
         
         CALayer *border2 = [CALayer layer];
         border2.borderColor = [UIColor whiteColor].CGColor;
         border2.borderWidth = 1;
         border2.frame = CGRectMake(1.0f, 0, 1.0f, viewSize.height);
-        [editProfileButton.layer addSublayer:border2];
-                 
-        CGFloat indicatorPositionX = self.bounds.size.width - 30;
-        CGFloat indicatorPositionY = (CTLContactViewHeaderHeight/2) - (19.0f/2);
         
-        UIImageView *editIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(indicatorPositionX,  indicatorPositionY, 19.0f, 19.0f)];
-        [editIndicator setImage:[UIImage imageNamed:@"cell-arrow.png"]];
+        [editProfileButton.layer addSublayer:border1];
+        [editProfileButton.layer addSublayer:border2];
         
         [self addSubview:pictureView];
         [self addSubview:nameLabel];
         [self addSubview:phoneLabel];
         [self addSubview:editProfileButton];
-        [self addSubview:editIndicator];
                                
         self.pictureView = pictureView;
         self.nameLabel = nameLabel;
@@ -178,19 +174,9 @@ int CTLPhoneLabelTag = 602;
         self.phoneLabel.text = [abPerson email];
     }
     
-    CGSize nameLabelSize = [self.nameLabel.text sizeWithFont:[UIFont fontWithName:CTLFontNameBold size:16]];
-    [self.nameLabel.text sizeWithFont:self.nameLabel.font];
-    
-    CGRect nameLabelFrame = self.nameLabel.frame;
-    nameLabelFrame.size.width = nameLabelSize.width;
-    self.nameLabel.frame = nameLabelFrame;
-    
-    CGSize phoneLabelSize = [self.phoneLabel.text sizeWithFont:[UIFont fontWithName:CTLFontName size:15]];
-    [self.phoneLabel.text sizeWithFont:self.phoneLabel.font];
-    
-    CGRect phoneLabelFrame = self.phoneLabel.frame;
-    phoneLabelFrame.size.width = phoneLabelSize.width;
-    self.phoneLabel.frame = phoneLabelFrame;
+    [UILabel autoWidth:self.nameLabel];
+    [UILabel autoWidth:self.phoneLabel];
+
 }
 
 -(void)drawRect:(CGRect)rect {

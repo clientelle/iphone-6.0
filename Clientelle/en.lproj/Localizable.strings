@@ -23,6 +23,7 @@ e†
 "COPY" = "Copy";
 "SHARE" = "Share";
 "BACK" = "Back";
+"PARENS_OPTIONAL" = "(Optional)";
 
 /* PERMISSIONS */
 "REQUIRES_ACCESS_TO_CONTACTS" = "To continue, please allow access to Contacts:";
@@ -51,6 +52,7 @@ e†
 "IMPORT_CONTACTS" = "Import Contact";
 
 /* EDIT CONTACT */
+"CONTACT_INFO" = "Contact Information";
 "EDIT_CONTACT" = "Edit Contact";
 "ADD_CONTACT" = "Add Contact";
 "EDIT_FORM" = "Edit Form";
@@ -119,9 +121,13 @@ e†
 
 /* Set Appointment */
 "SET_APPOINTMENT" = "Set Appointment";
+"APPOINTMENT_INFO" = "Appointment Info";
 "MEETING_WITH" = "Meeting with %@";
-"APPOINTMENT_NOTE" = "Appointment Note";
+"APPOINTMENT_TITLE" = "Title";
+"APPOINTMENT_NOTES" = "Notes";
 "START_TIME" = "Start Time";
 "END_TIME" = "End Time";
 "LOCATION" = "Location (example: \"My Office\")";
 "NO_CALENDAR_FOUND" = "Could not add event because local Calendar is not configured.";
+"APPOINTMENT_LOCATION" = "Location";
+

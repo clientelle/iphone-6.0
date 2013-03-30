@@ -28,6 +28,8 @@
 + (NSDateFormatter *)dateFormatter;
 
 + (NSString *)dateShortToString:(NSDate *)date;
++ (NSString *)formatShortTimeOnly:(NSDate *)date;
++ (NSString *)formatShortDateOnly:(NSDate *)date;
 + (NSString *)dateToString:(NSDate *)date;
 + (NSDateFormatter *)dateStyleFormatter;
 + (NSDate *)fromComponents:(NSDateComponents *)components;

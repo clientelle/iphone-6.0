@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		410BDDE717015EF7009E9842 /* trash-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDE517015EF7009E9842 /* trash-grey.png */; };
+		410BDDE817015EF7009E9842 /* trash-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDE617015EF7009E9842 /* trash-grey@2x.png */; };
+		410BDDEB170164E5009E9842 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDE9170164E5009E9842 /* 14-gear.png */; };
+		410BDDEC170164E5009E9842 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDEA170164E5009E9842 /* 14-gear@2x.png */; };
+		410BDDF317019B24009E9842 /* 50-plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDF117019B24009E9842 /* 50-plus.png */; };
+		410BDDF417019B24009E9842 /* 50-plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDF217019B24009E9842 /* 50-plus@2x.png */; };
 		412C3C8B16E98123009E662E /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 412C3C8916E98123009E662E /* app-icon.png */; };
 		412C3C8C16E98123009E662E /* app-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412C3C8A16E98123009E662E /* app-icon@2x.png */; };
 		412C3C9016E989D4009E662E /* cell-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412C3C8E16E989D4009E662E /* cell-arrow@2x.png */; };
@@ -169,6 +175,7 @@
 		41B5473316B4559500302652 /* CTLEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B5473216B4559500302652 /* CTLEvent.m */; };
 		41B5473416B4559500302652 /* CTLEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B5473216B4559500302652 /* CTLEvent.m */; };
 		41B5473616B4562D00302652 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B5473516B4562D00302652 /* EventKit.framework */; };
+		41CBA85A17013DC5006C16CC /* UILabel+CTLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CBA85917013DC5006C16CC /* UILabel+CTLLabel.m */; };
 		41D0D4CA16FC062B00D343CA /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D0D4C916FC062B00D343CA /* AddressBookUI.framework */; };
 		41D0D4CD16FC0F8500D343CA /* wht-down-arw.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4CB16FC0F8500D343CA /* wht-down-arw.png */; };
 		41D0D4CE16FC0F8500D343CA /* wht-down-arw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4CC16FC0F8500D343CA /* wht-down-arw@2x.png */; };
@@ -176,6 +183,8 @@
 		41D0D4DC16FE220500D343CA /* redButtonHighlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4D816FE220500D343CA /* redButtonHighlight@2x.png */; };
 		41D0D4DD16FE220500D343CA /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4D916FE220500D343CA /* redButton.png */; };
 		41D0D4DE16FE220500D343CA /* redButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4DA16FE220500D343CA /* redButton@2x.png */; };
+		41D0D4E116FEB27D00D343CA /* 06-map-pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4DF16FEB27C00D343CA /* 06-map-pin.png */; };
+		41D0D4E216FEB27D00D343CA /* 06-map-pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4E016FEB27C00D343CA /* 06-map-pin@2x.png */; };
 		41DA1DA816CB13F40017F71F /* CTLInboxControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */; };
 		41DA1DAA16CB14C00017F71F /* _CTLCDAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130653416C149D90063AC10 /* _CTLCDAccount.m */; };
 		41DA1DAB16CB14C00017F71F /* CTLCDAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130653616C149D90063AC10 /* CTLCDAccount.m */; };
@@ -255,6 +264,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		410BDDE517015EF7009E9842 /* trash-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash-grey.png"; sourceTree = "<group>"; };
+		410BDDE617015EF7009E9842 /* trash-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash-grey@2x.png"; sourceTree = "<group>"; };
+		410BDDE9170164E5009E9842 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
+		410BDDEA170164E5009E9842 /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
+		410BDDF117019B24009E9842 /* 50-plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "50-plus.png"; sourceTree = "<group>"; };
+		410BDDF217019B24009E9842 /* 50-plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "50-plus@2x.png"; sourceTree = "<group>"; };
 		412C3C8916E98123009E662E /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon.png"; sourceTree = "<group>"; };
 		412C3C8A16E98123009E662E /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon@2x.png"; sourceTree = "<group>"; };
 		412C3C8E16E989D4009E662E /* cell-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell-arrow@2x.png"; sourceTree = "<group>"; };
@@ -483,6 +498,8 @@
 		41B5473116B4559500302652 /* CTLEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLEvent.h; sourceTree = "<group>"; };
 		41B5473216B4559500302652 /* CTLEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLEvent.m; sourceTree = "<group>"; };
 		41B5473516B4562D00302652 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		41CBA85817013DC5006C16CC /* UILabel+CTLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+CTLLabel.h"; sourceTree = "<group>"; };
+		41CBA85917013DC5006C16CC /* UILabel+CTLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+CTLLabel.m"; sourceTree = "<group>"; };
 		41D0D4C916FC062B00D343CA /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		41D0D4CB16FC0F8500D343CA /* wht-down-arw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wht-down-arw.png"; sourceTree = "<group>"; };
 		41D0D4CC16FC0F8500D343CA /* wht-down-arw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wht-down-arw@2x.png"; sourceTree = "<group>"; };
@@ -490,6 +507,8 @@
 		41D0D4D816FE220500D343CA /* redButtonHighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redButtonHighlight@2x.png"; sourceTree = "<group>"; };
 		41D0D4D916FE220500D343CA /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
 		41D0D4DA16FE220500D343CA /* redButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redButton@2x.png"; sourceTree = "<group>"; };
+		41D0D4DF16FEB27C00D343CA /* 06-map-pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-map-pin.png"; sourceTree = "<group>"; };
+		41D0D4E016FEB27C00D343CA /* 06-map-pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-map-pin@2x.png"; sourceTree = "<group>"; };
 		41DA1DA616CB13F40017F71F /* CTLInboxControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInboxControllerTest.h; sourceTree = "<group>"; };
 		41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInboxControllerTest.m; sourceTree = "<group>"; };
 		41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAccountInterstitialViewController.h; sourceTree = "<group>"; };
@@ -603,6 +622,8 @@
 				415A4F3E16F6A886007A0BD4 /* UIColor+CTLColor.m */,
 				415A4F3F16F6A886007A0BD4 /* UITableViewCell+CellShadows.h */,
 				415A4F4016F6A886007A0BD4 /* UITableViewCell+CellShadows.m */,
+				41CBA85817013DC5006C16CC /* UILabel+CTLLabel.h */,
+				41CBA85917013DC5006C16CC /* UILabel+CTLLabel.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -922,6 +943,14 @@
 		417DC2A716AE16220073199D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				410BDDF117019B24009E9842 /* 50-plus.png */,
+				410BDDF217019B24009E9842 /* 50-plus@2x.png */,
+				410BDDE9170164E5009E9842 /* 14-gear.png */,
+				410BDDEA170164E5009E9842 /* 14-gear@2x.png */,
+				410BDDE517015EF7009E9842 /* trash-grey.png */,
+				410BDDE617015EF7009E9842 /* trash-grey@2x.png */,
+				41D0D4DF16FEB27C00D343CA /* 06-map-pin.png */,
+				41D0D4E016FEB27C00D343CA /* 06-map-pin@2x.png */,
 				41B546F016B454DF00302652 /* 07-map-marker.png */,
 				41B546F116B454DF00302652 /* 07-map-marker@2x.png */,
 				41B546F216B454DF00302652 /* 09-chat-2.png */,
@@ -1178,6 +1207,14 @@
 				41D0D4DC16FE220500D343CA /* redButtonHighlight@2x.png in Resources */,
 				41D0D4DD16FE220500D343CA /* redButton.png in Resources */,
 				41D0D4DE16FE220500D343CA /* redButton@2x.png in Resources */,
+				41D0D4E116FEB27D00D343CA /* 06-map-pin.png in Resources */,
+				41D0D4E216FEB27D00D343CA /* 06-map-pin@2x.png in Resources */,
+				410BDDE717015EF7009E9842 /* trash-grey.png in Resources */,
+				410BDDE817015EF7009E9842 /* trash-grey@2x.png in Resources */,
+				410BDDEB170164E5009E9842 /* 14-gear.png in Resources */,
+				410BDDEC170164E5009E9842 /* 14-gear@2x.png in Resources */,
+				410BDDF317019B24009E9842 /* 50-plus.png in Resources */,
+				410BDDF417019B24009E9842 /* 50-plus@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1298,6 +1335,7 @@
 				4146971B16F7494F00B22EDD /* CTLFactoryAppointment.m in Sources */,
 				41B47EEB16F89512000B08E1 /* CTLTopRoundedCorners.m in Sources */,
 				41B47EEE16F922DB000B08E1 /* CTLBottomRoundedCorners.m in Sources */,
+				41CBA85A17013DC5006C16CC /* UILabel+CTLLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

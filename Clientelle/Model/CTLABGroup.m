@@ -165,8 +165,6 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
 #pragma mark - Class Methods
 + (void)createDefaultGroups:(ABAddressBookRef)addressBookRef completion:(CTLSaveCompletionHandler)completion
 {
-    NSArray *abGroups = [CTLABGroup groupsFromSourceType:kABSourceTypeLocal addressBookRef:addressBookRef];
-    
     ABRecordID clientsGroupID = kABRecordInvalidID;
     ABRecordID prospectsGroupID = kABRecordInvalidID;
     ABRecordID associatesGroupID = kABRecordInvalidID;
@@ -175,6 +173,8 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
     NSString *associatesGroupName = NSLocalizedString(CTLGroupTypeAssociate, nil);
     NSString *prospectsGroupName = NSLocalizedString(CTLGroupTypeProspect, nil);
     
+    NSArray *abGroups = [CTLABGroup groupsFromSourceType:kABSourceTypeLocal addressBookRef:addressBookRef];
+
     //create form schemas for existing groups
     for(NSUInteger i=0;i<[abGroups count];i++){
         
@@ -194,8 +194,12 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
             associatesGroupID = groupID;
         }
         
-        CTLCDFormSchema *formSchema = [CTLCDFormSchema MR_createEntity];
-        formSchema.groupIDValue = groupID;
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"groupID=%i", groupID];
+        CTLCDFormSchema *formSchema = [CTLCDFormSchema MR_findFirstWithPredicate:predicate];
+        if(!formSchema){
+            formSchema = [CTLCDFormSchema MR_createEntity];
+            formSchema.groupIDValue = groupID;
+        }
     }
     
     if(clientsGroupID == kABRecordInvalidID){

@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class CTLCDAppointment;
+
 @interface CTLAppointmentCell : UITableViewCell
 
+- (void)configure:(CTLCDAppointment *)appointment;
+- (IBAction)segueToMapView:(id)sender;
+
+
+@property (nonatomic, weak) CTLCDAppointment *appointment;
+
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
-@property (nonatomic, weak) IBOutlet UILabel *locationLabel;
+@property (nonatomic, weak) IBOutlet UILabel *dateLabel;
+@property (nonatomic, weak) IBOutlet UILabel *timeLabel;
+@property (nonatomic, weak) IBOutlet UIButton *mapButton;
 
 @end

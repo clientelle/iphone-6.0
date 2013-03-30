@@ -5,12 +5,17 @@
 
 
 extern const struct CTLCDAppointmentAttributes {
+	__unsafe_unretained NSString *address;
+	__unsafe_unretained NSString *city;
 	__unsafe_unretained NSString *endDate;
 	__unsafe_unretained NSString *eventID;
+	__unsafe_unretained NSString *hasAddress;
 	__unsafe_unretained NSString *location;
-	__unsafe_unretained NSString *note;
+	__unsafe_unretained NSString *notes;
 	__unsafe_unretained NSString *startDate;
+	__unsafe_unretained NSString *state;
 	__unsafe_unretained NSString *title;
+	__unsafe_unretained NSString *zip;
 } CTLCDAppointmentAttributes;
 
 extern const struct CTLCDAppointmentRelationships {
@@ -18,6 +23,11 @@ extern const struct CTLCDAppointmentRelationships {
 
 extern const struct CTLCDAppointmentFetchedProperties {
 } CTLCDAppointmentFetchedProperties;
+
+
+
+
+
 
 
 
@@ -39,6 +49,22 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* address;
+
+
+//- (BOOL)validateAddress:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* city;
+
+
+//- (BOOL)validateCity:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSDate* endDate;
 
 
@@ -55,6 +81,18 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* hasAddress;
+
+
+@property BOOL hasAddressValue;
+- (BOOL)hasAddressValue;
+- (void)setHasAddressValue:(BOOL)value_;
+
+//- (BOOL)validateHasAddress:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSString* location;
 
 
@@ -63,10 +101,10 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* note;
+@property (nonatomic, strong) NSString* notes;
 
 
-//- (BOOL)validateNote:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateNotes:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -79,10 +117,26 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* state;
+
+
+//- (BOOL)validateState:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSString* title;
 
 
 //- (BOOL)validateTitle:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* zip;
+
+
+//- (BOOL)validateZip:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -98,6 +152,18 @@ extern const struct CTLCDAppointmentFetchedProperties {
 @interface _CTLCDAppointment (CoreDataGeneratedPrimitiveAccessors)
 
 
+- (NSString*)primitiveAddress;
+- (void)setPrimitiveAddress:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveCity;
+- (void)setPrimitiveCity:(NSString*)value;
+
+
+
+
 - (NSDate*)primitiveEndDate;
 - (void)setPrimitiveEndDate:(NSDate*)value;
 
@@ -110,14 +176,23 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+- (NSNumber*)primitiveHasAddress;
+- (void)setPrimitiveHasAddress:(NSNumber*)value;
+
+- (BOOL)primitiveHasAddressValue;
+- (void)setPrimitiveHasAddressValue:(BOOL)value_;
+
+
+
+
 - (NSString*)primitiveLocation;
 - (void)setPrimitiveLocation:(NSString*)value;
 
 
 
 
-- (NSString*)primitiveNote;
-- (void)setPrimitiveNote:(NSString*)value;
+- (NSString*)primitiveNotes;
+- (void)setPrimitiveNotes:(NSString*)value;
 
 
 
@@ -128,8 +203,20 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+- (NSString*)primitiveState;
+- (void)setPrimitiveState:(NSString*)value;
+
+
+
+
 - (NSString*)primitiveTitle;
 - (void)setPrimitiveTitle:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveZip;
+- (void)setPrimitiveZip:(NSString*)value;
 
 
 

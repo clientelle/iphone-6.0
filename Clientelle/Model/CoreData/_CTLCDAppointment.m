@@ -4,12 +4,17 @@
 #import "_CTLCDAppointment.h"
 
 const struct CTLCDAppointmentAttributes CTLCDAppointmentAttributes = {
+	.address = @"address",
+	.city = @"city",
 	.endDate = @"endDate",
 	.eventID = @"eventID",
+	.hasAddress = @"hasAddress",
 	.location = @"location",
-	.note = @"note",
+	.notes = @"notes",
 	.startDate = @"startDate",
+	.state = @"state",
 	.title = @"title",
+	.zip = @"zip",
 };
 
 const struct CTLCDAppointmentRelationships CTLCDAppointmentRelationships = {
@@ -44,9 +49,27 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"hasAddressValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"hasAddress"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic address;
+
+
+
+
+
+
+@dynamic city;
+
+
 
 
 
@@ -65,6 +88,32 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 
 
 
+@dynamic hasAddress;
+
+
+
+- (BOOL)hasAddressValue {
+	NSNumber *result = [self hasAddress];
+	return [result boolValue];
+}
+
+- (void)setHasAddressValue:(BOOL)value_ {
+	[self setHasAddress:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveHasAddressValue {
+	NSNumber *result = [self primitiveHasAddress];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveHasAddressValue:(BOOL)value_ {
+	[self setPrimitiveHasAddress:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
 @dynamic location;
 
 
@@ -72,7 +121,7 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 
 
 
-@dynamic note;
+@dynamic notes;
 
 
 
@@ -86,7 +135,21 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 
 
 
+@dynamic state;
+
+
+
+
+
+
 @dynamic title;
+
+
+
+
+
+
+@dynamic zip;
 
 
 

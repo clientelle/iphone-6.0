@@ -66,6 +66,9 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     _textFieldsDict = [NSMutableDictionary dictionary];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(formDidChange:) name:CTLFormFieldAddedNotification object: nil];
+    
+    
+    [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -283,11 +286,67 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     }
     
     [cell.textInput setKeyboardType:keyboardType];
-    [cell.textInput addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingChanged];
+    //[cell.textInput addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingChanged];
     
     [_textFieldsDict setValue:cell.textInput forKey:field[kCTLFieldName]];
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(section == 0){
+        return 45.0f;
+    }
+    
+    return 30.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerView = nil;
+    UILabel *headerLabel = nil;
+    CGFloat width = self.tableView.bounds.size.width - 20.0f;
+    
+    if(section == 0){
+        headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10.0f, width, 40.0f)];
+        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 15.0f, width, 20.0f)];
+        [headerLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13]];
+        headerLabel.text = NSLocalizedString(@"CONTACT_INFO", nil);
+        
+        /** Private Button **/
+        
+        UIButton *gearButton = [self makeFooterButton];
+        
+        CGRect buttonFrame = gearButton.frame;
+        buttonFrame.size.height = 30.0f;
+        buttonFrame.size.width = 40.0f;
+        buttonFrame.origin.y += 10.0f;
+        buttonFrame.origin.x = self.tableView.bounds.size.width - (buttonFrame.size.width + 10);
+        
+        [gearButton setFrame:buttonFrame];
+        [gearButton addTarget:self action:@selector(showAddFieldsModal:) forControlEvents:UIControlEventTouchUpInside];
+        [gearButton setImage:[UIImage imageNamed:@"sm-wrench-gray.png"] forState:UIControlStateNormal];
+
+        [headerView addSubview:gearButton];
+        [headerView setBackgroundColor:[UIColor clearColor]];
+    }
+    
+    if(section == 1){
+        headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10.0f, width, 30.0f)];
+        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 0, width, 20.0f)];
+        headerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:13];
+        headerLabel.text = NSLocalizedString(@"address", nil);
+    }
+    
+    headerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15.0f];
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.textColor = [UIColor darkGrayColor];
+    
+    headerView.backgroundColor = [UIColor clearColor];
+    [headerView addSubview:headerLabel];
+    
+    return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -313,17 +372,30 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         dashesLabel.text = @"-       -";
         
         UIButton *settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPositionX, 5, buttonWidth, buttonHeight)];
-        [settingsButton setImage:[UIImage imageNamed:@"sm-wrench-gray.png"] forState:UIControlStateNormal];
+        [settingsButton setImage:[UIImage imageNamed:@"trash-grey.png"] forState:UIControlStateNormal];
         [settingsButton addTarget:self action:@selector(showAddFieldsModal:) forControlEvents:UIControlEventTouchUpInside];
         
         UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30.0f)];
         [footerView addSubview:dashesLabel];
         [footerView addSubview:settingsButton];
         [footerView setBackgroundColor:[UIColor clearColor]];
+        [footerView setAlpha:0.75];
         
         return footerView;
     }
     return nil;
+}
+
+- (UIButton *)makeFooterButton
+{
+    UIEdgeInsets insets = UIEdgeInsetsMake(18, 18, 18, 18);
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *buttonBGInactive = [[UIImage imageNamed:@"whiteButton.png"] resizableImageWithCapInsets:insets];
+    UIImage *buttonBGActive = [[UIImage imageNamed:@"whiteButtonHighlight.png"] resizableImageWithCapInsets:insets];
+    [button setBackgroundImage:buttonBGInactive forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonBGActive forState:UIControlStateHighlighted];
+    
+    return button;
 }
 
 
@@ -419,10 +491,16 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 - (IBAction)dismissKeyboard:(UITapGestureRecognizer *)recognizer
 {
     [self.view endEditing:YES];
-    [_focusedTextField setBackgroundColor:[UIColor clearColor]];
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
+- (IBAction)highlightTextField:(UITextField *)textField
+{
+    [self.focusedTextField setBackgroundColor:[UIColor clearColor]];
+    [textField setBackgroundColor:[UIColor ctlFadedGray]];
+    self.focusedTextField = textField;
+}
+
+- (IBAction)textFieldDidChange:(UITextField *)textField
 {
     //clear all inputs of error background
     NSArray *fields = [NSArray arrayWithArray:_fieldRows];
@@ -445,15 +523,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         [_fieldRows[inputIndex] setValue:textField.text forKey:kCTLFieldValue];
         [self setPersonDictionary];
     }
-}
-
-- (IBAction)highlightTextField:(id)sender
-{
-    //TODO: highlight error text field 232	204	203	
-    UITextField *textField = (UITextField *)sender;
-    [_focusedTextField setBackgroundColor:[UIColor clearColor]];
-    [textField setBackgroundColor:[UIColor ctlFadedGray]];
-     _focusedTextField = textField;
 }
 
 - (void)showAddFieldsModal:(id)sender

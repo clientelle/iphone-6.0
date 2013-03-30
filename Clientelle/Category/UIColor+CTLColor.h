@@ -17,6 +17,7 @@
 + (UIColor *)ctlLightGreen;
 + (UIColor *)ctlFadedGray;
 + (UIColor *)ctlTorquoise;
++ (UIColor *)ctlGray;
 + (UIColor *)ctlLightGray;
 + (UIColor *)ctlMediumGray;
 + (UIColor *)ctlDarkGray;

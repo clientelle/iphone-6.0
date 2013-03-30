@@ -6,21 +6,10 @@
 //  Copyright (c) 2012 Clientelle Leads LLC. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
-#import "UIColor+CTLColor.h"
 #import "CTLFieldCell.h"
 #import "CTLViewDecorator.h"
 
 @implementation CTLFieldCell
-
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
 
 - (void)drawRect:(CGRect)rect
 {

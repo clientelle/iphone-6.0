@@ -10,4 +10,6 @@
 
 @interface CTLFactoryAppointment : NSObject
 
+- (void)createAppointments:(NSDate *)date;
+
 @end

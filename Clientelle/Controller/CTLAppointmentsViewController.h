@@ -12,7 +12,8 @@ extern NSString *const CTLReloadAppointmentsNotification;
 
 @class CTLPickerView;
 
-@interface CTLAppointmentsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, CTLSlideMenuDelegate, UIPickerViewDataSource, UIPickerViewDelegate>{
+/* view cannot be a TableViewController because of the top rolodex selector */
+@interface CTLAppointmentsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, CTLSlideMenuDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate>{
     UIView *_emptyView;
     CTLPickerView *_filterPickerView;
     NSArray *_filterArray;
@@ -22,6 +23,7 @@ extern NSString *const CTLReloadAppointmentsNotification;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
 
+- (IBAction)addAppointment:(id)sender;
 - (IBAction)dismissPickerFromTap:(UITapGestureRecognizer *)recognizer;
 
 @end

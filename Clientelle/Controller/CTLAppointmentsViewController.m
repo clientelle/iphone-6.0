@@ -7,15 +7,16 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import "NSDate+CTLDate.h"
+#import "UIColor+CTLColor.h"
+
+#import "CTLPickerView.h"
+#import "CTLPickerButton.h"
 
 #import "CTLCDAppointment.h"
 #import "CTLAppointmentsViewController.h"
 #import "CTLAddEventViewController.h"
 #import "CTLAppointmentCell.h"
-#import "NSDate+CTLDate.h"
-#import "UIColor+CTLColor.h"
-#import "CTLPickerView.h"
-#import "CTLPickerButton.h"
 
 NSString *const CTLReloadAppointmentsNotification = @"com.clientelle.notifications.reloadAppointments";
 NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
@@ -60,6 +61,8 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     _emptyView = [self buildEmptyView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadAppointments:) name:CTLReloadAppointmentsNotification object:nil];
+    
+    //[self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPickerFromTap:)]];
 }
 
 - (void)rememberAppointmentFilter:(int)index
@@ -118,7 +121,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     return emptyView;
 }
 
-- (void)addAppointment:(id)sender
+- (IBAction)addAppointment:(id)sender
 {
     [self performSegueWithIdentifier:CTLAppointmentModalSegueIdentifyer sender:sender];
 }
@@ -157,26 +160,20 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"appointmentCell";
-    CTLAppointmentCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+    static NSString *cellIdentifier = nil;
     
     CTLCDAppointment *appointment = [_appointments objectAtIndex:indexPath.row];
-    cell.titleLabel.text = appointment.title;
     
-    NSString *location = [NSString stringWithFormat:@"%@", [NSDate dateToString:appointment.startDate]];
-    if([appointment.location length]){
-        location = [location stringByAppendingFormat:@" @ %@", appointment.location];
-    }
-    
-    //if appointment is in the past, de-emphasize with gray color
-    if([appointment.startDate compare:[NSDate date]] == NSOrderedAscending){
-        cell.locationLabel.textColor = [UIColor grayColor];
+    if(appointment.hasAddressValue){
+        cellIdentifier = @"apptCellHasMap";
     }else{
-        cell.locationLabel.textColor = [UIColor ctlLightGreen];
+        cellIdentifier = @"apptCellNoMap";
     }
     
-    cell.locationLabel.text = location;
+    CTLAppointmentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+    [cell configure:appointment];
+
     return cell;
 }
 
@@ -192,6 +189,11 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60.0f;
+}
+
 #pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -200,8 +202,17 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
         if([sender isKindOfClass:[CTLCDAppointment class]]){
             CTLCDAppointment *appointment = (CTLCDAppointment *)sender;
             CTLAddEventViewController *viewController = [segue destinationViewController];
+            [viewController setIsPresentedAsModal:NO];
             [viewController setCdAppointment:appointment];
+            return;
         }
+    }
+    
+    if([[segue identifier] isEqualToString:CTLAppointmentModalSegueIdentifyer]){
+        UINavigationController *navigationController = [segue destinationViewController];
+        CTLAddEventViewController *viewController = (CTLAddEventViewController *)navigationController.topViewController;
+        [viewController setIsPresentedAsModal:YES];
+        return;
     }
 }
 
@@ -232,7 +243,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 
 - (void)togglePicker:(id)sender
 {
-    if(_filterPickerView.isHidden){
+    if(_filterPickerView.isVisible){
         [_filterPickerView hidePicker];
     }else{
         [_filterPickerView showPicker];
@@ -248,7 +259,9 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 
 - (IBAction)dismissPickerFromTap:(UITapGestureRecognizer *)recognizer
 {
-    [_filterPickerView hidePicker];
+    if(_filterPickerView.isVisible){
+        [_filterPickerView hidePicker];
+    }
 }
 
 #pragma mark - Filter Picker Delegate
