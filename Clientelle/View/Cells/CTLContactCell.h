@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Clientelle Leads LLC. All rights reserved.
 //
 
+@class CTLABPerson;
+
 @interface CTLContactCell : UITableViewCell
 
 @property (nonatomic, assign) int row;
@@ -15,6 +17,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *timestampLabel;
 @property (nonatomic, weak) CALayer *indicatorLayer;
 
+- (void)configure:(CTLABPerson *)person;
 - (void)setIndicator;
 
 @end

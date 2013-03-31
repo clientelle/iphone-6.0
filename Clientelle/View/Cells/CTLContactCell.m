@@ -10,8 +10,22 @@
 #import "UIColor+CTLColor.h"
 #import "CTLContactCell.h"
 #import "CTLViewDecorator.h"
+#import "CTLABPerson.h"
 
 @implementation CTLContactCell
+
+- (void)configure:(CTLABPerson *)person
+{
+    self.nameLabel.text = [person compositeName];
+    
+    if([[person phone] length] > 0){
+        self.detailsLabel.text = person.phone;
+    }else if([[person email] length] > 0){
+        self.detailsLabel.text = person.email;
+    }else{
+        self.detailsLabel.text = @"";
+    }
+}
 
 - (void)setIndicator
 {

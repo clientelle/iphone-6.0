@@ -61,6 +61,10 @@ int const CTLEmptyContactsMessageTag = 793;
     
     _emptyView = [self noContactsView];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
     
@@ -733,11 +737,13 @@ int const CTLEmptyContactsMessageTag = 793;
 
 #pragma mark - TableViewController Delegate methods
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     return 63.0;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     
     if (tableView == self.searchDisplayController.searchResultsTableView){
         return [_filteredContacts count];
@@ -746,8 +752,8 @@ int const CTLEmptyContactsMessageTag = 793;
     return [_contacts count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     static NSString *identifier = @"contactRow";
     CTLContactCell *cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
     if(!cell){
@@ -761,37 +767,28 @@ int const CTLEmptyContactsMessageTag = 793;
         person = [_contacts objectAtIndex:indexPath.row];
     }
      
-    [self configureCell:cell person:person];
+    [cell configure:person];
+    
+    NSDate *accessDate = [_accessedDictionary objectForKey:@(person.recordID)];
+    
+    if(accessDate){
+        NSString *timestampDate = [self generateDateStamp:accessDate];
+        cell.timestampLabel.text = [NSString stringWithFormat:@"%@", timestampDate];
+    }
     
     return cell;
 }
 
-- (void)configureCell:(CTLContactCell *)cell person:(CTLABPerson *)person
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    cell.nameLabel.text = [person compositeName];
-    
-    if([[person phone] length] > 0){
-        cell.detailsLabel.text = person.phone;
-    }else if([[person email] length] > 0){
-        cell.detailsLabel.text = person.email;
-    }else{
-        cell.detailsLabel.text = @"";
-    }
-    
-    NSDate *accessDate = [_accessedDictionary objectForKey:@(person.recordID)];
-    if(accessDate){
-        cell.timestampLabel.text = [NSString stringWithFormat:@"%@", [NSDate dateToString:accessDate]];
-    }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if([_contacts count] == 0){
         return self.view.bounds.size.height;
     }
     return 0;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
     if([_contacts count] == 0){
         UILabel *titleLabel = (UILabel*)[_emptyView viewWithTag:CTLEmptyContactsTitleTag];
         UILabel *messageLabel = (UILabel*)[_emptyView viewWithTag:CTLEmptyContactsMessageTag];
@@ -811,7 +808,8 @@ int const CTLEmptyContactsMessageTag = 793;
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     //if groupPicker is open dismiss it and do nothing else.
     if(_groupPickerView.isVisible){
         [self hideGroupPicker];
@@ -894,6 +892,19 @@ int const CTLEmptyContactsMessageTag = 793;
 }
 
 #pragma mark - Updating Timestamp for Contact Row
+
+- (NSString *)generateDateStamp:(NSDate *)date
+{
+    NSString *timestampDate = [NSDate formatShortDateOnly:date];
+    NSString *currentDate = [NSDate formatShortDateOnly:[NSDate date]];
+    
+    if([timestampDate isEqualToString:currentDate]){
+        timestampDate = [NSDate formatShortTimeOnly:date];
+    }
+    
+    return timestampDate;
+}
+
 - (void)updateContactTimestampInPlace
 {
     [self saveTimestampForContact];
@@ -903,14 +914,13 @@ int const CTLEmptyContactsMessageTag = 793;
 - (void)updateTimestampForActiveCell
 {
     CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-    cell.timestampLabel.text = [NSDate dateToString:[NSDate date]];
+    cell.timestampLabel.text = [NSDate formatShortTimeOnly:[NSDate date]];
     _shouldReorderListOnScroll = YES;
 }
 
 - (void)saveTimestampForContact
 {
     NSNumber *recordIDKey = @(_selectedPerson.recordID);
-        
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID=%i", _selectedPerson.recordID];
     CTLCDPerson *person = [CTLCDPerson MR_findFirstWithPredicate:predicate];
     
@@ -952,7 +962,8 @@ int const CTLEmptyContactsMessageTag = 793;
     return YES;
 }
 
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption{
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+{
     [self filterContactListForSearchText:[self.searchDisplayController.searchBar text] scope:
      [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
     return YES;
@@ -973,7 +984,8 @@ int const CTLEmptyContactsMessageTag = 793;
     [self presentViewController:smsController animated:YES completion:nil];
 }
 
-- (void)shareContactViaEmail:(id)sender {
+- (void)shareContactViaEmail:(id)sender
+{
     if(![MFMailComposeViewController canSendMail]){
         [self displayAlertMessage:NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL", nil)];
         return;
@@ -1041,7 +1053,8 @@ int const CTLEmptyContactsMessageTag = 793;
 
 #pragma mark - Message Delegate Methods
 
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
     if(result == MFMailComposeResultSent){
         [self updateContactTimestampInPlace];
     }

@@ -34,4 +34,6 @@
 + (NSDateFormatter *)dateStyleFormatter;
 + (NSDate *)fromComponents:(NSDateComponents *)components;
 
++ (NSDateFormatter *)dateOnlyFormat;
+
 @end
