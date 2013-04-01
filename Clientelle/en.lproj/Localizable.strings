@@ -71,7 +71,9 @@ e†
 "ZIP" = "ZIP Code";
 "State" = "State";
 
-
+/* DELETE CONTACT */
+"DELETE_CONTACT" = "Delete Contact";
+"REMOVE_FROM_GROUP" = "Remove from %@";
 
 
 /* Group Messaging */
@@ -114,7 +116,7 @@ e†
 "THIS_WEEK" = "This Week";
 "THIS_MONTH" = "This Month";
 "NO_APPOINTMENTS" = "No Appointments";
-"NO_APPOINTMENTS_FOUND" = "There were no appointments found";
+"NO_APPOINTMENTS_FOUND" = "No appointments found";
 "ADD_APPOINTMENT" = "Add Appointment";
 "DELETE_APPOINTMENT" = "Delete Appointment";
 "CONFIRM_DELETE_APPOINTMENT" = "Are you sure want to delete this appointment?";

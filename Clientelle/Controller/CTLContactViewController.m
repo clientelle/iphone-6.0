@@ -43,6 +43,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     }
     
     if([self.abGroup groupID] == CTLAllContactsGroupID){
+        _hasGroup = NO;
         ABRecordID defaultGroupID = [CTLABGroup clientGroupID];
         //check to make sure this group isn't nuked
         if([CTLABGroup groupDoesExist:defaultGroupID addressBookRef:_addressBookRef]){
@@ -50,6 +51,8 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         }else{
             self.abGroup = [CTLABGroup getAnyGroup:self.addressBookRef];
         }
+    }else{
+        _hasGroup = YES;
     }
     
     if(!_cdFormSchema){
@@ -66,8 +69,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     _textFieldsDict = [NSMutableDictionary dictionary];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(formDidChange:) name:CTLFormFieldAddedNotification object: nil];
-    
-    
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)]];
 }
 
@@ -335,7 +336,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     if(section == 1){
         headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10.0f, width, 30.0f)];
         headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 0, width, 20.0f)];
-        headerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:13];
         headerLabel.text = NSLocalizedString(@"address", nil);
     }
     
@@ -368,12 +368,13 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         
         UILabel *dashesLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelPositionX, 5, labelWidth, buttonHeight)];
         dashesLabel.backgroundColor = [UIColor clearColor];
+        dashesLabel.textColor = [UIColor darkGrayColor];
         dashesLabel.textAlignment = NSTextAlignmentCenter;
         dashesLabel.text = @"-       -";
         
         UIButton *settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPositionX, 5, buttonWidth, buttonHeight)];
         [settingsButton setImage:[UIImage imageNamed:@"trash-grey.png"] forState:UIControlStateNormal];
-        [settingsButton addTarget:self action:@selector(showAddFieldsModal:) forControlEvents:UIControlEventTouchUpInside];
+        [settingsButton addTarget:self action:@selector(handleDeleteContact:) forControlEvents:UIControlEventTouchUpInside];
         
         UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30.0f)];
         [footerView addSubview:dashesLabel];
@@ -383,7 +384,67 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         
         return footerView;
     }
+    
     return nil;
+}
+
+- (void)handleDeleteContact:(id)sender
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:nil
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:nil, nil];
+    if(!_hasGroup){
+        [actionSheet addButtonWithTitle: NSLocalizedString(@"DELETE_CONTACT", nil)];
+        actionSheet.cancelButtonIndex = 1;
+    }else{
+        NSString *removeFromGroupTitle = [NSString stringWithFormat:NSLocalizedString(@"REMOVE_FROM_GROUP", nil), [self.abGroup name]];
+        [actionSheet addButtonWithTitle:removeFromGroupTitle];
+        [actionSheet addButtonWithTitle: NSLocalizedString(@"DELETE_CONTACT", nil)];
+        actionSheet.cancelButtonIndex = 2;
+    }
+    
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"CANCEL", nil)];
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(_hasGroup){
+        
+        if(buttonIndex == 0){
+            NSLog(@"remove from group");
+            [self removeFromGroup];
+        }
+        
+        if(buttonIndex == 1){
+             NSLog(@"remove from addressbook");
+            [self removeFromAddressBook];
+        }
+        
+    }else{
+        if(buttonIndex == 0){
+            NSLog(@"remove from addressbook");
+            [self removeFromAddressBook];
+        }
+    }
+}
+
+- (void)removeFromGroup
+{
+    [self.abGroup removeMember:self.abPerson.recordID];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CTLExitContactModeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)removeFromAddressBook
+{
+    [CTLABPerson deletePerson:[self.abPerson recordRef] withAddressBook:self.addressBookRef];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CTLExitContactModeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (UIButton *)makeFooterButton
@@ -394,7 +455,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     UIImage *buttonBGActive = [[UIImage imageNamed:@"whiteButtonHighlight.png"] resizableImageWithCapInsets:insets];
     [button setBackgroundImage:buttonBGInactive forState:UIControlStateNormal];
     [button setBackgroundImage:buttonBGActive forState:UIControlStateHighlighted];
-    
     return button;
 }
 

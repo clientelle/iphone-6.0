@@ -12,7 +12,7 @@
 @class CTLABPerson;
 @class CTLCDFormSchema;
 
-@interface CTLContactViewController : UITableViewController<CTLFieldCellDelegate>{
+@interface CTLContactViewController : UITableViewController<CTLFieldCellDelegate, UIActionSheetDelegate>{
     BOOL _addressbookChangeDidComeFromApp;
     ABAddressBookRef _addressBookRef;
     CTLCDFormSchema *_cdFormSchema;
@@ -25,6 +25,7 @@
     NSArray *_addressFields;
     NSMutableArray *_addressRows;
     NSMutableDictionary *_addressDict;
+    BOOL _hasGroup;
 }
 
 /* CTLFieldCellDelegate */

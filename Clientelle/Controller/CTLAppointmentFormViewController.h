@@ -12,7 +12,7 @@
 @class CTLABPerson;
 @class CTLCDAppointment;
 
-@interface CTLAddEventViewController : UITableViewController<CTLFieldCellDelegate>{
+@interface CTLAppointmentFormViewController : UITableViewController<CTLFieldCellDelegate>{
     UIDatePicker *_datePicker;
     NSInteger _activeInputTag;
     EKEvent *_appointment;

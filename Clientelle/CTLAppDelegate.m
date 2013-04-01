@@ -10,6 +10,9 @@
 #import "CTLSlideMenuController.h"
 #import "CTLMainMenuViewController.h"
 
+#import "NSDate+CTLDate.h"
+#import "CTLCDAppointment.h"
+
 @implementation CTLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -43,6 +46,14 @@ void addressBookChanged(ABAddressBookRef reference, CFDictionaryRef dictionary, 
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [MagicalRecord cleanUp];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    //Remove appointments from CoreData that are more than 2 months old
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"startDate < %@", [NSDate monthsAgo:2]];
+    [CTLCDAppointment MR_deleteAllMatchingPredicate:predicate];
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
 }
 
 @end

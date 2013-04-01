@@ -13,21 +13,21 @@
 #import "CTLABPerson.h"
 #import "CTLABGroup.h"
 #import "CTLCDPerson.h"
-#import "CTLAddEventViewController.h"
+#import "CTLAppointmentFormViewController.h"
 #import "CTLContactsListViewController.h"
-#import "CTLAppointmentsViewController.h"
+#import "CTLAppointmentsListViewController.h"
 
 #import "CTLCDAppointment.h"
 #import "CTLCellBackground.h"
 #import "UITableViewCell+CellShadows.h"
 #import "CTLViewDecorator.h"
 
-#import "CTLFactoryAppointment.h"
+//#import "CTLFactoryAppointment.h"
 
 int CTLStartTimeInputTag = 2;
 int CTLEndTimeInputTag = 3;
 
-@implementation CTLAddEventViewController
+@implementation CTLAppointmentFormViewController
 
 - (void)viewDidLoad
 {
@@ -55,8 +55,8 @@ int CTLEndTimeInputTag = 3;
         
         if(_appointment){
             self.titleTextField.text = _appointment.title;
-            self.startTimeTextField.text = [NSDate dateToString:_appointment.startDate];
-            self.endTimeTextField.text = [NSDate dateToString:_appointment.endDate];
+            self.startTimeTextField.text = [NSDate formatDateAndTime:_appointment.startDate];
+            self.endTimeTextField.text = [NSDate formatDateAndTime:_appointment.endDate];
             self.notesTextField.text = _appointment.notes;
             
             //appointemnt location
@@ -78,12 +78,12 @@ int CTLEndTimeInputTag = 3;
     
     /*** GENERATE FAKE APPOINTMENTS ***/
     
-    /*
-    CTLFactoryAppointment *apptFactory = [[CTLFactoryAppointment alloc] init];
-    [apptFactory createAppointments:[NSDate monthsAgo:1]];
-    [apptFactory createAppointments:[NSDate date]];
-    [apptFactory createAppointments:[NSDate monthsFromNow:1]];
-    */
+    
+    //CTLFactoryAppointment *apptFactory = [[CTLFactoryAppointment alloc] init];
+    //[apptFactory createAppointments:[NSDate monthsAgo:4]];
+    //[apptFactory createAppointments:[NSDate date]];
+    //[apptFactory createAppointments:[NSDate monthsFromNow:1]];
+   
     
 }
 
@@ -258,7 +258,7 @@ int CTLEndTimeInputTag = 3;
 
     if(_activeInputTag == CTLStartTimeInputTag){
         if([self.startTimeTextField.text length] == 0){
-            self.startTimeTextField.text = [NSDate dateToString:_datePicker.date];
+            self.startTimeTextField.text = [NSDate formatDateAndTime:_datePicker.date];
             if(!_appointment.startDate){
                 _appointment.startDate = _datePicker.date;
                 [self.cdAppointment setStartDate:_datePicker.date];
@@ -281,7 +281,7 @@ int CTLEndTimeInputTag = 3;
                 _appointment.endDate = _datePicker.date;
                 [self.cdAppointment setEndDate:_datePicker.date];
             }
-            self.endTimeTextField.text = [NSDate dateToString:_datePicker.date];
+            self.endTimeTextField.text = [NSDate formatDateAndTime:_datePicker.date];
         }
         if(_appointment.endDate){
             _datePicker.date = _appointment.endDate;
@@ -293,7 +293,7 @@ int CTLEndTimeInputTag = 3;
 {
     if(_activeInputTag == CTLStartTimeInputTag || _activeInputTag == CTLEndTimeInputTag){
         UITextField *textField = (UITextField *)[self.view viewWithTag:_activeInputTag];
-        textField.text = [NSDate dateToString:[_datePicker date]];
+        textField.text = [NSDate formatDateAndTime:[_datePicker date]];
         
         if(_activeInputTag == CTLStartTimeInputTag){
             _appointment.startDate = [_datePicker date];
@@ -303,7 +303,7 @@ int CTLEndTimeInputTag = 3;
                     NSDate *endDate = [NSDate hoursFrom:_appointment.startDate numberOfHours:1];
                     _appointment.endDate = endDate;
                     [self.cdAppointment setEndDate:endDate];
-                    self.endTimeTextField.text = [NSDate dateToString:_appointment.endDate];
+                    self.endTimeTextField.text = [NSDate formatDateAndTime:_appointment.endDate];
                 }
             }
         }
@@ -316,7 +316,7 @@ int CTLEndTimeInputTag = 3;
                     NSDate *startDate = [NSDate hoursBefore:_appointment.endDate numberOfHours:1];
                     _appointment.startDate = startDate;
                     [self.cdAppointment setStartDate:startDate];
-                    self.startTimeTextField.text = [NSDate dateToString:_appointment.startDate];
+                    self.startTimeTextField.text = [NSDate formatDateAndTime:_appointment.startDate];
                 }
             }
         }
@@ -377,8 +377,6 @@ int CTLEndTimeInputTag = 3;
 
 - (void)deleteAppointment:(id)sender
 {
-    
-    
     NSString *eventID = [self.cdAppointment eventID];
     [self.cdAppointment MR_deleteEntity];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){

@@ -16,6 +16,7 @@ extern NSString *const CTLContactListReloadNotification;
 extern NSString *const CTLTimestampForRowNotification;
 extern NSString *const CTLNewContactWasAddedNotification;
 extern NSString *const CTLContactRowDidChangeNotification;
+extern NSString *const CTLExitContactModeNotification;
 
 @class CTLABGroup;
 @class CTLABPerson;

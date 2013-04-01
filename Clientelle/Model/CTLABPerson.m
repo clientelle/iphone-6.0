@@ -439,4 +439,15 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
     return nil;
 }
 
++ (BOOL)deletePerson:(ABRecordRef)recordRef withAddressBook:(ABAddressBookRef)addressBookRef
+{
+    __block BOOL result = NO;
+    CFErrorRef error = NULL;
+    if(ABAddressBookRemoveRecord(addressBookRef, recordRef, &error)){
+        result = ABAddressBookSave(addressBookRef, &error);
+    }
+    
+    return result;
+}
+
 @end

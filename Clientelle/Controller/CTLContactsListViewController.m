@@ -18,7 +18,7 @@
 #import "CTLContactViewController.h"
 #import "CTLContactImportViewController.h"
 #import "CTLGroupsListViewController.h"
-#import "CTLAddEventViewController.h"
+#import "CTLAppointmentFormViewController.h"
 
 #import "CTLContactCell.h"
 #import "CTLContactHeaderView.h"
@@ -37,6 +37,7 @@ NSString *const CTLContactListReloadNotification = @"com.clientelle.notification
 NSString *const CTLTimestampForRowNotification = @"com.clientelle.notifications.updateContactTimestamp";
 NSString *const CTLNewContactWasAddedNotification = @"com.clientelle.com.notifications.contactWasAdded";
 NSString *const CTLContactRowDidChangeNotification = @"com.clientelle.com.notifications.contactRowDidChange";
+NSString *const CTLExitContactModeNotification = @"com.clientelle.com.notifications.exitContactMode";
 
 NSString *const CTLImporterSegueIdentifyer = @"toImporter";
 NSString *const CTLContactListSegueIdentifyer = @"toContacts";
@@ -62,9 +63,6 @@ int const CTLEmptyContactsMessageTag = 793;
     _emptyView = [self noContactsView];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
-    self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
     
@@ -100,6 +98,38 @@ int const CTLEmptyContactsMessageTag = 793;
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactListAfterImport:) name:CTLContactWereImportedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactList:) name:CTLContactListReloadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timestampForRowDidChange:) name:CTLTimestampForRowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newContactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactRowDidChange:) name:CTLContactRowDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayShareContactActionSheet:) name:CTLShareContactNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidGoInactive:) name:kApplicationDidGoInactive object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exitContactMode:) name:CTLExitContactModeNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLShareContactNotification object:nil];
+}
+
+- (void)applicationDidGoInactive:(NSNotification *)notification{
+    [self exitContactMode];
+}
+
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
+{
+    UITableView *tableView = controller.searchResultsTableView;
+    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
+
 - (void)displayPermissionPrompt
 {
     UIAlertView *requirePermission = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"REQUIRES_ACCESS_TO_CONTACTS", nil)
@@ -130,29 +160,6 @@ int const CTLEmptyContactsMessageTag = 793;
         self.navigationItem.titleView = [self groupPickerButtonWithTitle:[selectedGroup name]];
         [self loadGroup:selectedGroup];
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactListAfterImport:) name:CTLContactWereImportedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactList:) name:CTLContactListReloadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timestampForRowDidChange:) name:CTLTimestampForRowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newContactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactRowDidChange:) name:CTLContactRowDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayShareContactActionSheet:) name:CTLShareContactNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidGoInactive:) name:kApplicationDidGoInactive object:nil];
-}
-
-- (void)applicationDidGoInactive:(NSNotification *)notification{
-    [self exitContactMode];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLShareContactNotification object:nil];
 }
 
 #pragma mark - Loading Contact List
@@ -202,19 +209,24 @@ int const CTLEmptyContactsMessageTag = 793;
 
 - (void)reloadContactList:(NSNotification *)notification
 {
-    CFErrorRef error;
-    self.addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
-    CTLABGroup *selectedGroup = [[CTLABGroup alloc] initWithGroupID:[CTLABGroup defaultGroupID] addressBook:self.addressBookRef];
-    
+    _contacts = nil;
     _accessedDictionary = nil;
     _contactsDictionary = nil;
-    _contacts = nil;
     
-    if([selectedGroup.members count] == 0){
-        [self.tableView reloadData];
+    CFErrorRef error;
+    self.addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
+    ABRecordID groupID = [CTLABGroup defaultGroupID];
+    
+    if(groupID == CTLAllContactsGroupID){
+        [self loadAllContacts];
     }else{
-        _contactsDictionary = selectedGroup.members;
-        [self setContactList];
+        CTLABGroup *selectedGroup = [[CTLABGroup alloc] initWithGroupID:groupID addressBook:self.addressBookRef];
+        if([selectedGroup.members count] == 0){
+            [self.tableView reloadData];
+        }else{
+            _contactsDictionary = selectedGroup.members;
+            [self setContactList];
+        }
     }
 }
 
@@ -425,9 +437,29 @@ int const CTLEmptyContactsMessageTag = 793;
     [actionSheet showInView:self.view];
 }
 
+#pragma mark - Prompt Delegate Methods
+
+- (void)displayAddGroupPrompt:(id)sender
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"CREATE_NEW_GROUP", nil)
+                                                        message:nil
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                                              otherButtonTitles:NSLocalizedString(@"CREATE", nil), nil];
+    
+    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    
+    UITextField *textField = [alertView textFieldAtIndex:0];
+    textField.placeholder = NSLocalizedString(@"ENTER_GROUP_NAME", nil);
+    textField.clearButtonMode = YES;
+    textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    textField.autocorrectionType = UITextAutocorrectionTypeYes;
+    
+    [alertView show];
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-
      switch(actionSheet.tag){
         case CTLAddContactActionSheetTag:
             switch(buttonIndex){
@@ -458,25 +490,6 @@ int const CTLEmptyContactsMessageTag = 793;
             break;
             
     }
-}
-
-- (IBAction)displayAddGroupPrompt:(id)sender
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"CREATE_NEW_GROUP", nil)
-                                                    message:nil
-                                                   delegate:self
-                                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                          otherButtonTitles:NSLocalizedString(@"CREATE", nil), nil];
-    
-    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    
-    UITextField *textField = [alertView textFieldAtIndex:0];
-    textField.placeholder = NSLocalizedString(@"ENTER_GROUP_NAME", nil);
-    textField.clearButtonMode = YES;
-    textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-    textField.autocorrectionType = UITextAutocorrectionTypeYes;
-    
-    [alertView show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -562,7 +575,7 @@ int const CTLEmptyContactsMessageTag = 793;
     
     if([[segue identifier] isEqualToString:CTLAppointmentSegueIdentifyer]){
         UINavigationController *navigationController = [segue destinationViewController];
-        CTLAddEventViewController *appointmentViewController = (CTLAddEventViewController *)navigationController.topViewController;
+        CTLAppointmentFormViewController *appointmentViewController = (CTLAppointmentFormViewController *)navigationController.topViewController;
         [appointmentViewController setIsPresentedAsModal:YES];
         [appointmentViewController setContact:_selectedPerson];
         return;
@@ -666,6 +679,11 @@ int const CTLEmptyContactsMessageTag = 793;
         self.contactHeader.frame = headerFrame;
         self.contactToolbar.frame = toolbarFrame;
     }];
+}
+
+- (void)exitContactMode:(NSNotification *)notification
+{
+    [self exitContactMode];
 }
 
 - (void)exitContactMode

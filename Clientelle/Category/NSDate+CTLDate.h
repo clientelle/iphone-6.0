@@ -12,7 +12,6 @@
 
 + (NSDate *)hoursFrom:(NSDate *)date numberOfHours:(NSInteger)hours;
 + (NSDate *)hoursBefore:(NSDate *)date numberOfHours:(NSInteger)hours;
-+ (NSDate *)nextMonth;
 + (NSDate *)monthsAgo:(int)num;
 + (NSDate *)monthsFromNow:(int)num;
 
@@ -21,19 +20,15 @@
 + (NSDate *)firstDateOfCurrentMonth;
 + (NSDate *)lastDateOfCurrentMonth;
 
++ (NSString *)formatShortTimeOnly:(NSDate *)date;
++ (NSString *)formatShortDateOnly:(NSDate *)date;
++ (NSString *)formatDateAndTime:(NSDate *)date;
+
++ (NSDateFormatter *)dateAndTimeFormat;
++ (NSDateFormatter *)dateOnlyFormat;
+
 + (NSDate *)zeroHour:(NSCalendar *)calendar date:(NSDate *)date;
 + (NSDate *)today;
 + (NSDate *)tomorrow;
-
-+ (NSDateFormatter *)dateFormatter;
-
-+ (NSString *)dateShortToString:(NSDate *)date;
-+ (NSString *)formatShortTimeOnly:(NSDate *)date;
-+ (NSString *)formatShortDateOnly:(NSDate *)date;
-+ (NSString *)dateToString:(NSDate *)date;
-+ (NSDateFormatter *)dateStyleFormatter;
-+ (NSDate *)fromComponents:(NSDateComponents *)components;
-
-+ (NSDateFormatter *)dateOnlyFormat;
 
 @end

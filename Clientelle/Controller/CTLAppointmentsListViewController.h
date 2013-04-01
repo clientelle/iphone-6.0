@@ -13,7 +13,7 @@ extern NSString *const CTLReloadAppointmentsNotification;
 @class CTLPickerView;
 
 /* view cannot be a TableViewController because of the top rolodex selector */
-@interface CTLAppointmentsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, CTLSlideMenuDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate>{
+@interface CTLAppointmentsListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, CTLSlideMenuDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate>{
     UIView *_emptyView;
     CTLPickerView *_filterPickerView;
     NSArray *_filterArray;

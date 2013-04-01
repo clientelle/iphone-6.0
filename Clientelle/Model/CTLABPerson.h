@@ -55,6 +55,7 @@ extern NSString *const CTLAddressZIPProperty;
 + (BOOL)validateContactInfo:(NSDictionary *)fieldsDict;
 + (void)peopleFromAddressBook:(ABAddressBookRef)addressBookRef withBlock:(CTLDictionayBlock)block;
 + (ABRecordRef)sourceByType:(ABSourceType)sourceType addessBookRef:(ABAddressBookRef)addressBookRef;
++ (BOOL)deletePerson:(ABRecordRef)recordRef withAddressBook:(ABAddressBookRef)addressBookRef;
 - (NSString *)description;
 
 @end

@@ -10,7 +10,8 @@
 
 @implementation NSDate(CTLDate)
 
-+ (NSDateFormatter *)dateFormatter {
++ (NSDateFormatter *)dateAndTimeFormat
+{
     static NSDateFormatter *formatter = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -23,7 +24,7 @@
     return formatter;
 }
 
-+ (NSDateFormatter *)dateShortFormatter
++ (NSDateFormatter *)dateShortFormat
 {
     static NSDateFormatter *formatter = nil;
     static dispatch_once_t onceToken;
@@ -65,26 +66,6 @@
     return formatter;
 }
 
-+ (NSDateFormatter *)dateStyleFormatter
-{
-    static NSDateFormatter *formatter = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        formatter = [[NSDateFormatter alloc] init];
-        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale currentLocale] objectForKey:NSLocaleIdentifier]]];
-        [formatter setTimeStyle:NSDateFormatterNoStyle];
-        [formatter setDateStyle:NSDateFormatterMediumStyle];
-        [formatter setDoesRelativeDateFormatting:YES];
-    });
-    return formatter;
-}
-
-+ (NSString *)dateShortToString:(NSDate *)date
-{
-    NSDateFormatter *dateFormatter = [NSDate dateShortFormatter];
-    return [dateFormatter stringFromDate:date];
-}
-
 + (NSString *)formatShortDateOnly:(NSDate *)date
 {
     NSDateFormatter *dateFormatter = [NSDate dateOnlyFormat];
@@ -97,12 +78,14 @@
     return [dateFormatter stringFromDate:date];
 }
 
-+ (NSString *)dateToString:(NSDate *)date {
-    NSDateFormatter *dateFormatter = [NSDate dateFormatter];
++ (NSString *)formatDateAndTime:(NSDate *)date
+{
+    NSDateFormatter *dateFormatter = [NSDate dateAndTimeFormat];
     return [dateFormatter stringFromDate:date];
 }
 
-+ (NSPredicate *)predicateFromDate:(NSDate *)date {
++ (NSPredicate *)predicateFromDate:(NSDate *)date
+{
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *currDate = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
     NSDate *mdy = [calendar dateFromComponents:currDate];
@@ -221,17 +204,6 @@
     return [calendar dateFromComponents:comps];
 }
 
-+ (NSDate *)nextMonth {
-    NSDate *date = [NSDate date];
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *currDate = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setMonth:[currDate month] + 1];
-    [comps setDay:[currDate day]];
-    [comps setYear:[currDate year]];
-    return [calendar dateFromComponents:comps];
-}
-
 + (NSDate *)monthsAgo:(int)num
 {
     NSDate *date = [NSDate date];
@@ -250,15 +222,10 @@
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *currDate = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
     NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setMonth:[currDate month] + 3];
+    [comps setMonth:[currDate month] + num];
     [comps setDay:[currDate day]];
     [comps setYear:[currDate year]];
     return [calendar dateFromComponents:comps];
-}
-
-+ (NSDate *)fromComponents:(NSDateComponents *)components {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    return [calendar dateFromComponents:components];
 }
 
 @end

@@ -14,8 +14,8 @@
 #import "CTLPickerButton.h"
 
 #import "CTLCDAppointment.h"
-#import "CTLAppointmentsViewController.h"
-#import "CTLAddEventViewController.h"
+#import "CTLAppointmentsListViewController.h"
+#import "CTLAppointmentFormViewController.h"
 #import "CTLAppointmentCell.h"
 
 NSString *const CTLReloadAppointmentsNotification = @"com.clientelle.notifications.reloadAppointments";
@@ -24,11 +24,11 @@ NSString *const CTLAppointmentModalSegueIdentifyer = @"toAppointmentModal";
 NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.appointmentFilter";
 
 
-@interface CTLAppointmentsViewController ()
+@interface CTLAppointmentsListViewController ()
 @property (nonatomic, strong) NSFetchedResultsController *resultsController;
 @end
 
-@implementation CTLAppointmentsViewController
+@implementation CTLAppointmentsListViewController
 
 - (void)viewDidLoad
 {
@@ -201,7 +201,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     if([[segue identifier] isEqualToString:CTLAppointmentFormSegueIdentifyer]){
         if([sender isKindOfClass:[CTLCDAppointment class]]){
             CTLCDAppointment *appointment = (CTLCDAppointment *)sender;
-            CTLAddEventViewController *viewController = [segue destinationViewController];
+            CTLAppointmentFormViewController *viewController = [segue destinationViewController];
             [viewController setIsPresentedAsModal:NO];
             [viewController setCdAppointment:appointment];
             return;
@@ -210,7 +210,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     
     if([[segue identifier] isEqualToString:CTLAppointmentModalSegueIdentifyer]){
         UINavigationController *navigationController = [segue destinationViewController];
-        CTLAddEventViewController *viewController = (CTLAddEventViewController *)navigationController.topViewController;
+        CTLAppointmentFormViewController *viewController = (CTLAppointmentFormViewController *)navigationController.topViewController;
         [viewController setIsPresentedAsModal:YES];
         return;
     }
