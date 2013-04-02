@@ -26,3 +26,6 @@
 #define kAppiraterDaysUntilPrompt 1
 #define kAppiraterUsesUntilPrompt 3
 #define kAppiraterTimeBeforeReminding 5
+
+// feedback
+#define kFeedbackEmail @"feedback@clientelle.com"
