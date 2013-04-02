@@ -73,10 +73,7 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     UITableViewCell *supportCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     [self styleLabel:supportCell.textLabel withText:NSLocalizedString(@"SUPPORT_FEATURES", nil)];
     
-    UITableViewCell *rateCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
-    [self styleLabel:rateCell.textLabel withText:NSLocalizedString(@"RATE_APP", nil)];
-    
-    UITableViewCell *shareCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+    UITableViewCell *shareCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
     [self styleLabel:shareCell.textLabel withText:NSLocalizedString(@"TELL_A_FRIEND", nil)];
 
 }
