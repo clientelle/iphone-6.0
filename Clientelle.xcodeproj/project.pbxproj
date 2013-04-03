@@ -251,7 +251,6 @@
 		41FEEE5116AFD13700094A70 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41FEEE5016AFD13700094A70 /* AddressBook.framework */; };
 		41FEEE5516AFD14D00094A70 /* CTLABGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FEEE5416AFD14D00094A70 /* CTLABGroup.m */; };
 		41FEEE5F16AFD3F600094A70 /* CTLAddressBookTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FEEE5E16AFD3F600094A70 /* CTLAddressBookTest.m */; };
-		83EB274A170B0B4D00EBB3D3 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 83EB272E170B0B4D00EBB3D3 /* .gitignore */; };
 		83EB274B170B0B4D00EBB3D3 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EB2730170B0B4D00EBB3D3 /* Appirater.m */; };
 		83EB274C170B0B4D00EBB3D3 /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83EB2732170B0B4D00EBB3D3 /* AppiraterLocalizable.strings */; };
 		83EB274D170B0B4D00EBB3D3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83EB2744170B0B4D00EBB3D3 /* README.md */; };
@@ -541,7 +540,6 @@
 		41FEEE5416AFD14D00094A70 /* CTLABGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLABGroup.m; sourceTree = "<group>"; };
 		41FEEE5D16AFD3F600094A70 /* CTLAddressBookTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAddressBookTest.h; sourceTree = "<group>"; };
 		41FEEE5E16AFD3F600094A70 /* CTLAddressBookTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAddressBookTest.m; sourceTree = "<group>"; };
-		83EB272E170B0B4D00EBB3D3 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		83EB272F170B0B4D00EBB3D3 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
 		83EB2730170B0B4D00EBB3D3 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
 		83EB2731170B0B4D00EBB3D3 /* AppiraterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppiraterDelegate.h; sourceTree = "<group>"; };
@@ -1094,7 +1092,6 @@
 		83EB272D170B0B4D00EBB3D3 /* Appirater */ = {
 			isa = PBXGroup;
 			children = (
-				83EB272E170B0B4D00EBB3D3 /* .gitignore */,
 				83EB272F170B0B4D00EBB3D3 /* Appirater.h */,
 				83EB2730170B0B4D00EBB3D3 /* Appirater.m */,
 				83EB2731170B0B4D00EBB3D3 /* AppiraterDelegate.h */,
@@ -1278,7 +1275,6 @@
 				410BDDEC170164E5009E9842 /* 14-gear@2x.png in Resources */,
 				410BDDF317019B24009E9842 /* 50-plus.png in Resources */,
 				410BDDF417019B24009E9842 /* 50-plus@2x.png in Resources */,
-				83EB274A170B0B4D00EBB3D3 /* .gitignore in Resources */,
 				83EB274C170B0B4D00EBB3D3 /* AppiraterLocalizable.strings in Resources */,
 				83EB274D170B0B4D00EBB3D3 /* README.md in Resources */,
 			);
