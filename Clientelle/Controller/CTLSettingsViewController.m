@@ -72,22 +72,26 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     [self styleLabel:notificationCell.textLabel withText:NSLocalizedString(@"NOTIFICATIONS", nil)];
     
     UITableViewCell *supportCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
-    [self styleLabel:supportCell.textLabel withText:NSLocalizedString(@"SUPPORT_FEATURES", nil)];
+    [self styleLabel:supportCell.textLabel withText:NSLocalizedString(@"HELP_SUPPORT", nil)];
     
-    UITableViewCell *shareCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+    UITableViewCell *featureCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+    [self styleLabel:featureCell.textLabel withText:NSLocalizedString(@"FEATURE_REQUEST", nil)];
+    
+    UITableViewCell *shareCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
     [self styleLabel:shareCell.textLabel withText:NSLocalizedString(@"TELL_A_FRIEND", nil)];
 
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"INDEXPATH %@", indexPath);
-    
-    if (indexPath.row == 0 && indexPath.section == 1) {
-        // feedback cell
-        [self didTouchFeedbackCell];
+    if(indexPath.section == 1){
+        if (indexPath.row == 0) {
+            [self didTouchFeedbackCell];
+        }
+        if(indexPath.row == 1){
+            [self didTouchShareWithFriendCell];
+        }
     }
-    
 }
 
 - (void)styleLabel:(UILabel *)label withText:(NSString *)text
@@ -98,15 +102,18 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 }
 
 
-- (void)toAccountFormView:(id)sender {
+- (void)toAccountFormView:(id)sender
+{
     [self performSegueWithIdentifier:CTLAccountSegueIdentifyer sender:self];
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
     return YES;
 }
 
-- (IBAction)dismissKeyboard:(UITapGestureRecognizer *)recognizer{
+- (IBAction)dismissKeyboard:(UITapGestureRecognizer *)recognizer
+{
     [self.view endEditing:YES];
 }
 
@@ -116,12 +123,10 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)toggleNotificationSetting:(id)sender{
-    
+- (IBAction)toggleNotificationSetting:(id)sender
+{
     UISwitch *notificationSwitch = sender;
-    
     NSLog(@"TURNING %i", notificationSwitch.isOn);
-    
     [[NSUserDefaults standardUserDefaults] setBool:notificationSwitch.isOn forKey:kCTLSettingsNotification];
 }
 
@@ -136,21 +141,26 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     }
 }
 
-- (void)didTouchFeedbackCell {
+- (void)didTouchFeedbackCell
+{
     MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
     [mailComposer setToRecipients:@[kFeedbackEmail]];
     [mailComposer setMailComposeDelegate:self];
-    [mailComposer setSubject:NSLocalizedString(@"IPHONE_FEEDBACK_SUBJECT",@"iPhone Feedback")];
-    [self presentViewController:mailComposer animated:YES completion:^{
-        //
-    }];
+    [mailComposer setSubject:NSLocalizedString(@"IPHONE_FEEDBACK_SUBJECT", @"iPhone Feedback")];
+    [self presentViewController:mailComposer animated:YES completion:^{ }];
+}
+
+- (void)didTouchShareWithFriendCell
+{
+    MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
+    [mailComposer setToRecipients:@[kFeedbackEmail]];
+    [mailComposer setMailComposeDelegate:self];
+    [mailComposer setSubject:NSLocalizedString(@"IPHONE_FEEDBACK_SUBJECT", @"iPhone Feedback")];
+    [self presentViewController:mailComposer animated:YES completion:^{ }];
 }
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [self dismissViewControllerAnimated:YES
-                             completion:^{
-                                 //
-                             }];
+    [self dismissViewControllerAnimated:YES completion:^{ }];
 }
 
 

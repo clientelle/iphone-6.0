@@ -33,6 +33,7 @@
     [MagicalRecord setupCoreDataStack];
     
     //prompt for rating
+    //[Appirater setDebug:YES];
     [Appirater setAppId:kAppiraterAppId];
     [Appirater setDaysUntilPrompt:kAppiraterDaysUntilPrompt];
     [Appirater setUsesUntilPrompt:kAppiraterUsesUntilPrompt];

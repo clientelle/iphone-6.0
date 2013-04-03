@@ -106,7 +106,8 @@ e†
 "FREE" = "Free";
 "PAID" = "Paid";
 "NOTIFICATIONS" = "Notifications";
-"SUPPORT_FEATURES" = "Support / Request Features";
+"HELP_SUPPORT" = "Help & Support";
+"FEATURE_REQUEST" = "Request Features";
 "RATE_APP" = "Rate in App Store";
 "TELL_A_FRIEND" = "Tell a Friend about Clientelle";
 "IPHONE_FEEDBACK_SUBJECT" = "iPhone Feedback"; 
