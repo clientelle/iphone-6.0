@@ -11,6 +11,7 @@
 #import "CTLCDAccount.h"
 #import "UITableViewCell+CellShadows.h"
 #import "UIColor+CTLColor.h"
+#import <MessageUI/MessageUI.h>
 
 NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 
@@ -73,10 +74,7 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     UITableViewCell *supportCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     [self styleLabel:supportCell.textLabel withText:NSLocalizedString(@"SUPPORT_FEATURES", nil)];
     
-    UITableViewCell *rateCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
-    [self styleLabel:rateCell.textLabel withText:NSLocalizedString(@"RATE_APP", nil)];
-    
-    UITableViewCell *shareCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+    UITableViewCell *shareCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
     [self styleLabel:shareCell.textLabel withText:NSLocalizedString(@"TELL_A_FRIEND", nil)];
 
 }
@@ -84,6 +82,12 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"INDEXPATH %@", indexPath);
+    
+    if (indexPath.row == 0 && indexPath.section == 1) {
+        // feedback cell
+        [self didTouchFeedbackCell];
+    }
+    
 }
 
 - (void)styleLabel:(UILabel *)label withText:(NSString *)text
@@ -132,6 +136,22 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     }
 }
 
+- (void)didTouchFeedbackCell {
+    MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
+    [mailComposer setToRecipients:@[kFeedbackEmail]];
+    [mailComposer setMailComposeDelegate:self];
+    [mailComposer setSubject:NSLocalizedString(@"IPHONE_FEEDBACK_SUBJECT",@"iPhone Feedback")];
+    [self presentViewController:mailComposer animated:YES completion:^{
+        //
+    }];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [self dismissViewControllerAnimated:YES
+                             completion:^{
+                                 //
+                             }];
+}
 
 
 @end

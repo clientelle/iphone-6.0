@@ -109,6 +109,7 @@ e†
 "SUPPORT_FEATURES" = "Support / Request Features";
 "RATE_APP" = "Rate in App Store";
 "TELL_A_FRIEND" = "Tell a Friend about Clientelle";
+"IPHONE_FEEDBACK_SUBJECT" = "iPhone Feedback"; 
 
 /* Appointments */
 "CALENDAR" = "Clientelle Calendar";

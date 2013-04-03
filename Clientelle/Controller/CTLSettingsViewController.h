@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
 @class CTLCDAccount;
 
-@interface CTLSettingsViewController : UITableViewController<CTLSlideMenuDelegate>{
+@interface CTLSettingsViewController : UITableViewController<CTLSlideMenuDelegate, MFMailComposeViewControllerDelegate>{
     CTLCDAccount *_account;
     UIAlertView *_purchaseAlertView;
 }

@@ -9,7 +9,7 @@
 #import "CTLAppDelegate.h"
 #import "CTLSlideMenuController.h"
 #import "CTLMainMenuViewController.h"
-
+#import "Appirater.h"
 #import "NSDate+CTLDate.h"
 #import "CTLCDAppointment.h"
 
@@ -31,8 +31,19 @@
     
     //hookup data source
     [MagicalRecord setupCoreDataStack];
-
+    
+    //prompt for rating
+    [Appirater setAppId:kAppiraterAppId];
+    [Appirater setDaysUntilPrompt:kAppiraterDaysUntilPrompt];
+    [Appirater setUsesUntilPrompt:kAppiraterUsesUntilPrompt];
+    [Appirater setTimeBeforeReminding:kAppiraterTimeBeforeReminding];
+    [Appirater appLaunched:YES];
     return YES;
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    [Appirater appEnteredForeground:YES];
 }
 
 void addressBookChanged(ABAddressBookRef reference, CFDictionaryRef dictionary, void *context) {
