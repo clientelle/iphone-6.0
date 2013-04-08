@@ -23,7 +23,6 @@ NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
 NSString *const CTLAppointmentModalSegueIdentifyer = @"toAppointmentModal";
 NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.appointmentFilter";
 
-
 @interface CTLAppointmentsListViewController ()
 @property (nonatomic, strong) NSFetchedResultsController *resultsController;
 @end
@@ -40,7 +39,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     //default to show current week
     self.resultsController = [CTLCDAppointment fetchedResultsController];
     
-    int defaultRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLDefaultSelectedCalendarFilter];
+    int selectedCalendarFilterRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLDefaultSelectedCalendarFilter];
     
     NSPredicate *todayPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (startDate  < %@)", [NSDate today], [NSDate tomorrow]];
     NSPredicate *thisWeekPredicate = [NSPredicate predicateWithFormat:@"(startDate > %@) AND (startDate =< %@)", [NSDate firstDayOfCurrentWeek], [NSDate lastDayOfCurrentWeek]];
@@ -51,17 +50,16 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     NSDictionary *thisMonth = @{@"title":NSLocalizedString(@"THIS_MONTH", nil), @"predicate":thisMonthPredicate};
     
     _filterArray = @[today, thisWeek, thisMonth];
-    _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:_filterArray[defaultRow][@"predicate"]];
+    _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:_filterArray[selectedCalendarFilterRow][@"predicate"]];
      
      _filterPickerView = [self createFilterPickerView];
-    [_filterPickerView selectRow:defaultRow inComponent:0 animated:NO];
-    self.navigationItem.titleView = [self filterPickerButtonWithTitle:_filterArray[defaultRow][@"title"]];
+    [_filterPickerView selectRow:selectedCalendarFilterRow inComponent:0 animated:NO];
+    self.navigationItem.titleView = [self filterPickerButtonWithTitle:_filterArray[selectedCalendarFilterRow][@"title"]];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
     
     _emptyView = [self buildEmptyView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadAppointments:) name:CTLReloadAppointmentsNotification object:nil];
-    
     //[self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPickerFromTap:)]];
 }
 
@@ -129,8 +127,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 - (void)reloadAppointments:(NSNotification *)notification
 {
     self.resultsController = [CTLCDAppointment fetchedResultsController];
-    NSInteger selectedRow = [_filterPickerView selectedRowInComponent:0];
-    NSDictionary *filter = [_filterArray objectAtIndex:selectedRow];
+    NSDictionary *filter = [_filterArray objectAtIndex:[_filterPickerView selectedRowInComponent:0]];
     _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:filter[@"predicate"]];
     [self.tableView reloadData];
 }

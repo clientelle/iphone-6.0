@@ -351,7 +351,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if(_showAddress && section == 0){
+    if((_showAddress && section == 0) || !self.abPerson){
         return 0;
     }
     return 60.0f;
@@ -359,6 +359,10 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
+    if(!self.abPerson){
+        return nil;
+    }
+    
     if((section == 0 && !_showAddress) || (section == 1 && _showAddress)){
         CGFloat buttonHeight = 30.0f;
         CGFloat buttonWidth = 60.0f;
@@ -477,11 +481,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 }
 
 - (IBAction)submit:(id)sender
-{
-    [self saveContactInfo];
-}
-
-- (void)saveContactInfo
 {
     [self setPersonDictionary];
     

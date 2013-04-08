@@ -24,7 +24,9 @@
     self.timeLabel.text = [NSString stringWithFormat:@"%@ - %@", [NSDate formatShortTimeOnly:appointment.startDate], [NSDate formatShortTimeOnly:appointment.endDate]];
     
     self.dateLabel.text = [NSDate formatShortDateOnly:appointment.startDate];
-    //if([appointment.startDate compare:[NSDate date]] == NSOrderedAscending){
+    if([appointment.startDate compare:[NSDate date]] == NSOrderedAscending){
+        self.dateLabel.textColor = [UIColor redColor];
+    }
 }
 
 - (IBAction)segueToMapView:(id)sender

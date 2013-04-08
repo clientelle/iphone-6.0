@@ -31,4 +31,6 @@
 + (NSDate *)today;
 + (NSDate *)tomorrow;
 
++ (NSDate *)dateFromComponents:(NSDateComponents *)components;
+
 @end

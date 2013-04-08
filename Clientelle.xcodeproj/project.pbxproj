@@ -9,10 +9,6 @@
 /* Begin PBXBuildFile section */
 		410BDDE717015EF7009E9842 /* trash-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDE517015EF7009E9842 /* trash-grey.png */; };
 		410BDDE817015EF7009E9842 /* trash-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDE617015EF7009E9842 /* trash-grey@2x.png */; };
-		410BDDEB170164E5009E9842 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDE9170164E5009E9842 /* 14-gear.png */; };
-		410BDDEC170164E5009E9842 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDEA170164E5009E9842 /* 14-gear@2x.png */; };
-		410BDDF317019B24009E9842 /* 50-plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDF117019B24009E9842 /* 50-plus.png */; };
-		410BDDF417019B24009E9842 /* 50-plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BDDF217019B24009E9842 /* 50-plus@2x.png */; };
 		412C3C8B16E98123009E662E /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 412C3C8916E98123009E662E /* app-icon.png */; };
 		412C3C8C16E98123009E662E /* app-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412C3C8A16E98123009E662E /* app-icon@2x.png */; };
 		412C3C9016E989D4009E662E /* cell-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412C3C8E16E989D4009E662E /* cell-arrow@2x.png */; };
@@ -45,6 +41,8 @@
 		415A4F4416F6A886007A0BD4 /* UITableViewCell+CellShadows.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F4016F6A886007A0BD4 /* UITableViewCell+CellShadows.m */; };
 		415A4F4B16F6B7EB007A0BD4 /* CTLViewDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F4A16F6B7EB007A0BD4 /* CTLViewDecorator.m */; };
 		415A4F4E16F6B829007A0BD4 /* CTLCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F4D16F6B829007A0BD4 /* CTLCellBackground.m */; };
+		415CB2201712F11400ED11A7 /* 26-checkmark-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 415CB21E1712F11400ED11A7 /* 26-checkmark-gray.png */; };
+		415CB2211712F11400ED11A7 /* 26-checkmark-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415CB21F1712F11400ED11A7 /* 26-checkmark-gray@2x.png */; };
 		415E851116EC517D00EBBCFE /* 25-box.png in Resources */ = {isa = PBXBuildFile; fileRef = 415E850F16EC517D00EBBCFE /* 25-box.png */; };
 		415E851216EC517D00EBBCFE /* 25-box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415E851016EC517D00EBBCFE /* 25-box@2x.png */; };
 		4167F5BC16D6FDA6005B7B08 /* CTLLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */; };
@@ -80,6 +78,13 @@
 		416DDAE816AFA9F100F2F8B3 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DDACC16AFA9F100F2F8B3 /* MagicalRecord.m */; };
 		416DDAEC16AFAB1600F2F8B3 /* Clientelle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 416DDAEA16AFAB1600F2F8B3 /* Clientelle.xcdatamodeld */; };
 		416DDAEE16AFAB8200F2F8B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416DDAED16AFAB8200F2F8B3 /* CoreData.framework */; };
+		4175E810170CEDD2004C5B0C /* 26-checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 4175E80E170CEDD2004C5B0C /* 26-checkmark.png */; };
+		4175E811170CEDD2004C5B0C /* 26-checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4175E80F170CEDD2004C5B0C /* 26-checkmark@2x.png */; };
+		4175E817170D3693004C5B0C /* CTLRemindersListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4175E816170D3693004C5B0C /* CTLRemindersListViewController.m */; };
+		4175E81A170D3796004C5B0C /* CTLReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4175E819170D3796004C5B0C /* CTLReminderCell.m */; };
+		4175E81D170D401E004C5B0C /* CTLReminderFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4175E81C170D401D004C5B0C /* CTLReminderFormViewController.m */; };
+		4175E822170D4130004C5B0C /* _CTLCDReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4175E81F170D4130004C5B0C /* _CTLCDReminder.m */; };
+		4175E823170D4130004C5B0C /* CTLCDReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4175E821170D4130004C5B0C /* CTLCDReminder.m */; };
 		417DC23E16ADF1140073199D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23D16ADF1140073199D /* UIKit.framework */; };
 		417DC24016ADF1140073199D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23F16ADF1140073199D /* Foundation.framework */; };
 		417DC24216ADF1140073199D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC24116ADF1140073199D /* CoreGraphics.framework */; };
@@ -172,8 +177,6 @@
 		41B5472616B454DF00302652 /* sm-wrench-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B5470716B454DF00302652 /* sm-wrench-gray.png */; };
 		41B5472716B454DF00302652 /* sm-wrench-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B5470816B454DF00302652 /* sm-wrench-gray@2x.png */; };
 		41B5473016B4556500302652 /* CTLFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B5472F16B4556500302652 /* CTLFieldCell.m */; };
-		41B5473316B4559500302652 /* CTLEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B5473216B4559500302652 /* CTLEvent.m */; };
-		41B5473416B4559500302652 /* CTLEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B5473216B4559500302652 /* CTLEvent.m */; };
 		41B5473616B4562D00302652 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B5473516B4562D00302652 /* EventKit.framework */; };
 		41CBA85A17013DC5006C16CC /* UILabel+CTLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CBA85917013DC5006C16CC /* UILabel+CTLLabel.m */; };
 		41D0D4CA16FC062B00D343CA /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D0D4C916FC062B00D343CA /* AddressBookUI.framework */; };
@@ -252,8 +255,6 @@
 		41FEEE5516AFD14D00094A70 /* CTLABGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FEEE5416AFD14D00094A70 /* CTLABGroup.m */; };
 		41FEEE5F16AFD3F600094A70 /* CTLAddressBookTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FEEE5E16AFD3F600094A70 /* CTLAddressBookTest.m */; };
 		83EB274B170B0B4D00EBB3D3 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EB2730170B0B4D00EBB3D3 /* Appirater.m */; };
-		83EB274C170B0B4D00EBB3D3 /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83EB2732170B0B4D00EBB3D3 /* AppiraterLocalizable.strings */; };
-		83EB274D170B0B4D00EBB3D3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83EB2744170B0B4D00EBB3D3 /* README.md */; };
 		83EB274F170B0C5100EBB3D3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83EB274E170B0C5100EBB3D3 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -270,10 +271,6 @@
 /* Begin PBXFileReference section */
 		410BDDE517015EF7009E9842 /* trash-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash-grey.png"; sourceTree = "<group>"; };
 		410BDDE617015EF7009E9842 /* trash-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash-grey@2x.png"; sourceTree = "<group>"; };
-		410BDDE9170164E5009E9842 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
-		410BDDEA170164E5009E9842 /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
-		410BDDF117019B24009E9842 /* 50-plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "50-plus.png"; sourceTree = "<group>"; };
-		410BDDF217019B24009E9842 /* 50-plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "50-plus@2x.png"; sourceTree = "<group>"; };
 		412C3C8916E98123009E662E /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon.png"; sourceTree = "<group>"; };
 		412C3C8A16E98123009E662E /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon@2x.png"; sourceTree = "<group>"; };
 		412C3C8E16E989D4009E662E /* cell-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell-arrow@2x.png"; sourceTree = "<group>"; };
@@ -317,6 +314,8 @@
 		415A4F4A16F6B7EB007A0BD4 /* CTLViewDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLViewDecorator.m; sourceTree = "<group>"; };
 		415A4F4C16F6B829007A0BD4 /* CTLCellBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLCellBackground.h; sourceTree = "<group>"; };
 		415A4F4D16F6B829007A0BD4 /* CTLCellBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLCellBackground.m; sourceTree = "<group>"; };
+		415CB21E1712F11400ED11A7 /* 26-checkmark-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "26-checkmark-gray.png"; sourceTree = "<group>"; };
+		415CB21F1712F11400ED11A7 /* 26-checkmark-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "26-checkmark-gray@2x.png"; sourceTree = "<group>"; };
 		415E850F16EC517D00EBBCFE /* 25-box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "25-box.png"; sourceTree = "<group>"; };
 		415E851016EC517D00EBBCFE /* 25-box@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "25-box@2x.png"; sourceTree = "<group>"; };
 		4167F5BA16D6FDA6005B7B08 /* CTLLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLLoginViewController.h; sourceTree = "<group>"; };
@@ -387,6 +386,18 @@
 		416DDAEB16AFAB1600F2F8B3 /* Clientelle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clientelle.xcdatamodel; sourceTree = "<group>"; };
 		416DDAED16AFAB8200F2F8B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		416DDB1816AFC24F00F2F8B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Clientelle.storyboard; sourceTree = "<group>"; };
+		4175E80E170CEDD2004C5B0C /* 26-checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "26-checkmark.png"; sourceTree = "<group>"; };
+		4175E80F170CEDD2004C5B0C /* 26-checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "26-checkmark@2x.png"; sourceTree = "<group>"; };
+		4175E815170D3693004C5B0C /* CTLRemindersListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLRemindersListViewController.h; sourceTree = "<group>"; };
+		4175E816170D3693004C5B0C /* CTLRemindersListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLRemindersListViewController.m; sourceTree = "<group>"; };
+		4175E818170D3796004C5B0C /* CTLReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLReminderCell.h; sourceTree = "<group>"; };
+		4175E819170D3796004C5B0C /* CTLReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLReminderCell.m; sourceTree = "<group>"; };
+		4175E81B170D401D004C5B0C /* CTLReminderFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLReminderFormViewController.h; sourceTree = "<group>"; };
+		4175E81C170D401D004C5B0C /* CTLReminderFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLReminderFormViewController.m; sourceTree = "<group>"; };
+		4175E81E170D4130004C5B0C /* _CTLCDReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CTLCDReminder.h; sourceTree = "<group>"; };
+		4175E81F170D4130004C5B0C /* _CTLCDReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CTLCDReminder.m; sourceTree = "<group>"; };
+		4175E820170D4130004C5B0C /* CTLCDReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLCDReminder.h; sourceTree = "<group>"; };
+		4175E821170D4130004C5B0C /* CTLCDReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLCDReminder.m; sourceTree = "<group>"; };
 		417DC23916ADF1140073199D /* Clientelle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clientelle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		417DC23D16ADF1140073199D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		417DC23F16ADF1140073199D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -499,8 +510,6 @@
 		41B5470816B454DF00302652 /* sm-wrench-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sm-wrench-gray@2x.png"; sourceTree = "<group>"; };
 		41B5472E16B4556500302652 /* CTLFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLFieldCell.h; sourceTree = "<group>"; };
 		41B5472F16B4556500302652 /* CTLFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLFieldCell.m; sourceTree = "<group>"; };
-		41B5473116B4559500302652 /* CTLEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLEvent.h; sourceTree = "<group>"; };
-		41B5473216B4559500302652 /* CTLEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLEvent.m; sourceTree = "<group>"; };
 		41B5473516B4562D00302652 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		41CBA85817013DC5006C16CC /* UILabel+CTLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+CTLLabel.h"; sourceTree = "<group>"; };
 		41CBA85917013DC5006C16CC /* UILabel+CTLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+CTLLabel.m"; sourceTree = "<group>"; };
@@ -915,6 +924,10 @@
 				41AEBDAC16EE8FD600BC397F /* CTLAppointmentsListViewController.m */,
 				41B546E516B39C2500302652 /* CTLAppointmentFormViewController.h */,
 				41B546E616B39C2500302652 /* CTLAppointmentFormViewController.m */,
+				4175E815170D3693004C5B0C /* CTLRemindersListViewController.h */,
+				4175E816170D3693004C5B0C /* CTLRemindersListViewController.m */,
+				4175E81B170D401D004C5B0C /* CTLReminderFormViewController.h */,
+				4175E81C170D401D004C5B0C /* CTLReminderFormViewController.m */,
 				41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */,
 				41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */,
 				41B546DF16B39C2300302652 /* CTLContactImportViewController.h */,
@@ -951,8 +964,6 @@
 				41FEEE5416AFD14D00094A70 /* CTLABGroup.m */,
 				41848DFE16B17430004BFE30 /* CTLABPerson.h */,
 				41848DFF16B17430004BFE30 /* CTLABPerson.m */,
-				41B5473116B4559500302652 /* CTLEvent.h */,
-				41B5473216B4559500302652 /* CTLEvent.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -977,10 +988,10 @@
 		417DC2A716AE16220073199D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				410BDDF117019B24009E9842 /* 50-plus.png */,
-				410BDDF217019B24009E9842 /* 50-plus@2x.png */,
-				410BDDE9170164E5009E9842 /* 14-gear.png */,
-				410BDDEA170164E5009E9842 /* 14-gear@2x.png */,
+				415CB21E1712F11400ED11A7 /* 26-checkmark-gray.png */,
+				415CB21F1712F11400ED11A7 /* 26-checkmark-gray@2x.png */,
+				4175E80E170CEDD2004C5B0C /* 26-checkmark.png */,
+				4175E80F170CEDD2004C5B0C /* 26-checkmark@2x.png */,
 				410BDDE517015EF7009E9842 /* trash-grey.png */,
 				410BDDE617015EF7009E9842 /* trash-grey@2x.png */,
 				41D0D4DF16FEB27C00D343CA /* 06-map-pin.png */,
@@ -1050,6 +1061,8 @@
 		41848DC716B0271B004BFE30 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				4175E81E170D4130004C5B0C /* _CTLCDReminder.h */,
+				4175E81F170D4130004C5B0C /* _CTLCDReminder.m */,
 				41AEBDAE16EECB6D00BC397F /* _CTLCDAppointment.h */,
 				41AEBDAF16EECB6D00BC397F /* _CTLCDAppointment.m */,
 				41DA1DCB16D003DC0017F71F /* _CTLCDInbox.h */,
@@ -1070,6 +1083,8 @@
 				41DA1DCE16D003DC0017F71F /* CTLCDInbox.m */,
 				41AEBDB016EECB6D00BC397F /* CTLCDAppointment.h */,
 				41AEBDB116EECB6D00BC397F /* CTLCDAppointment.m */,
+				4175E820170D4130004C5B0C /* CTLCDReminder.h */,
+				4175E821170D4130004C5B0C /* CTLCDReminder.m */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -1085,6 +1100,8 @@
 				41AEBDA516EC792900BC397F /* CTLMenuItemCell.m */,
 				41AEBDB416EEEE6F00BC397F /* CTLAppointmentCell.h */,
 				41AEBDB516EEEE6F00BC397F /* CTLAppointmentCell.m */,
+				4175E818170D3796004C5B0C /* CTLReminderCell.h */,
+				4175E819170D3796004C5B0C /* CTLReminderCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1271,12 +1288,10 @@
 				41D0D4E216FEB27D00D343CA /* 06-map-pin@2x.png in Resources */,
 				410BDDE717015EF7009E9842 /* trash-grey.png in Resources */,
 				410BDDE817015EF7009E9842 /* trash-grey@2x.png in Resources */,
-				410BDDEB170164E5009E9842 /* 14-gear.png in Resources */,
-				410BDDEC170164E5009E9842 /* 14-gear@2x.png in Resources */,
-				410BDDF317019B24009E9842 /* 50-plus.png in Resources */,
-				410BDDF417019B24009E9842 /* 50-plus@2x.png in Resources */,
-				83EB274C170B0B4D00EBB3D3 /* AppiraterLocalizable.strings in Resources */,
-				83EB274D170B0B4D00EBB3D3 /* README.md in Resources */,
+				4175E810170CEDD2004C5B0C /* 26-checkmark.png in Resources */,
+				4175E811170CEDD2004C5B0C /* 26-checkmark@2x.png in Resources */,
+				415CB2201712F11400ED11A7 /* 26-checkmark-gray.png in Resources */,
+				415CB2211712F11400ED11A7 /* 26-checkmark-gray@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1368,7 +1383,6 @@
 				41848DD316B0271B004BFE30 /* CTLCDPerson.m in Sources */,
 				41848DF816B0D7A7004BFE30 /* CTLContactsListViewController.m in Sources */,
 				41848E0016B17431004BFE30 /* CTLABPerson.m in Sources */,
-				41B5473316B4559500302652 /* CTLEvent.m in Sources */,
 				4130653716C149D90063AC10 /* _CTLCDAccount.m in Sources */,
 				4130653816C149D90063AC10 /* CTLCDAccount.m in Sources */,
 				4130653F16C14A980063AC10 /* CTLRegisterViewController.m in Sources */,
@@ -1399,6 +1413,11 @@
 				41B47EEE16F922DB000B08E1 /* CTLBottomRoundedCorners.m in Sources */,
 				41CBA85A17013DC5006C16CC /* UILabel+CTLLabel.m in Sources */,
 				83EB274B170B0B4D00EBB3D3 /* Appirater.m in Sources */,
+				4175E817170D3693004C5B0C /* CTLRemindersListViewController.m in Sources */,
+				4175E81A170D3796004C5B0C /* CTLReminderCell.m in Sources */,
+				4175E81D170D401E004C5B0C /* CTLReminderFormViewController.m in Sources */,
+				4175E822170D4130004C5B0C /* _CTLCDReminder.m in Sources */,
+				4175E823170D4130004C5B0C /* CTLCDReminder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1460,7 +1479,6 @@
 				41B546E916B39C2600302652 /* CTLContactFormEditorViewController.m in Sources */,
 				41B546EB16B39C2600302652 /* CTLAppointmentFormViewController.m in Sources */,
 				41B5473016B4556500302652 /* CTLFieldCell.m in Sources */,
-				41B5473416B4559500302652 /* CTLEvent.m in Sources */,
 				4130654016C14A980063AC10 /* CTLRegisterViewController.m in Sources */,
 				41DA1DA816CB13F40017F71F /* CTLInboxControllerTest.m in Sources */,
 			);
@@ -1600,10 +1618,12 @@
 		417DC27316ADF1140073199D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kevin Liu (2MUKMGUP79)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Clientelle/Clientelle-Prefix.pch";
 				INFOPLIST_FILE = "Clientelle/Clientelle-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8EBDA235-BE34-4FC9-832D-DCD13D5C8105";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1611,10 +1631,12 @@
 		417DC27416ADF1140073199D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kevin Liu (2MUKMGUP79)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Clientelle/Clientelle-Prefix.pch";
 				INFOPLIST_FILE = "Clientelle/Clientelle-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8EBDA235-BE34-4FC9-832D-DCD13D5C8105";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

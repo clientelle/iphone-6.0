@@ -11,6 +11,7 @@ e†
 "GROUP_MESSAGING" = "Group Messaging";
 "APPOINTMENTS" = "Appointments";
 "WEB_INBOX" = "Web Inbox";
+"REMINDERS" = "Reminders";
 "PREFERENCES" = "Preferences";
 
 /* GENERIC */
@@ -122,6 +123,19 @@ e†
 "ADD_APPOINTMENT" = "Add Appointment";
 "DELETE_APPOINTMENT" = "Delete Appointment";
 "CONFIRM_DELETE_APPOINTMENT" = "Are you sure want to delete this appointment?";
+
+
+/* Reminders */
+"CLIENTELLE_REMINDERS" = "Clientelle Reminders";
+"NO_REMINDERS" = "No Reminders";
+"NO_REMINDERS_FOUND" = "No reminders found";
+"ADD_REMINDER" = "Add Reminder";
+"DELETE_REMINDER" = "Delete Reminders";
+"CONFIRM_DELETE_REMINDERS" = "Are you sure want to delete this reminder?";
+"CREATE_REMINDER" = "Create Reminder";
+"EDIT_REMINDER" = "Edit Reminder";
+"REMINDER_NOTE" = "Reminder Note";
+"REMINDER_DUE" = "Due";
 
 /* Set Appointment */
 "SET_APPOINTMENT" = "Set Appointment";

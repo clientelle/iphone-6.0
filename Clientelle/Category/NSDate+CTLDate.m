@@ -228,4 +228,10 @@
     return [calendar dateFromComponents:comps];
 }
 
++ (NSDate *)dateFromComponents:(NSDateComponents *)components
+{
+     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+     return [calendar dateFromComponents:components];
+}
+
 @end

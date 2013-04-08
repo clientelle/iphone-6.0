@@ -28,11 +28,11 @@
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>WEB_INBOX</string>
+		<string>REMINDERS</string>
 		<key>identifier</key>
-		<string>inboxNavigationController</string>
+		<string>remindersNavigationController</string>
 		<key>icon</key>
-		<string>25-box.png</string>
+		<string>26-checkmark.png</string>
 	</dict>
 	<dict>
 		<key>title</key>

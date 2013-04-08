@@ -262,9 +262,9 @@ int CTLEndTimeInputTag = 3;
             if(!_appointment.startDate){
                 _appointment.startDate = _datePicker.date;
                 [self.cdAppointment setStartDate:_datePicker.date];
-                EKAlarm *firstReminder = [EKAlarm alarmWithRelativeOffset:-900.0f];
-                EKAlarm *secondReminder = [EKAlarm alarmWithRelativeOffset:-300.0f];
-                _appointment.alarms = @[firstReminder, secondReminder];
+                [_appointment addAlarm:[EKAlarm alarmWithRelativeOffset:-900.0f]]; //15 min before
+                [_appointment addAlarm:[EKAlarm alarmWithRelativeOffset:-300.0f]]; //5 min before
+                [_appointment addAlarm:[EKAlarm alarmWithAbsoluteDate:_datePicker.date]];
             }
         }
         if(_appointment.startDate){

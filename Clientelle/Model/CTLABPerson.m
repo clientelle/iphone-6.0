@@ -368,10 +368,14 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
 + (BOOL)validateContactInfo:(NSDictionary *)fieldsDict
 {
     int validityScore = 0;
-    BOOL isValid = YES;
+    BOOL isValid = NO;
     
     if((fieldsDict[CTLPersonFirstNameProperty] && [fieldsDict[CTLPersonFirstNameProperty] length] > 0) ||
        (fieldsDict[CTLPersonLastNameProperty] && [fieldsDict[CTLPersonLastNameProperty] length] > 0)){
+        validityScore++;
+    }
+
+    if(fieldsDict[CTLPersonOrganizationProperty] && [fieldsDict[CTLPersonOrganizationProperty] length] > 0){
         validityScore++;
     }
     
@@ -383,12 +387,8 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
         validityScore++;
     }
     
-    if(validityScore == 0){
-        isValid = NO;
-    }
-    
-    if(validityScore < 2){
-        isValid = NO;
+    if(validityScore >= 2){
+        isValid = YES;
     }
     
     return isValid;
