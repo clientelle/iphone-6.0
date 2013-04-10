@@ -713,7 +713,7 @@
                             <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="63" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ru9-mV-weG">
                                 <color key="separatorColor" red="0.86986142113095244" green="0.86500186011904767" blue="0.87472098214285721" alpha="1" colorSpace="calibratedRGB"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" barStyle="blackTranslucent" id="2GW-XM-GmG">
-                                    <rect key="frame" x="0.0" y="0.0" width="640" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="960" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
@@ -1661,17 +1661,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="reminderCell" rowHeight="64" id="xH3-QI-neb" customClass="CTLReminderCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="reminderCell" rowHeight="64" id="xH3-QI-neb" customClass="CTLReminderCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="63"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Call lawyer to discuss patent" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSq-dL-7gJ">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Call lawyer to discuss patent" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSq-dL-7gJ">
                                             <constraints>
+                                                <constraint firstAttribute="width" constant="257" id="Q4X-V4-pV6"/>
                                                 <constraint firstAttribute="height" constant="21" id="Wcq-tn-YDF"/>
-                                                <constraint firstAttribute="width" constant="237" id="sSa-IL-agf"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <color key="textColor" red="0.33725491169999999" green="0.33725491169999999" blue="0.33725491169999999" alpha="1" colorSpace="deviceRGB"/>
@@ -1679,10 +1679,11 @@
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="10:00am" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zbx-JX-c2a">
                                             <constraints>
+                                                <constraint firstAttribute="width" constant="237" id="RAO-sP-DBw"/>
                                                 <constraint firstAttribute="height" constant="21" id="a45-bK-pJj"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <color key="textColor" red="0.33725491169999999" green="0.33725491169999999" blue="0.33725491169999999" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FjT-Xn-DqO">
@@ -1691,11 +1692,13 @@
                                                 <constraint firstAttribute="width" constant="26" id="iMo-fH-J6i"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                            <state key="normal">
-                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" backgroundImage="whiteButton.png">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <state key="highlighted">
+                                            <state key="selected" image="26-checkmark-gray.png" backgroundImage="whiteButton.png">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="highlighted" backgroundImage="whiteButtonHighlight.png">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -1708,10 +1711,9 @@
                                 <constraints>
                                     <constraint firstItem="FjT-Xn-DqO" firstAttribute="centerY" secondItem="xH3-QI-neb" secondAttribute="centerY" type="default" id="7DD-HR-dxV"/>
                                     <constraint firstItem="SSq-dL-7gJ" firstAttribute="top" secondItem="xH3-QI-neb" secondAttribute="top" constant="13" id="A0G-QA-L6g"/>
-                                    <constraint firstItem="Zbx-JX-c2a" firstAttribute="leading" secondItem="SSq-dL-7gJ" secondAttribute="leading" type="default" id="H0r-yd-qyN"/>
-                                    <constraint firstItem="SSq-dL-7gJ" firstAttribute="trailing" secondItem="Zbx-JX-c2a" secondAttribute="trailing" type="default" id="MCA-6X-FAd"/>
-                                    <constraint firstItem="SSq-dL-7gJ" firstAttribute="leading" secondItem="xH3-QI-neb" secondAttribute="leading" constant="56" id="SXn-8R-hw4"/>
                                     <constraint firstItem="Zbx-JX-c2a" firstAttribute="top" secondItem="xH3-QI-neb" secondAttribute="top" constant="31" id="SeZ-FM-He5"/>
+                                    <constraint firstItem="Zbx-JX-c2a" firstAttribute="leading" secondItem="xH3-QI-neb" secondAttribute="leading" constant="56" id="XAh-Af-8ps"/>
+                                    <constraint firstItem="SSq-dL-7gJ" firstAttribute="leading" secondItem="xH3-QI-neb" secondAttribute="leading" constant="55" id="cwr-bN-xDw"/>
                                     <constraint firstItem="FjT-Xn-DqO" firstAttribute="leading" secondItem="xH3-QI-neb" secondAttribute="leading" constant="12" id="jn2-gz-2w9"/>
                                 </constraints>
                                 <connections>
@@ -1860,11 +1862,14 @@
     </scenes>
     <resources>
         <image name="06-map-pin.png" width="11" height="19"/>
+        <image name="26-checkmark-gray.png" width="16" height="16"/>
         <image name="clock-grn.png" width="18" height="18"/>
         <image name="clock-red.png" width="18" height="18"/>
         <image name="group-gray.png" width="32" height="21"/>
         <image name="group-white.png" width="32" height="21"/>
         <image name="plus.png" width="19" height="19"/>
+        <image name="whiteButton.png" width="36" height="36"/>
+        <image name="whiteButtonHighlight.png" width="36" height="36"/>
     </resources>
     <classes>
         <class className="CTLAccountInterstitialViewController" superclassName="UIViewController">

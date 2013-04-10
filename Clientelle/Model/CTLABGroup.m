@@ -99,9 +99,7 @@ NSString *const CTLDefaultSelectedGroupIDKey = @"defaultGroupKey";
         }
     }
 
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-        NSLog(@"Saving humans to CoreData");
-    }];
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
 }
 
 - (void)removeMember:(ABRecordID)personID

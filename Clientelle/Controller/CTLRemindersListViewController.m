@@ -149,7 +149,6 @@ NSString *const CTLReminderModalSegueIdentifyer = @"toReminderModal";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"reminderCell";
-    
     CTLCDReminder *reminder = [_reminders objectAtIndex:indexPath.row];
     CTLReminderCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     [cell setSelectionStyle:UITableViewCellEditingStyleNone];
@@ -164,6 +163,34 @@ NSString *const CTLReminderModalSegueIdentifyer = @"toReminderModal";
     CTLCDReminder *reminder = [_reminders objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:CTLReminderFormSegueIdentifyer sender:reminder];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+        CTLCDReminder *reminder = [_reminders objectAtIndex:indexPath.row];
+        [self deleteReminder:reminder];
+    }
+}
+
+//- (void)insertRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
+//{
+//}
+
+- (void)deleteReminder:(CTLCDReminder *)reminder
+{
+    [reminder MR_deleteEntity];
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+        [self reloadReminders:nil];
+    }];
 }
 
 @end
