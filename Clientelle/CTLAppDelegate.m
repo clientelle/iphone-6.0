@@ -39,6 +39,19 @@
     [Appirater setUsesUntilPrompt:kAppiraterUsesUntilPrompt];
     [Appirater setTimeBeforeReminding:kAppiraterTimeBeforeReminding];
     [Appirater appLaunched:YES];
+    
+    /*
+    //Register for External Changes
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        ABAddressBookRegisterExternalChangeCallback(addressBookRef, addressBookChanged, NULL);
+    }
+    
+    EKAuthorizationStatus EKAuthStatus = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
+    if(EKAuthStatus == EKAuthorizationStatusAuthorized){
+        EKEventStoreChangedNotification
+    }
+    */
     return YES;
 }
 

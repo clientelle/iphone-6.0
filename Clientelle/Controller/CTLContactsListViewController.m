@@ -178,7 +178,12 @@ int const CTLEmptyContactsMessageTag = 793;
     CFErrorRef error = NULL;
     self.addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
     CTLABGroup *selectedGroup = [[CTLABGroup alloc] initWithGroupID:[CTLABGroup defaultGroupID] addressBook:self.addressBookRef];
-    [self loadGroup:selectedGroup];
+    
+    if(selectedGroup.groupID == CTLAllContactsGroupID){
+        [self loadAllContacts];
+    }else{
+        [self loadGroup:selectedGroup];
+    }
      
     if(_inContactMode){
         _selectedPerson = [[CTLABPerson alloc] initWithRecordID:_selectedPerson.recordID withAddressBookRef:self.addressBookRef];
