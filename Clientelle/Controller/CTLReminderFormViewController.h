@@ -12,7 +12,7 @@
 
 @class CTLCDReminder;
 
-@interface CTLReminderFormViewController : UITableViewController<CTLFieldCellDelegate>{
+@interface CTLReminderFormViewController : UITableViewController<CTLFieldCellDelegate, CTLSlideMenuDelegate>{
     UIDatePicker *_datePicker;
     NSInteger _activeInputTag;
     EKReminder *_reminder;
@@ -22,7 +22,11 @@
     NSArray *_fields;
 }
 
-@property (nonatomic, assign) BOOL isPresentedAsModal;
+@property (nonatomic, weak) CTLSlideMenuController *menuController;
+
+@property (nonatomic, assign) BOOL presentedAsModal;
+@property (nonatomic, assign) BOOL transitionedFromLocalNotification;
+
 @property (nonatomic, strong) CTLCDReminder *cdReminder;
 
 @property (nonatomic, weak) IBOutlet UITextField *titleTextField;
@@ -35,5 +39,6 @@
 
 - (IBAction)showDatePicker:(id)sender;
 - (IBAction)saveReminder:(id)sender;
+- (void)dismiss:(id)sender;
 
 @end

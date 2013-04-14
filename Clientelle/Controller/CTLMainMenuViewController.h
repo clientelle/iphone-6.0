@@ -15,6 +15,10 @@ extern NSString *const CTLMenuPlistName;
     NSIndexPath *_selectedIndexPath;
 }
 
+- (void)styleActiveCell:(NSIndexPath *)indexPath;
+
+@property (nonatomic, strong) NSArray *menuItems;
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 
 @end

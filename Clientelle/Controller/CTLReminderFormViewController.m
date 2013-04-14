@@ -15,73 +15,53 @@
 #import "UITableViewCell+CellShadows.h"
 #import "CTLViewDecorator.h"
 
-
 NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendarName";
 
 @implementation CTLReminderFormViewController
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
     [self configureInputs];
     [self checkPermission];
-    
-    [self.titleTextField becomeFirstResponder];
     
     //IB tags -> Core Data mapping
     _fields = @[@"", @"title", @"dueDate"];
     
-    if(self.isPresentedAsModal){
-        self.navigationItem.title = NSLocalizedString(@"CREATE_REMINDER", nil);
-        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
-        self.navigationItem.leftBarButtonItem = cancelButton;
-    }else{
-        self.navigationItem.title = NSLocalizedString(@"EDIT_REMINDER", nil);
-    }
-    
     if(!self.cdReminder){
-        self.cdReminder = [CTLCDReminder MR_createEntity];
+        
+        self.navigationItem.title = NSLocalizedString(@"CREATE_REMINDER", nil);
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss:)];
+        self.navigationItem.leftBarButtonItem = cancelButton;
+        
         _reminder = [EKReminder reminderWithEventStore:_eventStore];
         _reminder.calendar = [_eventStore defaultCalendarForNewReminders];
+        self.cdReminder = [CTLCDReminder MR_createEntity];
         [self.cdReminder setEventID:_reminder.calendarItemIdentifier];
     }else{
+        
+        self.navigationItem.title = NSLocalizedString(@"EDIT_REMINDER", nil);
+        
         _reminder = (EKReminder *)[_eventStore calendarItemWithIdentifier:[self.cdReminder eventID]];
         if(_reminder){
             self.titleTextField.text = _reminder.title;
             NSDate *dueDate = [NSDate dateFromComponents:_reminder.dueDateComponents];
             self.dueTimeTextField.text = [NSDate formatDateAndTime:dueDate];
+            [_datePicker setDate:dueDate];
+        }else{
+            self.titleTextField.text = self.cdReminder.title;
+            self.dueTimeTextField.text = [NSDate formatDateAndTime:self.cdReminder.dueDate];
+            [_datePicker setDate:self.cdReminder.dueDate];
+            
+            _reminder = [EKReminder reminderWithEventStore:_eventStore];
+            _reminder.title = self.cdReminder.title;
+            _reminder.calendar = [_eventStore defaultCalendarForNewReminders];
+            _reminder.dueDateComponents = [self dateComponentsFromDate:self.cdReminder.dueDate];
         }
     }
 }
-/*
-- (EKCalendar *)createReminderCalendar
-{
-    //get local calendar source (device calendar. not imap)
-    EKSource *localSource = nil;
-    for (EKSource *source in _eventStore.sources) {
-        if (source.sourceType == EKSourceTypeLocal) {
-            localSource = source;
-            break;
-        }
-    }
-    //create a calendar to store app-created reminders
-    EKCalendar *localCalendar = [EKCalendar calendarForEntityType:EKEntityTypeReminder eventStore:_eventStore];
-    localCalendar.title = @"Clientelle";
-    localCalendar.source = localSource;
-
-    [_eventStore saveCalendar:localCalendar commit:YES error:nil];
-    [[NSUserDefaults standardUserDefaults] setObject:localCalendar.calendarIdentifier forKey:CTLCalendarIDKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    return localCalendar;
-}
-*/
 
 - (void)checkPermission
 {
@@ -93,33 +73,16 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
         [_eventStore requestAccessToEntityType:EKEntityTypeReminder completion:^(BOOL granted, NSError *error) {
             if(granted){
                 _hasCalendarAccess = YES;
-                //[self setupReminderCalendar];
             } else {
                 [self displayPermissionPrompt];
             }
         }];
     } else if(EKAuthStatus == EKAuthorizationStatusAuthorized){
         _hasCalendarAccess = YES;
-        //[self setupReminderCalendar];
     } else {
         [self displayPermissionPrompt];
     }
 }
-
-/*
-- (void)setupReminderCalendar
-{
-    NSString *calendarID = [[NSUserDefaults standardUserDefaults] stringForKey:CTLCalendarIDKey];
-    if(calendarID){
-        _reminderCalendar = [_eventStore calendarWithIdentifier:calendarID];
-        if(!_reminderCalendar){
-            _reminderCalendar = [self createReminderCalendar];
-        }
-    }else{
-        _reminderCalendar = [self createReminderCalendar];
-    }
-}
- */
 
 - (void)displayPermissionPrompt
 {
@@ -128,20 +91,22 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil, nil];
-    
     [requirePermission show];
 }
 
 - (void)configureInputs
 {
+    self.titleTextField.placeholder = NSLocalizedString(@"APPOINTMENT_TITLE", nil);
+    
     _datePicker = [[UIDatePicker alloc] init];
     _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-    _datePicker.date = [NSDate hoursFrom:[NSDate date] numberOfHours:1];
+//_datePicker.date = [NSDate hoursFrom:[NSDate date] numberOfHours:1];
+    
+    _datePicker.date = [NSDate date];
+    
     [_datePicker addTarget:self action:@selector(setDate:) forControlEvents:UIControlEventValueChanged];
     
     self.dueTimeTextField.inputView = _datePicker;
-    self.titleTextField.placeholder = NSLocalizedString(@"APPOINTMENT_TITLE", nil);
-
 }
 
 - (NSDateComponents *)dateComponentsFromDate:(NSDate *)date
@@ -153,31 +118,20 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
 
 - (void)setDate:(id)sender
 {
+    self.navigationItem.rightBarButtonItem.enabled = YES;
     UITextField *textField = (UITextField *)[self.view viewWithTag:_activeInputTag];
     textField.text = [NSDate formatDateAndTime:[_datePicker date]];
-    _reminder.dueDateComponents = [self dateComponentsFromDate:_datePicker.date];
-    self.cdReminder.dueDate = _datePicker.date;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
-    // Return the number of rows in the section.
     return 2;
 }
 
@@ -188,12 +142,67 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
     return cell;
 }
 
-#pragma mark - Outlet Controls
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if(!self.transitionedFromLocalNotification){
+        return 0.0f;
+    }
+    
+    return 60.0f;
+}
 
-- (void)cancel:(id)sender
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if(!self.transitionedFromLocalNotification){
+        return nil;
+    }
+    
+    CGRect viewFrame = self.view.frame;
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewFrame.size.width, 50.0f)];
+    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    CGRect buttonFrame = addButton.frame;
+    buttonFrame.size.height = 35.0f;
+    buttonFrame.size.width = viewFrame.size.width - 20.0f;
+    buttonFrame.origin.y += 10.0f;
+    buttonFrame.origin.x += 10.0f;
+    [addButton setFrame:buttonFrame];
+    
+    UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    
+    // Set the background for any states you plan to use
+    [addButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [addButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [addButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    [addButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
+    [addButton addTarget:self action:@selector(markAsCompleted:) forControlEvents:UIControlEventTouchUpInside];
+    [addButton setTitle:NSLocalizedString(@"MARK_AS_COMPLETED", nil) forState:UIControlStateNormal];
+    
+    addButton.layer.shadowOpacity = 0.2f;
+    addButton.layer.shadowRadius = 1.0f;
+    addButton.layer.shadowOffset = CGSizeMake(0,0);
+    
+    [footerView addSubview:addButton];
+    return footerView;
+}
+
+- (void)markAsCompleted:(id)sender
+{
+    [self.cdReminder setCompeleted:@(1)];
+    [self.cdReminder setCompletedDate:[NSDate date]];
+    [self saveReminder:sender];
+}
+
+- (void)dismiss:(id)sender
 {
     [self resetForm];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if(self.presentedAsModal){
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)resetForm
@@ -208,15 +217,11 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
 
     if([self.dueTimeTextField.text length] == 0){
         self.dueTimeTextField.text = [NSDate formatDateAndTime:_datePicker.date];
-
         if(!_reminder.dueDateComponents){
-     
             _reminder.dueDateComponents = [self dateComponentsFromDate:_datePicker.date];
-            
             [self.cdReminder setDueDate:_datePicker.date];
-            EKAlarm *firstReminder = [EKAlarm alarmWithRelativeOffset:-900.0f];
-            EKAlarm *secondReminder = [EKAlarm alarmWithRelativeOffset:-300.0f];
-            _reminder.alarms = @[firstReminder, secondReminder];
+            [_reminder addAlarm:[EKAlarm alarmWithRelativeOffset:-900.0f]];
+            [_reminder addAlarm:[EKAlarm alarmWithRelativeOffset:-300.0f]];
         }
     }
     if(_reminder.dueDateComponents){
@@ -225,22 +230,21 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
     }
 }
 
-- (BOOL)validateReminder:(EKReminder *)reminder
+- (BOOL)validateReminder
 {
-    BOOL isValid = YES;
     UIColor *errorColor = [UIColor ctlInputErrorBackground];
     
-    if([reminder.title length] == 0){
+    if([self.titleTextField.text length] == 0){
         [self.titleTextField setBackgroundColor:errorColor];
-        isValid = NO;
+        return NO;
     }
     
-    if(!reminder.dueDateComponents){
+    if([self.dueTimeTextField.text length] == 0){
         [self.dueTimeTextField setBackgroundColor:errorColor];
-        isValid = NO;
+        return NO;
     }
 
-    return isValid;
+    return YES;
 }
 
 - (IBAction)saveReminder:(id)sender
@@ -250,20 +254,33 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
         return;
     }
     
-    if(![self validateReminder:_reminder]){
+    if(![self validateReminder]){
         return;
     }
- 
-    [_reminder addAlarm:[EKAlarm alarmWithRelativeOffset:-900.0f]]; //15 min before
-    [_reminder addAlarm:[EKAlarm alarmWithRelativeOffset:-300.0f]]; //5 min before
-    [_reminder addAlarm:[EKAlarm alarmWithAbsoluteDate:_datePicker.date]];
+    
+    _reminder.title = self.titleTextField.text;
+    _reminder.dueDateComponents = [self dateComponentsFromDate:_datePicker.date];
+
+    self.cdReminder.title = self.titleTextField.text;
+    self.cdReminder.dueDate = _datePicker.date;
+
+    if([_datePicker.date compare:[NSDate date]] == NSOrderedAscending || [sender isKindOfClass:[UIButton class]]){
+        //date is in the past. look for old notifs that need to be cleared out
+        [self cancelLocalNotification:_reminder.calendarItemIdentifier];
+    }else{
+        //[_reminder addAlarm:[EKAlarm alarmWithRelativeOffset:-900.0f]]; //15 min before
+        //[_reminder addAlarm:[EKAlarm alarmWithRelativeOffset:-300.0f]]; //5 min before
+        //[_reminder addAlarm:[EKAlarm alarmWithAbsoluteDate:_datePicker.date]];
+        [self scheduleNotificationWithItem:_reminder interval:5];
+    }
     
     NSError *error = nil;
     BOOL result = [_eventStore saveReminder:_reminder commit:YES error:&error];
     
     if(result){
-        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-        [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadRemindersNotification object:nil];
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+            [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadRemindersNotification object:nil];
+        }];
     }else{
         UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:nil
                                                              message:[error description]
@@ -273,24 +290,53 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
         [errorAlert show];
     }
     
-    [self resetForm];
+    [self dismiss:nil];
     
-    if(self.isPresentedAsModal){
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }else{
-        [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)cancelLocalNotification:(NSString *)reminderEventID
+{
+    for (UILocalNotification *notification in [[[UIApplication sharedApplication] scheduledLocalNotifications] copy]){
+        NSDictionary *userInfo = notification.userInfo;
+        if ([reminderEventID isEqualToString:[userInfo objectForKey:@"reminderEventID"]]){
+            [[UIApplication sharedApplication] cancelLocalNotification:notification];
+        }
     }
+}
+
+- (void)scheduleNotificationWithItem:(EKReminder *)item interval:(int)minutesBefore
+{
+    [self cancelLocalNotification:item.calendarItemIdentifier];
+    
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSDate *itemDate = [calendar dateFromComponents:item.dueDateComponents];
+    
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    
+    if (notification == nil){
+        return;
+    }
+    
+    notification.applicationIconBadgeNumber = 1;
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    
+    //localNotif.fireDate = [itemDate dateByAddingTimeInterval:-(minutesBefore*60)];
+    notification.fireDate = itemDate;
+    
+    notification.timeZone = [NSTimeZone defaultTimeZone];
+    notification.alertBody = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"REMINDER", nil), item.title];
+    notification.alertAction = NSLocalizedString(@"VIEW_REMINDER", nil);
+ 
+    notification.userInfo = @{@"navigationController":@"remindersNavigationController", @"viewController":@"reminderFormViewController", @"reminderEventID":item.calendarItemIdentifier};
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
 
 #pragma CTLFieldCellDelegate
 
 - (IBAction)textFieldDidChange:(UITextField *)textField
 {
-    NSString *field = _fields[textField.tag];
-    if([field isEqualToString:@"title"]){
-        [_reminder setValue:textField.text forKey:field];
-        [self.cdReminder setValue:textField.text forKey:field];
-    }
+    self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 - (IBAction)highlightTextField:(UITextField *)textField
@@ -306,6 +352,5 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
     [self.view endEditing:YES];
     [self.focusedTextField setBackgroundColor:[UIColor clearColor]];
 }
-
 
 @end

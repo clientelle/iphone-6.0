@@ -171,7 +171,8 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
                 CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *inboxInterstitial = (CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
                 
                 [inboxInterstitial setMenuController:self.menuController];
-                [self.menuController flipToView:inboxInterstitial];
+                [self.menuController setMainViewController:inboxInterstitial];
+                [self.menuController flipToView];
             }];
                                   
         }else{

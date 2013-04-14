@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CTLAppointmentCell.h"
 
 extern NSString *const CTLReloadAppointmentsNotification;
 
 @class CTLPickerView;
 
 /* view cannot be a TableViewController because of the top rolodex selector */
-@interface CTLAppointmentsListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, CTLSlideMenuDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate>{
+@interface CTLAppointmentsListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, CTLSlideMenuDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate, CTLAppointmentCellDelegate>{
     UIView *_emptyView;
     CTLPickerView *_filterPickerView;
     NSArray *_filterArray;

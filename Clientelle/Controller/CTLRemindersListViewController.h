@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <EventKit/EventKit.h>
+#import "CTLReminderCell.h"
 
 extern NSString *const CTLReloadRemindersNotification;
 
-@interface CTLRemindersListViewController : UITableViewController{
+@interface CTLRemindersListViewController : UITableViewController<CTLSlideMenuDelegate, CTLReminderCellDelegate>{
     NSArray *_reminders;
 }
 

@@ -8,13 +8,17 @@
 
 extern const CGFloat CTLMainMenuWidth;
 
+@class CTLMainMenuViewController;
+
 @interface CTLSlideMenuController : UIViewController{
     UIStoryboard *_mainStoryboard;
     ABAddressBookRef _addressBookRef;
 }
 
-@property (nonatomic, weak) UIViewController<CTLSlideMenuDelegate> *panel;
-@property (nonatomic, weak) UINavigationController *mainViewNavController;
+@property (nonatomic, weak) CTLMainMenuViewController<CTLSlideMenuDelegate> *panel;
+@property (nonatomic, weak) UINavigationController *mainNavigationController;
+@property (nonatomic, strong) UIViewController<CTLSlideMenuDelegate> *nextViewController;
+@property (nonatomic, strong) UIViewController<CTLSlideMenuDelegate> *mainViewController;
 @property (nonatomic, assign) ABAddressBookRef addressBookRef;
 @property (nonatomic, strong) UIStoryboard *mainStoryboard;
 
@@ -23,12 +27,18 @@ extern const CGFloat CTLMainMenuWidth;
 @property (nonatomic, assign) BOOL hasInbox;
 @property (nonatomic, assign) BOOL rightSwipeEnabled;
 
-- (id)initWithMenu:(UIViewController<CTLSlideMenuDelegate> *)menuView mainView:(UINavigationController *)mainView;
 
-- (void)setMainView:(NSString *)navigationControllerName;
-- (void)flipToView:(UIViewController<CTLSlideMenuDelegate> *)mainViewController;
-- (void)renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)mainViewController
-;
+- (id)initWithIdentifier:(NSString *)identifier;
+
+- (id)initWithIdentifier:(NSString *)identifier viewController:(UIViewController<CTLSlideMenuDelegate> *)viewController;
+
+- (void)setMainView:(NSString *)identifier;
+- (void)flipToView;
+
+
+- (void)transitionToView:(UIViewController<CTLSlideMenuDelegate> *)viewController withAnimationStyle:(UIViewAnimationTransition)animationStyle;
+
+- (void)renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)mainViewController;
 
 - (void)toggleMenu:(id)sender;
 

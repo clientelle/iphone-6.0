@@ -12,40 +12,12 @@
 
 #import "CTLAppointmentCell.h"
 #import "CTLViewDecorator.h"
-#import "CTLCDAppointment.h"
 
 @implementation CTLAppointmentCell
 
-- (void)configure:(CTLCDAppointment *)appointment
-{
-    self.appointment = appointment;
-    
-    self.titleLabel.text = appointment.title;
-    self.timeLabel.text = [NSString stringWithFormat:@"%@ - %@", [NSDate formatShortTimeOnly:appointment.startDate], [NSDate formatShortTimeOnly:appointment.endDate]];
-    
-    self.dateLabel.text = [NSDate formatShortDateOnly:appointment.startDate];
-    if([appointment.startDate compare:[NSDate date]] == NSOrderedAscending){
-        self.dateLabel.textColor = [UIColor redColor];
-    }
-}
-
 - (IBAction)segueToMapView:(id)sender
 {
-    NSDictionary *addressDict = @{@"address": [self.appointment address], @"city": [self.appointment city], @"state": [self.appointment state], @"zip": [self.appointment address]};
-        
-    NSArray *addressArray = [addressDict allValues];
-    NSMutableArray *addyArray = [[NSMutableArray alloc] init];
-    
-    for(NSUInteger i=0;i<[addressArray count];i++){
-        if([[addressArray objectAtIndex:i] length] > 0){
-            [addyArray addObject:[addressArray objectAtIndex:i]];
-        }
-    }
-    
-    NSString *addressStr = [addyArray componentsJoinedByString:@", "];
-    NSString *encodedAddress = [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *mapURLString = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@", encodedAddress];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mapURLString]];
+    [self.delegate showMap:self];
 }
 
 - (void)drawRect:(CGRect)rect

@@ -3,25 +3,65 @@
 //  Created by Samuel Goodwin on 1/17/13.
 //  Copyright (c) 2013 Roundwall Software. All rights reserved.
 //
+#import <QuartzCore/QuartzCore.h>
 
 #import "CTLSlideMenuController.h"
-#import "CTLContactsListViewController.h"
-#import <QuartzCore/QuartzCore.h>
+#import "CTLMainMenuViewController.h"
 
 const CGFloat CTLMainMenuWidth = 190.0f;
 
 @implementation CTLSlideMenuController
 
-- (id)initWithMenu:(UIViewController<CTLSlideMenuDelegate> *)menuView mainView:(UINavigationController *)mainView
+- (id)initWithIdentifier:(NSString *)identifier
 {
     self = [super init];
-
+    self.mainStoryboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
+    
     if(self){
+        
         CGRect frame = self.view.bounds;
-        [self setLeftPanel:menuView withFrame:frame];
-        [self setRightPanel:mainView withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(frame), CGRectGetHeight(frame))];
-        [self setShadow:mainView];
+        
+        CTLMainMenuViewController *menuViewController = [self.mainStoryboard instantiateInitialViewController];
+        [self setLeftPanel:menuViewController withFrame:frame];
+        [self setActiveMenuItem:identifier];
+        
+        UINavigationController *navigationController = (UINavigationController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:identifier];
+        
+        [self setRightPanel:navigationController withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(frame), CGRectGetHeight(frame))];
+        [self setShadow:navigationController];
     }
+
+    return self;
+}
+
+- (id)initWithIdentifier:(NSString *)identifier viewController:(UIViewController<CTLSlideMenuDelegate> *)viewController
+{
+    self = [super init];
+    self.mainStoryboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
+    
+    if(self){
+        
+        CGRect frame = self.view.bounds;
+        CGRect viewFrame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(frame), CGRectGetHeight(frame));
+        
+        CTLMainMenuViewController *menuViewController = [self.mainStoryboard instantiateInitialViewController];
+        [self setLeftPanel:menuViewController withFrame:frame];
+        [self setActiveMenuItem:identifier];
+        
+        self.mainNavigationController = [self.mainStoryboard instantiateViewControllerWithIdentifier:identifier];
+        self.mainViewController = viewController;
+        self.mainViewController.menuController = self;
+
+        [self renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)self.mainNavigationController.topViewController];
+        [self.mainNavigationController pushViewController:viewController animated:NO];
+
+        [self addChildViewController:self.mainNavigationController];
+
+        self.mainNavigationController.view.frame = viewFrame;
+        [self.view addSubview:self.mainNavigationController.view];
+        [self setShadow:self.mainNavigationController];
+    }
+    
     return self;
 }
 
@@ -42,21 +82,21 @@ const CGFloat CTLMainMenuWidth = 190.0f;
 
 -(void)handleSwipeLeft:(UISwipeGestureRecognizer*)recognizer
 {
-    if(self.mainViewNavController.view.frame.origin.x != 0){
+    if(self.mainNavigationController.view.frame.origin.x != 0){
         [self hideMenu];
     }
 }
 
 -(void)handleSwipeRight:(UISwipeGestureRecognizer*)recognizer
 {
-    if(self.rightSwipeEnabled && self.mainViewNavController.view.frame.origin.x == 0){
+    if(self.rightSwipeEnabled && self.mainNavigationController.view.frame.origin.x == 0){
         [self showMenu];
     }
 }
 
 #pragma mark - Set Panels
 
-- (void)setLeftPanel:(UIViewController<CTLSlideMenuDelegate> *)leftPanel withFrame:(CGRect)frame
+- (void)setLeftPanel:(CTLMainMenuViewController *)leftPanel withFrame:(CGRect)frame
 {
     frame.size.width = CTLMainMenuWidth;
     leftPanel.view.frame = frame;
@@ -66,26 +106,25 @@ const CGFloat CTLMainMenuWidth = 190.0f;
     [self.view addSubview:self.panel.view];
 }
 
-- (void)setMainView:(NSString *)navigationControllerName
+- (void)setMainView:(NSString *)identifier
 {
-    UINavigationController *navigationController = (UINavigationController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:navigationControllerName];
-    
-    [self setShadow:navigationController];
+    UINavigationController *navigationController = [self.mainStoryboard instantiateViewControllerWithIdentifier:identifier];
     
     CGFloat width = CGRectGetWidth(self.view.bounds);
     CGFloat height = CGRectGetHeight(self.view.bounds);
     
-    if(self.mainViewNavController){
-        [self.mainViewNavController removeFromParentViewController];
-        [self.mainViewNavController.view removeFromSuperview];
+    if(self.mainNavigationController){
+        [self.mainNavigationController removeFromParentViewController];
+        [self.mainNavigationController.view removeFromSuperview];
     }
     
     [self setRightPanel:navigationController withFrame:CGRectMake(CTLMainMenuWidth, 0.0f, width, height)];
     
     [UIView animateWithDuration:0.3 animations:^{
-        self.mainViewNavController.view.frame = CGRectMake(0.0f, 0.0f, width, height);
+        self.mainNavigationController.view.frame = CGRectMake(0.0f, 0.0f, width, height);
     }];
-    
+
+    [self setShadow:navigationController];
 }
 
 - (void)setShadow:(UINavigationController *)mainView
@@ -98,44 +137,65 @@ const CGFloat CTLMainMenuWidth = 190.0f;
     mainView.view.layer.shadowOffset = CGSizeMake(-3, 0);
 }
 
-- (void)flipToView:(UIViewController<CTLSlideMenuDelegate> *)mainViewController
+- (void)flipToView
 {
-    [mainViewController setMenuController:self];
-    
+    [self.mainViewController setMenuController:self];
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration: 1];
     [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
-    [self.mainViewNavController pushViewController:mainViewController animated:NO];
+    [self.mainNavigationController pushViewController:self.mainViewController animated:NO];
     [UIView commitAnimations];
-
 }
 
-- (void)renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)mainViewController
+- (void)transitionToView:(UIViewController<CTLSlideMenuDelegate> *)viewController withAnimationStyle:(UIViewAnimationTransition)animationStyle
 {
-    mainViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(toggleMenu:)];
+    self.mainViewController = viewController;
+    [self.mainViewController setMenuController:self];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration: 1];
+    [UIView setAnimationTransition:animationStyle forView:self.view cache:YES];
+    [self.mainNavigationController pushViewController:self.mainViewController animated:NO];
+    [UIView commitAnimations];
+}
+
+- (void)renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)viewController
+{
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(toggleMenu:)];
+    viewController.navigationItem.leftBarButtonItem = menuButton;
 }
 
 - (void)setRightPanel:(UINavigationController *)rightNavigationController withFrame:(CGRect)frame
 {
-    UIViewController<CTLSlideMenuDelegate> *mainViewController = (UIViewController<CTLSlideMenuDelegate> *)rightNavigationController.topViewController;
+    self.mainNavigationController = rightNavigationController;
+    self.mainViewController = (UIViewController<CTLSlideMenuDelegate> *)rightNavigationController.topViewController;
+        
+    [self renderMenuButton:self.mainViewController];
+    [self.mainViewController setMenuController:self];
+    [self addChildViewController:self.mainNavigationController];
+    self.mainNavigationController.view.frame = frame;
+    [self.view addSubview:self.mainNavigationController.view];
+}
+
+- (void)setActiveMenuItem:(NSString *)identifier
+{
+    NSArray *menuItems = self.panel.menuItems;
+    NSInteger selectedRowIndex = 0;
     
-    [self renderMenuButton:mainViewController];
-           
-    [mainViewController setMenuController:self];
-    self.mainViewNavController = rightNavigationController;
+    for(NSInteger i=0; i<[menuItems count];i++){
+        if([menuItems[i][@"identifier"] isEqualToString:identifier]){
+            selectedRowIndex = i;
+            break;
+        }
+    }
     
-    [self addChildViewController:self.mainViewNavController];
-    self.mainViewNavController.view.frame = frame;
-    
-   
-    [self.view addSubview:self.mainViewNavController.view];
+    [self.panel setSelectedIndexPath:[NSIndexPath indexPathForRow:selectedRowIndex inSection:0]];
 }
 
 #pragma mark - Toggle Menu
 
 - (void)toggleMenu:(id)sender
 {
-    if(self.mainViewNavController.view.frame.origin.x == 0){
+    if(self.mainNavigationController.view.frame.origin.x == 0){
         [self showMenu];
     }else{
         [self hideMenu];
@@ -145,20 +205,67 @@ const CGFloat CTLMainMenuWidth = 190.0f;
 -(void)showMenu
 {
     [self.view endEditing:YES];
-    CGRect mainFrame = self.mainViewNavController.view.frame;
+    CGRect mainFrame = self.mainNavigationController.view.frame;
     CGRect movedFrame = CGRectMake(self.panel.view.frame.size.width, mainFrame.origin.y, mainFrame.size.width, mainFrame.size.height);
     [UIView animateWithDuration:0.3 animations:^{
-        [self.mainViewNavController.view setFrame:movedFrame];
+        [self.mainNavigationController.view setFrame:movedFrame];
     }];
 }
 
 -(void)hideMenu
 {
-    CGRect mainFrame = self.mainViewNavController.view.frame;
+    CGRect mainFrame = self.mainNavigationController.view.frame;
     CGRect movedFrame = CGRectMake(0, mainFrame.origin.y, mainFrame.size.width, mainFrame.size.height);
     [UIView animateWithDuration:0.3 animations:^{
-        [self.mainViewNavController.view setFrame:movedFrame];
+        [self.mainNavigationController.view setFrame:movedFrame];
     }];
+}
+
+- (BOOL)isCurrentViewIsModal
+{
+    UIViewController *presentedViewController = self.mainViewController.presentedViewController;
+    
+    BOOL presentedViewHasNavigationController = [presentedViewController isKindOfClass:[UINavigationController class]];
+    
+    return presentedViewHasNavigationController == NO && presentedViewController != nil;
+}
+
+//UILocationNotification in AppDelegate prompts user to open cooresponding view
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0){
+        self.nextViewController = nil;
+        return;
+    }
+    
+    if(buttonIndex == 1){
+
+        UINavigationController *presentedNavigationController = self.mainNavigationController;
+        UIViewController *presentedViewController = self.mainViewController.presentedViewController;
+        
+        BOOL presentedViewHasNavigationController = [presentedViewController isKindOfClass:[UINavigationController class]];
+        BOOL presentedViewIsModal = presentedViewHasNavigationController == NO && presentedViewController != nil;
+        
+        if(presentedViewHasNavigationController){
+            presentedNavigationController = (UINavigationController *)presentedViewController;
+        }
+
+        if(presentedViewIsModal){
+            self.nextViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"CLOSE", nil) style:UIBarButtonSystemItemCancel target:self.nextViewController action:@selector(dismiss:)];
+            UINavigationController *tmpNavController = [[UINavigationController alloc] initWithRootViewController:self.nextViewController];
+                        
+            tmpNavController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+            [presentedViewController presentViewController:tmpNavController animated:YES completion:nil];
+            
+        }else{
+
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration: 1];
+            [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
+            [presentedNavigationController pushViewController:self.nextViewController animated:NO];
+            [UIView commitAnimations];
+        }
+    }
 }
 
 @end

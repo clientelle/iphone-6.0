@@ -16,32 +16,9 @@
 
 @implementation CTLReminderCell
 
-- (void)configure:(CTLCDReminder *)reminder
-{
-    self.reminder = reminder;
-    self.titleLabel.text = reminder.title;
-    self.dueDateLabel.text = [NSDate formatDateAndTime:reminder.dueDate];
-}
-
 - (IBAction)markAsComplete:(id)sender
 {
-    if([self.reminder compeletedValue]){
-        [self.reminder setCompeleted:@(0)];
-        [self.reminder setCompletedDate:nil];
-        
-        if([self.reminder.dueDate compare:[NSDate date]] == NSOrderedAscending){
-            self.dueDateLabel.textColor = [UIColor redColor];
-        }
-        
-        [self decorateInCompletedCell];
-        
-    }else{
-        [self decorateCompletedCell];
-        [self.reminder setCompeleted:@(1)];
-        [self.reminder setCompletedDate:[NSDate date]];
-    }
-    
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [self.delegate changeReminderStatus:self];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -50,21 +27,16 @@
     CTLViewDecorator *decorator = [[CTLViewDecorator alloc] init];
     CAShapeLayer *dottedLine = [decorator createDottedLine:self.frame];
     [self.contentView.layer addSublayer:dottedLine];
-    
-    if([self.reminder compeletedValue]){
-        [self decorateCompletedCell];
-    }else if([self.reminder.dueDate compare:[NSDate date]] == NSOrderedAscending){
-        self.dueDateLabel.textColor = [UIColor redColor];
-    }
 }
 
-- (void)decorateInCompletedCell
+- (void)decorateInCompletedCell:(BOOL)isOverDue
 {
     self.titleLabel.layer.sublayers = nil;
     [self.doneButton setImage:nil forState:UIControlStateNormal];
     
-    if([self.reminder.dueDate compare:[NSDate date]] == NSOrderedAscending){
-        self.dueDateLabel.textColor = [UIColor redColor];
+    if(isOverDue){
+        self.dueDateLabel.textColor = [UIColor ctlRed];
+        self.titleLabel.textColor = [UIColor ctlRed];
     }
 }
 
@@ -73,13 +45,20 @@
     UIImage *checkMark = [UIImage imageNamed:@"26-checkmark-gray.png"];
     [self.doneButton setImage:checkMark forState:UIControlStateNormal];
     
+    CGFloat maxWidth = 245.0f;
     CGSize titleLabelSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font];
+    
+    if(titleLabelSize.width > maxWidth){
+        titleLabelSize.width = 230.0f;
+    }
+    
     CALayer *strikeThru = [CALayer layer];
     strikeThru.borderWidth = 1;
     strikeThru.borderColor = [UIColor darkGrayColor].CGColor;
     strikeThru.frame = CGRectMake(-5.0f, (titleLabelSize.height/2) + 1, titleLabelSize.width+10.0f, 1.0f);
     
     [self.titleLabel.layer addSublayer:strikeThru];
+    [self.titleLabel setTextColor:[UIColor darkGrayColor]];
     [self.dueDateLabel setTextColor:[UIColor darkGrayColor]];
 }
 

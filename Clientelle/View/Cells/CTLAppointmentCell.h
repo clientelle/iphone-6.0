@@ -10,13 +10,16 @@
 
 @class CTLCDAppointment;
 
-@interface CTLAppointmentCell : UITableViewCell
+@protocol CTLAppointmentCellDelegate
+- (void)configure:(UITableViewCell *)cell withAppointment:(CTLCDAppointment *)appointment;
+- (void)showMap:(UITableViewCell *)cell;
+@end
 
-- (void)configure:(CTLCDAppointment *)appointment;
+@interface CTLAppointmentCell : UITableViewCell;
+
 - (IBAction)segueToMapView:(id)sender;
 
-
-@property (nonatomic, weak) CTLCDAppointment *appointment;
+@property (nonatomic, assign) id<CTLAppointmentCellDelegate>delegate;
 
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *dateLabel;

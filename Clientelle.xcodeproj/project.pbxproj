@@ -916,6 +916,7 @@
 		417DC29316ADF60E0073199D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				416DD83416AF9C2D00F2F8B3 /* SliderMenu */,
 				41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */,
 				41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */,
 				416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */,
@@ -950,7 +951,6 @@
 				4130653E16C14A960063AC10 /* CTLRegisterViewController.m */,
 				416DD83816AF9E9000F2F8B3 /* CTLSettingsViewController.h */,
 				416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */,
-				416DD83416AF9C2D00F2F8B3 /* SliderMenu */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

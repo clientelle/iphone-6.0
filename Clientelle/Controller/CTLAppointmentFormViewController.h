@@ -44,5 +44,6 @@
 
 - (IBAction)showDatePicker:(id)sender;
 - (IBAction)saveAppointment:(id)sender;
+- (void)cancel:(id)sender;
 
 @end

@@ -168,9 +168,9 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     }
     
     CTLAppointmentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    [cell setSelectionStyle:UITableViewCellEditingStyleNone];
-    [cell configure:appointment];
-
+    cell.delegate = self;
+    [self configure:cell withAppointment:appointment];
+    
     return cell;
 }
 
@@ -189,6 +189,42 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 60.0f;
+}
+
+#pragma mark - CTLAppointmentDelegate methods
+
+- (void)configure:(CTLAppointmentCell *)cell withAppointment:(CTLCDAppointment *)appointment
+{
+    [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+    cell.titleLabel.text = appointment.title;
+    cell.timeLabel.text = [NSString stringWithFormat:@"%@ - %@", [NSDate formatShortTimeOnly:appointment.startDate], [NSDate formatShortTimeOnly:appointment.endDate]];
+    
+    cell.dateLabel.text = [NSDate formatShortDateOnly:appointment.startDate];
+    if([appointment.startDate compare:[NSDate date]] == NSOrderedAscending){
+        cell.dateLabel.textColor = [UIColor redColor];
+    }
+}
+
+- (void)showMap:(CTLAppointmentCell *)cell
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    CTLCDAppointment *appointment = [_appointments objectAtIndex:indexPath.row];
+    
+    NSDictionary *addressDict = @{@"address": appointment.address, @"city": appointment.city, @"state": appointment.state, @"zip": appointment.address};
+    
+    NSArray *addressArray = [addressDict allValues];
+    NSMutableArray *addyArray = [[NSMutableArray alloc] init];
+    
+    for(NSUInteger i=0;i<[addressArray count];i++){
+        if([[addressArray objectAtIndex:i] length] > 0){
+            [addyArray addObject:[addressArray objectAtIndex:i]];
+        }
+    }
+    
+    NSString *addressStr = [addyArray componentsJoinedByString:@", "];
+    NSString *encodedAddress = [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *mapURLString = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@", encodedAddress];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mapURLString]];
 }
 
 #pragma mark - Segue

@@ -12,7 +12,6 @@
 
 #import "CTLCDReminder.h"
 #import "CTLRemindersListViewController.h"
-#import "CTLReminderCell.h"
 #import "CTLReminderFormViewController.h"
 
 NSString *const CTLReloadRemindersNotification = @"com.clientelle.notifications.reloadReminders";
@@ -59,7 +58,7 @@ NSString *const CTLReminderModalSegueIdentifyer = @"toReminderModal";
         if([sender isKindOfClass:[CTLCDReminder class]]){
             CTLCDReminder *reminder = (CTLCDReminder *)sender;
             CTLReminderFormViewController *viewController = [segue destinationViewController];
-            [viewController setIsPresentedAsModal:NO];
+            [viewController setPresentedAsModal:NO];
             [viewController setCdReminder:reminder];
             return;
         }
@@ -68,7 +67,7 @@ NSString *const CTLReminderModalSegueIdentifyer = @"toReminderModal";
     if([[segue identifier] isEqualToString:CTLReminderModalSegueIdentifyer]){
         UINavigationController *navigationController = [segue destinationViewController];
         CTLReminderFormViewController *viewController = (CTLReminderFormViewController *)navigationController.topViewController;
-        [viewController setIsPresentedAsModal:YES];
+        [viewController setPresentedAsModal:YES];
         return;
     }
 }
@@ -148,15 +147,50 @@ NSString *const CTLReminderModalSegueIdentifyer = @"toReminderModal";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"reminderCell";
     CTLCDReminder *reminder = [_reminders objectAtIndex:indexPath.row];
+    static NSString *cellIdentifier = @"reminderCell";
     CTLReminderCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    [cell setSelectionStyle:UITableViewCellEditingStyleNone];
-    [cell configure:reminder];
+    [self configure:cell withReminder:reminder];
     return cell;
 }
 
-#pragma mark - Table view delegate
+- (void)changeReminderStatus:(CTLReminderCell *)cell
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    CTLCDReminder *reminder = [_reminders objectAtIndex:indexPath.row];
+    
+    if([reminder compeletedValue]){
+        [reminder setCompeleted:@(0)];
+        [reminder setCompletedDate:nil];
+        
+        BOOL isOverDue = [reminder.dueDate compare:[NSDate date]] == NSOrderedAscending;
+        [cell decorateInCompletedCell:isOverDue];
+        
+    }else{
+        [cell decorateCompletedCell];
+        [reminder setCompeleted:@(1)];
+        [reminder setCompletedDate:[NSDate date]];
+    }
+    
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+}
+
+- (void)configure:(CTLReminderCell *)cell withReminder:(CTLCDReminder *)reminder
+{
+    cell.delegate = self;
+    [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+    
+    cell.titleLabel.text = reminder.title;
+    cell.titleLabel.layer.sublayers = nil;
+    cell.dueDateLabel.text = [NSDate formatDateAndTime:reminder.dueDate];
+     
+    if(reminder.compeletedValue){
+        [cell decorateCompletedCell];
+    }else{
+        BOOL isOverDue = [reminder.dueDate compare:[NSDate date]] == NSOrderedAscending;
+        [cell decorateInCompletedCell:isOverDue];
+    }
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -180,10 +214,6 @@ NSString *const CTLReminderModalSegueIdentifyer = @"toReminderModal";
         [self deleteReminder:reminder];
     }
 }
-
-//- (void)insertRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
-//{
-//}
 
 - (void)deleteReminder:(CTLCDReminder *)reminder
 {

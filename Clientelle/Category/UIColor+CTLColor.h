@@ -25,5 +25,6 @@
 + (UIColor *)iOSHighlightedTextColor;
 + (UIColor *)ctlInputErrorBackground;
 + (UIColor *)ctlGroupedTableBackgroundColor;
++ (UIColor *)ctlRed;
 
 @end

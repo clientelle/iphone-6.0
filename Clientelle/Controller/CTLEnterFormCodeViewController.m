@@ -40,8 +40,8 @@
         
     CTLInboxViewController<CTLSlideMenuDelegate> *inboxViewController = (CTLInboxViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
     [inboxViewController setInbox:newInbox];
-        
-    [self.menuController flipToView:inboxViewController];
+    [self.menuController setMainViewController:inboxViewController];
+    [self.menuController flipToView];
     [self.menuController renderMenuButton:self];
     [self.navigationItem setHidesBackButton:YES animated:YES];
     
