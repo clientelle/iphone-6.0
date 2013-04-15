@@ -35,8 +35,8 @@ int CTLEndTimeInputTag = 3;
     
     self.navigationItem.title = NSLocalizedString(@"SET_APPOINTMENT", nil);
     
-    if(self.isPresentedAsModal){
-        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+    if(self.presentedAsModal){
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss:)];
         self.navigationItem.leftBarButtonItem = cancelButton;
     }
     
@@ -254,43 +254,39 @@ int CTLEndTimeInputTag = 3;
 
 - (IBAction)showDatePicker:(UITextField *)textField
 {
+    self.navigationItem.rightBarButtonItem.enabled = YES;
     [self highlightTextField:textField];
-
+    
     if(_activeInputTag == CTLStartTimeInputTag){
-        if([self.startTimeTextField.text length] == 0){
-            self.startTimeTextField.text = [NSDate formatDateAndTime:_datePicker.date];
-            if(!_appointment.startDate){
-                _appointment.startDate = _datePicker.date;
-                [self.cdAppointment setStartDate:_datePicker.date];
-                [_appointment addAlarm:[EKAlarm alarmWithRelativeOffset:-900.0f]]; //15 min before
-                [_appointment addAlarm:[EKAlarm alarmWithRelativeOffset:-300.0f]]; //5 min before
-                [_appointment addAlarm:[EKAlarm alarmWithAbsoluteDate:_datePicker.date]];
-            }
+        if([textField.text length] == 0){
+            textField.text = [NSDate formatDateAndTime:_datePicker.date];
         }
         if(_appointment.startDate){
             _datePicker.date = _appointment.startDate;
+        }else{
+            _appointment.startDate = _datePicker.date;
         }
     }
     
     if(_activeInputTag == CTLEndTimeInputTag){
-        if([self.endTimeTextField.text length] == 0){
+        if([textField.text length] == 0){
             if(_appointment.startDate){
                 _datePicker.date = [NSDate hoursFrom:_appointment.startDate numberOfHours:1];
             }
-            if(!_appointment.endDate){
-                _appointment.endDate = _datePicker.date;
-                [self.cdAppointment setEndDate:_datePicker.date];
-            }
-            self.endTimeTextField.text = [NSDate formatDateAndTime:_datePicker.date];
+            textField.text = [NSDate formatDateAndTime:_datePicker.date];
         }
         if(_appointment.endDate){
             _datePicker.date = _appointment.endDate;
+        }else{
+            _appointment.endDate = _datePicker.date;
         }
     }
 }
 
 - (void)setDate:(id)sender
 {
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+    
     if(_activeInputTag == CTLStartTimeInputTag || _activeInputTag == CTLEndTimeInputTag){
         UITextField *textField = (UITextField *)[self.view viewWithTag:_activeInputTag];
         textField.text = [NSDate formatDateAndTime:[_datePicker date]];
@@ -300,10 +296,8 @@ int CTLEndTimeInputTag = 3;
             if(_appointment.endDate){
                 //do not allow endDate to be before startDate
                 if([_appointment.endDate compare:_appointment.startDate] == NSOrderedAscending){
-                    NSDate *endDate = [NSDate hoursFrom:_appointment.startDate numberOfHours:1];
-                    _appointment.endDate = endDate;
-                    [self.cdAppointment setEndDate:endDate];
-                    self.endTimeTextField.text = [NSDate formatDateAndTime:_appointment.endDate];
+                    NSDate *endDate = [NSDate hoursFrom:_appointment.endDate numberOfHours:1];
+                    self.endTimeTextField.text = [NSDate formatDateAndTime:endDate];
                 }
             }
         }
@@ -314,9 +308,7 @@ int CTLEndTimeInputTag = 3;
                 //do not allow endDate to be before startDate
                 if([_appointment.startDate compare:_appointment.endDate] == NSOrderedDescending){
                     NSDate *startDate = [NSDate hoursBefore:_appointment.endDate numberOfHours:1];
-                    _appointment.startDate = startDate;
-                    [self.cdAppointment setStartDate:startDate];
-                    self.startTimeTextField.text = [NSDate formatDateAndTime:_appointment.startDate];
+                    self.startTimeTextField.text = [NSDate formatDateAndTime:startDate];
                 }
             }
         }
@@ -324,22 +316,22 @@ int CTLEndTimeInputTag = 3;
     
 }
 
-- (BOOL)validateAppointment:(EKEvent *)appointment
+- (BOOL)validateAppointment
 {
     BOOL isValid = YES;
     UIColor *errorColor = [UIColor ctlInputErrorBackground];
     
-    if([appointment.title length] == 0){
+    if([self.titleTextField.text length] == 0){
         [self.titleTextField setBackgroundColor:errorColor];
         isValid = NO;
     }
     
-    if(!appointment.startDate){
+    if(!_appointment.startDate){
         [self.startTimeTextField setBackgroundColor:errorColor];
         isValid = NO;
     }
     
-    if(!appointment.endDate){
+    if(!_appointment.endDate){
         [self.endTimeTextField setBackgroundColor:errorColor];
         isValid = NO;
     }
@@ -404,8 +396,35 @@ int CTLEndTimeInputTag = 3;
         return;
     }
     
-    if(![self validateAppointment:_appointment]){
+    if(![self validateAppointment]){
         return;
+    }
+    
+    _appointment.title = self.titleTextField.text;
+    _appointment.notes = self.notesTextField.text;
+    
+    self.cdAppointment.title = self.titleTextField.text;
+    self.cdAppointment.startDate = _appointment.startDate;
+    self.cdAppointment.endDate = _appointment.endDate;
+    
+    if([self.notesTextField.text length] > 0){
+        self.cdAppointment.notes = self.notesTextField.text;
+    }
+    
+    if([self.addressTextField.text length] > 0){
+        self.cdAppointment.address = self.addressTextField.text;
+    }
+    
+    if([self.cityTextField.text length] > 0){
+        self.cdAppointment.city = self.cityTextField.text;
+    }
+    
+    if([self.stateTextField.text length] > 0){
+        self.cdAppointment.state = self.stateTextField.text;
+    }
+    
+    if([self.zipTextField.text length] > 0){
+        self.cdAppointment.address = self.zipTextField.text;
     }
     
     EKCalendar *defaultCalendar = [_eventStore defaultCalendarForNewEvents];
@@ -416,6 +435,14 @@ int CTLEndTimeInputTag = 3;
         [_eventStore saveEvent:_appointment span:EKSpanThisEvent commit:YES error:&error];
     }
     
+    if([_datePicker.date compare:[NSDate date]] == NSOrderedAscending){
+        [self cancelLocalNotification:_appointment.eventIdentifier];
+    }else{
+        [_appointment addAlarm:[EKAlarm alarmWithRelativeOffset:-900.0f]];
+        [_appointment addAlarm:[EKAlarm alarmWithAbsoluteDate:_datePicker.date]];
+        [self scheduleNotificationWithItem:_appointment interval:5];
+    }
+    
     if(![self.cdAppointment eventID] && _appointment.eventIdentifier != nil){
         self.cdAppointment.eventID = _appointment.eventIdentifier;
     }
@@ -424,28 +451,48 @@ int CTLEndTimeInputTag = 3;
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadAppointmentsNotification object:nil];
     
-    [self resetForm];
     if(self.contact){
         [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
     }
     
-    if(self.isPresentedAsModal){
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }else{
-        [self.navigationController popViewControllerAnimated:YES];
+    [self dismiss:nil];
+}
+
+-(void)cancelLocalNotification:(NSString *)eventID
+{
+    for (UILocalNotification *notification in [[[UIApplication sharedApplication] scheduledLocalNotifications] copy]){
+        NSDictionary *userInfo = notification.userInfo;
+        if ([eventID isEqualToString:[userInfo objectForKey:@"eventID"]]){
+            [[UIApplication sharedApplication] cancelLocalNotification:notification];
+        }
     }
 }
 
-- (BOOL)addressIsEmpty
+- (void)scheduleNotificationWithItem:(EKEvent *)item interval:(int)minutesBefore
 {
-    if([self.addressTextField.text length] == 0 &&
-       [self.cityTextField.text length] == 0 &&
-       [self.stateTextField.text length] == 0 &&
-       [self.zipTextField.text length] == 0){
-        return YES;
+    [self cancelLocalNotification:item.calendarItemIdentifier];
+    
+    //NSDate *itemDate = item.startDate;
+    
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    
+    if (notification == nil){
+        return;
     }
     
-    return NO;
+    notification.applicationIconBadgeNumber = 1;
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    
+    //localNotif.fireDate = [itemDate dateByAddingTimeInterval:-(minutesBefore*60)];
+    notification.fireDate = item.startDate;
+    
+    notification.timeZone = [NSTimeZone defaultTimeZone];
+    notification.alertBody = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"APPOINTMENT", nil), item.title];
+    notification.alertAction = NSLocalizedString(@"VIEW_APPOINTMENT", nil);
+    
+    notification.userInfo = @{@"navigationController":@"appointmentsNavigationController", @"viewController":@"appointmentFormViewController", @"eventID":item.eventIdentifier};
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
 
 - (BOOL)hasAddress
@@ -462,10 +509,15 @@ int CTLEndTimeInputTag = 3;
 
 #pragma mark - Outlet Controls
 
-- (void)cancel:(id)sender
+- (void)dismiss:(id)sender
 {
     [self resetForm];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if(self.presentedAsModal){
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)resetForm
@@ -479,11 +531,7 @@ int CTLEndTimeInputTag = 3;
 
 - (IBAction)textFieldDidChange:(UITextField *)textField
 {
-    NSString *field = _fields[textField.tag];
-    if([field isEqualToString:@"title"] || [field isEqualToString:@"notes"]){
-       [_appointment setValue:textField.text forKey:field]; 
-    }
-    [self.cdAppointment setValue:textField.text forKey:field];
+    self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 - (IBAction)highlightTextField:(UITextField *)textField

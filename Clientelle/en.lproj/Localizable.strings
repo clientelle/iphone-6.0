@@ -144,6 +144,7 @@ e†
 "MARK_AS_COMPLETED" = "Mark as Completed";
 
 /* Set Appointment */
+"APPOINTMENT" = "Appointment";
 "SET_APPOINTMENT" = "Set Appointment";
 "APPOINTMENT_INFO" = "Appointment Info";
 "MEETING_WITH" = "Meeting with %@";
@@ -154,4 +155,5 @@ e†
 "LOCATION" = "Location (example: \"My Office\")";
 "NO_CALENDAR_FOUND" = "Could not add event because local Calendar is not configured.";
 "APPOINTMENT_LOCATION" = "Location";
+"VIEW_APPOINTMENT" = "View Appointment";
 

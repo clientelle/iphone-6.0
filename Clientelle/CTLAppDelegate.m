@@ -11,9 +11,11 @@
 #import "CTLMainMenuViewController.h"
 #import "Appirater.h"
 
-#import "CTLRemindersListViewController.h"
 #import "CTLReminderFormViewController.h"
 #import "CTLCDReminder.h"
+
+#import "CTLAppointmentFormViewController.h"
+#import "CTLCDAppointment.h"
 
 @implementation CTLAppDelegate
 
@@ -55,7 +57,9 @@
     if(notification && [[notification userInfo][@"navigationController"] length] > 0){
         application.applicationIconBadgeNumber = notification.applicationIconBadgeNumber-1;
         _rootViewController = [self setViewFromNotification:notification];
-    }else{
+    }
+
+    if(_rootViewController == nil){
         _rootViewController = [[CTLSlideMenuController alloc] initWithIdentifier:@"contactsNavigationController"];
     }
     
@@ -64,37 +68,9 @@
     return YES;
 }
                                
-- (CTLSlideMenuController *)setViewFromNotification:(UILocalNotification *)notification
-{
-    CTLSlideMenuController *rootViewController = nil;
-    
-    NSDictionary *userInfo = [notification userInfo];
-
-    if([userInfo[@"viewController"] isEqualToString:@"reminderFormViewController"]){
-        
-        CTLReminderFormViewController *reminderFormViewController = [self configureReminderViewController:userInfo];
-        [reminderFormViewController setPresentedAsModal:NO];
-        
-        rootViewController = [[CTLSlideMenuController alloc] initWithIdentifier:userInfo[@"navigationController"] viewController:reminderFormViewController];
-    }
-    
-    if(rootViewController == nil){
-        rootViewController = [[CTLSlideMenuController alloc] initWithIdentifier:@"contactsNavigationController"];
-    }
-    
-    return rootViewController;
-}
-
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [Appirater appEnteredForeground:YES];
-}
-
-void addressBookChanged(ABAddressBookRef reference, CFDictionaryRef dictionary, void *context) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        id ref = (__bridge id)(reference);
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAddressBookDidChange object:ref];
-    });
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -119,12 +95,74 @@ void addressBookChanged(ABAddressBookRef reference, CFDictionaryRef dictionary, 
         canTransition = YES;
     }
     
+    if([[notification userInfo][@"viewController"] isEqualToString:@"appointmentFormViewController"]){
+        CTLAppointmentFormViewController *viewController = [self configureAppointmentViewController:[notification userInfo]];
+        [viewController setPresentedAsModal:[self currentViewIsModal]];
+        [self handleTransition:viewController applicationState:application.applicationState];
+        canTransition = YES;
+    }
+    
     if(canTransition && application.applicationState == UIApplicationStateActive){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:notification.alertBody delegate:_rootViewController cancelButtonTitle:NSLocalizedString(@"CLOSE", nil) otherButtonTitles:NSLocalizedString(@"VIEW", nil), nil];
         [alert show];
     }
 
     application.applicationIconBadgeNumber = notification.applicationIconBadgeNumber-1;
+}
+
+#pragma mark - Listeners
+
+void addressBookChanged(ABAddressBookRef reference, CFDictionaryRef dictionary, void *context) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        id ref = (__bridge id)(reference);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kAddressBookDidChange object:ref];
+    });
+}
+
+#pragma mark - Configure transitionable view controller (from local notification)
+
+- (CTLSlideMenuController *)setViewFromNotification:(UILocalNotification *)notification
+{
+    CTLSlideMenuController *rootViewController = nil;
+    NSDictionary *userInfo = [notification userInfo];
+    
+    if([userInfo[@"viewController"] isEqualToString:@"reminderFormViewController"]){
+        CTLReminderFormViewController *viewController = [self configureReminderViewController:userInfo];
+        [viewController setPresentedAsModal:NO];
+        rootViewController = [[CTLSlideMenuController alloc] initWithIdentifier:userInfo[@"navigationController"] viewController:viewController];
+    }
+    
+    if([userInfo[@"viewController"] isEqualToString:@"appointmentFormViewController"]){
+        CTLAppointmentFormViewController *viewController = [self configureAppointmentViewController:userInfo];
+        
+        [viewController setPresentedAsModal:NO];
+        rootViewController = [[CTLSlideMenuController alloc] initWithIdentifier:userInfo[@"navigationController"] viewController:viewController];
+    }
+    
+    return rootViewController;
+}
+
+- (CTLReminderFormViewController *)configureReminderViewController:(NSDictionary *)userInfo
+{
+    CTLReminderFormViewController *viewController = (CTLReminderFormViewController *)[_storyboad instantiateViewControllerWithIdentifier:userInfo[@"viewController"]];
+    CTLCDReminder *reminder = [CTLCDReminder MR_findFirstByAttribute:@"eventID" withValue:userInfo[@"eventID"]];
+    
+    [viewController setCdReminder:reminder];
+    [viewController setTransitionedFromLocalNotification:YES];
+    [viewController setPresentedAsModal:NO];
+    return viewController;
+}
+
+- (CTLAppointmentFormViewController *)configureAppointmentViewController:(NSDictionary *)userInfo
+{
+    CTLAppointmentFormViewController *viewController = (CTLAppointmentFormViewController *)[_storyboad instantiateViewControllerWithIdentifier:userInfo[@"viewController"]];
+    
+    CTLCDAppointment *appointment = [CTLCDAppointment MR_findFirstByAttribute:@"eventID" withValue:userInfo[@"eventID"]];
+    
+    [viewController setCdAppointment:appointment];
+    [viewController setTransitionedFromLocalNotification:YES];
+    [viewController setPresentedAsModal:NO];
+    return viewController;
 }
 
 - (void)handleTransition:(UIViewController<CTLSlideMenuDelegate> *)viewController applicationState:(UIApplicationState)state
@@ -136,27 +174,10 @@ void addressBookChanged(ABAddressBookRef reference, CFDictionaryRef dictionary, 
     }
 }
 
-#pragma mark - Configure transitionable view controller (from local notification)
-
-- (CTLReminderFormViewController *)configureReminderViewController:(NSDictionary *)userInfo
-{
-    CTLReminderFormViewController *reminderFormViewController = (CTLReminderFormViewController *)[_storyboad instantiateViewControllerWithIdentifier:userInfo[@"viewController"]];
-    
-    CTLCDReminder *reminder = [CTLCDReminder MR_findFirstByAttribute:@"eventID" withValue:userInfo[@"reminderEventID"]];
-    
-    [reminderFormViewController setCdReminder:reminder];
-    [reminderFormViewController setTransitionedFromLocalNotification:YES];
-    [reminderFormViewController setPresentedAsModal:NO];
-
-    return reminderFormViewController;
-}
-
 - (BOOL)currentViewIsModal
 {
     UIViewController *presentedViewController = _rootViewController.mainViewController.presentedViewController;
-    
     BOOL presentedViewHasNavigationController = [presentedViewController isKindOfClass:[UINavigationController class]];
-    
     return presentedViewHasNavigationController == NO && presentedViewController != nil;
 }
 

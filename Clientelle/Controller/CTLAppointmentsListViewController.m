@@ -200,6 +200,8 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     cell.timeLabel.text = [NSString stringWithFormat:@"%@ - %@", [NSDate formatShortTimeOnly:appointment.startDate], [NSDate formatShortTimeOnly:appointment.endDate]];
     
     cell.dateLabel.text = [NSDate formatShortDateOnly:appointment.startDate];
+    cell.dateLabel.textColor = [UIColor darkGrayColor];
+    
     if([appointment.startDate compare:[NSDate date]] == NSOrderedAscending){
         cell.dateLabel.textColor = [UIColor redColor];
     }
@@ -235,7 +237,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
         if([sender isKindOfClass:[CTLCDAppointment class]]){
             CTLCDAppointment *appointment = (CTLCDAppointment *)sender;
             CTLAppointmentFormViewController *viewController = [segue destinationViewController];
-            [viewController setIsPresentedAsModal:NO];
+            [viewController setPresentedAsModal:NO];
             [viewController setCdAppointment:appointment];
             return;
         }
@@ -244,7 +246,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     if([[segue identifier] isEqualToString:CTLAppointmentModalSegueIdentifyer]){
         UINavigationController *navigationController = [segue destinationViewController];
         CTLAppointmentFormViewController *viewController = (CTLAppointmentFormViewController *)navigationController.topViewController;
-        [viewController setIsPresentedAsModal:YES];
+        [viewController setPresentedAsModal:YES];
         return;
     }
 }

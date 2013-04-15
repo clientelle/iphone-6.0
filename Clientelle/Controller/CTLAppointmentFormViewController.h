@@ -12,7 +12,7 @@
 @class CTLABPerson;
 @class CTLCDAppointment;
 
-@interface CTLAppointmentFormViewController : UITableViewController<CTLFieldCellDelegate>{
+@interface CTLAppointmentFormViewController : UITableViewController<CTLFieldCellDelegate, CTLSlideMenuDelegate>{
     UIDatePicker *_datePicker;
     NSInteger _activeInputTag;
     EKEvent *_appointment;
@@ -27,6 +27,7 @@
 - (IBAction)highlightTextField:(UITextField *)textField;
 - (IBAction)textFieldDidChange:(UITextField *)textField;
 
+@property (nonatomic, weak) CTLSlideMenuController *menuController;
 
 @property (nonatomic, weak) IBOutlet UITextField *titleTextField;
 @property (nonatomic, weak) IBOutlet UITextField *startTimeTextField;
@@ -38,12 +39,14 @@
 @property (nonatomic, weak) IBOutlet UITextField *stateTextField;
 @property (nonatomic, weak) IBOutlet UITextField *zipTextField;
 
-@property (nonatomic, assign) BOOL isPresentedAsModal;
+@property (nonatomic, assign) BOOL presentedAsModal;
+@property (nonatomic, assign) BOOL transitionedFromLocalNotification;
+
 @property (nonatomic, strong) CTLCDAppointment *cdAppointment;
 @property (nonatomic, strong) CTLABPerson *contact;
 
 - (IBAction)showDatePicker:(id)sender;
 - (IBAction)saveAppointment:(id)sender;
-- (void)cancel:(id)sender;
+- (void)dismiss:(id)sender;
 
 @end

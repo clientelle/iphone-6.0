@@ -581,7 +581,7 @@ int const CTLEmptyContactsMessageTag = 793;
     if([[segue identifier] isEqualToString:CTLAppointmentSegueIdentifyer]){
         UINavigationController *navigationController = [segue destinationViewController];
         CTLAppointmentFormViewController *appointmentViewController = (CTLAppointmentFormViewController *)navigationController.topViewController;
-        [appointmentViewController setIsPresentedAsModal:YES];
+        [appointmentViewController setPresentedAsModal:YES];
         [appointmentViewController setContact:_selectedPerson];
         return;
     }

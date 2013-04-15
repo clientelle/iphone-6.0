@@ -265,12 +265,10 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
     self.cdReminder.dueDate = _datePicker.date;
 
     if([_datePicker.date compare:[NSDate date]] == NSOrderedAscending || [sender isKindOfClass:[UIButton class]]){
-        //date is in the past. look for old notifs that need to be cleared out
         [self cancelLocalNotification:_reminder.calendarItemIdentifier];
     }else{
-        //[_reminder addAlarm:[EKAlarm alarmWithRelativeOffset:-900.0f]]; //15 min before
-        //[_reminder addAlarm:[EKAlarm alarmWithRelativeOffset:-300.0f]]; //5 min before
-        //[_reminder addAlarm:[EKAlarm alarmWithAbsoluteDate:_datePicker.date]];
+        [_reminder addAlarm:[EKAlarm alarmWithRelativeOffset:-900.0f]];
+        [_reminder addAlarm:[EKAlarm alarmWithAbsoluteDate:_datePicker.date]];
         [self scheduleNotificationWithItem:_reminder interval:5];
     }
     
@@ -298,7 +296,7 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
 {
     for (UILocalNotification *notification in [[[UIApplication sharedApplication] scheduledLocalNotifications] copy]){
         NSDictionary *userInfo = notification.userInfo;
-        if ([reminderEventID isEqualToString:[userInfo objectForKey:@"reminderEventID"]]){
+        if ([reminderEventID isEqualToString:[userInfo objectForKey:@"eventID"]]){
             [[UIApplication sharedApplication] cancelLocalNotification:notification];
         }
     }
@@ -327,7 +325,7 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
     notification.alertBody = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"REMINDER", nil), item.title];
     notification.alertAction = NSLocalizedString(@"VIEW_REMINDER", nil);
  
-    notification.userInfo = @{@"navigationController":@"remindersNavigationController", @"viewController":@"reminderFormViewController", @"reminderEventID":item.calendarItemIdentifier};
+    notification.userInfo = @{@"navigationController":@"remindersNavigationController", @"viewController":@"reminderFormViewController", @"eventID":item.calendarItemIdentifier};
     
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }

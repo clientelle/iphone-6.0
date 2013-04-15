@@ -59,7 +59,7 @@
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Reminders" representedClassName="CTLCDReminder" syncable="YES">
+    <entity name="Reminder" representedClassName="CTLCDReminder" syncable="YES">
         <attribute name="compeleted" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="completedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dueDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -72,6 +72,6 @@
         <element name="FormSchema" positionX="-0" positionY="-198" width="128" height="180"/>
         <element name="Inbox" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Person" positionX="-326" positionY="-361" width="128" height="253"/>
-        <element name="Reminders" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="Reminder" positionX="160" positionY="192" width="128" height="120"/>
     </elements>
 </model>

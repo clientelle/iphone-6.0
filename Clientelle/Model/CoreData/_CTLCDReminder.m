@@ -24,16 +24,16 @@ const struct CTLCDReminderFetchedProperties CTLCDReminderFetchedProperties = {
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:moc_];
+	return [NSEntityDescription insertNewObjectForEntityForName:@"Reminder" inManagedObjectContext:moc_];
 }
 
 + (NSString*)entityName {
-	return @"Reminders";
+	return @"Reminder";
 }
 
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:moc_];
+	return [NSEntityDescription entityForName:@"Reminder" inManagedObjectContext:moc_];
 }
 
 - (CTLCDReminderID*)objectID {
