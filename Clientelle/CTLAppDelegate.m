@@ -43,12 +43,11 @@
         ABAddressBookRegisterExternalChangeCallback(addressBookRef, addressBookChanged, NULL);
     }
     
-    /*
-    EKAuthorizationStatus EKAuthStatus = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
-    if(EKAuthStatus == EKAuthorizationStatusAuthorized){
-        EKEventStoreChangedNotification
-    }
-    */
+    //EKAuthorizationStatus EKAuthStatus = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
+    //if(EKAuthStatus == EKAuthorizationStatusAuthorized){
+        //EKEventStore *eventStore = [[EKEventStore alloc] init];
+        
+    //}
     
     _storyboad = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
     
@@ -111,6 +110,11 @@
 }
 
 #pragma mark - Listeners
+
+- (void)eventDidChange:(NSNotification *)notification
+{
+    NSLog(@"NOTIFICATION %@", notification);
+}
 
 void addressBookChanged(ABAddressBookRef reference, CFDictionaryRef dictionary, void *context) {
     dispatch_async(dispatch_get_main_queue(), ^{

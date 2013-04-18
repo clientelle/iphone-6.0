@@ -40,6 +40,9 @@ int CTLEndTimeInputTag = 3;
         self.navigationItem.leftBarButtonItem = cancelButton;
     }
     
+    _hasCalendarAccess = NO;
+    _eventStore = [[EKEventStore alloc] init];
+    
     [self configureInputs];
     [self checkPermission];
     
@@ -89,9 +92,6 @@ int CTLEndTimeInputTag = 3;
 
 - (void)checkPermission
 {
-    _hasCalendarAccess = NO;
-    _eventStore = [[EKEventStore alloc] init];
-    
     EKAuthorizationStatus EKAuthStatus = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
     if(EKAuthStatus == EKAuthorizationStatusNotDetermined){
         [_eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
@@ -210,46 +210,6 @@ int CTLEndTimeInputTag = 3;
     return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    if(section == 0 || [_appointment eventIdentifier] == nil){
-        return 0;
-    }
-
-    return 60.0f;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    if(section == 0 || [_appointment eventIdentifier] == nil){
-        return nil;
-    }
-    
-    CGFloat buttonHeight = 30.0f;
-    CGFloat buttonWidth = 60.0f;
-    CGFloat labelWidth = 100.0f;
-    CGFloat buttonPositionX = self.view.bounds.size.width/2 - buttonWidth/2;
-    CGFloat labelPositionX = self.view.bounds.size.width/2 - labelWidth/2;
-    
-    UILabel *dashesLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelPositionX, 5, labelWidth, buttonHeight)];
-    dashesLabel.backgroundColor = [UIColor clearColor];
-    dashesLabel.textAlignment = NSTextAlignmentCenter;
-    dashesLabel.text = @"-       -";
-    
-    UIButton *settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPositionX, 5, buttonWidth, buttonHeight)];
-    [settingsButton setImage:[UIImage imageNamed:@"trash-grey.png"] forState:UIControlStateNormal];
-    [settingsButton addTarget:self action:@selector(confirmDelete:) forControlEvents:UIControlEventTouchUpInside];
-    [settingsButton setAlpha:0.75f];
-    
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30.0f)];
-    [footerView addSubview:dashesLabel];
-    [footerView addSubview:settingsButton];
-    [footerView setBackgroundColor:[UIColor clearColor]];
-    
-    return footerView;
-}
-
-
 #pragma mark - Set Data
 
 - (IBAction)showDatePicker:(UITextField *)textField
@@ -357,38 +317,6 @@ int CTLEndTimeInputTag = 3;
     return localCalendar;
 }
 
-- (void)confirmDelete:(id)sender
-{
-    UIAlertView *confirmAlert = [[UIAlertView alloc] initWithTitle:nil
-                                                           message:NSLocalizedString(@"CONFIRM_DELETE_APPOINTMENT", NIL)
-                                                          delegate:self
-                                                 cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                                 otherButtonTitles:@"OK", nil];
-    [confirmAlert show];
-}
-
-- (void)deleteAppointment:(id)sender
-{
-    NSString *eventID = [self.cdAppointment eventID];
-    [self.cdAppointment MR_deleteEntity];
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-        if(eventID){
-            NSError *error = nil;
-            [_eventStore removeEvent:_appointment span:EKSpanThisEvent commit:YES error:&error];
-        }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadAppointmentsNotification object:nil];
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(buttonIndex == 1){
-        [self deleteAppointment:alertView];
-    }
-}
-
 - (IBAction)saveAppointment:(id)sender
 {
     if(!_hasCalendarAccess){
@@ -472,20 +400,16 @@ int CTLEndTimeInputTag = 3;
 {
     [self cancelLocalNotification:item.calendarItemIdentifier];
     
-    //NSDate *itemDate = item.startDate;
-    
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     
     if (notification == nil){
         return;
     }
     
+    NSDate *itemDate = item.startDate;
     notification.applicationIconBadgeNumber = 1;
     notification.soundName = UILocalNotificationDefaultSoundName;
-    
-    //localNotif.fireDate = [itemDate dateByAddingTimeInterval:-(minutesBefore*60)];
-    notification.fireDate = item.startDate;
-    
+    notification.fireDate = [itemDate dateByAddingTimeInterval:-(minutesBefore*60)];
     notification.timeZone = [NSTimeZone defaultTimeZone];
     notification.alertBody = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"APPOINTMENT", nil), item.title];
     notification.alertAction = NSLocalizedString(@"VIEW_APPOINTMENT", nil);

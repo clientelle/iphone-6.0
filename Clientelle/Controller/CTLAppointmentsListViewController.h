@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <EventKit/EventKit.h>
 #import "CTLAppointmentCell.h"
 
 extern NSString *const CTLReloadAppointmentsNotification;
@@ -19,6 +20,7 @@ extern NSString *const CTLReloadAppointmentsNotification;
     CTLPickerView *_filterPickerView;
     NSArray *_filterArray;
     NSArray *_appointments;
+    EKEventStore *_eventStore;
 }
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;

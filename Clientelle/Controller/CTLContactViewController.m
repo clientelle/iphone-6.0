@@ -561,6 +561,8 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (IBAction)textFieldDidChange:(UITextField *)textField
 {
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+    
     //clear all inputs of error background
     NSArray *fields = [NSArray arrayWithArray:_fieldRows];
     [fields enumerateObjectsUsingBlock:^(id input, NSUInteger idx, BOOL *stop){

@@ -108,14 +108,12 @@ int const CTLEmptyContactsMessageTag = 793;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayShareContactActionSheet:) name:CTLShareContactNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidGoInactive:) name:kApplicationDidGoInactive object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exitContactMode:) name:CTLExitContactModeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLShareContactNotification object:nil];
 }
 
