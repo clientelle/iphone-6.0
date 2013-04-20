@@ -24,6 +24,7 @@
         <attribute name="startDate" attributeType="Date" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wasModified" optional="YES" transient="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="FormSchema" representedClassName="CTLCDFormSchema" syncable="YES">
@@ -65,13 +66,14 @@
         <attribute name="dueDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="eventID" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
+        <attribute name="wasModified" optional="YES" transient="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
     </entity>
     <elements>
         <element name="Account" positionX="-171" positionY="-495" width="128" height="210"/>
-        <element name="Appointment" positionX="160" positionY="192" width="128" height="210"/>
+        <element name="Appointment" positionX="160" positionY="192" width="128" height="225"/>
         <element name="FormSchema" positionX="-0" positionY="-198" width="128" height="180"/>
         <element name="Inbox" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Person" positionX="-326" positionY="-361" width="128" height="253"/>
-        <element name="Reminder" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="Reminder" positionX="160" positionY="192" width="128" height="135"/>
     </elements>
 </model>

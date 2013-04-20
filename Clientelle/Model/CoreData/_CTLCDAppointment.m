@@ -14,6 +14,7 @@ const struct CTLCDAppointmentAttributes CTLCDAppointmentAttributes = {
 	.startDate = @"startDate",
 	.state = @"state",
 	.title = @"title",
+	.wasModified = @"wasModified",
 	.zip = @"zip",
 };
 
@@ -51,6 +52,10 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 	
 	if ([key isEqualToString:@"hasAddressValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"hasAddress"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"wasModifiedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"wasModified"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 
@@ -144,6 +149,32 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 
 @dynamic title;
 
+
+
+
+
+
+@dynamic wasModified;
+
+
+
+- (BOOL)wasModifiedValue {
+	NSNumber *result = [self wasModified];
+	return [result boolValue];
+}
+
+- (void)setWasModifiedValue:(BOOL)value_ {
+	[self setWasModified:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveWasModifiedValue {
+	NSNumber *result = [self primitiveWasModified];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveWasModifiedValue:(BOOL)value_ {
+	[self setPrimitiveWasModified:[NSNumber numberWithBool:value_]];
+}
 
 
 

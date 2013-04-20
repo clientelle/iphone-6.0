@@ -14,6 +14,9 @@ extern NSString *const CTLReloadRemindersNotification;
 
 @interface CTLRemindersListViewController : UITableViewController<CTLSlideMenuDelegate, CTLReminderCellDelegate>{
     NSArray *_reminders;
+    NSMutableDictionary *_events;
+    EKEventStore *_eventStore;
+    BOOL _changeDidComeFromApp;
 }
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;

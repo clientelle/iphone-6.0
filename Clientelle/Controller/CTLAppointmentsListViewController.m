@@ -33,57 +33,73 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 {
     [super viewDidLoad];
     
-    
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+        
     _eventStore = [[EKEventStore alloc] init];
-    
+    self.resultsController = [CTLCDAppointment fetchedResultsController];
     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BACK", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
     [self.navigationItem setBackBarButtonItem: backButton];
-    
     
     NSDictionary *todayDict = [self filterDict:NSLocalizedString(@"TODAY", nil)
                                      startDate:[NSDate today]
                                        endDate:[NSDate tomorrow]];
     
     NSDictionary *weekDict = [self filterDict:NSLocalizedString(@"THIS_WEEK", nil)
-                                     startDate:[NSDate firstDayOfCurrentWeek]
-                                       endDate:[NSDate lastDayOfCurrentWeek]];
+                                    startDate:[NSDate firstDayOfCurrentWeek]
+                                      endDate:[NSDate lastDayOfCurrentWeek]];
     
     NSDictionary *monthDict = [self filterDict:NSLocalizedString(@"THIS_MONTH", nil)
                                      startDate:[NSDate firstDateOfCurrentMonth]
                                        endDate:[NSDate lastDateOfCurrentMonth]];
     
     _filterArray = @[todayDict, weekDict, monthDict];
-     
-      
+    
+    
     int selectedCalendarFilterRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLDefaultSelectedCalendarFilter];
-    self.resultsController = [CTLCDAppointment fetchedResultsController];
     _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:_filterArray[selectedCalendarFilterRow][@"predicate"]];
-     
+    
+    [self setEventKeys];
+    
      _filterPickerView = [self createFilterPickerView];
     [_filterPickerView selectRow:selectedCalendarFilterRow inComponent:0 animated:NO];
     self.navigationItem.titleView = [self filterPickerButtonWithTitle:_filterArray[selectedCalendarFilterRow][@"title"]];
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
-    
+   
     _emptyView = [self buildEmptyView];
-    
+
     //tap to dissmiss the filter picker
     //[self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPickerFromTap:)]];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadAppointments:) name:CTLReloadAppointmentsNotification object:nil];
+}
+
+- (void)setEventKeys
+{
+    _events = [NSMutableDictionary dictionary];
+    if([_appointments count] > 0){
+        for(NSInteger i=0;i<[_appointments count]; i++){
+            CTLCDAppointment *appt = _appointments[i];
+            [_events setObject:appt forKey:appt.eventID];
+        }
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadAppointments:)
+                                                 name:CTLReloadAppointmentsNotification
+                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(eventDidChange:)
                                                  name:EKEventStoreChangedNotification
                                                object:_eventStore];
-    
 }
 
 - (NSDictionary *)filterDict:title startDate:(NSDate *)startDate endDate:(NSDate *)endDate
 {
     NSPredicate *calPredicate = [_eventStore predicateForEventsWithStartDate:startDate endDate:endDate calendars:nil];
-    NSPredicate *strPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (startDate =< %@)", startDate, endDate];
-    return @{@"title":title, @"predicate":strPredicate, @"calPredicate":calPredicate};
+    NSPredicate *cdPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (startDate =< %@)", startDate, endDate];
+    return @{@"title":title, @"predicate":cdPredicate, @"calPredicate":calPredicate};
 }
 
 - (void)eventDidChange:(NSNotification *)notification
@@ -93,10 +109,39 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     
     NSDictionary *filter = _filterArray[selectedCalendarFilterRow];
     NSArray *events = [_eventStore eventsMatchingPredicate:filter[@"calPredicate"]];
-    NSLog(@"EVENTS %@", events);
+    __block BOOL hasChanges = NO;
     
-    for(NSInteger i=0;i<[events count];i++){
-        [self updateCellForRow:i forEvent:events[i]];
+    if([events count] > 0){
+        for(NSInteger i=0;i<[events count];i++){
+            EKEvent *event = events[i];
+            if(_events[event.eventIdentifier] != nil){
+                hasChanges = YES;
+                CTLCDAppointment *appointment = _events[event.eventIdentifier];
+                appointment.title = event.title;
+                appointment.startDate = event.startDate;
+                appointment.endDate = event.endDate;
+                appointment.location = event.location;
+                appointment.notes = event.notes;
+                appointment.wasModifiedValue = YES;
+                
+                [_events setObject:appointment forKey:event.eventIdentifier];
+            }
+        }
+    }
+    
+    if([_events count] > 0){
+        [_events enumerateKeysAndObjectsUsingBlock:^(NSString *eventID, CTLCDAppointment *appointment, BOOL *stop){
+            if(appointment.wasModifiedValue == NO){
+                [appointment MR_deleteEntity];
+                hasChanges = YES;
+            }
+        }];
+    }
+    
+    if(hasChanges){
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+            [self reloadAppointments:nil];
+        }];
     }
 }
 
@@ -166,6 +211,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     self.resultsController = [CTLCDAppointment fetchedResultsController];
     NSDictionary *filter = [_filterArray objectAtIndex:[_filterPickerView selectedRowInComponent:0]];
     _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:filter[@"predicate"]];
+    [self setEventKeys];
     [self.tableView reloadData];
 }
 
@@ -241,6 +287,9 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     if(editingStyle == UITableViewCellEditingStyleDelete){
         CTLCDAppointment *appointment = [_appointments objectAtIndex:indexPath.row];
         [self deleteReminder:appointment];
+        NSError *error = nil;
+        EKEvent *event = [_eventStore eventWithIdentifier:appointment.eventID];
+        [_eventStore removeEvent:event span:EKSpanThisEvent error:&error];
     }
 }
 
@@ -270,6 +319,10 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 
 - (void)updateCellForRow:(int)row forEvent:(EKEvent *)appointment
 {
+    NSLog(@"APPOINTMENT %@", appointment);
+    
+    /*
+    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     CTLAppointmentCell *cell = (CTLAppointmentCell *)[self.tableView cellForRowAtIndexPath:indexPath];
  
@@ -282,6 +335,8 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     if([appointment.startDate compare:[NSDate date]] == NSOrderedAscending){
         cell.dateLabel.textColor = [UIColor redColor];
     }
+     
+     */
 }
 
 - (void)showMap:(CTLAppointmentCell *)cell

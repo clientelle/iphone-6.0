@@ -46,6 +46,12 @@ int CTLEndTimeInputTag = 3;
     [self configureInputs];
     [self checkPermission];
     
+    _calendar = [_eventStore defaultCalendarForNewEvents];
+    
+    if(!_calendar){
+        _calendar = [self createCalendar];
+    }
+    
     //IB tags -> Core Data mapping
     _fields = @[@"", @"title", @"startDate", @"endDate", @"notes", @"address", @"city",  @"state", @"zip"];
     
@@ -53,10 +59,18 @@ int CTLEndTimeInputTag = 3;
         self.cdAppointment = [CTLCDAppointment MR_createEntity];
         _appointment = [EKEvent eventWithEventStore:_eventStore];
         _appointment.calendar = [_eventStore defaultCalendarForNewEvents];
+        
+        _appointment.startDate = _datePicker.date;
+        _appointment.endDate = [NSDate hoursFrom:_appointment.startDate numberOfHours:1];
+        
+        self.cdAppointment.startDate = _appointment.startDate;
+        self.cdAppointment.endDate = _appointment.endDate;
+        
     }else{
         _appointment = [_eventStore eventWithIdentifier:[self.cdAppointment eventID]];
         
         if(_appointment){
+
             self.titleTextField.text = _appointment.title;
             self.startTimeTextField.text = [NSDate formatDateAndTime:_appointment.startDate];
             self.endTimeTextField.text = [NSDate formatDateAndTime:_appointment.endDate];
@@ -253,11 +267,14 @@ int CTLEndTimeInputTag = 3;
         
         if(_activeInputTag == CTLStartTimeInputTag){
             _appointment.startDate = [_datePicker date];
+            self.cdAppointment.startDate = [_datePicker date];
             if(_appointment.endDate){
                 //do not allow endDate to be before startDate
                 if([_appointment.endDate compare:_appointment.startDate] == NSOrderedAscending){
-                    NSDate *endDate = [NSDate hoursFrom:_appointment.endDate numberOfHours:1];
+                    NSDate *endDate = [NSDate hoursFrom:_appointment.startDate numberOfHours:1];
                     self.endTimeTextField.text = [NSDate formatDateAndTime:endDate];
+                    _appointment.endDate = endDate;
+                    self.cdAppointment.endDate = endDate;
                 }
             }
         }
@@ -269,6 +286,8 @@ int CTLEndTimeInputTag = 3;
                 if([_appointment.startDate compare:_appointment.endDate] == NSOrderedDescending){
                     NSDate *startDate = [NSDate hoursBefore:_appointment.endDate numberOfHours:1];
                     self.startTimeTextField.text = [NSDate formatDateAndTime:startDate];
+                    _appointment.startDate = startDate;
+                    self.cdAppointment.startDate = startDate;
                 }
             }
         }
@@ -332,8 +351,8 @@ int CTLEndTimeInputTag = 3;
     _appointment.notes = self.notesTextField.text;
     
     self.cdAppointment.title = self.titleTextField.text;
-    self.cdAppointment.startDate = _appointment.startDate;
-    self.cdAppointment.endDate = _appointment.endDate;
+    //self.cdAppointment.startDate = _appointment.startDate;
+    //self.cdAppointment.endDate = _appointment.endDate;
     
     if([self.notesTextField.text length] > 0){
         self.cdAppointment.notes = self.notesTextField.text;
@@ -355,20 +374,18 @@ int CTLEndTimeInputTag = 3;
         self.cdAppointment.address = self.zipTextField.text;
     }
     
-    EKCalendar *defaultCalendar = [_eventStore defaultCalendarForNewEvents];
-    
-    if(defaultCalendar){
-        NSError *error = nil;
-        [_appointment setCalendar:defaultCalendar];
-        [_eventStore saveEvent:_appointment span:EKSpanThisEvent commit:YES error:&error];
+    if(_appointment.eventIdentifier != nil){
+        [self cancelAlarms:_appointment];
     }
     
-    if([_datePicker.date compare:[NSDate date]] == NSOrderedAscending){
-        [self cancelLocalNotification:_appointment.eventIdentifier];
-    }else{
+    NSError *error = nil;
+    [_appointment setCalendar:[_eventStore defaultCalendarForNewEvents]];
+    [_eventStore saveEvent:_appointment span:EKSpanThisEvent commit:YES error:&error];
+    
+    if([_datePicker.date compare:[NSDate date]] == NSOrderedDescending){
+        [self scheduleNotificationWithItem:_appointment interval:5];
         [_appointment addAlarm:[EKAlarm alarmWithRelativeOffset:-900.0f]];
         [_appointment addAlarm:[EKAlarm alarmWithAbsoluteDate:_datePicker.date]];
-        [self scheduleNotificationWithItem:_appointment interval:5];
     }
     
     if(![self.cdAppointment eventID] && _appointment.eventIdentifier != nil){
@@ -386,20 +403,25 @@ int CTLEndTimeInputTag = 3;
     [self dismiss:nil];
 }
 
--(void)cancelLocalNotification:(NSString *)eventID
+-(void)cancelAlarms:(EKEvent *)appointment
 {
+    NSArray *alarms = appointment.alarms;
+    for(NSInteger i=0;i<[alarms count];i++){
+        [appointment removeAlarm:alarms[i]];
+        NSLog(@"REMOVED ALARM %@", alarms[i]);
+    }
+    
     for (UILocalNotification *notification in [[[UIApplication sharedApplication] scheduledLocalNotifications] copy]){
         NSDictionary *userInfo = notification.userInfo;
-        if ([eventID isEqualToString:[userInfo objectForKey:@"eventID"]]){
+        if ([appointment.eventIdentifier isEqualToString:[userInfo objectForKey:@"eventID"]]){
             [[UIApplication sharedApplication] cancelLocalNotification:notification];
+             NSLog(@"CANCELED LOCAL NOTIF");
         }
     }
 }
 
 - (void)scheduleNotificationWithItem:(EKEvent *)item interval:(int)minutesBefore
 {
-    [self cancelLocalNotification:item.calendarItemIdentifier];
-    
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     
     if (notification == nil){

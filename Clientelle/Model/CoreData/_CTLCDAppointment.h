@@ -15,6 +15,7 @@ extern const struct CTLCDAppointmentAttributes {
 	__unsafe_unretained NSString *startDate;
 	__unsafe_unretained NSString *state;
 	__unsafe_unretained NSString *title;
+	__unsafe_unretained NSString *wasModified;
 	__unsafe_unretained NSString *zip;
 } CTLCDAppointmentAttributes;
 
@@ -23,6 +24,7 @@ extern const struct CTLCDAppointmentRelationships {
 
 extern const struct CTLCDAppointmentFetchedProperties {
 } CTLCDAppointmentFetchedProperties;
+
 
 
 
@@ -133,6 +135,18 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* wasModified;
+
+
+@property BOOL wasModifiedValue;
+- (BOOL)wasModifiedValue;
+- (void)setWasModifiedValue:(BOOL)value_;
+
+//- (BOOL)validateWasModified:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSString* zip;
 
 
@@ -211,6 +225,15 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 - (NSString*)primitiveTitle;
 - (void)setPrimitiveTitle:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveWasModified;
+- (void)setPrimitiveWasModified:(NSNumber*)value;
+
+- (BOOL)primitiveWasModifiedValue;
+- (void)setPrimitiveWasModifiedValue:(BOOL)value_;
 
 
 

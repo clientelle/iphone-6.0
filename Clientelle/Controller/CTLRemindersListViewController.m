@@ -33,15 +33,82 @@ NSString *const CTLReminderModalSegueIdentifyer = @"toReminderModal";
     
     self.resultsController = [CTLCDReminder fetchedResultsController];
 
+    _eventStore = [[EKEventStore alloc] init];
+    
     _reminders = [self.resultsController fetchedObjects];
+        
+    [self setEventKeys];
+    
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadReminders:) name:CTLReloadRemindersNotification object:nil];
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(eventDidChange:)
+                                                 name:EKEventStoreChangedNotification
+                                               object:_eventStore];
+
 }
+
+- (void)setEventKeys
+{
+    _events = [NSMutableDictionary dictionary];
+    if([_reminders count] > 0){
+        for(NSInteger i=0;i<[_reminders count]; i++){
+            CTLCDReminder *reminder = _reminders[i];
+            [_events setObject:reminder forKey:reminder.eventID];
+        }
+    }
+}
+
+- (void)eventDidChange:(NSNotification *)notification
+{
+    if(_changeDidComeFromApp){
+        _changeDidComeFromApp = NO;
+        return;
+    }
+    _eventStore = notification.object;
+           
+    EKCalendar *calendar = [_eventStore defaultCalendarForNewReminders];
+    NSPredicate *predicate = [_eventStore predicateForRemindersInCalendars:@[calendar]];
+    __block BOOL hasChanges = NO;
+    
+    [_eventStore fetchRemindersMatchingPredicate:predicate completion:^(NSArray *reminders) {
+        for (EKReminder *reminder in reminders) {
+            if(_events[reminder.calendarItemIdentifier] != nil){
+                hasChanges = YES;
+                CTLCDReminder *cdReminder = _events[reminder.calendarItemIdentifier];
+                cdReminder.title = reminder.title;
+                cdReminder.compeletedValue = reminder.completed;
+                cdReminder.completedDate = reminder.completionDate;
+                cdReminder.dueDate = [NSDate dateFromComponents:reminder.dueDateComponents];
+                cdReminder.wasModifiedValue = YES;
+                
+                [_events setObject:cdReminder forKey:reminder.calendarItemIdentifier];
+            }
+        }
+    }];
+    
+    if([_events count] > 0){
+        [_events enumerateKeysAndObjectsUsingBlock:^(NSString *eventID, CTLCDReminder *reminder, BOOL *stop){
+            if(reminder.wasModifiedValue == NO){
+                [reminder MR_deleteEntity];
+                hasChanges = YES;
+            }
+        }];
+    }
+    
+    if(hasChanges){
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+            [self reloadReminders:nil];
+        }];
+    }
+}
+
 
 - (void)reloadReminders:(NSNotification *)notification
 {
+    _changeDidComeFromApp = YES;
     self.resultsController = [CTLCDReminder fetchedResultsController];
     _reminders = [self.resultsController fetchedObjects];
     [self.tableView reloadData];

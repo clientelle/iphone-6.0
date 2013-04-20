@@ -20,6 +20,7 @@
     BOOL _hasCalendarAccess;
     NSArray *_fields;
     BOOL _hasAddress;
+    EKCalendar *_calendar;
 }
 
 /* CTLFieldCellDelegate */
