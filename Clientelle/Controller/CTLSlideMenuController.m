@@ -19,9 +19,8 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"contactsNavigationC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     [self setupMenuView:self.view.bounds];
-    NSLog(@"SLIDE MENU VIEWDIDLOAD");
+
     if(!self.mainViewControllerIdentifier){
         self.mainViewControllerIdentifier = CTLDefaultNavigationControllerIdentifier;
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
@@ -38,7 +37,7 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"contactsNavigationC
     [self addChildViewController:menuViewController];
     [self.view addSubview:menuViewController.view];
 
-    self.rightSwipeEnabled = YES;
+    self.rightSwipeEnabled = NO;
     
     UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
     [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
