@@ -8,17 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString *const CTLMenuPlistName;
-
-@interface CTLMainMenuViewController : UITableViewController<CTLSlideMenuDelegate>{
-    NSArray *_menuItems;
+@interface CTLMainMenuViewController : UITableViewController{
     NSIndexPath *_selectedIndexPath;
 }
 
 - (void)styleActiveCell:(NSIndexPath *)indexPath;
 
-@property (nonatomic, strong) NSArray *menuItems;
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, strong) CTLSlideMenuController *menuController;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 
 @end

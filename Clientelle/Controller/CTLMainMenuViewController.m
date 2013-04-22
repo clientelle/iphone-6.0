@@ -12,22 +12,18 @@
 #import "CTLSlideMenuController.h"
 #import "CTLContactsListViewController.h"
 
-NSString *const CTLMenuPlistName = @"Clientelle-Menu";
-
 @implementation CTLMainMenuViewController
 
-@synthesize menuItems = _menuItems, selectedIndexPath = _selectedIndexPath;
+@synthesize selectedIndexPath = _selectedIndexPath;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    //self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter.png"]];
+    NSLog(@"MAIN MENU - VIEW DID LOAD");
     
+    //self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter.png"]];
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:40 green:40 blue:40 alpha:1.0f];
-    self.tableView.separatorColor = [UIColor clearColor];
-
-    _menuItems = [[NSArray alloc]initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:CTLMenuPlistName ofType:@"plist"]];
 
 //TODO: save this to nsuser defaults
 self.menuController.hasPro = NO;
@@ -52,90 +48,57 @@ self.menuController.hasInbox = NO;
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [_menuItems count];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 40.0f;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    CTLMenuItemCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil) {
-        cell = [[CTLMenuItemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-
-   [cell setSelectionStyle:UITableViewCellEditingStyleNone];
-     
-    NSDictionary *menuItem = _menuItems[indexPath.row];
-    
-    cell.imageView.image = [UIImage imageNamed:menuItem[@"icon"]];
-    cell.textLabel.text = NSLocalizedString(menuItem[@"title"], nil);
-    
-    if([self isLastRow:indexPath]){
-        [cell lastBorder];
+    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    if([cell.reuseIdentifier isEqualToString:self.menuController.mainViewControllerIdentifier]){
+        [self styleActiveCell:indexPath];
     }
     return cell;
 }
 
-- (void)setActiveCell:(NSNotification *)notification
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSIndexPath *indexPath = (NSIndexPath *)notification.object;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self removeStyleFromPreviouslyActiveCell:indexPath];
     [self styleActiveCell:indexPath];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [self loadViewController:cell.reuseIdentifier];
+}
+
+- (void)loadViewController:(NSString *)storyboardIdentifier
+{
+    if([storyboardIdentifier isEqualToString:@"inboxNavigationController"]){
+        if(!self.menuController.hasPro || !self.menuController.hasAccount){
+            storyboardIdentifier = @"accountInterstitialNavigationController";
+        }
+        if(!self.menuController.hasInbox){
+            storyboardIdentifier = @"inboxInterstitialNavigationController";
+        }
+        storyboardIdentifier = @"inboxNavigationController";
+    }
+     
+    [self.menuController setMainView:storyboardIdentifier];
 }
 
 - (void)styleActiveCell:(NSIndexPath *)indexPath
 {
     self.selectedIndexPath = indexPath;
     CTLMenuItemCell *cell = (CTLMenuItemCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    [cell setActiveBorders:[self isLastRow:indexPath]];
+    BOOL isLastCell = [self isLastRow:indexPath];
+    [cell setActiveBorders:isLastCell];
 }
 
 - (void)removeStyleFromPreviouslyActiveCell:(NSIndexPath *)indexPath
 {
-    CTLMenuItemCell *cell = (CTLMenuItemCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    CTLMenuItemCell *cell = (CTLMenuItemCell *)[self.tableView cellForRowAtIndexPath:self.selectedIndexPath];
     [cell resetBorders];
-    
-    if([self isLastRow:indexPath]){
-        [cell lastBorder];
-    }
 }
 
 - (BOOL)isLastRow:(NSIndexPath *)indexPath
 {
-    return indexPath.row == ([_menuItems count] -1);
-}
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self removeStyleFromPreviouslyActiveCell:self.selectedIndexPath];
-    [self styleActiveCell:indexPath];
-    
-    NSDictionary *menuItem = [_menuItems objectAtIndex:indexPath.row];
-    [self.menuController setMainView:[self handleInboxSelection:menuItem[@"identifier"]]];
-}
-
-- (NSString *)handleInboxSelection:(NSString *)navControllerName
-{
-    if([navControllerName isEqualToString:@"inboxNavigationController"]){
-        if(!self.menuController.hasPro || !self.menuController.hasAccount){
-            return @"accountInterstitialNavigationController";
-        }
-        if(!self.menuController.hasInbox){
-            return @"inboxInterstitialNavigationController";
-        }
-        return @"inboxNavigationController";
-    }
-    return navControllerName;
+    return indexPath.row == ([self.tableView numberOfRowsInSection:0] -1);
 }
 
 @end

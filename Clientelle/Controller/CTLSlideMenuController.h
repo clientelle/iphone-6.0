@@ -10,17 +10,15 @@ extern const CGFloat CTLMainMenuWidth;
 
 @class CTLMainMenuViewController;
 
-@interface CTLSlideMenuController : UIViewController{
-    UIStoryboard *_mainStoryboard;
-    ABAddressBookRef _addressBookRef;
-}
+@interface CTLSlideMenuController : UIViewController;
 
-@property (nonatomic, weak) CTLMainMenuViewController<CTLSlideMenuDelegate> *panel;
 @property (nonatomic, weak) UINavigationController *mainNavigationController;
+
+@property (nonatomic, strong) NSString *mainViewControllerIdentifier;
+
 @property (nonatomic, strong) UIViewController<CTLSlideMenuDelegate> *nextViewController;
 @property (nonatomic, strong) UIViewController<CTLSlideMenuDelegate> *mainViewController;
 @property (nonatomic, assign) ABAddressBookRef addressBookRef;
-@property (nonatomic, strong) UIStoryboard *mainStoryboard;
 
 @property (nonatomic, assign) BOOL hasPro;
 @property (nonatomic, assign) BOOL hasAccount;
@@ -28,18 +26,16 @@ extern const CGFloat CTLMainMenuWidth;
 @property (nonatomic, assign) BOOL rightSwipeEnabled;
 
 
-- (id)initWithIdentifier:(NSString *)identifier;
-
-- (id)initWithIdentifier:(NSString *)identifier viewController:(UIViewController<CTLSlideMenuDelegate> *)viewController;
-
 - (void)setMainView:(NSString *)identifier;
 - (void)flipToView;
-
 
 - (void)transitionToView:(UIViewController<CTLSlideMenuDelegate> *)viewController withAnimationStyle:(UIViewAnimationTransition)animationStyle;
 
 - (void)renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)mainViewController;
 
-- (void)toggleMenu:(id)sender;
+- (IBAction)toggleMenu:(id)sender;
+
+- (void)launchWithViewFromNotification:(UILocalNotification *)notification;
+- (void)setMainViewFromNotification:(UILocalNotification *)notification applicationState:(UIApplicationState)applicationState;
 
 @end

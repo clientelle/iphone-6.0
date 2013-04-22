@@ -1,74 +1,43 @@
 //
-//  RWSSlideMenuViewController.m
-//  Created by Samuel Goodwin on 1/17/13.
-//  Copyright (c) 2013 Roundwall Software. All rights reserved.
+//  CTLSlideMenuController.m
+//  Created by Kevin Liu on 1/17/13.
+//  Copyright (c) 2013 Clientelle. All rights reserved.
 //
 #import <QuartzCore/QuartzCore.h>
 
 #import "CTLSlideMenuController.h"
 #import "CTLMainMenuViewController.h"
 
-const CGFloat CTLMainMenuWidth = 190.0f;
+#import "CTLAppointmentFormViewController.h"
+#import "CTLCDAppointment.h"
+
+const CGFloat CTLMainMenuWidth = 80.0f;
+NSString *const CTLDefaultNavigationControllerIdentifier = @"contactsNavigationController";
 
 @implementation CTLSlideMenuController
-
-- (id)initWithIdentifier:(NSString *)identifier
-{
-    self = [super init];
-    self.mainStoryboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
-    
-    if(self){
-        
-        CGRect frame = self.view.bounds;
-        
-        CTLMainMenuViewController *menuViewController = [self.mainStoryboard instantiateInitialViewController];
-        [self setLeftPanel:menuViewController withFrame:frame];
-        [self setActiveMenuItem:identifier];
-        
-        UINavigationController *navigationController = (UINavigationController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:identifier];
-        
-        [self setRightPanel:navigationController withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(frame), CGRectGetHeight(frame))];
-        [self setShadow:navigationController];
-    }
-
-    return self;
-}
-
-- (id)initWithIdentifier:(NSString *)identifier viewController:(UIViewController<CTLSlideMenuDelegate> *)viewController
-{
-    self = [super init];
-    self.mainStoryboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle: nil];
-    
-    if(self){
-        
-        CGRect frame = self.view.bounds;
-        CGRect viewFrame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(frame), CGRectGetHeight(frame));
-        
-        CTLMainMenuViewController *menuViewController = [self.mainStoryboard instantiateInitialViewController];
-        [self setLeftPanel:menuViewController withFrame:frame];
-        [self setActiveMenuItem:identifier];
-        
-        self.mainNavigationController = [self.mainStoryboard instantiateViewControllerWithIdentifier:identifier];
-        self.mainViewController = viewController;
-        self.mainViewController.menuController = self;
-
-        [self renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)self.mainNavigationController.topViewController];
-        [self.mainNavigationController pushViewController:viewController animated:NO];
-
-        [self addChildViewController:self.mainNavigationController];
-
-        self.mainNavigationController.view.frame = viewFrame;
-        [self.view addSubview:self.mainNavigationController.view];
-        [self setShadow:self.mainNavigationController];
-    }
-    
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    [self setupMenuView:self.view.bounds];
+    NSLog(@"SLIDE MENU VIEWDIDLOAD");
+    if(!self.mainViewControllerIdentifier){
+        self.mainViewControllerIdentifier = CTLDefaultNavigationControllerIdentifier;
+        UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
+        [self setRightPanel:navigationController withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+    }
+}
+
+-  (void)setupMenuView:(CGRect)frame
+{
+    CTLMainMenuViewController *menuViewController = (CTLMainMenuViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"mainMenuViewController"];
+    [menuViewController setMenuController:self];
+    frame.size.width = CTLMainMenuWidth;
+    menuViewController.view.frame = frame;
+    [self addChildViewController:menuViewController];
+    [self.view addSubview:menuViewController.view];
+
     self.rightSwipeEnabled = YES;
     
     UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
@@ -79,6 +48,8 @@ const CGFloat CTLMainMenuWidth = 190.0f;
     [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
     [self.view addGestureRecognizer:swipeRight];
 }
+
+#pragma mark - UI Controls
 
 -(void)handleSwipeLeft:(UISwipeGestureRecognizer*)recognizer
 {
@@ -94,29 +65,49 @@ const CGFloat CTLMainMenuWidth = 190.0f;
     }
 }
 
-#pragma mark - Set Panels
-
-- (void)setLeftPanel:(CTLMainMenuViewController *)leftPanel withFrame:(CGRect)frame
+- (IBAction)toggleMenu:(id)sender
 {
-    frame.size.width = CTLMainMenuWidth;
-    leftPanel.view.frame = frame;
-    self.panel = leftPanel;
-    [self.panel setMenuController:self];
-    [self addChildViewController:self.panel];
-    [self.view addSubview:self.panel.view];
+    if(self.mainNavigationController.view.frame.origin.x == 0){
+        [self showMenu];
+    }else{
+        [self hideMenu];
+    }
 }
+
+-(void)showMenu
+{
+    [self.view endEditing:YES];
+    CGRect mainFrame = self.mainNavigationController.view.frame;
+    CGRect movedFrame = CGRectMake(CTLMainMenuWidth, mainFrame.origin.y, mainFrame.size.width, mainFrame.size.height);
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.mainNavigationController.view setFrame:movedFrame];
+    }];
+}
+
+-(void)hideMenu
+{
+    CGRect mainFrame = self.mainNavigationController.view.frame;
+    CGRect movedFrame = CGRectMake(0, mainFrame.origin.y, mainFrame.size.width, mainFrame.size.height);
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.mainNavigationController.view setFrame:movedFrame];
+    }];
+}
+
+#pragma mark - Set Panels
 
 - (void)setMainView:(NSString *)identifier
 {
-    UINavigationController *navigationController = [self.mainStoryboard instantiateViewControllerWithIdentifier:identifier];
-    
-    CGFloat width = CGRectGetWidth(self.view.bounds);
-    CGFloat height = CGRectGetHeight(self.view.bounds);
-    
     if(self.mainNavigationController){
         [self.mainNavigationController removeFromParentViewController];
         [self.mainNavigationController.view removeFromSuperview];
     }
+    
+    CGFloat width = CGRectGetWidth(self.view.bounds);
+    CGFloat height = CGRectGetHeight(self.view.bounds);
+    
+    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:identifier];
     
     [self setRightPanel:navigationController withFrame:CGRectMake(CTLMainMenuWidth, 0.0f, width, height)];
     
@@ -129,9 +120,7 @@ const CGFloat CTLMainMenuWidth = 190.0f;
 
 - (void)setShadow:(UINavigationController *)mainView
 {
-    CGPathRef shadowPath = [UIBezierPath bezierPathWithRect:mainView.view.bounds].CGPath;
-    [mainView.view.layer setShadowPath:shadowPath];
-    
+    mainView.view.layer.shadowPath = [UIBezierPath bezierPathWithRect:mainView.view.bounds].CGPath;
     mainView.view.layer.shadowOpacity = 0.85f;
     mainView.view.layer.shadowRadius = 5.0f;
     mainView.view.layer.shadowOffset = CGSizeMake(-3, 0);
@@ -174,63 +163,9 @@ const CGFloat CTLMainMenuWidth = 190.0f;
     [self addChildViewController:self.mainNavigationController];
     self.mainNavigationController.view.frame = frame;
     [self.view addSubview:self.mainNavigationController.view];
+    [self setShadow:self.mainNavigationController];
 }
 
-- (void)setActiveMenuItem:(NSString *)identifier
-{
-    NSArray *menuItems = self.panel.menuItems;
-    NSInteger selectedRowIndex = 0;
-    
-    for(NSInteger i=0; i<[menuItems count];i++){
-        if([menuItems[i][@"identifier"] isEqualToString:identifier]){
-            selectedRowIndex = i;
-            break;
-        }
-    }
-    
-    [self.panel setSelectedIndexPath:[NSIndexPath indexPathForRow:selectedRowIndex inSection:0]];
-}
-
-#pragma mark - Toggle Menu
-
-- (void)toggleMenu:(id)sender
-{
-    if(self.mainNavigationController.view.frame.origin.x == 0){
-        [self showMenu];
-    }else{
-        [self hideMenu];
-    }
-}
-
--(void)showMenu
-{
-    [self.view endEditing:YES];
-    CGRect mainFrame = self.mainNavigationController.view.frame;
-    CGRect movedFrame = CGRectMake(self.panel.view.frame.size.width, mainFrame.origin.y, mainFrame.size.width, mainFrame.size.height);
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.mainNavigationController.view setFrame:movedFrame];
-    }];
-}
-
--(void)hideMenu
-{
-    CGRect mainFrame = self.mainNavigationController.view.frame;
-    CGRect movedFrame = CGRectMake(0, mainFrame.origin.y, mainFrame.size.width, mainFrame.size.height);
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.mainNavigationController.view setFrame:movedFrame];
-    }];
-}
-
-- (BOOL)isCurrentViewIsModal
-{
-    UIViewController *presentedViewController = self.mainViewController.presentedViewController;
-    
-    BOOL presentedViewHasNavigationController = [presentedViewController isKindOfClass:[UINavigationController class]];
-    
-    return presentedViewHasNavigationController == NO && presentedViewController != nil;
-}
-
-//UILocationNotification in AppDelegate prompts user to open cooresponding view
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex == 0){
@@ -264,6 +199,60 @@ const CGFloat CTLMainMenuWidth = 190.0f;
             [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
             [presentedNavigationController pushViewController:self.nextViewController animated:NO];
             [UIView commitAnimations];
+        }
+    }
+}
+
+- (void)launchWithViewFromNotification:(UILocalNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    self.mainViewControllerIdentifier = userInfo[@"navigationController"];
+    
+    if([userInfo[@"viewController"] isEqualToString:@"appointmentFormViewController"]){
+        CTLAppointmentFormViewController *viewController = (CTLAppointmentFormViewController *)[self.storyboard instantiateViewControllerWithIdentifier:userInfo[@"viewController"]];
+        CTLCDAppointment *appointment = [CTLCDAppointment MR_findFirstByAttribute:@"eventID" withValue:userInfo[@"eventID"]];
+        [viewController setCdAppointment:appointment];
+        self.mainViewController = viewController;
+    }
+
+    self.mainNavigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
+    self.mainNavigationController.view.frame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
+    
+    self.mainViewController.menuController = self;
+    
+    [self renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)self.mainNavigationController.topViewController];
+    [self.mainNavigationController pushViewController:self.mainViewController animated:NO];
+    
+    [self addChildViewController:self.mainNavigationController];
+    [self.view addSubview:self.mainNavigationController.view];
+    [self setShadow:self.mainNavigationController];
+}
+
+- (void)setMainViewFromNotification:(UILocalNotification *)notification applicationState:(UIApplicationState)applicationState
+{
+    NSDictionary *userInfo = [notification userInfo];
+        
+    if([userInfo[@"viewController"] isEqualToString:@"appointmentFormViewController"]){
+        CTLAppointmentFormViewController *viewController = (CTLAppointmentFormViewController *)[self.storyboard instantiateViewControllerWithIdentifier:userInfo[@"viewController"]];
+        
+        CTLCDAppointment *appointment = [CTLCDAppointment MR_findFirstByAttribute:@"eventID" withValue:userInfo[@"eventID"]];
+        [viewController setCdAppointment:appointment];
+        [viewController setTransitionedFromLocalNotification:YES];
+        
+        
+        UIViewController *presentedViewController = self.mainViewController.presentedViewController;
+        BOOL currentlyInModalView = [presentedViewController isKindOfClass:[UINavigationController class]] == NO && presentedViewController != nil;
+        
+        [viewController setPresentedAsModal:currentlyInModalView];
+        
+        if(applicationState == UIApplicationStateInactive){
+            [self transitionToView:viewController withAnimationStyle:UIViewAnimationTransitionFlipFromLeft];
+        }else if(applicationState == UIApplicationStateActive){
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:notification.alertBody delegate:self cancelButtonTitle:NSLocalizedString(@"CLOSE", nil) otherButtonTitles:NSLocalizedString(@"VIEW", nil), nil];
+            [alert show];
+            
+            self.nextViewController = viewController;
         }
     }
 }

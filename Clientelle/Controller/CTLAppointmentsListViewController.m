@@ -286,16 +286,38 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 {
     if(editingStyle == UITableViewCellEditingStyleDelete){
         CTLCDAppointment *appointment = [_appointments objectAtIndex:indexPath.row];
-        [self deleteReminder:appointment];
+        [self deleteAppointment:appointment];
         NSError *error = nil;
         EKEvent *event = [_eventStore eventWithIdentifier:appointment.eventID];
         [_eventStore removeEvent:event span:EKSpanThisEvent error:&error];
     }
 }
 
-- (void)deleteReminder:(CTLCDAppointment *)reminder
+- (void)changeAppointmentStatus:(CTLAppointmentCell *)cell
 {
-    [reminder MR_deleteEntity];
+    ////NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    //CTLCDAppointment *appointment = [_appointments objectAtIndex:indexPath.row];
+    /*
+    if([appointment compeletedValue]){
+        [appointment setCompeleted:@(0)];
+        [appointment setCompletedDate:nil];
+        
+        BOOL isOverDue = [appointment.startDate compare:[NSDate date]] == NSOrderedAscending;
+        [cell decorateInCompletedCell:isOverDue];
+        
+    }else{
+        [cell decorateCompletedCell];
+        [appointment setCompeleted:@(1)];
+        [appointment setCompletedDate:[NSDate date]];
+    }
+    
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+     */
+}
+
+- (void)deleteAppointment:(CTLCDAppointment *)appointment
+{
+    [appointment MR_deleteEntity];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
         [self reloadAppointments:nil];
     }];
@@ -456,6 +478,13 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
 	return [_filterArray count];
+}
+
+- (void)markAsCompleted:(id)sender
+{
+    //[self.cdAppointment setCompeleted:@(1)];
+    //[self.cdAppointment setCompletedDate:[NSDate date]];
+    //[self saveAppointment:sender];
 }
 
 @end

@@ -8,13 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+extern CGFloat const CTLMainMenuCellHeight;
+
 @interface CTLMenuItemCell : UITableViewCell{
     CALayer *_topBorder;
     CALayer *_bottomBorder;
+    UIColor *_topBorderColor;
+    UIColor *_bottomBorderColor;
+    UIColor *_activeCellColor;
+    UIColor *_activeBottomBorderColor;
 }
 
-- (void)setActiveBorders:(BOOL)isLast;
+@property(nonatomic, strong) IBOutlet UIImageView *icon;
+
+- (void)setActiveBorders:(BOOL)isLastCell;
 - (void)resetBorders;
-- (void)lastBorder;
 
 @end

@@ -320,6 +320,7 @@ int CTLEndTimeInputTag = 3;
 
 - (EKCalendar *)createCalendar
 {
+    //TODO: no calendar no sync!
     //get local calendar source (device calendar. not imap)
     EKSource *localSource = nil;
     for (EKSource *source in _eventStore.sources) {
@@ -328,7 +329,7 @@ int CTLEndTimeInputTag = 3;
             break;
         }
     }
-    //create a calendar to store app-created reminders
+
     EKCalendar *localCalendar = [EKCalendar calendarForEntityType:EKEntityTypeEvent eventStore:_eventStore];
     localCalendar.title = NSLocalizedString(@"CALENDAR", nil);
     localCalendar.source = localSource;
@@ -431,7 +432,8 @@ int CTLEndTimeInputTag = 3;
     NSDate *itemDate = item.startDate;
     notification.applicationIconBadgeNumber = 1;
     notification.soundName = UILocalNotificationDefaultSoundName;
-    notification.fireDate = [itemDate dateByAddingTimeInterval:-(minutesBefore*60)];
+    //notification.fireDate = [itemDate dateByAddingTimeInterval:-(minutesBefore*60)];
+    notification.fireDate = itemDate;
     notification.timeZone = [NSTimeZone defaultTimeZone];
     notification.alertBody = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"APPOINTMENT", nil), item.title];
     notification.alertAction = NSLocalizedString(@"VIEW_APPOINTMENT", nil);

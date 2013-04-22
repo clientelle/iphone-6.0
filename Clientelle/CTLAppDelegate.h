@@ -8,13 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class CTLSlideMenuController;
-
-@interface CTLAppDelegate : UIResponder <UIApplicationDelegate>{
-    UIStoryboard *_storyboad;
-    CTLSlideMenuController *_rootViewController;
-}
-
+@interface CTLAppDelegate : UIResponder <UIApplicationDelegate>
 @property (strong, nonatomic) UIWindow *window;
-
 @end
