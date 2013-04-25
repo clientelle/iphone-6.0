@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Clientelle Leads LLC. All rights reserved.
 //
 
-@class CTLABPerson;
+@class CTLCDPerson;
 
 @class UIMenuController;
 
@@ -24,7 +24,7 @@ extern CGFloat const CTLContactViewHeaderHeight;
 @property (nonatomic, weak) UIButton *editButton;
 @property (nonatomic, weak) UIImageView *indicator;
 
-- (void)populateViewData:(CTLABPerson *)abPerson;
+- (void)populateViewData:(CTLCDPerson *)contact;
 
 - (void)reset;
 

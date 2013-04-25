@@ -8,7 +8,6 @@
 #import "UIColor+CTLColor.h"
 #import "CTLContactFormEditorViewController.h"
 #import "CTLCDFormSchema.h"
-#import "CTLABGroup.h"
 #import "UITableViewCell+CellShadows.h"
 
 NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
@@ -65,6 +64,7 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.navBar.topItem.rightBarButtonItem.enabled = YES;
     [self setFieldAtIndexPath:indexPath];
 }
 

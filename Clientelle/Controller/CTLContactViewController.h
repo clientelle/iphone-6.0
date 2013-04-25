@@ -8,8 +8,7 @@
 
 #import "CTLFieldCell.h"
 
-@class CTLABGroup;
-@class CTLABPerson;
+@class CTLCDPerson;
 @class CTLCDFormSchema;
 
 @interface CTLContactViewController : UITableViewController<CTLFieldCellDelegate, UIActionSheetDelegate>{
@@ -25,7 +24,6 @@
     NSArray *_addressFields;
     NSMutableArray *_addressRows;
     NSMutableDictionary *_addressDict;
-    BOOL _hasGroup;
 }
 
 /* CTLFieldCellDelegate */
@@ -36,8 +34,7 @@
 @property(nonatomic, weak) IBOutlet UIBarButtonItem *saveContactButton;
 
 @property(nonatomic, assign) ABAddressBookRef addressBookRef;
-@property(nonatomic, strong) CTLABPerson *abPerson;
-@property(nonatomic, strong) CTLABGroup *abGroup;
+@property(nonatomic, strong) CTLCDPerson *contact;
 
 - (IBAction)submit:(id)sender;
 - (IBAction)dismissKeyboard:(UITapGestureRecognizer *)recognizer;

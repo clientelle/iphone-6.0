@@ -19,10 +19,8 @@ CGFloat const CTLContactModeToolbarViewHeight = 70;
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
         self.appointmentButton = [self createButton:@"11-clock.png" withIndex:0];
-        //self.emailButton = [self createButton:@"18-envelope.png" withIndex:1];
         self.callButton = [self createButton:@"75-phone.png" withIndex:1];
         self.smsButton = [self createButton:@"09-chat-2.png" withIndex:2];
-        //self.mapButton = [self createButton:@"07-map-marker.png" withIndex:4];
     }
     return self;
 }

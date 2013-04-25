@@ -7,7 +7,6 @@ const struct CTLCDFormSchemaAttributes CTLCDFormSchemaAttributes = {
 	.address = @"address",
 	.email = @"email",
 	.firstName = @"firstName",
-	.groupID = @"groupID",
 	.jobTitle = @"jobTitle",
 	.lastName = @"lastName",
 	.note = @"note",
@@ -57,10 +56,6 @@ const struct CTLCDFormSchemaFetchedProperties CTLCDFormSchemaFetchedProperties =
 	}
 	if ([key isEqualToString:@"firstNameValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"firstName"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"groupIDValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"groupID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"jobTitleValue"]) {
@@ -162,32 +157,6 @@ const struct CTLCDFormSchemaFetchedProperties CTLCDFormSchemaFetchedProperties =
 
 - (void)setPrimitiveFirstNameValue:(BOOL)value_ {
 	[self setPrimitiveFirstName:[NSNumber numberWithBool:value_]];
-}
-
-
-
-
-
-@dynamic groupID;
-
-
-
-- (int16_t)groupIDValue {
-	NSNumber *result = [self groupID];
-	return [result shortValue];
-}
-
-- (void)setGroupIDValue:(int16_t)value_ {
-	[self setGroupID:[NSNumber numberWithShort:value_]];
-}
-
-- (int16_t)primitiveGroupIDValue {
-	NSNumber *result = [self primitiveGroupID];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveGroupIDValue:(int16_t)value_ {
-	[self setPrimitiveGroupID:[NSNumber numberWithShort:value_]];
 }
 
 

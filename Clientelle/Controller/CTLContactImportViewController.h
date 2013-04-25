@@ -25,7 +25,6 @@
 @property(nonatomic, strong) IBOutlet UIActivityIndicatorView *busyIndicator;
 
 @property(nonatomic, assign) ABAddressBookRef addressBookRef;
-@property(nonatomic, strong) CTLABGroup *selectedGroup;
 
 - (IBAction)importContacts:(id)sender;
 - (IBAction)cancelImport:(id)sender;

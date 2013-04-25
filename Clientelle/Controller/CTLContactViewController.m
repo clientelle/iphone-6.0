@@ -19,7 +19,6 @@
 #import "CTLFieldCell.h"
 
 #import "CTLABPerson.h"
-#import "CTLABGroup.h"
 #import "CTLCDPerson.h"
 
 #import "UITableViewCell+CellShadows.h"
@@ -36,38 +35,14 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     
     _addressbookChangeDidComeFromApp = NO;
     
-    if(self.abPerson){
+    if(self.contact){
         self.navigationItem.title = NSLocalizedString(@"EDIT_CONTACT", nil);
     }else{
         self.navigationItem.title = NSLocalizedString(@"ADD_CONTACT", nil);
     }
-    
-    if([self.abGroup groupID] == CTLAllContactsGroupID){
-        _hasGroup = NO;
-        ABRecordID defaultGroupID = [CTLABGroup clientGroupID];
-        //check to make sure this group isn't nuked
-        if([CTLABGroup groupDoesExist:defaultGroupID addressBookRef:_addressBookRef]){
-            self.abGroup = [[CTLABGroup alloc] initWithGroupID:defaultGroupID addressBook:self.addressBookRef];
-        }else{
-            self.abGroup = [CTLABGroup getAnyGroup:self.addressBookRef];
-        }
-    }else{
-        _hasGroup = YES;
-    }
-    
-    if(!_cdFormSchema){
-        _cdFormSchema = [CTLCDFormSchema MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"groupID=%i", [self.abGroup groupID]]];
-    }
-    
-    //if group was added from outside of the app, it needs to have a form schema
-    if(!_cdFormSchema.groupID){
-        _cdFormSchema = [CTLCDFormSchema MR_createEntity];
-        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-    }
-    
+
     [self buildSchema];
-    _textFieldsDict = [NSMutableDictionary dictionary];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(formDidChange:) name:CTLFormFieldAddedNotification object: nil];
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)]];
 }
@@ -86,9 +61,18 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (void)buildSchema
 {
+    if(!_cdFormSchema){
+        _cdFormSchema = [CTLCDFormSchema MR_findFirst];
+        if(!_cdFormSchema){
+            _cdFormSchema = [CTLCDFormSchema MR_createEntity];
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+        }
+    }
+    
     _fieldRows = [NSMutableArray array];
     _formSchema = [NSMutableArray array];
     _addressRows = [NSMutableArray array];
+    _textFieldsDict = [NSMutableDictionary dictionary];
     
     if(!_personDict){
         _personDict = [NSMutableDictionary dictionary];
@@ -105,9 +89,9 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     if(!_addressFields){
         _addressFields = [[CTLCDFormSchema fieldsFromPlist:CTLAddressSchemaPlist] mutableCopy];
     }
-        
+
     _showAddress = [self fieldIsVisible:CTLPersonAddressProperty];
-     
+
     for(NSUInteger i=0; i < [_formFields count]; i++){
         NSMutableDictionary *inputField = nil;
         NSString *field = _formFields[i][kCTLFieldName];
@@ -117,8 +101,8 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         
         if(newValue){
             value = newValue;
-        }else if(self.abPerson != nil){
-            value = [[self.abPerson valueForKey:field] description];
+        }else if(self.contact != nil){
+            value = [[self.contact valueForKey:field] description];
             if(value){
                 [_personDict setValue:value forKey:field];
             }
@@ -150,11 +134,12 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
             
             if(newValue){
                 value = newValue;
-            }else if(self.abPerson != nil){
-                value = [[[self.abPerson addressDict] valueForKey:field] description];
+            }else if(self.contact != nil){
+                /*
+                value = [[[self.contact addressDict] valueForKey:field] description];
                 if(value){
                     [inputField setValue:value forKey:kCTLFieldValue];
-                }
+                }*/
             }
             [_addressRows addObject:inputField];
         }
@@ -182,6 +167,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     }];
 }
 
+/*
 - (void)addressBookDidChange:(NSNotification *)notification
 {
     //if changes came from app or user has no pending changes, simply reload the form view
@@ -190,15 +176,15 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         return;
     }
     
-    ABRecordID personID = [self.abPerson recordID];
-    NSString *personName = [self.abPerson compositeName];
+    ABRecordID personID = [self.contact recordID];
+    NSString *personName = [self.contact firstName];
     
     CFErrorRef error;
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
     self.addressBookRef = addressBookRef;
-    self.abPerson = [[CTLABPerson alloc] initWithRecordID:personID withAddressBookRef:addressBookRef];
+    CTLABPerson *abPerson = [[CTLABPerson alloc] initWithRecordID:personID withAddressBookRef:addressBookRef];
         
-    if(!self.abPerson){
+    if(!self.contact){
         [CTLCDPerson deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"recordID=%i", personID]];
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
@@ -209,7 +195,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     }else{
         [self reloadFormViewAfterAddressBookChange];
     }
-}
+}*/
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -351,7 +337,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if((_showAddress && section == 0) || !self.abPerson){
+    if((_showAddress && section == 0) || !self.contact){
         return 0;
     }
     return 60.0f;
@@ -359,7 +345,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if(!self.abPerson){
+    if(!self.contact){
         return nil;
     }
     
@@ -392,65 +378,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     return nil;
 }
 
-- (void)handleDeleteContact:(id)sender
-{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:self
-                                                    cancelButtonTitle:nil
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:nil, nil];
-    if(!_hasGroup){
-        [actionSheet addButtonWithTitle: NSLocalizedString(@"DELETE_CONTACT", nil)];
-        actionSheet.cancelButtonIndex = 1;
-    }else{
-        NSString *removeFromGroupTitle = [NSString stringWithFormat:NSLocalizedString(@"REMOVE_FROM_GROUP", nil), [self.abGroup name]];
-        [actionSheet addButtonWithTitle:removeFromGroupTitle];
-        [actionSheet addButtonWithTitle: NSLocalizedString(@"DELETE_CONTACT", nil)];
-        actionSheet.cancelButtonIndex = 2;
-    }
-    
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"CANCEL", nil)];
-    [actionSheet showInView:self.view];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(_hasGroup){
-        
-        if(buttonIndex == 0){
-            NSLog(@"remove from group");
-            [self removeFromGroup];
-        }
-        
-        if(buttonIndex == 1){
-             NSLog(@"remove from addressbook");
-            [self removeFromAddressBook];
-        }
-        
-    }else{
-        if(buttonIndex == 0){
-            NSLog(@"remove from addressbook");
-            [self removeFromAddressBook];
-        }
-    }
-}
-
-- (void)removeFromGroup
-{
-    [self.abGroup removeMember:self.abPerson.recordID];
-    [[NSNotificationCenter defaultCenter] postNotificationName:CTLExitContactModeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:nil];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)removeFromAddressBook
-{
-    [CTLABPerson deletePerson:[self.abPerson recordRef] withAddressBook:self.addressBookRef];
-    [[NSNotificationCenter defaultCenter] postNotificationName:CTLExitContactModeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:nil];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (UIButton *)makeFooterButton
 {
     UIEdgeInsets insets = UIEdgeInsetsMake(18, 18, 18, 18);
@@ -471,7 +398,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         CTLContactFormEditorViewController *formEditorViewController = [segue destinationViewController];
         [formEditorViewController setFormSchema:_cdFormSchema];
         [formEditorViewController setFieldsFromPList:_formFields];
-        [formEditorViewController setAbGroup:self.abGroup];
     }
 }
 
@@ -479,6 +405,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 - (IBAction)submit:(id)sender
 {
@@ -508,31 +435,38 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         [self setAddressDictionary];
         [_personDict setValue:_addressDict forKey:CTLPersonAddressProperty];
     }
-
-    if([self.abPerson recordID]){
-        self.abPerson = [self.abPerson updateWithDictionary:_personDict];
-        [self.abPerson setAccessDate:[NSDate date]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactRowDidChangeNotification object:self.abPerson];
-     }else{
-        ABRecordID recordID = kABRecordInvalidID;
-        self.abPerson = [[CTLABPerson alloc] initWithDictionary:_personDict withAddressBookRef:self.addressBookRef];
-        recordID = [self.abPerson recordID];
-        if(recordID != kABRecordInvalidID){
-            [self.abPerson setAccessDate:[NSDate date]];
-            [self.abGroup addMember:self.abPerson];
-        }
-        [[NSNotificationCenter defaultCenter] postNotificationName:CTLNewContactWasAddedNotification object:self.abPerson];
-    }
-         
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID=%i", [self.abPerson recordID]];
-    CTLCDPerson *person = [CTLCDPerson MR_findFirstWithPredicate:predicate];
-    if(!person){
-        [CTLCDPerson createFromABPerson:self.abPerson];
-    }else{
-        [person updatePerson:_personDict];
-    }
+    //TODO: Get AB Person and upate CD
+    BOOL syncedWithAB = YES;
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    NSLog(@"CONTACT %@", self.contact);
+    
+    if(!self.contact){
+        self.contact = [CTLCDPerson MR_createEntity];
+        [self.contact updatePerson:_personDict];
+        
+        __block CTLABPerson *abPerson = nil;
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL succes, NSError *error){
+            if(syncedWithAB){
+                abPerson = [[CTLABPerson alloc] initWithDictionary:_personDict withAddressBookRef:self.addressBookRef];
+                [self.contact setRecordIDValue:abPerson.recordID];
+            }
+        }];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:CTLNewContactWasAddedNotification object:self.contact];
+    }else{
+
+        [self.contact updatePerson:_personDict];
+        
+        __block CTLABPerson *abPerson = nil;
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL succes, NSError *error){
+            if(syncedWithAB){
+                abPerson = [[CTLABPerson alloc] initWithRecordID:self.contact.recordID withAddressBookRef:self.addressBookRef];
+                [abPerson updateWithDictionary:_personDict];
+            }
+        }];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactRowDidChangeNotification object:self.contact];
+    }
     
     //set flag to notifiy that changes came from within the app
     _addressbookChangeDidComeFromApp = YES;
@@ -540,9 +474,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 }
 
 - (void)formDidChange:(NSNotification *)notification{
-    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"groupID=%i", [self.abGroup groupID]];
-    _formSchema = [CTLCDFormSchema MR_findFirstWithPredicate:predicate inContext:localContext];
+    _formSchema = [CTLCDFormSchema MR_findFirst];
     [self buildSchema];
     [self.tableView reloadData];
 }

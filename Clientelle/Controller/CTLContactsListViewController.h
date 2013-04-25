@@ -11,36 +11,31 @@
 
 extern int const CTLAllContactsGroupID;
 
-extern NSString *const CTLContactWereImportedNotification;
+extern NSString *const CTLContactsWereImportedNotification;
 extern NSString *const CTLContactListReloadNotification;
 extern NSString *const CTLTimestampForRowNotification;
 extern NSString *const CTLNewContactWasAddedNotification;
 extern NSString *const CTLContactRowDidChangeNotification;
-extern NSString *const CTLExitContactModeNotification;
 
-@class CTLABGroup;
-@class CTLABPerson;
+@class CTLCDPerson;
 @class CTLContactToolbarView;
 @class CTLContactHeaderView;
 @class CTLPickerView;
 
-@interface CTLContactsListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CTLSlideMenuDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>{
-    
+@interface CTLContactsListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CTLSlideMenuDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>{
     ABAddressBookRef _addressBookRef;
-    
-
-    CTLPickerView *_groupPickerView;
-    NSMutableArray *_groupArray;
+    CTLPickerView *_sortPickerView;
+    NSArray *_sortArray;
         
-    NSMutableArray *_contacts;
+    NSArray *_contacts;
     NSMutableArray *_filteredContacts;
-    NSMutableDictionary *_accessedDictionary;
-    NSMutableDictionary *_contactsDictionary;
+
+    UISearchDisplayController *_searchController;
     
     UIView *_emptyView;
     BOOL _inContactMode;
     NSIndexPath *_selectedIndexPath;
-    CTLABPerson *_selectedPerson;
+    CTLCDPerson *_selectedPerson;
     
     BOOL _shouldReorderListOnScroll;
 }
@@ -53,6 +48,6 @@ extern NSString *const CTLExitContactModeNotification;
 @property (nonatomic, strong) CTLContactHeaderView *contactHeader;
 @property (nonatomic, strong) CTLContactToolbarView *contactToolbar;
 
-- (IBAction)dismissGroupPickerFromTap:(UITapGestureRecognizer *)recognizer;
+- (IBAction)dismissSortPickerFromTap:(UITapGestureRecognizer *)recognizer;
 
 @end

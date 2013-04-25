@@ -8,6 +8,7 @@ e†
 
 /* MAIN MENU */
 "CONTACTS" = "Contacts";
+"CLIENTS" = "Clients";
 "LEADS" = "Leads";
 "APPOINTMENTS" = "Appointments";
 "WEB_INBOX" = "Web Inbox";
@@ -27,6 +28,7 @@ e†
 "PARENS_OPTIONAL" = "(Optional)";
 "CLOSE" = "Close";
 "VIEW" = "View";
+"DONE" = "Done";
 
 /* PERMISSIONS */
 "REQUIRES_ACCESS_TO_CONTACTS" = "To continue, please allow access to Contacts:";
@@ -37,17 +39,14 @@ e†
 "ALLOW_ACCESS_TO_CALENDARS" = "Clientelle requires access to your Calendars.";
 "GO_TO_SETTINGS_CALENDARS" = "Settings > Privacy > Calendars";
 
-/* GROUPS */
-"ALL_CONTACTS" = "All Contacts";
-"CLIENTS" = "Clients";
-"PROSPECTS" = "Prospects";
-"ASSOCIATES" = "Associates";
+/* SORT CONTACTS */
+"SORT_BY" = "Sort by";
+"ACTIVITY" = "Most Active";
+"FIRST_NAME" = "First name";
+"LAST_NAME" = "Last name";
 
-"EMPTY_GROUP" = "This group has no contacts yet.";
 "ADD_CONTACTS" = "Add Contacts";
-"SHARE_CONTACT_MSG" = "Here is %@'s contact info: ";
-"PHONE_COLON" = "phone: %@ ";
-"EMAIL_COLON" = "email: %@ ";
+"NO_CONTACTS_YET" = "No contacts yet";
 
 /* ADD CONTACTS */
 "ADD_NEW_CONTACT" = "Add a new Contact";

@@ -10,8 +10,6 @@
 #import "NSDate+CTLDate.h"
 #import "UILabel+CTLLabel.h"
 
-#import "CTLABPerson.h"
-#import "CTLABGroup.h"
 #import "CTLCDPerson.h"
 #import "CTLAppointmentFormViewController.h"
 #import "CTLContactsListViewController.h"
@@ -85,7 +83,7 @@ int CTLEndTimeInputTag = 3;
     }
     
     if(self.contact){
-        NSString *appointmentTitle = [NSString stringWithFormat:NSLocalizedString(@"MEETING_WITH", nil), [self.contact compositeName]];
+        NSString *appointmentTitle = [NSString stringWithFormat:NSLocalizedString(@"MEETING_WITH", nil), [self.contact firstName]];
         _appointment.title = appointmentTitle;
         [self.cdAppointment setTitle:appointmentTitle];
         self.titleTextField.text = appointmentTitle;

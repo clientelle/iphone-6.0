@@ -1,30 +1,21 @@
-//
-//  CTLContactListController.m
-//  Clientelle
-//
-//  Created by Samuel Goodwin on 3/17/12.
-//  Copyright (c) 2012 Clientelle Ltd.. All rights reserved.
-//
-
 #import <QuartzCore/QuartzCore.h>
 #import "UIColor+CTLColor.h"
 #import "NSString+CTLString.h"
 #import "NSDate+CTLDate.h"
 
 #import "CTLSlideMenuController.h"
-#import "CTLGroupsListViewController.h"
+
 #import "CTLContactsListViewController.h"
 
 #import "CTLContactViewController.h"
 #import "CTLContactImportViewController.h"
-#import "CTLGroupsListViewController.h"
+
 #import "CTLAppointmentFormViewController.h"
 
 #import "CTLContactCell.h"
 #import "CTLContactHeaderView.h"
 #import "CTLContactToolbarView.h"
 
-#import "CTLABGroup.h"
 #import "CTLABPerson.h"
 #import "CTLCDPerson.h"
 #import "CTLCDFormSchema.h"
@@ -32,17 +23,17 @@
 #import "CTLPickerView.h"
 #import "CTLPickerButton.h"
 
-NSString *const CTLContactWereImportedNotification = @"com.clientelle.notifications.contactsWereImported";
+NSString *const CTLContactsWereImportedNotification = @"com.clientelle.notifications.contactsWereImported";
 NSString *const CTLContactListReloadNotification = @"com.clientelle.notifications.reloadContacts";
 NSString *const CTLTimestampForRowNotification = @"com.clientelle.notifications.updateContactTimestamp";
 NSString *const CTLNewContactWasAddedNotification = @"com.clientelle.com.notifications.contactWasAdded";
 NSString *const CTLContactRowDidChangeNotification = @"com.clientelle.com.notifications.contactRowDidChange";
-NSString *const CTLExitContactModeNotification = @"com.clientelle.com.notifications.exitContactMode";
+NSString *const CTLSortOrderSelectedIndex = @"com.clientelle.notifcations.selectedSortOrder";
+
 
 NSString *const CTLImporterSegueIdentifyer = @"toImporter";
 NSString *const CTLContactListSegueIdentifyer = @"toContacts";
 NSString *const CTLContactFormSegueIdentifyer = @"toContactForm";
-NSString *const CTLGroupListSegueIdentifyer = @"toGroupList";
 NSString *const CTLAppointmentSegueIdentifyer = @"toSetAppointment";
 
 int const CTLAllContactsGroupID = 0;
@@ -59,22 +50,30 @@ int const CTLEmptyContactsMessageTag = 793;
     
     _inContactMode = NO;
     _shouldReorderListOnScroll = NO;
-    
     _emptyView = [self noContactsView];
+    
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    [self rightTitlebarWithAddContactButton];
     
+    [self prepareContactViewMode];
+    
+    [self buildSortPicker];
+    
+    [self checkAddressbookPermission];
+    
+    [self registerNotificationsObservers];
+}
+
+- (void)checkAddressbookPermission
+{
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-    
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
         ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
-            // First time access has been granted, add the contact
+            // First time access has been granted
             if(granted){
                 self.addressBookRef = addressBookRef;
-                [self.menuController setAddressBookRef:self.addressBookRef];
-                [CTLABGroup createDefaultGroups:addressBookRef completion:^(void){
-                    [self buildGroupsAndLoadContacts];
-                }];
+                [self loadAllContacts];
             }else{
                 [self displayPermissionPrompt];
             }
@@ -82,50 +81,12 @@ int const CTLEmptyContactsMessageTag = 793;
     } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
         // The user has previously given access.
         self.addressBookRef = addressBookRef;
-        [self.menuController setAddressBookRef:self.addressBookRef];
+        [self loadAllContacts];
         
-        NSNumber *count = [CTLCDFormSchema MR_numberOfEntities];
-        if([count intValue] == 0){
-            [CTLABGroup createDefaultGroups:addressBookRef completion:^(void){
-                [self buildGroupsAndLoadContacts];
-            }];
-        }else{
-            [self buildGroupsAndLoadContacts];
-        }
     } else {
         // The user has previously denied access
         [self displayPermissionPrompt];
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactListAfterImport:) name:CTLContactWereImportedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactList:) name:CTLContactListReloadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timestampForRowDidChange:) name:CTLTimestampForRowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newContactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactRowDidChange:) name:CTLContactRowDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayShareContactActionSheet:) name:CTLShareContactNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidGoInactive:) name:kApplicationDidGoInactive object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exitContactMode:) name:CTLExitContactModeNotification object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLShareContactNotification object:nil];
-}
-
-- (void)applicationDidGoInactive:(NSNotification *)notification{
-    [self exitContactMode];
-}
-
-- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
-{
-    UITableView *tableView = controller.searchResultsTableView;
-    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)displayPermissionPrompt
@@ -139,233 +100,174 @@ int const CTLEmptyContactsMessageTag = 793;
     [requirePermission show];
 }
 
-- (void)buildGroupsAndLoadContacts
+#pragma mark - Loading Contact List
+
+- (int)savedSortOrderIndex
 {
-    [self rightTitlebarWithAddContactButton];
-    int defaultGroupID = [CTLABGroup defaultGroupID];
-    
-    [self buildGroupSelector:defaultGroupID];
-    [self prepareContactViewMode];
-    
-    _contacts = [NSArray array];
-    _filteredContacts = [NSMutableArray array];
-    
-    if(defaultGroupID == CTLAllContactsGroupID){
-        self.navigationItem.titleView = [self groupPickerButtonWithTitle: NSLocalizedString(@"ALL_CONTACTS", nil)];
-        [self loadAllContacts];
-    }else{
-        CTLABGroup *selectedGroup = [[CTLABGroup alloc] initWithGroupID:defaultGroupID addressBook:self.addressBookRef];
-        self.navigationItem.titleView = [self groupPickerButtonWithTitle:[selectedGroup name]];
-        [self loadGroup:selectedGroup];
-    }
+    return [[NSUserDefaults standardUserDefaults] integerForKey:CTLSortOrderSelectedIndex];
 }
 
-#pragma mark - Loading Contact List
+- (void)saveSortOrder:(NSInteger)filterIndex
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:filterIndex forKey:CTLSortOrderSelectedIndex];
+    [defaults synchronize];
+}
 
 - (void)loadAllContacts
 {
-    [CTLABPerson peopleFromAddressBook:self.addressBookRef withBlock:^(NSDictionary *results){
-        _contactsDictionary = [results mutableCopy];
-    }];
+    _contacts = [CTLCDPerson findAll];
+    _filteredContacts = [NSMutableArray array];
     
-    [self setContactList];
-}
-
-- (void)addressBookDidChange:(NSNotification *)notification
-{
-    CFErrorRef error = NULL;
-    self.addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
-    CTLABGroup *selectedGroup = [[CTLABGroup alloc] initWithGroupID:[CTLABGroup defaultGroupID] addressBook:self.addressBookRef];
-    
-    if(selectedGroup.groupID == CTLAllContactsGroupID){
-        [self loadAllContacts];
-    }else{
-        [self loadGroup:selectedGroup];
+    if(!_searchController && [_contacts count] > 0){
+        [self buildSearchBar];
     }
+
+    NSInteger row = [_sortPickerView selectedRowInComponent:0];
+    
+    NSString *field = _sortArray[row][@"field"];
+    BOOL asc = [_sortArray[row][@"asc"] boolValue];
+    
+    NSSortDescriptor *sortByAccessDate = [NSSortDescriptor sortDescriptorWithKey:field ascending:asc];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortByAccessDate];
      
-    if(_inContactMode){
-        _selectedPerson = [[CTLABPerson alloc] initWithRecordID:_selectedPerson.recordID withAddressBookRef:self.addressBookRef];
-        [self.contactHeader populateViewData:_selectedPerson];
-        [self determineToolbarAbilities];
-    }
-}
-
-- (void)loadGroup:(CTLABGroup *)group
-{
-    _contactsDictionary = group.members;
-    [self setContactList];
+    _contacts = [_contacts sortedArrayUsingDescriptors:sortDescriptors];
+ 
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+        [self.tableView setContentOffset:CGPointMake(0.0f, CGRectGetHeight(self.searchBar.bounds))];
+    });
 }
 
 - (void)reloadContactListAfterImport:(NSNotification *)notification
 {
-    NSMutableDictionary *importedContacts = [notification object];
-    if([importedContacts count] > 0 ){
-        for(NSNumber *recordID in importedContacts){
-            [_accessedDictionary setObject:[NSDate date] forKey:recordID];
-            [_contactsDictionary setObject:[importedContacts objectForKey:recordID] forKey:recordID];
-        }
-    }
-    
-    [self handleUIRestrictions];
-    [self sortContactListByAccessDate:[_contactsDictionary allValues]];
+    _contacts = [CTLCDPerson findAll];
+    [self loadAllContacts];
 }
 
 - (void)reloadContactList:(NSNotification *)notification
 {
     _contacts = nil;
-    _accessedDictionary = nil;
-    _contactsDictionary = nil;
-    
     CFErrorRef error;
     self.addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
-    ABRecordID groupID = [CTLABGroup defaultGroupID];
-    
-    if(groupID == CTLAllContactsGroupID){
-        [self loadAllContacts];
-    }else{
-        CTLABGroup *selectedGroup = [[CTLABGroup alloc] initWithGroupID:groupID addressBook:self.addressBookRef];
-        if([selectedGroup.members count] == 0){
-            [self.tableView reloadData];
-        }else{
-            _contactsDictionary = selectedGroup.members;
-            [self setContactList];
-        }
-    }
+    [self loadAllContacts];
 }
 
-- (void)handleUIRestrictions
-{
-    if([_contactsDictionary count] == 0){
-        self.searchBar.hidden = YES;
-        self.tableView.scrollEnabled = NO;
-    }else{
-        self.searchBar.hidden = NO;
-        self.tableView.scrollEnabled = YES;
-    }
-}
+#pragma mark - Sort Contacts Picker
 
-- (void)setContactList
+- (void)buildSearchBar
 {
-    [self handleUIRestrictions];
-    
-    //map saved contacts to address book contacts and float most recent to the top
-    if(!_accessedDictionary){
-        NSArray *storedContacts = [CTLCDPerson MR_findAll];
-        _accessedDictionary = [[NSMutableDictionary alloc] initWithCapacity:[storedContacts count]];
-        for(NSInteger i=0;i<[storedContacts count];i++){
-            CTLCDPerson *contact = [storedContacts objectAtIndex:i];
-            if(contact.lastAccessed){
-                [_accessedDictionary setObject:contact.lastAccessed forKey:@([contact recordIDValue])];
-            }
-        }
-    }
-    
-    NSMutableArray *members = [[NSMutableArray alloc] initWithCapacity:[_contactsDictionary count]];
-    for(NSNumber *recordID in _contactsDictionary){
-        CTLABPerson *abPerson = [_contactsDictionary objectForKey:recordID];
-        NSDate *lastAccessed = [_accessedDictionary objectForKey:@([abPerson recordID])];
-        if(lastAccessed){
-            [abPerson setAccessDate: lastAccessed];
-        }
-        [members addObject:abPerson];
-    }
-    
-    [self sortContactListByAccessDate:members];
-}
-
-- (void)sortContactListByAccessDate:(NSArray *)contacts
-{
-    NSSortDescriptor *sortByAccessDate = [NSSortDescriptor sortDescriptorWithKey:@"accessDate" ascending:NO];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortByAccessDate];
-    NSArray *sortedContacts = [contacts sortedArrayUsingDescriptors:sortDescriptors];
-    
-    _contacts = [[NSMutableArray alloc] initWithArray:sortedContacts];
+    [self.searchBar setBarStyle:UIBarStyleBlackOpaque];
+    self.searchBar.delegate = self;
+    self.searchBar.showsCancelButton = YES;
+    [self.searchBar setBarStyle:UIBarStyleBlackTranslucent];
+    self.tableView.tableHeaderView = self.searchBar;
+    _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    _searchController.delegate = self;
+    _searchController.searchResultsDataSource = self;
+    _searchController.searchResultsDelegate = self;
+    self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-        [self.tableView setContentOffset:CGPointMake(0.0f, CGRectGetHeight(self.searchDisplayController.searchBar.bounds))];
+        [self.tableView setContentOffset:CGPointMake(0.0f, CGRectGetHeight(self.searchBar.bounds))];
     });
 }
 
-#pragma mark - Group Picker
-
-- (UIButton *)groupPickerButtonWithTitle:(NSString *)selectedGroupName
-{
-    CTLPickerButton *uiButton = [[CTLPickerButton alloc] initWithTitle:selectedGroupName];
-    [uiButton addTarget:self action:@selector(togglePicker:) forControlEvents:UIControlEventTouchUpInside];
-    return uiButton;
-}
-
-- (void)updateGroupPickerButtonWithTitle:(NSString *)groupName
+- (void)updateSortPickerButtonWithTitle:(NSString *)sortLabel
 {
     CTLPickerButton *uiButton = (CTLPickerButton *)self.navigationItem.titleView;
-    [uiButton updateTitle:groupName];
+    [uiButton updateTitle:sortLabel];
     self.navigationItem.titleView = uiButton;
 }
 
-- (void)buildGroupSelector:(int)defaultGroupID
+- (void)buildSortPicker
 {
-    _groupPickerView = [self createGroupPickerView];
+    _sortPickerView = [[CTLPickerView alloc] initWithWidth:self.view.bounds.size.width];
+    _sortPickerView.delegate = self;
+    _sortPickerView.dataSource = self;
+    [self.view addSubview:_sortPickerView];
     
-    CTLABGroup *allContacts = [[CTLABGroup alloc] init];
-    allContacts.name = NSLocalizedString(@"ALL_CONTACTS", nil);
-    allContacts.groupID = CTLAllContactsGroupID;
+    NSDictionary *activity   = @{@"title":NSLocalizedString(@"ACTIVITY", nil),   @"field":@"lastAccessed", @"asc": @(0)};
+    NSDictionary *first_name = @{@"title":NSLocalizedString(@"FIRST_NAME", nil), @"field":@"firstName", @"asc": @(1)};
+    NSDictionary *last_name  = @{@"title":NSLocalizedString(@"LAST_NAME", nil),  @"field":@"lastName", @"asc": @(1)};
     
-    _groupArray = [[NSMutableArray alloc] initWithObjects:allContacts, nil];
-    [_groupArray addObjectsFromArray:[CTLABGroup groupsInLocalSource:self.addressBookRef]];
+    NSInteger selectedRow = [self savedSortOrderIndex];
     
-    for(NSInteger i=0;i<[_groupArray count]; i++){
-        CTLABGroup *group = [_groupArray objectAtIndex:i];
-        if(group.groupID == defaultGroupID){
-            [_groupPickerView selectRow:i inComponent:0 animated:NO];
-            break;
-        }
-    }
+    _sortArray = @[activity, first_name, last_name];
+    [_sortPickerView selectRow:selectedRow inComponent:0 animated:NO];
+    
+    CTLPickerButton *filterButton = [[CTLPickerButton alloc] initWithTitle:NSLocalizedString(@"CLIENTS", nil)];
+    [filterButton addTarget:self action:@selector(toggleSortPicker:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationItem.titleView = filterButton;
 }
 
-- (CTLPickerView *)createGroupPickerView
-{
-    CTLPickerView *groupPicker = [[CTLPickerView alloc] initWithWidth:self.view.bounds.size.width];
-    groupPicker.delegate = self;
-    groupPicker.dataSource = self;
-    [self.view addSubview:groupPicker];
-    return groupPicker;
-}
-
-- (void)togglePicker:(id)sender
+- (void)toggleSortPicker:(id)sender
 {
     if(_inContactMode){
         [self exitContactMode];
     }
     
-    if(_groupPickerView.isVisible){
-        [self hideGroupPicker];
+    if(_sortPickerView.isVisible){
+        [self hideSortPicker];
     }else{
-        [self showGroupPicker];
+        [self showSortPicker];
     }
 }
 
-- (void)hideGroupPicker
+- (void)hideSortPicker
 {
-    [_groupPickerView hidePicker];
+    NSInteger selectedRow = [_sortPickerView selectedRowInComponent:0];
+    NSInteger savedSelectedRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLSortOrderSelectedIndex];
+    
+    if(selectedRow != savedSelectedRow){
+        [_sortPickerView selectRow:savedSelectedRow inComponent:0 animated:NO];
+    }
+    
+    [_sortPickerView hidePicker];
     [self rightTitlebarWithAddContactButton];
+    [self updateSortPickerButtonWithTitle:NSLocalizedString(@"CLIENTS", nil)];
 }
 
-- (void)showGroupPicker
+- (void)showSortPicker
 {
-    [_groupPickerView showPicker];
-    [self rightTitlebarWithGroupViewButton];
+    [_sortPickerView showPicker];
+    [self rightTitlebarWithDoneButton];
+    [self updateSortPickerButtonWithTitle:NSLocalizedString(@"SORT_BY", nil)];
 }
 
-- (IBAction)dismissGroupPickerFromTap:(UITapGestureRecognizer *)recognizer
+- (void)rightTitlebarWithAddContactButton
 {
-    [self hideGroupPicker];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus"] style:UIBarButtonItemStylePlain target:self action:@selector(displayAddContactActionSheet:)];
+}
+
+- (void)rightTitlebarWithDoneButton
+{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sort"] style:UIBarButtonItemStyleDone target:self action:@selector(selectSortFilter:)];
+    
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+}
+
+- (void)selectSortFilter:(id)sender
+{
+    NSInteger selectedFilterRow = [_sortPickerView selectedRowInComponent:0];
+    [self updateSortPickerButtonWithTitle:_sortArray[selectedFilterRow][@"title"]];
+    [self loadAllContacts];
+    [self saveSortOrder:selectedFilterRow];
+    [self hideSortPicker];
+}
+
+
+- (IBAction)dismissSortPickerFromTap:(UITapGestureRecognizer *)recognizer
+{
+    [self hideSortPicker];
 }
 
 - (CTLABGroup *)selectedGroup
 {
-    NSInteger selectedRow = [_groupPickerView selectedRowInComponent:0];
-    CTLABGroup *selectedGroup = [_groupArray objectAtIndex:selectedRow];
+    NSInteger selectedRow = [_sortPickerView selectedRowInComponent:0];
+    CTLABGroup *selectedGroup = [_sortArray objectAtIndex:selectedRow];
     return selectedGroup;
 }
 
@@ -377,64 +279,44 @@ int const CTLEmptyContactsMessageTag = 793;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    CTLABGroup *abGroup = [_groupArray objectAtIndex:[_groupPickerView selectedRowInComponent:0]];
-    [self updateGroupPickerButtonWithTitle:abGroup.name];
-    
-    if(abGroup.groupID == 0){
-        [self loadAllContacts];
-    }else{
-        [self loadGroup:abGroup];
+    NSLog(@"SELECTING YO");
+    if(_sortPickerView.isVisible){
+        [self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStyleDone];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
     }
-
-    [CTLABGroup saveDefaultGroupID:abGroup.groupID];
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-	CTLABGroup *group = [_groupArray objectAtIndex:row];
-    return group.name;
+    return _sortArray[row][@"title"];
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-	return [_groupArray count];
+	return [_sortArray count];
 }
 
 #pragma mark - Titlebar Helper
-
-- (void)rightTitlebarWithAddContactButton
-{
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus.png"] style:UIBarButtonItemStylePlain target:self action:@selector(displayAddContactActionSheet:)];
-}
-
-- (void)rightTitlebarWithGroupViewButton
-{
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus.png"] style:UIBarButtonItemStylePlain target:self action:@selector(displayAddGroupPrompt:)];
-}
 
 - (void)displayAddContactActionSheet:(id)sender
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"ADD_NEW_CONTACT", nil)
                                                              delegate:self
-                                                    cancelButtonTitle:nil
+                                                    cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"NEW_CONTACT", nil), nil];
+                                                    otherButtonTitles:NSLocalizedString(@"NEW_CONTACT", nil), NSLocalizedString(@"IMPORT_CONTACTS", nil), nil];
     actionSheet.tag = CTLAddContactActionSheetTag;
-    
-    if([self.selectedGroup groupID] != CTLAllContactsGroupID){
-        [actionSheet addButtonWithTitle:NSLocalizedString(@"IMPORT_CONTACTS", nil)];
-        actionSheet.cancelButtonIndex = 2;
-    }else{
-        actionSheet.cancelButtonIndex = 1;
-    }
-    
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"CANCEL", nil)];
     [actionSheet showInView:self.view];
 }
 
 
 - (void)displayShareContactActionSheet:(id)sender
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"FORWARD_CONTACT", nil), [_selectedPerson compositeName]] delegate:self cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"SEND_VIA_SMS", nil), NSLocalizedString(@"SEND_VIA_EMAIL", nil), nil];
+    NSString *contactName = [NSString stringWithFormat:NSLocalizedString(@"FORWARD_CONTACT", nil), _selectedPerson.firstName];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:contactName
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:NSLocalizedString(@"SEND_VIA_SMS", nil), NSLocalizedString(@"SEND_VIA_EMAIL", nil), nil];
     
     actionSheet.tag = CTLShareContactActionSheetTag;
     [actionSheet showInView:self.view];
@@ -472,9 +354,7 @@ int const CTLEmptyContactsMessageTag = 793;
                     break;
                 case 1:
                     //if group selector is set to "all contacts" the import button is hidden because it doesnt make sense
-                    if([self.selectedGroup groupID] != CTLAllContactsGroupID){
-                        [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
-                    }
+                    [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
                     break;
             }
             break;
@@ -495,45 +375,6 @@ int const CTLEmptyContactsMessageTag = 793;
     }
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSString *newGroupName = [[alertView textFieldAtIndex:0] text];
-    if([newGroupName length] == 0){
-        return ;
-    }
-
-    ABRecordRef  existingGroupRef = [CTLABGroup findByName:newGroupName addressBookRef:self.addressBookRef];
-    if(existingGroupRef){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:[NSString stringWithFormat:NSLocalizedString(@"GROUP_EXISTS", nil), newGroupName]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        return;
-    }
-    
-    ABRecordID groupID = [CTLABGroup createGroup:newGroupName addressBookRef:self.addressBookRef];
-    if(groupID != kABRecordInvalidID){
-        CTLCDFormSchema *formSchema = [CTLCDFormSchema MR_createEntity];
-        formSchema.groupIDValue = groupID;
-        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-        
-        [CTLABGroup saveDefaultGroupID:groupID];
-        
-        CTLABGroup *newGroup = [[CTLABGroup alloc] initWithGroupID:groupID addressBook:self.addressBookRef];
-        [_groupArray addObject:newGroup];
-        [_groupPickerView reloadAllComponents];
-        
-        NSInteger selectedIndex = [_groupArray count] - 1;
-        [_groupPickerView selectRow:selectedIndex inComponent:0 animated:YES];
-        [self loadGroup:newGroup];
-        [self updateGroupPickerButtonWithTitle:newGroupName];
-        [self hideGroupPicker];
-    }
-}
-
-
 #pragma mark - Segue Actions
 
 - (void)editContact:(id)sender
@@ -546,15 +387,9 @@ int const CTLEmptyContactsMessageTag = 793;
     if(!self.addressBookRef){
         [self displayPermissionPrompt];
     }else{
-        [self hideGroupPicker];
+        [self hideSortPicker];
         [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
     }
-}
-
-- (void)showGroupList:(id)sender
-{
-    [self hideGroupPicker];
-    [self performSegueWithIdentifier:CTLGroupListSegueIdentifyer sender:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -562,16 +397,14 @@ int const CTLEmptyContactsMessageTag = 793;
     if([[segue identifier] isEqualToString:CTLImporterSegueIdentifyer]){
         CTLContactImportViewController *importer = [segue destinationViewController];
         [importer setAddressBookRef:self.addressBookRef];
-        [importer setSelectedGroup:self.selectedGroup];
         return;
     }
     
     if ([[segue identifier] isEqualToString:CTLContactFormSegueIdentifyer]) {
         CTLContactViewController *contactFormViewController = [segue destinationViewController];
         [contactFormViewController setAddressBookRef:self.addressBookRef];
-        [contactFormViewController setAbGroup:self.selectedGroup];
         if(_selectedPerson){
-            [contactFormViewController setAbPerson:_selectedPerson];
+            [contactFormViewController setContact:_selectedPerson];
         }
         return;
     }
@@ -603,7 +436,6 @@ int const CTLEmptyContactsMessageTag = 793;
     [self.contactToolbar.emailButton addTarget:self action:@selector(showEmailForPerson:) forControlEvents:UIControlEventTouchUpInside];
     [self.contactToolbar.callButton addTarget:self action:@selector(showDialPerson:) forControlEvents:UIControlEventTouchUpInside];
     [self.contactToolbar.smsButton addTarget:self action:@selector(showSMSForPerson:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contactToolbar.mapButton addTarget:self action:@selector(showMapForPerson:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.contactHeader];
     [self.view addSubview:self.contactToolbar];
@@ -621,7 +453,7 @@ int const CTLEmptyContactsMessageTag = 793;
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20.0f]];
     [titleLabel setTextColor:textColor];
-    [titleLabel setText:[self.selectedGroup name]];
+    [titleLabel setText:NSLocalizedString(@"ADD_CONTACTS", nil)];
     titleLabel.tag = CTLEmptyContactsTitleTag;
     
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 120.0f, viewFrame.size.width, 25.0f)];
@@ -629,7 +461,7 @@ int const CTLEmptyContactsMessageTag = 793;
     [messageLabel setTextAlignment:NSTextAlignmentCenter];
     [messageLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0f]];
     [messageLabel setTextColor:textColor];
-    [messageLabel setText:NSLocalizedString(@"EMPTY_GROUP", nil)];
+    [messageLabel setText:NSLocalizedString(@"NO_CONTACTS_YET", nil)];
     messageLabel.tag = CTLEmptyContactsMessageTag;
     
     CGFloat buttonCenter = viewFrame.size.width/2 - 63;
@@ -664,7 +496,6 @@ int const CTLEmptyContactsMessageTag = 793;
 - (void)enterContactMode
 {
     [self.contactHeader populateViewData:_selectedPerson];
-    [self determineToolbarAbilities];
     
     if(_inContactMode){
         return;
@@ -710,7 +541,7 @@ int const CTLEmptyContactsMessageTag = 793;
         _selectedPerson = nil;
         _selectedIndexPath = nil;
         if(_shouldReorderListOnScroll){
-            [self sortContactListByAccessDate:_contacts];
+            [self loadAllContacts];
             _shouldReorderListOnScroll = NO;
         }
     }];
@@ -723,28 +554,8 @@ int const CTLEmptyContactsMessageTag = 793;
         [self exitContactMode];
     }
     
-    if(_groupPickerView.isVisible){
-        [self hideGroupPicker];
-    }
-}
-
-- (void)determineToolbarAbilities
-{
-    //Disable buttons if user does not have contact info
-    self.contactToolbar.emailButton.enabled = ([[_selectedPerson email] length] > 0);
-    
-    if([[_selectedPerson phone] length] > 0){
-        self.contactToolbar.callButton.enabled = YES;
-        self.contactToolbar.smsButton.enabled = YES;
-    }else{
-        self.contactToolbar.callButton.enabled = NO;
-        self.contactToolbar.smsButton.enabled = NO;
-    }
-    
-    if([_selectedPerson.addressDict count] > 0){
-        self.contactToolbar.mapButton.enabled = YES;
-    }else{
-        self.contactToolbar.mapButton.enabled = NO;
+    if(_sortPickerView.isVisible){
+        [self hideSortPicker];
     }
 }
 
@@ -765,7 +576,6 @@ int const CTLEmptyContactsMessageTag = 793;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
     if (tableView == self.searchDisplayController.searchResultsTableView){
         return [_filteredContacts count];
     }
@@ -781,25 +591,66 @@ int const CTLEmptyContactsMessageTag = 793;
         cell = [[CTLContactCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
     
-    CTLABPerson *person = nil;
+    CTLCDPerson *person = nil;
     if (tableView == self.searchDisplayController.searchResultsTableView){
         person = [_filteredContacts objectAtIndex:indexPath.row];
     }else{
         person = [_contacts objectAtIndex:indexPath.row];
     }
      
-    [cell configure:person];
-    
-    NSDate *accessDate = [_accessedDictionary objectForKey:@(person.recordID)];
-    
-    if(accessDate){
-        NSString *timestampDate = [self generateDateStamp:accessDate];
-        cell.timestampLabel.text = [NSString stringWithFormat:@"%@", timestampDate];
+    cell.nameLabel.text = [self generatePersonName:person];
+    cell.detailsLabel.text = [self generateContactString:person];
+        
+    if(person.lastAccessed){
+        cell.timestampLabel.text = [self generateDateStamp:person.lastAccessed];
     }
     
     return cell;
 }
 
+- (NSString *)generateContactString:(CTLCDPerson *)person
+{
+    NSString *contactStr = @"";
+    
+    if([[person phone] length] > 0){
+        contactStr = person.phone;
+    }else if([[person email] length] > 0){
+        contactStr = person.email;
+    }
+    return contactStr;
+}
+
+- (NSString *)generatePersonName:(CTLCDPerson *)person
+{
+    NSString *compositeName = @"";
+    
+    if([_sortPickerView selectedRowInComponent:0] == 2){
+        if([person.lastName length] > 0){
+            compositeName = [compositeName stringByAppendingString:person.lastName];
+        }
+        
+        if([person.firstName length] > 0){
+            if([person.lastName length] > 0){
+                compositeName = [compositeName stringByAppendingFormat:@", %@", person.firstName];
+            }else{
+                compositeName = [compositeName stringByAppendingFormat:@" %@", person.firstName];
+            }
+        }
+
+    }else{
+        if([person.firstName length] > 0){
+            compositeName = [compositeName stringByAppendingString:person.firstName];
+        }
+        
+        if([person.lastName length] > 0){
+            compositeName = [compositeName stringByAppendingFormat:@" %@", person.lastName];
+        }
+    }
+    
+    return compositeName;
+}
+
+/*
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if([_contacts count] == 0){
@@ -811,29 +662,17 @@ int const CTLEmptyContactsMessageTag = 793;
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if([_contacts count] == 0){
-        UILabel *titleLabel = (UILabel*)[_emptyView viewWithTag:CTLEmptyContactsTitleTag];
-        UILabel *messageLabel = (UILabel*)[_emptyView viewWithTag:CTLEmptyContactsMessageTag];
-        
-        if(!_addressBookRef){
-            [titleLabel setText:NSLocalizedString(@"NO_CONTACTS", nil)];
-            [messageLabel setText:NSLocalizedString(@"ALLOW_ACCESS_TO_CONTACTS", nil)];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.tableView setContentOffset:CGPointMake(0.0f, CGRectGetHeight(self.searchDisplayController.searchBar.bounds))];
-            });
-        }else{
-            [titleLabel setText:[self.selectedGroup name]];
-        }
         return _emptyView;
     }
     return nil;
-}
+}*/
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //if groupPicker is open dismiss it and do nothing else.
-    if(_groupPickerView.isVisible){
-        [self hideGroupPicker];
+    if(_sortPickerView.isVisible){
+        [self hideSortPicker];
         return;
     }
     
@@ -863,23 +702,6 @@ int const CTLEmptyContactsMessageTag = 793;
 - (void)showAppointmentScheduler:(id)sender
 {
     [self performSegueWithIdentifier:CTLAppointmentSegueIdentifyer sender:sender];
-}
-
-- (void)showMapForPerson:(id)sender
-{
-    NSArray *addressArray = [_selectedPerson.addressDict allValues];
-    NSMutableArray *addyArray = [[NSMutableArray alloc] init];
-    for(NSUInteger i=0;i<[addressArray count];i++){
-        if([[addressArray objectAtIndex:i] length] > 0){
-            [addyArray addObject:[addressArray objectAtIndex:i]];
-        }
-    }
-    
-    NSString *addressStr = [addyArray componentsJoinedByString:@", "];
-    NSString *encodedAddress = [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *mapURLString = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@", encodedAddress];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mapURLString]];
-    [self updateContactTimestampInPlace];
 }
 
 - (void)showDialPerson:(id)sender
@@ -941,20 +763,8 @@ int const CTLEmptyContactsMessageTag = 793;
 
 - (void)saveTimestampForContact
 {
-    NSNumber *recordIDKey = @(_selectedPerson.recordID);
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID=%i", _selectedPerson.recordID];
-    CTLCDPerson *person = [CTLCDPerson MR_findFirstWithPredicate:predicate];
-    
-    if(!person){
-        person = [CTLCDPerson createFromABPerson:_selectedPerson];
-    }
-    
-    person.lastAccessed = [NSDate date];
+    _selectedPerson.lastAccessed = [NSDate date];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-    
-    _selectedPerson.accessDate = person.lastAccessed;
-    [_accessedDictionary setObject:person.lastAccessed forKey:recordIDKey];
-    [_contactsDictionary setObject:_selectedPerson forKey:recordIDKey];
 }
 
 - (void)timestampForRowDidChange:(NSNotification *)notification
@@ -964,29 +774,46 @@ int const CTLEmptyContactsMessageTag = 793;
 
 #pragma mark - UISearchDisplayController Delegate Methods
 
+/*
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSLog(@"SEARCH %@", searchText);
+    [self filterContactListForSearchText:[self.searchDisplayController.searchBar text] scope:
+     [[searchBar scopeButtonTitles] objectAtIndex:0]];
+}*/
+
 - (void)filterContactListForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
 	[_filteredContacts removeAllObjects];
-	for (NSNumber *key in _contactsDictionary){
-        CTLABPerson *person = [_contactsDictionary objectForKey:key];
-        NSComparisonResult result = [person.compositeName compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+    
+	for (NSInteger i=0;i<[_contacts count]; i++){
+        CTLCDPerson *person = _contacts[i];
+        //TODO: composite name
+        NSComparisonResult result = [person.firstName compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
         if (result == NSOrderedSame){
             [_filteredContacts addObject:person];
         }
 	}
 }
 
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
+{
+    UITableView *tableView = controller.searchResultsTableView;
+    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
+
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
     [self filterContactListForSearchText:searchString scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     return YES;
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
 {
     [self filterContactListForSearchText:[self.searchDisplayController.searchBar text] scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+    [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
     return YES;
 }
 
@@ -1045,30 +872,21 @@ int const CTLEmptyContactsMessageTag = 793;
 #pragma mark - Handle Notifications
 - (void)newContactWasAdded:(NSNotification *)notification
 {
-    if([notification.object isKindOfClass:[CTLABPerson class]]){
+    if([notification.object isKindOfClass:[CTLCDPerson class]]){
         _selectedPerson = notification.object;
         _shouldReorderListOnScroll = YES;
-        [_contactsDictionary setObject:_selectedPerson forKey:@(_selectedPerson.recordID)];
-        [_accessedDictionary setObject:[NSDate date] forKey:@(_selectedPerson.recordID)];
-        _contacts = [[_contactsDictionary allValues] mutableCopy];
+        [self loadAllContacts];
         [self enterContactMode];
-        [self.tableView reloadData];
-        [self handleUIRestrictions];
     }
 }
 
 - (void)contactRowDidChange:(NSNotification *)notification
 {
-    if([notification.object isKindOfClass:[CTLABPerson class]]){
+    if([notification.object isKindOfClass:[CTLCDPerson class]]){
         _selectedPerson = notification.object;
         _shouldReorderListOnScroll = YES;
-        [_contactsDictionary setObject:_selectedPerson forKey:@(_selectedPerson.recordID)];
-        [_accessedDictionary setObject:[NSDate date] forKey:@(_selectedPerson.recordID)];
-        _contacts = [[_contactsDictionary allValues] mutableCopy];
+        [self loadAllContacts];
         [self.contactHeader populateViewData:_selectedPerson];
-        CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-        [cell.indicatorLayer removeFromSuperlayer];
-        [self.tableView reloadData];
     }
 }
 
@@ -1089,5 +907,26 @@ int const CTLEmptyContactsMessageTag = 793;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+
+- (void)registerNotificationsObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayShareContactActionSheet:) name:CTLShareContactNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactListAfterImport:) name:CTLContactsWereImportedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactList:) name:CTLContactListReloadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timestampForRowDidChange:) name:CTLTimestampForRowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newContactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactRowDidChange:) name:CTLContactRowDidChangeNotification object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLShareContactNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLContactsWereImportedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLContactListReloadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLTimestampForRowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLNewContactWasAddedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLContactRowDidChangeNotification object:nil];
+}
 
 @end

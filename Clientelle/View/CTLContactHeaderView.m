@@ -11,7 +11,7 @@
 #import "UILabel+CTLLabel.h"
 #import "NSString+CTLString.h"
 #import "CTLContactHeaderView.h"
-#import "CTLABPerson.h"
+#import "CTLCDPerson.h"
 
 NSString *const CTLFontName = @"HelveticaNeue";
 NSString *const CTLFontNameBold = @"HelveticaNeue-Bold";
@@ -154,25 +154,20 @@ int CTLPhoneLabelTag = 602;
 	[[NSNotificationCenter defaultCenter] postNotificationName:CTLShareContactNotification object:nil];
 }
 
-- (void)populateViewData:(CTLABPerson *)abPerson {
-    
+- (void)populateViewData:(CTLCDPerson *)contact
+{
     [self reset];
     
-    NSString *nameStr = [abPerson compositeName];
-    if([abPerson organization]){
-        nameStr = [nameStr stringByAppendingFormat:@", %@", [abPerson organization]];
+    NSString *nameStr = contact.firstName;
+    
+    if(contact.organization){
+        nameStr = [nameStr stringByAppendingFormat:@", %@", contact.organization];
     }
     self.nameLabel.text = nameStr;
-    self.phoneLabel.text = ([abPerson phone]) ? [abPerson phone] : [abPerson email];
+    self.phoneLabel.text = (contact.phone) ? contact.phone : contact.email;
     
-    self.nameLabel.text = [abPerson compositeName];
-    self.pictureView.image = [abPerson picture];
-    
-    if([[abPerson phone] length] > 0){
-        self.phoneLabel.text = [abPerson phone];
-    }else if([[abPerson email] length] > 0){
-        self.phoneLabel.text = [abPerson email];
-    }
+
+    //self.pictureView.image = [abPerson picture];
     
     [UILabel autoWidth:self.nameLabel];
     [UILabel autoWidth:self.phoneLabel];

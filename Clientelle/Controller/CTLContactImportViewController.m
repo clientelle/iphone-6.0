@@ -9,7 +9,7 @@
 #import "CTLContactsListViewController.h"
 #import "CTLContactImportViewController.h"
 #import "CTLABPerson.h"
-#import "CTLABGroup.h"
+#import "CTLCDPerson.h"
 
 @interface CTLContactImportViewController ()
 - (void)loadAddressBookContacts;
@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad
 {
+    self.busyIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.busyIndicator.hidden = YES;
     
     _contacts = [NSArray array];
@@ -29,17 +30,58 @@
     _selectedBackgroundColor = [UIColor ctlLightGray];
     _disabledTextColor = [UIColor colorFromUnNormalizedRGB:78.0f green:78.0f blue:78.0f alpha:1.0f];
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+    if(!self.addressBookRef){
+        [self checkAddressbookPermission];
+    }else{
         [self loadAddressBookContacts];
-    });
+    }
+}
+
+- (void)checkAddressbookPermission
+{
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+            // First time access has been granted
+            if(granted){
+                self.addressBookRef = addressBookRef;
+                [self loadAddressBookContacts];
+            }else{
+                [self displayPermissionPrompt];
+            }
+        });
+    } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        // The user has previously given access.
+        self.addressBookRef = addressBookRef;
+        [self loadAddressBookContacts];
+        
+    } else {
+        // The user has previously denied access
+        [self displayPermissionPrompt];
+    }
+}
+
+- (void)displayPermissionPrompt
+{
+    UIAlertView *requirePermission = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"REQUIRES_ACCESS_TO_CONTACTS", nil)
+                                                                message:NSLocalizedString(@"GO_TO_SETTINGS_CONTACTS", nil)
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil, nil];
+    
+    [requirePermission show];
 }
 
 - (void)loadAddressBookContacts
 {
     [CTLABPerson peopleFromAddressBook:self.addressBookRef withBlock:^(NSDictionary *results){
         NSMutableDictionary *people = [results mutableCopy];
-        for(NSNumber *recordID in _selectedGroup.members){
-            [people removeObjectForKey:recordID];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID != nil"];
+        NSArray *contacts = [CTLCDPerson MR_findAllWithPredicate:predicate];
+        
+        for(NSInteger i=0;i<[contacts count];i++){
+            CTLCDPerson *person = contacts[i];
+            [people removeObjectForKey:person.recordID];
         }
         
         _contacts = [people allValues];
@@ -207,9 +249,18 @@
     self.doneButton.enabled = NO;
     self.busyIndicator.hidden = NO;
     [self.busyIndicator startAnimating];
-    [self.selectedGroup addMembers:_selectedPeople];
+
+    
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+    __block NSMutableArray *cdPeople = [NSMutableArray array];
+    [_selectedPeople enumerateKeysAndObjectsUsingBlock:^(NSNumber *recordID, CTLABPerson *person, BOOL *stop){
+        CTLCDPerson *cdPerson = [CTLCDPerson createFromABPerson:person];
+        [cdPeople addObject:cdPerson];
+    }];
+    
+    [context MR_saveToPersistentStoreAndWait];
         
-    [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:_selectedPeople];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactsWereImportedNotification object:cdPeople];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

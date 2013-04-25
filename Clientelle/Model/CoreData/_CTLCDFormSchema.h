@@ -8,7 +8,6 @@ extern const struct CTLCDFormSchemaAttributes {
 	__unsafe_unretained NSString *address;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *firstName;
-	__unsafe_unretained NSString *groupID;
 	__unsafe_unretained NSString *jobTitle;
 	__unsafe_unretained NSString *lastName;
 	__unsafe_unretained NSString *note;
@@ -21,7 +20,6 @@ extern const struct CTLCDFormSchemaRelationships {
 
 extern const struct CTLCDFormSchemaFetchedProperties {
 } CTLCDFormSchemaFetchedProperties;
-
 
 
 
@@ -77,18 +75,6 @@ extern const struct CTLCDFormSchemaFetchedProperties {
 - (void)setFirstNameValue:(BOOL)value_;
 
 //- (BOOL)validateFirstName:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSNumber* groupID;
-
-
-@property int16_t groupIDValue;
-- (int16_t)groupIDValue;
-- (void)setGroupIDValue:(int16_t)value_;
-
-//- (BOOL)validateGroupID:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -187,15 +173,6 @@ extern const struct CTLCDFormSchemaFetchedProperties {
 
 - (BOOL)primitiveFirstNameValue;
 - (void)setPrimitiveFirstNameValue:(BOOL)value_;
-
-
-
-
-- (NSNumber*)primitiveGroupID;
-- (void)setPrimitiveGroupID:(NSNumber*)value;
-
-- (int16_t)primitiveGroupIDValue;
-- (void)setPrimitiveGroupIDValue:(int16_t)value_;
 
 
 

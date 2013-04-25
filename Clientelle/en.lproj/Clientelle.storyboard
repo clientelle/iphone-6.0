@@ -112,27 +112,8 @@
                                             <outlet property="icon" destination="jog-Oj-1kN" id="j9a-RM-xrw"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="remindersNavigationController" rowHeight="60" id="Ohe-g4-gTz" customClass="CTLMenuItemCell">
-                                        <rect key="frame" x="0.0" y="240" width="320" height="60"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="258-checkmark.png" translatesAutoresizingMaskIntoConstraints="NO" id="huf-0R-Z4C"/>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="huf-0R-Z4C" firstAttribute="leading" secondItem="Ohe-g4-gTz" secondAttribute="leading" constant="30" id="Yf1-i1-O4U"/>
-                                            <constraint firstItem="huf-0R-Z4C" firstAttribute="top" secondItem="Ohe-g4-gTz" secondAttribute="top" constant="20" type="default" id="lxi-2i-kQZ"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="icon" destination="huf-0R-Z4C" id="rPc-Kf-ar1"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="settingsNavigationController" rowHeight="60" id="bPc-gq-bO8" customClass="CTLMenuItemCell">
-                                        <rect key="frame" x="0.0" y="300" width="320" height="60"/>
+                                        <rect key="frame" x="0.0" y="240" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -304,7 +285,7 @@
                                 <color key="separatorColor" red="0.80000007149999997" green="0.80000007149999997" blue="0.80000007149999997" alpha="1" colorSpace="deviceRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fieldRow" textLabel="fvi-q2-uCb" style="IBUITableViewCellStyleDefault" id="HJu-O1-HnZ">
-                                        <rect key="frame" x="0.0" y="46" width="320" height="46"/>
+                                        <rect key="frame" x="0.0" y="46" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -365,7 +346,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pbe-Fm-nXO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-987" y="-2554"/>
+            <point key="canvasLocation" x="-1589" y="-2702"/>
         </scene>
         <!--Messages List View Controller - Messages-->
         <scene sceneID="IEc-nu-Znw">
@@ -473,7 +454,6 @@
                                     <outlet property="delegate" destination="AaL-yu-Gmw" id="Em2-lO-zXg"/>
                                 </connections>
                             </searchBar>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="SuX-ov-nUc"/>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -481,17 +461,14 @@
                             <constraint firstItem="xug-Fu-cx0" firstAttribute="leading" secondItem="6MH-jG-RZX" secondAttribute="leading" type="default" id="APo-Eq-hKe"/>
                             <constraint firstItem="TPD-2A-Lb4" firstAttribute="top" secondItem="6MH-jG-RZX" secondAttribute="top" constant="43" id="ClQ-hx-MNh"/>
                             <constraint firstItem="Gb8-i3-BDv" firstAttribute="trailing" secondItem="6MH-jG-RZX" secondAttribute="trailing" type="default" id="Hpf-KE-7yK"/>
-                            <constraint firstItem="Gb8-i3-BDv" firstAttribute="centerY" secondItem="SuX-ov-nUc" secondAttribute="centerY" type="default" id="KDc-Wk-4KB"/>
                             <constraint firstItem="TPD-2A-Lb4" firstAttribute="trailing" secondItem="6MH-jG-RZX" secondAttribute="trailing" type="default" id="kc9-iZ-Vsh"/>
                             <constraint firstItem="TPD-2A-Lb4" firstAttribute="leading" secondItem="6MH-jG-RZX" secondAttribute="leading" type="default" id="nYR-sQ-Zbx"/>
                             <constraint firstItem="Gb8-i3-BDv" firstAttribute="top" secondItem="6MH-jG-RZX" secondAttribute="top" type="default" id="sBt-om-CNc"/>
                             <constraint firstItem="xug-Fu-cx0" firstAttribute="trailing" secondItem="6MH-jG-RZX" secondAttribute="trailing" type="default" id="smT-7t-aWA"/>
                             <constraint firstItem="Gb8-i3-BDv" firstAttribute="leading" secondItem="6MH-jG-RZX" secondAttribute="leading" type="default" id="u05-Cp-SOa"/>
-                            <constraint firstAttribute="trailing" secondItem="SuX-ov-nUc" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="z4g-hx-zab"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="busyIndicator" destination="SuX-ov-nUc" id="Xn4-ny-TrP"/>
                         <outlet property="doneButton" destination="lxC-C2-sYA" id="s4E-Xi-5ae"/>
                         <outlet property="searchDisplayController" destination="dWs-yL-3Oa" id="mjH-vI-JR7"/>
                         <outlet property="tableView" destination="xug-Fu-cx0" id="GnJ-Hr-d6c"/>
@@ -845,18 +822,9 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="63" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ru9-mV-weG">
-                                <color key="separatorColor" red="0.86986142113095244" green="0.86500186011904767" blue="0.87472098214285721" alpha="1" colorSpace="calibratedRGB"/>
-                                <searchBar key="tableHeaderView" contentMode="redraw" barStyle="blackTranslucent" id="2GW-XM-GmG">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                    <connections>
-                                        <outlet property="delegate" destination="Eu8-IV-10h" id="KBj-gc-29f"/>
-                                    </connections>
-                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clearsContextBeforeDrawing="NO" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="contactRow" rowHeight="63" id="sPR-Q1-eTs" customClass="CTLContactCell">
-                                        <rect key="frame" x="0.0" y="66" width="320" height="63"/>
+                                        <rect key="frame" x="0.0" y="22" width="320" height="63"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="62"/>
@@ -928,8 +896,8 @@
                         <barButtonItem key="rightBarButtonItem" image="plus.png" id="nnO-eO-z5U"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchBar" destination="2GW-XM-GmG" id="LW2-65-sPR"/>
-                        <outlet property="searchDisplayController" destination="gsT-lV-Os2" id="OvP-9c-0gN"/>
+                        <outlet property="searchBar" destination="CjQ-3W-qA0" id="Xrp-Vu-OXk"/>
+                        <outlet property="searchDisplayController" destination="KbZ-A7-Lbv" id="ONO-gn-Dnl"/>
                         <outlet property="tableView" destination="Ru9-mV-weG" id="fkf-7R-UK0"/>
                         <segue destination="AaL-yu-Gmw" kind="modal" identifier="toImporter" id="t9u-78-s9z"/>
                         <segue destination="lvE-fZ-8fX" kind="modal" identifier="toSetAppointment" id="iGD-nT-ogT"/>
@@ -937,21 +905,29 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sp-tg-Pia" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="gsT-lV-Os2">
-                    <connections>
-                        <outlet property="delegate" destination="Eu8-IV-10h" id="3Yd-po-Tgx"/>
-                        <outlet property="searchBar" destination="2GW-XM-GmG" id="5BX-wM-3yS"/>
-                        <outlet property="searchContentsController" destination="Eu8-IV-10h" id="pUO-pR-1Yj"/>
-                        <outlet property="searchResultsDataSource" destination="Eu8-IV-10h" id="uf3-yE-i3w"/>
-                        <outlet property="searchResultsDelegate" destination="Eu8-IV-10h" id="MHg-ej-s0t"/>
-                    </connections>
-                </searchDisplayController>
                 <tapGestureRecognizer id="hTN-pY-asP">
                     <connections>
-                        <action selector="dismissGroupPickerFromTap:" destination="Eu8-IV-10h" id="29f-RL-dHe"/>
+                        <action selector="dismissSortPickerFromTap:" destination="Eu8-IV-10h" id="otp-NG-4SE"/>
                         <outlet property="delegate" destination="Eu8-IV-10h" id="Mwj-gt-WcE"/>
                     </connections>
                 </tapGestureRecognizer>
+                <searchDisplayController id="KbZ-A7-Lbv">
+                    <connections>
+                        <outlet property="delegate" destination="Eu8-IV-10h" id="wxX-d5-h4F"/>
+                        <outlet property="searchBar" destination="CjQ-3W-qA0" id="ZZB-Vu-Oq3"/>
+                        <outlet property="searchContentsController" destination="Eu8-IV-10h" id="Vkx-Td-dqZ"/>
+                        <outlet property="searchResultsDataSource" destination="Eu8-IV-10h" id="60q-Hq-ite"/>
+                        <outlet property="searchResultsDelegate" destination="Eu8-IV-10h" id="UbC-GJ-m3z"/>
+                    </connections>
+                </searchDisplayController>
+                <searchBar contentMode="redraw" barStyle="blackTranslucent" showsCancelButton="YES" id="CjQ-3W-qA0">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="Eu8-IV-10h" id="YKr-s8-Yw0"/>
+                    </connections>
+                </searchBar>
             </objects>
             <point key="canvasLocation" x="-3901" y="-2702"/>
         </scene>
@@ -2155,7 +2131,6 @@
         <image name="11-clock.png" width="25" height="25"/>
         <image name="111-user.png" width="24" height="21"/>
         <image name="19-gear.png" width="26" height="26"/>
-        <image name="258-checkmark.png" width="19" height="18"/>
         <image name="26-checkmark-gray.png" width="16" height="16"/>
         <image name="44-shoebox.png" width="24" height="22"/>
         <image name="clock-grn.png" width="18" height="18"/>
@@ -2251,7 +2226,7 @@
         <class className="CTLContactsListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactsListViewController.h"/>
             <relationships>
-                <relationship kind="action" name="dismissGroupPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="action" name="dismissSortPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>

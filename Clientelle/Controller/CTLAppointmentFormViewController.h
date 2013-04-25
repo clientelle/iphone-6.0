@@ -9,7 +9,7 @@
 #import <EventKit/EventKit.h>
 #import "CTLFieldCell.h"
 
-@class CTLABPerson;
+@class CTLCDPerson;
 @class CTLCDAppointment;
 
 @interface CTLAppointmentFormViewController : UITableViewController<CTLFieldCellDelegate, CTLSlideMenuDelegate>{
@@ -44,7 +44,7 @@
 @property (nonatomic, assign) BOOL transitionedFromLocalNotification;
 
 @property (nonatomic, strong) CTLCDAppointment *cdAppointment;
-@property (nonatomic, strong) CTLABPerson *contact;
+@property (nonatomic, strong) CTLCDPerson *contact;
 
 - (IBAction)showDatePicker:(id)sender;
 - (IBAction)saveAppointment:(id)sender;

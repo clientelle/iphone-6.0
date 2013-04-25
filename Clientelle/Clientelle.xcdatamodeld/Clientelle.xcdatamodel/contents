@@ -31,7 +31,6 @@
         <attribute name="address" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="email" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="firstName" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="groupID" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="jobTitle" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="lastName" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="note" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -49,6 +48,7 @@
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isPrivate" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="jobTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastAccessed" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
@@ -56,7 +56,7 @@
         <attribute name="organization" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="recordID" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="recordID" optional="YES" attributeType="Integer 16" indexed="YES" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -71,9 +71,9 @@
     <elements>
         <element name="Account" positionX="-171" positionY="-495" width="128" height="210"/>
         <element name="Appointment" positionX="160" positionY="192" width="128" height="225"/>
-        <element name="FormSchema" positionX="-0" positionY="-198" width="128" height="180"/>
+        <element name="FormSchema" positionX="-0" positionY="-198" width="128" height="165"/>
         <element name="Inbox" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Person" positionX="-326" positionY="-361" width="128" height="253"/>
+        <element name="Person" positionX="-326" positionY="-361" width="128" height="270"/>
         <element name="Reminder" positionX="160" positionY="192" width="128" height="135"/>
     </elements>
 </model>
