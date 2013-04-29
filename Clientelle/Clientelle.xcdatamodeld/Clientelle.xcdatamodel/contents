@@ -14,18 +14,12 @@
         <attribute name="user_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Appointment" representedClassName="CTLCDAppointment" syncable="YES">
-        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="eventID" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="hasAddress" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDate" attributeType="Date" syncable="YES"/>
-        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="wasModified" optional="YES" transient="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="FormSchema" representedClassName="CTLCDFormSchema" syncable="YES">
         <attribute name="address" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -45,20 +39,18 @@
     </entity>
     <entity name="Person" representedClassName="CTLCDPerson" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="compositeName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isPrivate" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="jobTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastAccessed" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="organization" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="recordID" optional="YES" attributeType="Integer 16" indexed="YES" syncable="YES"/>
-        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Reminder" representedClassName="CTLCDReminder" syncable="YES">
         <attribute name="compeleted" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -66,14 +58,13 @@
         <attribute name="dueDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="eventID" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
-        <attribute name="wasModified" optional="YES" transient="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
     </entity>
     <elements>
         <element name="Account" positionX="-171" positionY="-495" width="128" height="210"/>
-        <element name="Appointment" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="Appointment" positionX="160" positionY="192" width="128" height="135"/>
         <element name="FormSchema" positionX="-0" positionY="-198" width="128" height="165"/>
         <element name="Inbox" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Person" positionX="-326" positionY="-361" width="128" height="270"/>
-        <element name="Reminder" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="Person" positionX="-326" positionY="-361" width="128" height="238"/>
+        <element name="Reminder" positionX="160" positionY="192" width="128" height="120"/>
     </elements>
 </model>

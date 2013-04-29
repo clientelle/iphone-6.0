@@ -167,7 +167,7 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
         NSData *imageData = (__bridge NSData *)ABPersonCopyImageDataWithFormat(recordRef, kABPersonImageFormatThumbnail);
         self.picture = [UIImage imageWithData:imageData];
     }else{
-        self.picture = [UIImage imageNamed:@"default-pic.png"];
+        //self.picture = [UIImage imageNamed:@"default-pic"];
     }
     
     [self setProperty:kABPersonFirstNameProperty];

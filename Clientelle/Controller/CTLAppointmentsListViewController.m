@@ -33,7 +33,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 {
     [super viewDidLoad];
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
         
     _eventStore = [[EKEventStore alloc] init];
     self.resultsController = [CTLCDAppointment fetchedResultsController];
@@ -69,6 +69,8 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 
     //tap to dissmiss the filter picker
     //[self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPickerFromTap:)]];
+    
+    [self registerNotificationObservers];
 }
 
 - (void)setEventKeys
@@ -82,67 +84,11 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reloadAppointments:)
-                                                 name:CTLReloadAppointmentsNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(eventDidChange:)
-                                                 name:EKEventStoreChangedNotification
-                                               object:_eventStore];
-}
-
 - (NSDictionary *)filterDict:title startDate:(NSDate *)startDate endDate:(NSDate *)endDate
 {
     NSPredicate *calPredicate = [_eventStore predicateForEventsWithStartDate:startDate endDate:endDate calendars:nil];
     NSPredicate *cdPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (startDate =< %@)", startDate, endDate];
     return @{@"title":title, @"predicate":cdPredicate, @"calPredicate":calPredicate};
-}
-
-- (void)eventDidChange:(NSNotification *)notification
-{
-    _eventStore = notification.object;
-    int selectedCalendarFilterRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLDefaultSelectedCalendarFilter];
-    
-    NSDictionary *filter = _filterArray[selectedCalendarFilterRow];
-    NSArray *events = [_eventStore eventsMatchingPredicate:filter[@"calPredicate"]];
-    __block BOOL hasChanges = NO;
-    
-    if([events count] > 0){
-        for(NSInteger i=0;i<[events count];i++){
-            EKEvent *event = events[i];
-            if(_events[event.eventIdentifier] != nil){
-                hasChanges = YES;
-                CTLCDAppointment *appointment = _events[event.eventIdentifier];
-                appointment.title = event.title;
-                appointment.startDate = event.startDate;
-                appointment.endDate = event.endDate;
-                appointment.location = event.location;
-                appointment.notes = event.notes;
-                appointment.wasModifiedValue = YES;
-                
-                [_events setObject:appointment forKey:event.eventIdentifier];
-            }
-        }
-    }
-    
-    if([_events count] > 0){
-        [_events enumerateKeysAndObjectsUsingBlock:^(NSString *eventID, CTLCDAppointment *appointment, BOOL *stop){
-            if(appointment.wasModifiedValue == NO){
-                [appointment MR_deleteEntity];
-                hasChanges = YES;
-            }
-        }];
-    }
-    
-    if(hasChanges){
-        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-            [self reloadAppointments:nil];
-        }];
-    }
 }
 
 - (void)rememberAppointmentFilter:(int)index
@@ -175,8 +121,8 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     CGFloat buttonCenter = viewFrame.size.width/2 - 70;
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
-    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
     
     // Set the background for any states you plan to use
     [addButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
@@ -244,7 +190,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     
     CTLCDAppointment *appointment = [_appointments objectAtIndex:indexPath.row];
     
-    if(appointment.hasAddressValue){
+    if(appointment.location){
         cellIdentifier = @"apptCellHasMap";
     }else{
         cellIdentifier = @"apptCellNoMap";
@@ -365,20 +311,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     CTLCDAppointment *appointment = [_appointments objectAtIndex:indexPath.row];
-    
-    NSDictionary *addressDict = @{@"address": appointment.address, @"city": appointment.city, @"state": appointment.state, @"zip": appointment.address};
-    
-    NSArray *addressArray = [addressDict allValues];
-    NSMutableArray *addyArray = [[NSMutableArray alloc] init];
-    
-    for(NSUInteger i=0;i<[addressArray count];i++){
-        if([[addressArray objectAtIndex:i] length] > 0){
-            [addyArray addObject:[addressArray objectAtIndex:i]];
-        }
-    }
-    
-    NSString *addressStr = [addyArray componentsJoinedByString:@", "];
-    NSString *encodedAddress = [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *encodedAddress = [appointment.location stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *mapURLString = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@", encodedAddress];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mapURLString]];
 }
@@ -485,6 +418,20 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     //[self.cdAppointment setCompeleted:@(1)];
     //[self.cdAppointment setCompletedDate:[NSDate date]];
     //[self saveAppointment:sender];
+}
+
+
+- (void)registerNotificationObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadAppointments:)
+                                                 name:CTLReloadAppointmentsNotification
+                                               object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:CTLReloadAppointmentsNotification];
 }
 
 @end

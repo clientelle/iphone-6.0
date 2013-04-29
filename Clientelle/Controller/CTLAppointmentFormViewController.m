@@ -51,7 +51,7 @@ int CTLEndTimeInputTag = 3;
     }
     
     //IB tags -> Core Data mapping
-    _fields = @[@"", @"title", @"startDate", @"endDate", @"notes", @"address", @"city",  @"state", @"zip"];
+    _fields = @[@"", @"title", @"startDate", @"endDate",  @"location"];
     
     if(!self.cdAppointment){
         self.cdAppointment = [CTLCDAppointment MR_createEntity];
@@ -72,13 +72,7 @@ int CTLEndTimeInputTag = 3;
             self.titleTextField.text = _appointment.title;
             self.startTimeTextField.text = [NSDate formatDateAndTime:_appointment.startDate];
             self.endTimeTextField.text = [NSDate formatDateAndTime:_appointment.endDate];
-            self.notesTextField.text = _appointment.notes;
-            
-            //appointemnt location
-            self.addressTextField.text = [self.cdAppointment address];
-            self.cityTextField.text = [self.cdAppointment city];
-            self.stateTextField.text = [self.cdAppointment state];
-            self.zipTextField.text = [self.cdAppointment zip];
+            self.addressTextField.text = _appointment.location;
         }
     }
     
@@ -135,12 +129,7 @@ int CTLEndTimeInputTag = 3;
     self.titleTextField.placeholder     = NSLocalizedString(@"APPOINTMENT_TITLE", nil);
     self.startTimeTextField.placeholder = NSLocalizedString(@"START_TIME", nil);
     self.endTimeTextField.placeholder   = NSLocalizedString(@"END_TIME", nil);
-    self.notesTextField.placeholder     = NSLocalizedString(@"APPOINTMENT_NOTES", nil);
-    
-    self.addressTextField.placeholder   = NSLocalizedString(@"address", nil);
-    self.cityTextField.placeholder      = NSLocalizedString(@"City", nil);
-    self.stateTextField.placeholder     = NSLocalizedString(@"State", nil);
-    self.zipTextField.placeholder       = NSLocalizedString(@"ZIP", nil);
+    self.addressTextField.placeholder     = NSLocalizedString(@"APPOINTMENT_LOCATION", nil);
 }
 
 - (void)displayPermissionPrompt
@@ -162,11 +151,11 @@ int CTLEndTimeInputTag = 3;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    return 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -175,11 +164,7 @@ int CTLEndTimeInputTag = 3;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(section == 0){
-        return 40.0f;
-    }
-    
-    return 30.0f;
+    return 40.0f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -193,30 +178,8 @@ int CTLEndTimeInputTag = 3;
     headerLabel.backgroundColor = [UIColor clearColor];
     headerLabel.textColor = [UIColor darkGrayColor];
     
-    if(section == 0){
-        [headerView setFrame:CGRectMake(0, 10.0f, width, 40.0f)];
-        headerLabel.text = NSLocalizedString(@"APPOINTMENT_INFO", nil);
-    }
-    
-    //Address Section
-    if(section == 1){
-        [headerLabel setFrame:CGRectMake(30.0f, 0, width, 20.0f)];
-        UIImageView *pinImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"06-map-pin.png"]];
-        pinImage.frame = CGRectMake(10.0f, 3.0f, 11.0f, 19.0f);
-        headerLabel.text = NSLocalizedString(@"APPOINTMENT_LOCATION", nil);
-        [UILabel autoWidth:headerLabel];
-        
-        UILabel *optionalLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerLabel.frame.size.width+35.0f, 0, width, 20.0f)];
-        optionalLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0f];
-        optionalLabel.backgroundColor = [UIColor clearColor];
-        optionalLabel.text = NSLocalizedString(@"PARENS_OPTIONAL", nil);
-        optionalLabel.textColor = [UIColor darkGrayColor];
-        [UILabel autoWidth:optionalLabel];
-
-        [headerView addSubview:pinImage];
-        [headerView addSubview:optionalLabel];
-    }
-    
+    [headerView setFrame:CGRectMake(0, 10.0f, width, 40.0f)];
+    headerLabel.text = NSLocalizedString(@"APPOINTMENT_INFO", nil);
     [headerView addSubview:headerLabel];
 
     return headerView;
@@ -347,30 +310,12 @@ int CTLEndTimeInputTag = 3;
     }
     
     _appointment.title = self.titleTextField.text;
-    _appointment.notes = self.notesTextField.text;
+    _appointment.location = self.addressTextField.text;
     
     self.cdAppointment.title = self.titleTextField.text;
-    //self.cdAppointment.startDate = _appointment.startDate;
-    //self.cdAppointment.endDate = _appointment.endDate;
-    
-    if([self.notesTextField.text length] > 0){
-        self.cdAppointment.notes = self.notesTextField.text;
-    }
     
     if([self.addressTextField.text length] > 0){
-        self.cdAppointment.address = self.addressTextField.text;
-    }
-    
-    if([self.cityTextField.text length] > 0){
-        self.cdAppointment.city = self.cityTextField.text;
-    }
-    
-    if([self.stateTextField.text length] > 0){
-        self.cdAppointment.state = self.stateTextField.text;
-    }
-    
-    if([self.zipTextField.text length] > 0){
-        self.cdAppointment.address = self.zipTextField.text;
+        self.cdAppointment.location = self.addressTextField.text;
     }
     
     if(_appointment.eventIdentifier != nil){
@@ -390,8 +335,7 @@ int CTLEndTimeInputTag = 3;
     if(![self.cdAppointment eventID] && _appointment.eventIdentifier != nil){
         self.cdAppointment.eventID = _appointment.eventIdentifier;
     }
-    
-    [self.cdAppointment setHasAddressValue:[self hasAddress]];
+
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadAppointmentsNotification object:nil];
     
@@ -439,18 +383,6 @@ int CTLEndTimeInputTag = 3;
     notification.userInfo = @{@"navigationController":@"appointmentsNavigationController", @"viewController":@"appointmentFormViewController", @"eventID":item.eventIdentifier};
     
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-}
-
-- (BOOL)hasAddress
-{
-    if([self.addressTextField.text length] > 0 ||
-       [self.cityTextField.text length] > 0 ||
-       [self.stateTextField.text length] > 0 ||
-       [self.zipTextField.text length] > 0){
-        return YES;
-    }
-    
-    return NO;
 }
 
 #pragma mark - Outlet Controls

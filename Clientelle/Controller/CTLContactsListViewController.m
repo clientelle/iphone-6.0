@@ -2,6 +2,7 @@
 #import "UIColor+CTLColor.h"
 #import "NSString+CTLString.h"
 #import "NSDate+CTLDate.h"
+#import "UILabel+CTLLabel.h"
 
 #import "CTLSlideMenuController.h"
 
@@ -30,7 +31,6 @@ NSString *const CTLNewContactWasAddedNotification = @"com.clientelle.com.notific
 NSString *const CTLContactRowDidChangeNotification = @"com.clientelle.com.notifications.contactRowDidChange";
 NSString *const CTLSortOrderSelectedIndex = @"com.clientelle.notifcations.selectedSortOrder";
 
-
 NSString *const CTLImporterSegueIdentifyer = @"toImporter";
 NSString *const CTLContactListSegueIdentifyer = @"toContacts";
 NSString *const CTLContactFormSegueIdentifyer = @"toContactForm";
@@ -39,8 +39,6 @@ NSString *const CTLAppointmentSegueIdentifyer = @"toSetAppointment";
 int const CTLAllContactsGroupID = 0;
 int const CTLShareContactActionSheetTag = 234;
 int const CTLAddContactActionSheetTag = 424;
-int const CTLEmptyContactsTitleTag = 792;
-int const CTLEmptyContactsMessageTag = 793;
 
 @implementation CTLContactsListViewController
 
@@ -52,7 +50,7 @@ int const CTLEmptyContactsMessageTag = 793;
     _shouldReorderListOnScroll = NO;
     _emptyView = [self noContactsView];
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
 
     [self rightTitlebarWithAddContactButton];
     
@@ -119,24 +117,26 @@ int const CTLEmptyContactsMessageTag = 793;
     _contacts = [CTLCDPerson findAll];
     _filteredContacts = [NSMutableArray array];
     
-    if(!_searchController && [_contacts count] > 0){
+    if([_contacts count] > 0){
+        
         [self buildSearchBar];
-    }
-
-    NSInteger row = [_sortPickerView selectedRowInComponent:0];
-    
-    NSString *field = _sortArray[row][@"field"];
-    BOOL asc = [_sortArray[row][@"asc"] boolValue];
-    
-    NSSortDescriptor *sortByAccessDate = [NSSortDescriptor sortDescriptorWithKey:field ascending:asc];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortByAccessDate];
+       
+        NSInteger row = [_sortPickerView selectedRowInComponent:0];
+        
+        NSString *field = _sortArray[row][@"field"];
+        BOOL asc = [_sortArray[row][@"asc"] boolValue];
+        
+        NSSortDescriptor *sortByAccessDate = [NSSortDescriptor sortDescriptorWithKey:field ascending:asc];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByAccessDate];
+         
+        _contacts = [_contacts sortedArrayUsingDescriptors:sortDescriptors];
      
-    _contacts = [_contacts sortedArrayUsingDescriptors:sortDescriptors];
- 
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-        [self.tableView setContentOffset:CGPointMake(0.0f, CGRectGetHeight(self.searchBar.bounds))];
-    });
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView setContentOffset:CGPointMake(0.0f, CGRectGetHeight(self.searchBar.bounds))];
+        });
+    }
+    
+    [self.tableView reloadData];
 }
 
 - (void)reloadContactListAfterImport:(NSNotification *)notification
@@ -157,18 +157,10 @@ int const CTLEmptyContactsMessageTag = 793;
 
 - (void)buildSearchBar
 {
-    [self.searchBar setBarStyle:UIBarStyleBlackOpaque];
-    self.searchBar.delegate = self;
-    self.searchBar.showsCancelButton = YES;
-    [self.searchBar setBarStyle:UIBarStyleBlackTranslucent];
-    self.tableView.tableHeaderView = self.searchBar;
-    _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    _searchController.delegate = self;
-    _searchController.searchResultsDataSource = self;
-    _searchController.searchResultsDelegate = self;
-    self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
-    self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    if(!self.tableView.tableHeaderView){
+        self.tableView.tableHeaderView = self.searchBar;
+    }
+
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView setContentOffset:CGPointMake(0.0f, CGRectGetHeight(self.searchBar.bounds))];
     });
@@ -218,16 +210,16 @@ int const CTLEmptyContactsMessageTag = 793;
 
 - (void)hideSortPicker
 {
+    [_sortPickerView hidePicker];
+    [self rightTitlebarWithAddContactButton];
+    [self updateSortPickerButtonWithTitle:NSLocalizedString(@"CLIENTS", nil)];
+    
     NSInteger selectedRow = [_sortPickerView selectedRowInComponent:0];
     NSInteger savedSelectedRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLSortOrderSelectedIndex];
     
     if(selectedRow != savedSelectedRow){
         [_sortPickerView selectRow:savedSelectedRow inComponent:0 animated:NO];
     }
-    
-    [_sortPickerView hidePicker];
-    [self rightTitlebarWithAddContactButton];
-    [self updateSortPickerButtonWithTitle:NSLocalizedString(@"CLIENTS", nil)];
 }
 
 - (void)showSortPicker
@@ -237,9 +229,19 @@ int const CTLEmptyContactsMessageTag = 793;
     [self updateSortPickerButtonWithTitle:NSLocalizedString(@"SORT_BY", nil)];
 }
 
+- (void)rightTitlebarWithEditContactButton
+{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"40-forward"] style:UIBarButtonItemStyleDone target:self action:@selector(editContact:)];
+    
+    //[self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStyleDone];
+    
+    //[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"14-gear"] style:UIBarButtonItemStyleDone target:self action:@selector(editContact:)];
+}
+
 - (void)rightTitlebarWithAddContactButton
 {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus"] style:UIBarButtonItemStylePlain target:self action:@selector(displayAddContactActionSheet:)];
+    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus"] style:UIBarButtonItemStylePlain target:self action:@selector(displayAddContactActionSheet:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(displayAddContactActionSheet:)];
 }
 
 - (void)rightTitlebarWithDoneButton
@@ -279,11 +281,8 @@ int const CTLEmptyContactsMessageTag = 793;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    NSLog(@"SELECTING YO");
-    if(_sortPickerView.isVisible){
-        [self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStyleDone];
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    }
+    [self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStyleDone];
+    self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -453,22 +452,19 @@ int const CTLEmptyContactsMessageTag = 793;
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20.0f]];
     [titleLabel setTextColor:textColor];
-    [titleLabel setText:NSLocalizedString(@"ADD_CONTACTS", nil)];
-    titleLabel.tag = CTLEmptyContactsTitleTag;
+    [titleLabel setText:NSLocalizedString(@"NO_CLIENTS", nil)];
     
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 120.0f, viewFrame.size.width, 25.0f)];
     [messageLabel setBackgroundColor:[UIColor clearColor]];
     [messageLabel setTextAlignment:NSTextAlignmentCenter];
     [messageLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0f]];
     [messageLabel setTextColor:textColor];
-    [messageLabel setText:NSLocalizedString(@"NO_CONTACTS_YET", nil)];
-    messageLabel.tag = CTLEmptyContactsMessageTag;
+    [messageLabel setText:NSLocalizedString(@"EMPTY_CONTACTS_MSG", nil)];
+        
     
-    CGFloat buttonCenter = viewFrame.size.width/2 - 63;
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
-    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
     
     // Set the background for any states you plan to use
     [addButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
@@ -477,10 +473,16 @@ int const CTLEmptyContactsMessageTag = 793;
     [addButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
     [addButton setTitleColor:[UIColor colorFromUnNormalizedRGB:61.0f green:71.0f blue:110.0f alpha:1.0f] forState:UIControlStateHighlighted];
     
-    [addButton setFrame:CGRectMake(buttonCenter, 175.0f, 126.0f, 38.0f)];
-    [addButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
-    [addButton addTarget:self action:@selector(showImporter:) forControlEvents:UIControlEventTouchUpInside];
-    [addButton setTitle:NSLocalizedString(@"ADD_CONTACTS", nil) forState:UIControlStateNormal];
+    UIFont *buttonFont = [UIFont fontWithName:@"Helvetica-Bold" size:14.0f];
+    NSString *buttonString = NSLocalizedString(@"ADD_CONTACTS", nil);
+    CGSize buttonSize = [buttonString sizeWithFont:buttonFont];
+    CGFloat buttonWidth = buttonSize.width + 20.0f;
+    CGFloat buttonCenter = (viewFrame.size.width/2) - (buttonWidth/2);
+    
+    [addButton setFrame:CGRectMake(buttonCenter, 175.0f, buttonWidth, 38.0f)];
+    [addButton.titleLabel setFont:buttonFont];
+    [addButton addTarget:self action:@selector(displayAddContactActionSheet:) forControlEvents:UIControlEventTouchUpInside];
+    [addButton setTitle:buttonString forState:UIControlStateNormal];
     
     addButton.layer.shadowOpacity = 0.2f;
     addButton.layer.shadowRadius = 1.0f;
@@ -495,6 +497,7 @@ int const CTLEmptyContactsMessageTag = 793;
 
 - (void)enterContactMode
 {
+    [self rightTitlebarWithEditContactButton];
     [self.contactHeader populateViewData:_selectedPerson];
     
     if(_inContactMode){
@@ -522,6 +525,7 @@ int const CTLEmptyContactsMessageTag = 793;
 
 - (void)exitContactMode
 {
+    [self rightTitlebarWithAddContactButton];
     [self.tableView deselectRowAtIndexPath:_selectedIndexPath animated:YES];
     CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
     [cell.indicatorLayer removeFromSuperlayer];
@@ -608,49 +612,22 @@ int const CTLEmptyContactsMessageTag = 793;
     return cell;
 }
 
-- (NSString *)generateContactString:(CTLCDPerson *)person
-{
-    NSString *contactStr = @"";
-    
-    if([[person phone] length] > 0){
-        contactStr = person.phone;
-    }else if([[person email] length] > 0){
-        contactStr = person.email;
-    }
-    return contactStr;
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
 }
 
-- (NSString *)generatePersonName:(CTLCDPerson *)person
-{
-    NSString *compositeName = @"";
-    
-    if([_sortPickerView selectedRowInComponent:0] == 2){
-        if([person.lastName length] > 0){
-            compositeName = [compositeName stringByAppendingString:person.lastName];
-        }
-        
-        if([person.firstName length] > 0){
-            if([person.lastName length] > 0){
-                compositeName = [compositeName stringByAppendingFormat:@", %@", person.firstName];
-            }else{
-                compositeName = [compositeName stringByAppendingFormat:@" %@", person.firstName];
-            }
-        }
-
-    }else{
-        if([person.firstName length] > 0){
-            compositeName = [compositeName stringByAppendingString:person.firstName];
-        }
-        
-        if([person.lastName length] > 0){
-            compositeName = [compositeName stringByAppendingFormat:@" %@", person.lastName];
-        }
-    }
-    
-    return compositeName;
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
 }
 
-/*
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+        CTLCDPerson *person = [_contacts objectAtIndex:indexPath.row];
+        [self deleteContact:person];
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if([_contacts count] == 0){
@@ -665,8 +642,7 @@ int const CTLEmptyContactsMessageTag = 793;
         return _emptyView;
     }
     return nil;
-}*/
-
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -695,6 +671,54 @@ int const CTLEmptyContactsMessageTag = 793;
 
     _selectedIndexPath = indexPath;
     [self enterContactMode];
+}
+
+- (void)deleteContact:(CTLCDPerson *)contact
+{
+    [contact MR_deleteEntity];
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [self loadAllContacts];
+}
+
+- (NSString *)generateContactString:(CTLCDPerson *)person
+{
+    NSString *contactStr = @"";
+    
+    if([[person phone] length] > 0){
+        contactStr = person.phone;
+    }else if([[person email] length] > 0){
+        contactStr = person.email;
+    }
+    return contactStr;
+}
+
+- (NSString *)generatePersonName:(CTLCDPerson *)person
+{
+    NSString *compositeName = @"";
+    
+    if([_sortPickerView selectedRowInComponent:0] == 2){
+        if([person.lastName length] > 0){
+            compositeName = [compositeName stringByAppendingString:person.lastName];
+        }
+        
+        if([person.firstName length] > 0){
+            if([person.lastName length] > 0){
+                compositeName = [compositeName stringByAppendingFormat:@", %@", person.firstName];
+            }else{
+                compositeName = [compositeName stringByAppendingFormat:@" %@", person.firstName];
+            }
+        }
+    }else{
+        if([person.firstName length] > 0){
+            compositeName = [compositeName stringByAppendingString:person.firstName];
+        }
+        
+        if([person.lastName length] > 0){
+            compositeName = [compositeName stringByAppendingFormat:@" %@", person.lastName];
+        }
+    }
+    
+    return compositeName;
 }
 
 #pragma mark - Toolbar Actions
@@ -799,7 +823,7 @@ int const CTLEmptyContactsMessageTag = 793;
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
     UITableView *tableView = controller.searchResultsTableView;
-    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 

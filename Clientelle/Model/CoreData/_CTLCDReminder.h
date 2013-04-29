@@ -10,7 +10,6 @@ extern const struct CTLCDReminderAttributes {
 	__unsafe_unretained NSString *dueDate;
 	__unsafe_unretained NSString *eventID;
 	__unsafe_unretained NSString *title;
-	__unsafe_unretained NSString *wasModified;
 } CTLCDReminderAttributes;
 
 extern const struct CTLCDReminderRelationships {
@@ -18,7 +17,6 @@ extern const struct CTLCDReminderRelationships {
 
 extern const struct CTLCDReminderFetchedProperties {
 } CTLCDReminderFetchedProperties;
-
 
 
 
@@ -83,18 +81,6 @@ extern const struct CTLCDReminderFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* wasModified;
-
-
-@property BOOL wasModifiedValue;
-- (BOOL)wasModifiedValue;
-- (void)setWasModifiedValue:(BOOL)value_;
-
-//- (BOOL)validateWasModified:(id*)value_ error:(NSError**)error_;
-
-
-
-
 
 
 @end
@@ -135,15 +121,6 @@ extern const struct CTLCDReminderFetchedProperties {
 
 - (NSString*)primitiveTitle;
 - (void)setPrimitiveTitle:(NSString*)value;
-
-
-
-
-- (NSNumber*)primitiveWasModified;
-- (void)setPrimitiveWasModified:(NSNumber*)value;
-
-- (BOOL)primitiveWasModifiedValue;
-- (void)setPrimitiveWasModifiedValue:(BOOL)value_;
 
 
 

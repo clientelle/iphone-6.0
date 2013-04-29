@@ -6,20 +6,18 @@
 
 extern const struct CTLCDPersonAttributes {
 	__unsafe_unretained NSString *address;
-	__unsafe_unretained NSString *city;
+	__unsafe_unretained NSString *compositeName;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *firstName;
-	__unsafe_unretained NSString *isPrivate;
 	__unsafe_unretained NSString *jobTitle;
 	__unsafe_unretained NSString *lastAccessed;
 	__unsafe_unretained NSString *lastName;
 	__unsafe_unretained NSString *note;
 	__unsafe_unretained NSString *organization;
 	__unsafe_unretained NSString *phone;
+	__unsafe_unretained NSString *picture;
 	__unsafe_unretained NSString *rating;
 	__unsafe_unretained NSString *recordID;
-	__unsafe_unretained NSString *state;
-	__unsafe_unretained NSString *zip;
 } CTLCDPersonAttributes;
 
 extern const struct CTLCDPersonRelationships {
@@ -27,8 +25,6 @@ extern const struct CTLCDPersonRelationships {
 
 extern const struct CTLCDPersonFetchedProperties {
 } CTLCDPersonFetchedProperties;
-
-
 
 
 
@@ -65,10 +61,10 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* city;
+@property (nonatomic, strong) NSString* compositeName;
 
 
-//- (BOOL)validateCity:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateCompositeName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -85,18 +81,6 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 //- (BOOL)validateFirstName:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSNumber* isPrivate;
-
-
-@property BOOL isPrivateValue;
-- (BOOL)isPrivateValue;
-- (void)setIsPrivateValue:(BOOL)value_;
-
-//- (BOOL)validateIsPrivate:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -149,6 +133,14 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSData* picture;
+
+
+//- (BOOL)validatePicture:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSNumber* rating;
 
 
@@ -173,22 +165,6 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* state;
-
-
-//- (BOOL)validateState:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSString* zip;
-
-
-//- (BOOL)validateZip:(id*)value_ error:(NSError**)error_;
-
-
-
-
 
 
 @end
@@ -206,8 +182,8 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 
-- (NSString*)primitiveCity;
-- (void)setPrimitiveCity:(NSString*)value;
+- (NSString*)primitiveCompositeName;
+- (void)setPrimitiveCompositeName:(NSString*)value;
 
 
 
@@ -220,15 +196,6 @@ extern const struct CTLCDPersonFetchedProperties {
 
 - (NSString*)primitiveFirstName;
 - (void)setPrimitiveFirstName:(NSString*)value;
-
-
-
-
-- (NSNumber*)primitiveIsPrivate;
-- (void)setPrimitiveIsPrivate:(NSNumber*)value;
-
-- (BOOL)primitiveIsPrivateValue;
-- (void)setPrimitiveIsPrivateValue:(BOOL)value_;
 
 
 
@@ -269,6 +236,12 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 
+- (NSData*)primitivePicture;
+- (void)setPrimitivePicture:(NSData*)value;
+
+
+
+
 - (NSNumber*)primitiveRating;
 - (void)setPrimitiveRating:(NSNumber*)value;
 
@@ -283,18 +256,6 @@ extern const struct CTLCDPersonFetchedProperties {
 
 - (int16_t)primitiveRecordIDValue;
 - (void)setPrimitiveRecordIDValue:(int16_t)value_;
-
-
-
-
-- (NSString*)primitiveState;
-- (void)setPrimitiveState:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveZip;
-- (void)setPrimitiveZip:(NSString*)value;
 
 
 

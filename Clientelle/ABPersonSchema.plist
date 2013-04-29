@@ -5,7 +5,7 @@
 	<dict>
 		<key>label</key>
 		<string>First Name</string>
-		<key>name</key>
+		<key>field</key>
 		<string>firstName</string>
 		<key>placeholder</key>
 		<string>First Name</string>
@@ -17,7 +17,7 @@
 	<dict>
 		<key>label</key>
 		<string>Last Name</string>
-		<key>name</key>
+		<key>field</key>
 		<string>lastName</string>
 		<key>placeholder</key>
 		<string>Last Name</string>
@@ -29,7 +29,7 @@
 	<dict>
 		<key>label</key>
 		<string>Company</string>
-		<key>name</key>
+		<key>field</key>
 		<string>organization</string>
 		<key>placeholder</key>
 		<string>Company Name</string>
@@ -41,7 +41,7 @@
 	<dict>
 		<key>label</key>
 		<string>Title</string>
-		<key>name</key>
+		<key>field</key>
 		<string>jobTitle</string>
 		<key>placeholder</key>
 		<string>Job Title or Role</string>
@@ -53,7 +53,7 @@
 	<dict>
 		<key>label</key>
 		<string>Phone</string>
-		<key>name</key>
+		<key>field</key>
 		<string>phone</string>
 		<key>placeholder</key>
 		<string>Primary Phone</string>
@@ -65,7 +65,7 @@
 	<dict>
 		<key>label</key>
 		<string>Email</string>
-		<key>name</key>
+		<key>field</key>
 		<string>email</string>
 		<key>placeholder</key>
 		<string>Email Address</string>
@@ -77,10 +77,22 @@
 	<dict>
 		<key>label</key>
 		<string>Note</string>
-		<key>name</key>
+		<key>field</key>
 		<string>note</string>
 		<key>placeholder</key>
 		<string>Add a note</string>
+		<key>keyboardType</key>
+		<integer>0</integer>
+		<key>enabled</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>label</key>
+		<string>Address</string>
+		<key>field</key>
+		<string>address</string>
+		<key>placeholder</key>
+		<string>Address</string>
 		<key>keyboardType</key>
 		<integer>0</integer>
 		<key>enabled</key>

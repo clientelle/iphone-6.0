@@ -21,7 +21,7 @@ int const CTLPickerButtonPadding = 20.0f;
     if (self) {
         [self.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
         [self setTitle:title forState:UIControlStateNormal];
-        [self setImage:[UIImage imageNamed:@"wht-down-arw.png"] forState:UIControlStateNormal];
+        [self setImage:[UIImage imageNamed:@"wht-down-arw"] forState:UIControlStateNormal];
         [self positionIndicator];
     }
     return self;

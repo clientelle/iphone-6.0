@@ -148,7 +148,7 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"contactsNavigationC
 
 - (void)renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)viewController
 {
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(toggleMenu:)];
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:UIBarButtonItemStyleBordered target:self action:@selector(toggleMenu:)];
     viewController.navigationItem.leftBarButtonItem = menuButton;
 }
 

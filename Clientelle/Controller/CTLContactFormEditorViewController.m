@@ -22,15 +22,13 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:206.0f green:206.0f blue:206.0f alpha:1.0f];
     
     _fieldRows = [[NSMutableArray alloc] init];
-    NSMutableArray *fields = [self.fieldsFromPList mutableCopy];
-    [fields addObject:@{kCTLFieldLabel:NSLocalizedString(@"address", nil), kCTLFieldName:@"address"}];
         
-    for(NSInteger i=0; i< [fields count]; i++){
-        NSMutableDictionary *inputField = [fields[i] mutableCopy];
+    for(NSInteger i=0; i< [self.fieldsFromPList count]; i++){
+        NSMutableDictionary *inputField = [self.fieldsFromPList[i] mutableCopy];
         NSString *label = NSLocalizedString([inputField valueForKey:kCTLFieldName], nil);
         [inputField setValue:label forKey:kCTLFieldLabel];
         [inputField setValue:label forKey:kCTLFieldPlaceHolder];
-        [inputField setValue:[self.formSchema valueForKey:[fields[i] objectForKey:kCTLFieldName]] forKey:kCTLFieldEnabled];
+        [inputField setValue:[self.formSchema valueForKey:[self.fieldsFromPList[i] objectForKey:kCTLFieldName]] forKey:kCTLFieldEnabled];
         [_fieldRows addObject:inputField];
     }
 }
@@ -80,8 +78,26 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
         [self.formSchema setValue:@(1) forKey:fieldName];
         [self styleEnabledField:cell];
     }
- 
-    [self.doneButton setStyle:UIBarButtonItemStyleDone];
+    
+    [self requireMinimumContactFields];
+}
+
+- (void)requireMinimumContactFields
+{
+    NSInteger disabledCount = 0;
+    NSDictionary *attributes = [self.formSchema.entity attributesByName];
+    for (NSString *attribute in attributes) {
+        NSNumber *value = (NSNumber *)[self.formSchema valueForKey: attribute];
+        if([value boolValue] == NO){
+            disabledCount++;
+        }
+    }
+    
+    if(disabledCount == [attributes count]){
+        self.doneButton.enabled = NO;
+    }else{
+        [self.doneButton setStyle:UIBarButtonItemStyleDone];
+    }
 }
 
 - (void)styleEnabledField:(UITableViewCell *)cell

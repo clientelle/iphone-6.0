@@ -249,7 +249,6 @@
     self.doneButton.enabled = NO;
     self.busyIndicator.hidden = NO;
     [self.busyIndicator startAnimating];
-
     
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
     __block NSMutableArray *cdPeople = [NSMutableArray array];

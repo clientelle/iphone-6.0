@@ -21,7 +21,7 @@
 #import "CTLABPerson.h"
 #import "CTLCDPerson.h"
 
-#import "UITableViewCell+CellShadows.h"
+#import "CTLTooltipView.h"
 
 NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
@@ -41,22 +41,13 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         self.navigationItem.title = NSLocalizedString(@"ADD_CONTACT", nil);
     }
 
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
+    
     [self buildSchema];
-
+    [self createHeaderView];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(formDidChange:) name:CTLFormFieldAddedNotification object: nil];
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)]];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
 }
 
 - (void)buildSchema
@@ -71,26 +62,12 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     
     _fieldRows = [NSMutableArray array];
     _formSchema = [NSMutableArray array];
-    _addressRows = [NSMutableArray array];
     _textFieldsDict = [NSMutableDictionary dictionary];
-    
-    if(!_personDict){
-        _personDict = [NSMutableDictionary dictionary];
-    }
-    
-    if(!_addressDict){
-        _addressDict = [NSMutableDictionary dictionary];
-    }
-    
+    _personDict = [NSMutableDictionary dictionary];
+        
     if(!_formFields){
         _formFields = [[CTLCDFormSchema fieldsFromPlist:CTLABPersonSchemaPlist] mutableCopy];
     }
-    
-    if(!_addressFields){
-        _addressFields = [[CTLCDFormSchema fieldsFromPlist:CTLAddressSchemaPlist] mutableCopy];
-    }
-
-    _showAddress = [self fieldIsVisible:CTLPersonAddressProperty];
 
     for(NSUInteger i=0; i < [_formFields count]; i++){
         NSMutableDictionary *inputField = nil;
@@ -120,30 +97,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
             [_fieldRows addObject:inputField];
         }
     }
-
-    if(_showAddress){
-        for(NSInteger k=0; k < [_addressFields count]; k++){
-            NSMutableDictionary *inputField = [_addressFields[k] mutableCopy];
-            NSString *field = _addressFields[k][kCTLFieldName];
-            NSString *newValue = _addressDict[field];
-            NSString *value = nil;
-            NSString *label = NSLocalizedString([inputField valueForKey:kCTLFieldName], nil);
-            
-            [inputField setValue:label forKey:kCTLFieldLabel];
-            [inputField setValue:label forKey:kCTLFieldPlaceHolder];
-            
-            if(newValue){
-                value = newValue;
-            }else if(self.contact != nil){
-                /*
-                value = [[[self.contact addressDict] valueForKey:field] description];
-                if(value){
-                    [inputField setValue:value forKey:kCTLFieldValue];
-                }*/
-            }
-            [_addressRows addObject:inputField];
-        }
-    }
 }
 
 - (BOOL)fieldIsVisible:(NSString *)fieldName
@@ -156,14 +109,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     NSArray *fields = [NSArray arrayWithArray:_fieldRows];
     [fields enumerateObjectsUsingBlock:^(id input, NSUInteger idx, BOOL *stop){
         [_personDict setValue:input[kCTLFieldValue] forKey:input[kCTLFieldName]];
-    }];
-}
-
-- (void)setAddressDictionary
-{
-    NSArray *fields = [NSArray arrayWithArray:_addressRows];
-    [fields enumerateObjectsUsingBlock:^(id input, NSUInteger idx, BOOL *stop){
-        [_addressDict setValue:input[kCTLFieldValue] forKey:input[kCTLFieldName]];
     }];
 }
 
@@ -206,7 +151,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 - (void)reloadFormViewAfterAddressBookChange
 {
     [_personDict removeAllObjects];
-    [_addressDict removeAllObjects];
     [self buildSchema];
     [self.tableView reloadData];
 }
@@ -215,17 +159,11 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if(_showAddress){
-        return 2;
-    }
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(section == 1 && _showAddress){
-        return [_addressRows count];
-    }
     return [_fieldRows count];
 }
 
@@ -243,20 +181,11 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     if (cell == nil) {
         cell = [[CTLFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    
-    [cell addShadowToCellInTableView:tableView atIndexPath:indexPath];
 
-    NSMutableDictionary *field = [NSMutableDictionary dictionary];
-    if(indexPath.section == 0){
-        field = _fieldRows[indexPath.row];
-        cell.textInput.tag = indexPath.row;
-    }else{
-        field = _addressRows[indexPath.row];
-        cell.textInput.tag = indexPath.row + [_fieldRows count];
-    }
-    
-    cell.textInput.placeholder = field[kCTLFieldPlaceHolder];
+    NSMutableDictionary *field = _fieldRows[indexPath.row];
+    cell.textInput.tag = indexPath.row;
     cell.textInput.text = field[kCTLFieldValue];
+    cell.textInput.placeholder = field[kCTLFieldPlaceHolder];
         
     UIKeyboardType keyboardType = (UIKeyboardType)[field[kCTLFieldKeyboardType] intValue];
     if(keyboardType != UIKeyboardTypeEmailAddress){
@@ -280,115 +209,86 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+- (void)createHeaderView
 {
-    if(section == 0){
-        return 45.0f;
+    if(self.contact){
+        if([self.contact recordID]){ //has addressbook ID
+            [self setPrivateButtonInactive:self.privateButton];
+        }else{
+            [self setPrivateButtonActive:self.privateButton];
+        }
+    }else{
+        if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_private_tooltip_once"]){
+            [self setPrivateButtonInactive:self.privateButton];
+            [self createPrivateTooltipWithMessage:NSLocalizedString(@"PRIVATE_TOOLTIP_MSG", nil)];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_private_tooltip_once"];
+        }else{
+            [self setPrivateButtonActive:self.privateButton];
+        }
     }
-    
-    return 30.0f;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+- (void)createPrivateTooltipWithMessage:(NSString *)message
 {
-    UIView *headerView = nil;
-    UILabel *headerLabel = nil;
-    CGFloat width = self.tableView.bounds.size.width - 20.0f;
-    
-    if(section == 0){
-        headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10.0f, width, 40.0f)];
-        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 15.0f, width, 20.0f)];
-        [headerLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13]];
-        headerLabel.text = NSLocalizedString(@"CONTACT_INFO", nil);
-        
-        /** Private Button **/
-        
-        UIButton *gearButton = [self makeFooterButton];
-        
-        CGRect buttonFrame = gearButton.frame;
-        buttonFrame.size.height = 30.0f;
-        buttonFrame.size.width = 40.0f;
-        buttonFrame.origin.y += 10.0f;
-        buttonFrame.origin.x = self.tableView.bounds.size.width - (buttonFrame.size.width + 10);
-        
-        [gearButton setFrame:buttonFrame];
-        [gearButton addTarget:self action:@selector(showAddFieldsModal:) forControlEvents:UIControlEventTouchUpInside];
-        [gearButton setImage:[UIImage imageNamed:@"sm-wrench-gray.png"] forState:UIControlStateNormal];
-
-        [headerView addSubview:gearButton];
-        [headerView setBackgroundColor:[UIColor clearColor]];
+    if(_privateTooltip){
+        [_privateTooltip removeFromSuperview];
     }
-    
-    if(section == 1){
-        headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10.0f, width, 30.0f)];
-        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 0, width, 20.0f)];
-        headerLabel.text = NSLocalizedString(@"address", nil);
-    }
-    
-    headerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15.0f];
-    headerLabel.backgroundColor = [UIColor clearColor];
-    headerLabel.textColor = [UIColor darkGrayColor];
-    
-    headerView.backgroundColor = [UIColor clearColor];
-    [headerView addSubview:headerLabel];
-    
-    return headerView;
+    _privateTooltip = [[CTLTooltipView alloc] initWithFrame:CGRectMake(138, 35, 175.0f, 40.0f)];
+    [_privateTooltip setTipText:message];
+    [self.tableView addSubview:_privateTooltip];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+- (void)setPrivateButtonActive:(UIButton *)button
 {
-    if((_showAddress && section == 0) || !self.contact){
-        return 0;
-    }
-    return 60.0f;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    if(!self.contact){
-        return nil;
+    _isPrivate = YES;
+    self.contactsTitleLabel.text = NSLocalizedString(@"PRIVATE_CONTACT", nil);
+    
+    if(self.contact){
+        self.navigationItem.rightBarButtonItem.enabled = YES;
     }
     
-    if((section == 0 && !_showAddress) || (section == 1 && _showAddress)){
-        CGFloat buttonHeight = 30.0f;
-        CGFloat buttonWidth = 60.0f;
-        CGFloat labelWidth = 100.0f;
-        CGFloat buttonPositionX = self.view.bounds.size.width/2 - buttonWidth/2;
-        CGFloat labelPositionX = self.view.bounds.size.width/2 - labelWidth/2;
-        
-        UILabel *dashesLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelPositionX, 5, labelWidth, buttonHeight)];
-        dashesLabel.backgroundColor = [UIColor clearColor];
-        dashesLabel.textColor = [UIColor darkGrayColor];
-        dashesLabel.textAlignment = NSTextAlignmentCenter;
-        dashesLabel.text = @"-       -";
-        
-        UIButton *settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPositionX, 5, buttonWidth, buttonHeight)];
-        [settingsButton setImage:[UIImage imageNamed:@"trash-grey.png"] forState:UIControlStateNormal];
-        [settingsButton addTarget:self action:@selector(handleDeleteContact:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30.0f)];
-        [footerView addSubview:dashesLabel];
-        [footerView addSubview:settingsButton];
-        [footerView setBackgroundColor:[UIColor clearColor]];
-        [footerView setAlpha:0.75];
-        
-        return footerView;
+    [button setImage:[UIImage imageNamed:@"key-private"] forState:UIControlStateNormal];
+    [button removeTarget:self action:@selector(togglePrivateButtonActive:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(togglePrivateButtonInactive:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setPrivateButtonInactive:(UIButton *)button
+{
+    _isPrivate = NO;
+    self.contactsTitleLabel.text = NSLocalizedString(@"CONTACT_INFO", nil);
+    
+    if(self.contact){
+        self.navigationItem.rightBarButtonItem.enabled = YES;
     }
     
-    return nil;
+    [button setImage:[UIImage imageNamed:@"key-public"] forState:UIControlStateNormal];
+    [button removeTarget:self action:@selector(togglePrivateButtonInactive:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(togglePrivateButtonActive:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (UIButton *)makeFooterButton
+- (IBAction)togglePrivateButtonActive:(UIButton *)button
 {
-    UIEdgeInsets insets = UIEdgeInsetsMake(18, 18, 18, 18);
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *buttonBGInactive = [[UIImage imageNamed:@"whiteButton.png"] resizableImageWithCapInsets:insets];
-    UIImage *buttonBGActive = [[UIImage imageNamed:@"whiteButtonHighlight.png"] resizableImageWithCapInsets:insets];
-    [button setBackgroundImage:buttonBGInactive forState:UIControlStateNormal];
-    [button setBackgroundImage:buttonBGActive forState:UIControlStateHighlighted];
-    return button;
+    [self createPrivateTooltipWithMessage:NSLocalizedString(@"CONTACT_IS_NOW_PRIVATE", nil)];
+    [self performSelector:@selector(autoDismissTootlip:) withObject:_privateTooltip afterDelay:2.0];
+    [self setPrivateButtonActive:button];
 }
 
+- (void)togglePrivateButtonInactive:(UIButton *)button
+{
+    [self createPrivateTooltipWithMessage:NSLocalizedString(@"CONTACT_IS_NO_LONGER_PRIVATE", nil)];
+    [self performSelector:@selector(autoDismissTootlip:) withObject:_privateTooltip afterDelay:2.0];
+    [self setPrivateButtonInactive:button];
+}
+
+- (void)autoDismissTootlip:(id)sender
+{
+    UIView *tooltip = (UIView *)sender;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:1];
+    [UIView setAnimationDelegate:self];
+    tooltip.alpha = 0.0f;
+    [UIView commitAnimations];
+}
 
 #pragma mark - Segue
 
@@ -431,26 +331,24 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         return;
     }
     
-    if(_showAddress){
+    /*
+    if([self fieldIsVisible:CTLPersonAddressProperty]){
         [self setAddressDictionary];
         [_personDict setValue:_addressDict forKey:CTLPersonAddressProperty];
-    }
+    }*/
     //TODO: Get AB Person and upate CD
-    BOOL syncedWithAB = YES;
-    
-    NSLog(@"CONTACT %@", self.contact);
-    
+
     if(!self.contact){
         self.contact = [CTLCDPerson MR_createEntity];
         [self.contact updatePerson:_personDict];
         
         __block CTLABPerson *abPerson = nil;
-        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL succes, NSError *error){
-            if(syncedWithAB){
-                abPerson = [[CTLABPerson alloc] initWithDictionary:_personDict withAddressBookRef:self.addressBookRef];
-                [self.contact setRecordIDValue:abPerson.recordID];
-            }
-        }];
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+        
+        if(_isPrivate == NO){
+            abPerson = [[CTLABPerson alloc] initWithDictionary:_personDict withAddressBookRef:self.addressBookRef];
+            [self.contact setRecordIDValue:abPerson.recordID];
+        }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:CTLNewContactWasAddedNotification object:self.contact];
     }else{
@@ -458,13 +356,13 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         [self.contact updatePerson:_personDict];
         
         __block CTLABPerson *abPerson = nil;
-        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL succes, NSError *error){
-            if(syncedWithAB){
-                abPerson = [[CTLABPerson alloc] initWithRecordID:self.contact.recordID withAddressBookRef:self.addressBookRef];
-                [abPerson updateWithDictionary:_personDict];
-            }
-        }];
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
         
+        if(_isPrivate == NO){
+            abPerson = [[CTLABPerson alloc] initWithRecordID:self.contact.recordID withAddressBookRef:self.addressBookRef];
+            [abPerson updateWithDictionary:_personDict];
+        }
+
         [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactRowDidChangeNotification object:self.contact];
     }
     
@@ -489,6 +387,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     [self.focusedTextField setBackgroundColor:[UIColor clearColor]];
     [textField setBackgroundColor:[UIColor ctlFadedGray]];
     self.focusedTextField = textField;
+    [self performSelector:@selector(autoDismissTootlip:) withObject:_privateTooltip afterDelay:0.25];
 }
 
 - (IBAction)textFieldDidChange:(UITextField *)textField
@@ -505,27 +404,25 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     if(textField.keyboardType == UIKeyboardTypePhonePad){
         textField.text = [NSString formatPhoneNumber:textField.text];
     }
-    
-    NSInteger fieldCount = [_fieldRows count];
-    NSInteger inputIndex = textField.tag;
-    if(textField.tag > (fieldCount -1)){
-        inputIndex -= fieldCount;
-        [_addressRows[inputIndex] setValue:textField.text forKey:kCTLFieldValue];
-        [self setAddressDictionary];
-    }else{
-        [_fieldRows[inputIndex] setValue:textField.text forKey:kCTLFieldValue];
-        [self setPersonDictionary];
-    }
+
+    [_fieldRows[textField.tag] setValue:textField.text forKey:kCTLFieldValue];
+    [self setPersonDictionary];
 }
 
-- (void)showAddFieldsModal:(id)sender
+- (IBAction)showAddFieldsModal:(id)sender
 {
-    [self performSegueWithIdentifier:CTLContactFormEditorSegueIdentifyer sender:self];
+    [self performSegueWithIdentifier:CTLContactFormEditorSegueIdentifyer sender:sender];
+}
+
+- (void)registerNotificationObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
 }
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLFormFieldAddedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
 }
 
 @end

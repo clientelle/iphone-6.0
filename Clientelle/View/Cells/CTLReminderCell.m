@@ -42,7 +42,7 @@
 
 - (void)decorateCompletedCell
 {
-    UIImage *checkMark = [UIImage imageNamed:@"26-checkmark-gray.png"];
+    UIImage *checkMark = [UIImage imageNamed:@"26-checkmark-gray"];
     [self.doneButton setImage:checkMark forState:UIControlStateNormal];
     
     CGFloat maxWidth = 245.0f;

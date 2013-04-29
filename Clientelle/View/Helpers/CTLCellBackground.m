@@ -22,7 +22,7 @@
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGColorRef background = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]].CGColor;
+    CGColorRef background = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]].CGColor;
     
     CGContextSetFillColorWithColor(context, background);
     CGContextFillRect(context, self.bounds);

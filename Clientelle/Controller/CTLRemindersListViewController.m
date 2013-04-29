@@ -39,15 +39,9 @@ NSString *const CTLReminderModalSegueIdentifyer = @"toReminderModal";
         
     [self setEventKeys];
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper.png"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadReminders:) name:CTLReloadRemindersNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(eventDidChange:)
-                                                 name:EKEventStoreChangedNotification
-                                               object:_eventStore];
-
+    [self registerNotificationObservers];
 }
 
 - (void)setEventKeys
@@ -60,51 +54,6 @@ NSString *const CTLReminderModalSegueIdentifyer = @"toReminderModal";
         }
     }
 }
-
-- (void)eventDidChange:(NSNotification *)notification
-{
-    if(_changeDidComeFromApp){
-        _changeDidComeFromApp = NO;
-        return;
-    }
-    _eventStore = notification.object;
-           
-    EKCalendar *calendar = [_eventStore defaultCalendarForNewReminders];
-    NSPredicate *predicate = [_eventStore predicateForRemindersInCalendars:@[calendar]];
-    __block BOOL hasChanges = NO;
-    
-    [_eventStore fetchRemindersMatchingPredicate:predicate completion:^(NSArray *reminders) {
-        for (EKReminder *reminder in reminders) {
-            if(_events[reminder.calendarItemIdentifier] != nil){
-                hasChanges = YES;
-                CTLCDReminder *cdReminder = _events[reminder.calendarItemIdentifier];
-                cdReminder.title = reminder.title;
-                cdReminder.compeletedValue = reminder.completed;
-                cdReminder.completedDate = reminder.completionDate;
-                cdReminder.dueDate = [NSDate dateFromComponents:reminder.dueDateComponents];
-                cdReminder.wasModifiedValue = YES;
-                
-                [_events setObject:cdReminder forKey:reminder.calendarItemIdentifier];
-            }
-        }
-    }];
-    
-    if([_events count] > 0){
-        [_events enumerateKeysAndObjectsUsingBlock:^(NSString *eventID, CTLCDReminder *reminder, BOOL *stop){
-            if(reminder.wasModifiedValue == NO){
-                [reminder MR_deleteEntity];
-                hasChanges = YES;
-            }
-        }];
-    }
-    
-    if(hasChanges){
-        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-            [self reloadReminders:nil];
-        }];
-    }
-}
-
 
 - (void)reloadReminders:(NSNotification *)notification
 {
@@ -174,8 +123,8 @@ NSString *const CTLReminderModalSegueIdentifyer = @"toReminderModal";
         CGFloat buttonCenter = viewFrame.size.width/2 - 70;
         UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
-        UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+        UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+        UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
         
         // Set the background for any states you plan to use
         [addButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
@@ -288,6 +237,17 @@ NSString *const CTLReminderModalSegueIdentifyer = @"toReminderModal";
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
         [self reloadReminders:nil];
     }];
+}
+
+
+- (void)registerNotificationObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadReminders:) name:CTLReloadRemindersNotification object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:CTLReloadRemindersNotification];
 }
 
 @end

@@ -5,20 +5,18 @@
 
 const struct CTLCDPersonAttributes CTLCDPersonAttributes = {
 	.address = @"address",
-	.city = @"city",
+	.compositeName = @"compositeName",
 	.email = @"email",
 	.firstName = @"firstName",
-	.isPrivate = @"isPrivate",
 	.jobTitle = @"jobTitle",
 	.lastAccessed = @"lastAccessed",
 	.lastName = @"lastName",
 	.note = @"note",
 	.organization = @"organization",
 	.phone = @"phone",
+	.picture = @"picture",
 	.rating = @"rating",
 	.recordID = @"recordID",
-	.state = @"state",
-	.zip = @"zip",
 };
 
 const struct CTLCDPersonRelationships CTLCDPersonRelationships = {
@@ -53,10 +51,6 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"isPrivateValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"isPrivate"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 	if ([key isEqualToString:@"ratingValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"rating"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -79,7 +73,7 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 
 
 
-@dynamic city;
+@dynamic compositeName;
 
 
 
@@ -95,32 +89,6 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 
 @dynamic firstName;
 
-
-
-
-
-
-@dynamic isPrivate;
-
-
-
-- (BOOL)isPrivateValue {
-	NSNumber *result = [self isPrivate];
-	return [result boolValue];
-}
-
-- (void)setIsPrivateValue:(BOOL)value_ {
-	[self setIsPrivate:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveIsPrivateValue {
-	NSNumber *result = [self primitiveIsPrivate];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveIsPrivateValue:(BOOL)value_ {
-	[self setPrimitiveIsPrivate:[NSNumber numberWithBool:value_]];
-}
 
 
 
@@ -162,6 +130,13 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 
 
 @dynamic phone;
+
+
+
+
+
+
+@dynamic picture;
 
 
 
@@ -215,20 +190,6 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 - (void)setPrimitiveRecordIDValue:(int16_t)value_ {
 	[self setPrimitiveRecordID:[NSNumber numberWithShort:value_]];
 }
-
-
-
-
-
-@dynamic state;
-
-
-
-
-
-
-@dynamic zip;
-
 
 
 

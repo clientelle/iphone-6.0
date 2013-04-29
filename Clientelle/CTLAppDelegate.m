@@ -16,7 +16,7 @@
 {
     //setup global appearance
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackOpaque];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar"] forBarMetrics:UIBarMetricsDefault];
     
     //hookup data source
     [MagicalRecord setupCoreDataStack];

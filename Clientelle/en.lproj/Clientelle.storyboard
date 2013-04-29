@@ -209,22 +209,96 @@
         <scene sceneID="rgf-da-57t">
             <objects>
                 <tableViewController id="UoD-9H-AyX" customClass="CTLContactViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="oK1-rL-5hz">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="oK1-rL-5hz">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.87058830261230469" green="0.86666673421859741" blue="0.87450987100601196" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="o83-JC-y9P">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Contact" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFR-oR-rc8">
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="224" id="5uh-4z-F5B"/>
+                                        <constraint firstAttribute="height" constant="21" id="NC1-VT-QLE"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X0f-VJ-KN3">
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="40" id="TQZ-1k-fsG"/>
+                                        <constraint firstAttribute="height" constant="25" id="c6I-eV-iJm"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <state key="normal" image="key-public.png" backgroundImage="whiteButton.png">
+                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="highlighted" backgroundImage="whiteButtonHighlight.png">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="togglePrivateButtonActive:" destination="UoD-9H-AyX" eventType="touchUpInside" id="R6r-BZ-Tbd"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="KFR-oR-rc8" firstAttribute="leading" secondItem="o83-JC-y9P" secondAttribute="leading" constant="13" id="3ED-Zw-V6H"/>
+                                <constraint firstAttribute="trailing" secondItem="X0f-VJ-KN3" secondAttribute="trailing" constant="14" id="Fgw-UJ-4Ns"/>
+                                <constraint firstItem="KFR-oR-rc8" firstAttribute="top" secondItem="o83-JC-y9P" secondAttribute="top" constant="14" id="JgW-St-AMI"/>
+                                <constraint firstItem="X0f-VJ-KN3" firstAttribute="top" secondItem="o83-JC-y9P" secondAttribute="top" constant="11" id="tiN-BQ-4pY"/>
+                            </constraints>
+                        </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="Zmb-Rx-c0Z">
+                            <rect key="frame" x="0.0" y="106" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qB3-o4-KyU">
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="73" id="B7u-Z2-455"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <state key="normal" image="sm-wrench-gray.png">
+                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="showAddFieldsModal:" destination="UoD-9H-AyX" eventType="touchUpInside" id="ZxP-t8-SRl"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-          -" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eUR-xz-CUo">
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="eUR-xz-CUo" firstAttribute="leading" secondItem="Zmb-Rx-c0Z" secondAttribute="leading" constant="130" id="7qt-PP-vfz"/>
+                                <constraint firstItem="qB3-o4-KyU" firstAttribute="top" secondItem="Zmb-Rx-c0Z" secondAttribute="top" type="default" id="FOW-fL-uuW"/>
+                                <constraint firstItem="qB3-o4-KyU" firstAttribute="centerX" secondItem="Zmb-Rx-c0Z" secondAttribute="centerX" type="default" id="Mvu-pZ-ScA"/>
+                                <constraint firstItem="eUR-xz-CUo" firstAttribute="top" secondItem="Zmb-Rx-c0Z" secondAttribute="top" constant="11" id="QUp-x6-y55"/>
+                                <constraint firstItem="qB3-o4-KyU" firstAttribute="bottom" secondItem="Zmb-Rx-c0Z" secondAttribute="bottom" type="default" id="lTl-lQ-o4u"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleAspectFit" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="inputRow" id="nBf-Ba-D1I" customClass="CTLFieldCell">
-                                <rect key="frame" x="0.0" y="46" width="320" height="46"/>
+                                <rect key="frame" x="0.0" y="62" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hVa-my-ZY8">
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="271" id="4Xq-fl-Knd"/>
                                                 <constraint firstAttribute="height" constant="30" id="Erd-lX-BvI"/>
+                                                <constraint firstAttribute="width" constant="292" id="LQT-Rn-9MC"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
@@ -238,8 +312,8 @@
                                 </view>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="hVa-my-ZY8" firstAttribute="top" secondItem="nBf-Ba-D1I" secondAttribute="top" constant="7" id="XNP-sc-SBo"/>
-                                    <constraint firstItem="hVa-my-ZY8" firstAttribute="leading" secondItem="nBf-Ba-D1I" secondAttribute="leading" constant="24" id="Xt9-yd-3qF"/>
+                                    <constraint firstItem="hVa-my-ZY8" firstAttribute="top" secondItem="nBf-Ba-D1I" secondAttribute="top" constant="6" id="LSo-cz-Jxx"/>
+                                    <constraint firstItem="hVa-my-ZY8" firstAttribute="centerX" secondItem="nBf-Ba-D1I" secondAttribute="centerX" type="default" id="QcT-hj-eBj"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="textInput" destination="hVa-my-ZY8" id="QIN-4l-BfH"/>
@@ -252,13 +326,17 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="lYU-Eo-iC4">
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="save" id="ZOh-Ol-25m">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="ZOh-Ol-25m">
                             <connections>
                                 <action selector="submit:" destination="UoD-9H-AyX" id="OqE-w6-mM8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="contactsTitleLabel" destination="KFR-oR-rc8" id="UfJ-YX-dce"/>
+                        <outlet property="editFormButton" destination="qB3-o4-KyU" id="Gb1-As-7ru"/>
+                        <outlet property="headerView" destination="o83-JC-y9P" id="SjQ-wx-uow"/>
+                        <outlet property="privateButton" destination="X0f-VJ-KN3" id="H13-38-f9v"/>
                         <outlet property="saveContactButton" destination="ZOh-Ol-25m" id="lAg-sZ-fyR"/>
                         <segue destination="uBe-ki-BBC" kind="modal" identifier="toContactFormEditor" id="IlY-wz-pWc"/>
                     </connections>
@@ -624,130 +702,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="8xk-j2-zSi">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="49" id="Lhj-dl-Yyc" customClass="CTLFieldCell">
-                                        <rect key="frame" x="0.0" y="231" width="320" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="48"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="PFT-nD-8fn">
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="270" id="K0A-j9-onY"/>
-                                                        <constraint firstAttribute="height" constant="30" id="QOO-LO-SWV"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    <connections>
-                                                        <action selector="highlightTextField:" destination="4Ud-sL-cmd" eventType="editingDidBegin" id="TKM-pY-hPH"/>
-                                                        <action selector="textFieldDidChange:" destination="4Ud-sL-cmd" eventType="editingChanged" id="m6p-cQ-hsl"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="PFT-nD-8fn" firstAttribute="centerX" secondItem="Lhj-dl-Yyc" secondAttribute="centerX" type="default" id="7bv-Mo-Vh8"/>
-                                            <constraint firstItem="PFT-nD-8fn" firstAttribute="top" secondItem="Lhj-dl-Yyc" secondAttribute="top" constant="8" id="OqB-rT-VGo"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="textInput" destination="PFT-nD-8fn" id="btt-Qj-9jg"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="nrp-Jq-L6F" customClass="CTLFieldCell">
-                                        <rect key="frame" x="0.0" y="281" width="320" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="49"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="EA4-1s-dfK">
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="271" id="Crg-OK-bVE"/>
-                                                        <constraint firstAttribute="height" constant="30" id="QbK-O2-AjX"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    <connections>
-                                                        <action selector="highlightTextField:" destination="4Ud-sL-cmd" eventType="editingDidBegin" id="8QS-wn-Dhn"/>
-                                                        <action selector="textFieldDidChange:" destination="4Ud-sL-cmd" eventType="editingChanged" id="OzC-AD-Zpx"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="EA4-1s-dfK" firstAttribute="top" secondItem="nrp-Jq-L6F" secondAttribute="top" constant="8" id="3Uo-JN-jGH"/>
-                                            <constraint firstItem="EA4-1s-dfK" firstAttribute="centerX" secondItem="nrp-Jq-L6F" secondAttribute="centerX" type="default" id="JJF-GT-WZ7"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="textInput" destination="EA4-1s-dfK" id="uvA-oB-egv"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="Vd7-4a-kiB" customClass="CTLFieldCell">
-                                        <rect key="frame" x="0.0" y="331" width="320" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="49"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="blU-ba-ngQ">
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="271" id="09V-pf-bsu"/>
-                                                        <constraint firstAttribute="height" constant="30" id="o9V-rY-tsR"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    <connections>
-                                                        <action selector="highlightTextField:" destination="4Ud-sL-cmd" eventType="editingDidBegin" id="TNf-wg-OWE"/>
-                                                        <action selector="textFieldDidChange:" destination="4Ud-sL-cmd" eventType="editingChanged" id="vNN-ct-hdY"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="blU-ba-ngQ" firstAttribute="centerX" secondItem="Vd7-4a-kiB" secondAttribute="centerX" type="default" id="MKr-VZ-hcB"/>
-                                            <constraint firstItem="blU-ba-ngQ" firstAttribute="top" secondItem="Vd7-4a-kiB" secondAttribute="top" constant="8" id="Usx-wR-eEw"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="textInput" destination="blU-ba-ngQ" id="uQr-IS-mvt"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="dkU-hL-3iy" customClass="CTLFieldCell">
-                                        <rect key="frame" x="0.0" y="381" width="320" height="51"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="49"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="ZIP" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Uzz-0r-vth">
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="KUE-29-yfp"/>
-                                                        <constraint firstAttribute="width" constant="271" id="tbj-WX-GPX"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    <connections>
-                                                        <action selector="highlightTextField:" destination="4Ud-sL-cmd" eventType="editingDidBegin" id="1mx-N5-YdX"/>
-                                                        <action selector="textFieldDidChange:" destination="4Ud-sL-cmd" eventType="editingChanged" id="kCN-au-sGy"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="Uzz-0r-vth" firstAttribute="centerX" secondItem="dkU-hL-3iy" secondAttribute="centerX" type="default" id="AHn-Tg-ZNN"/>
-                                            <constraint firstItem="Uzz-0r-vth" firstAttribute="top" secondItem="dkU-hL-3iy" secondAttribute="top" constant="8" id="Zwk-V0-zf0"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="textInput" destination="Uzz-0r-vth" id="hcg-CJ-Ldt"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                     </tableView>
                     <navigationItem key="navigationItem" id="lzh-qs-mUm">
@@ -758,14 +712,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addressTextField" destination="PFT-nD-8fn" id="AGr-lR-582"/>
-                        <outlet property="cityTextField" destination="EA4-1s-dfK" id="Nzb-na-mzD"/>
                         <outlet property="endTimeTextField" destination="mOk-92-rON" id="jMR-8o-FbM"/>
                         <outlet property="notesTextField" destination="lpa-dK-6Ie" id="aIa-t2-Kcf"/>
                         <outlet property="startTimeTextField" destination="Nxo-9v-K9x" id="g1j-TZ-sDA"/>
-                        <outlet property="stateTextField" destination="blU-ba-ngQ" id="hos-xL-HQK"/>
                         <outlet property="titleTextField" destination="3wB-3z-eEk" id="eKf-M3-s24"/>
-                        <outlet property="zipTextField" destination="Uzz-0r-vth" id="L46-ak-gt2"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kUZ-wU-eJ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1272,7 +1222,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="1Sv-5i-Se8">
-                                        <rect key="frame" x="0.0" y="55" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="55" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -1328,7 +1278,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="84c-LQ-Bdp" style="IBUITableViewCellStyleDefault" id="hvx-yT-Wfk">
-                                        <rect key="frame" x="0.0" y="208" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="208" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -2135,8 +2085,10 @@
         <image name="44-shoebox.png" width="24" height="22"/>
         <image name="clock-grn.png" width="18" height="18"/>
         <image name="clock-red.png" width="18" height="18"/>
+        <image name="key-public.png" width="26" height="12"/>
         <image name="menu.png" width="18" height="18"/>
         <image name="plus.png" width="19" height="19"/>
+        <image name="sm-wrench-gray.png" width="18" height="18"/>
         <image name="whiteButton.png" width="36" height="36"/>
         <image name="whiteButtonHighlight.png" width="36" height="36"/>
     </resources>
@@ -2168,13 +2120,9 @@
                 <relationship kind="action" name="showDatePicker:"/>
                 <relationship kind="action" name="textFieldDidChange:" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="addressTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="cityTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="endTimeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="notesTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="startTimeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="stateTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="titleTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="zipTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
         <class className="CTLAppointmentsListViewController" superclassName="UIViewController">
@@ -2218,8 +2166,14 @@
             <relationships>
                 <relationship kind="action" name="dismissKeyboard:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="highlightTextField:" candidateClass="UITextField"/>
+                <relationship kind="action" name="showAddFieldsModal:"/>
                 <relationship kind="action" name="submit:"/>
                 <relationship kind="action" name="textFieldDidChange:" candidateClass="UITextField"/>
+                <relationship kind="action" name="togglePrivateButtonActive:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="contactsTitleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="editFormButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="headerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="privateButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="saveContactButton" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>

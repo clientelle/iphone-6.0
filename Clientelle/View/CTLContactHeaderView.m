@@ -36,7 +36,7 @@ int CTLPhoneLabelTag = 602;
         CGSize viewSize = self.bounds.size;
         
         UIImageView *pictureView = [[UIImageView alloc] initWithFrame:CGRectMake(padding, padding, 45.0f, 45.0f)];
-        [pictureView setImage:[UIImage imageNamed:@"default-pic.png"]];
+        [pictureView setImage:[UIImage imageNamed:@"default-pic"]];
         [pictureView setBackgroundColor:[UIColor colorFromUnNormalizedRGB:240.0f green:240.0f blue:240.0f alpha:1.0f]];
         [pictureView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
         [pictureView.layer setBorderWidth: 2.0];
@@ -59,14 +59,14 @@ int CTLPhoneLabelTag = 602;
         [phoneLabel setUserInteractionEnabled:YES];
         phoneLabel.tag = CTLPhoneLabelTag;
         
-        CGFloat editButtonWidth = 50.0f;
-        CGFloat rightOffset = viewSize.width - editButtonWidth;
+        //CGFloat editButtonWidth = 50.0f;
+        //CGFloat rightOffset = viewSize.width - editButtonWidth;
         
-        UIButton *editProfileButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [editProfileButton setFrame:CGRectMake(rightOffset, 0, editButtonWidth, viewSize.height)];
-        [editProfileButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
-        [editProfileButton setImage:[UIImage imageNamed:@"cell-arrow.png"] forState:UIControlStateNormal];
-                        
+//        UIButton *editProfileButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [editProfileButton setFrame:CGRectMake(rightOffset, 0, editButtonWidth, viewSize.height)];
+//        [editProfileButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
+//        [editProfileButton setImage:[UIImage imageNamed:@"cell-arrow"] forState:UIControlStateNormal];
+        
         CALayer *border1 = [CALayer layer];
         border1.borderColor = [UIColor ctlGray].CGColor;
         border1.borderWidth = 1;
@@ -77,18 +77,18 @@ int CTLPhoneLabelTag = 602;
         border2.borderWidth = 1;
         border2.frame = CGRectMake(1.0f, 0, 1.0f, viewSize.height);
         
-        [editProfileButton.layer addSublayer:border1];
-        [editProfileButton.layer addSublayer:border2];
+        //[editProfileButton.layer addSublayer:border1];
+        //[editProfileButton.layer addSublayer:border2];
         
         [self addSubview:pictureView];
         [self addSubview:nameLabel];
         [self addSubview:phoneLabel];
-        [self addSubview:editProfileButton];
+        //[self addSubview:editProfileButton];
                                
         self.pictureView = pictureView;
         self.nameLabel = nameLabel;
         self.phoneLabel = phoneLabel;
-        self.editButton = editProfileButton;
+        //self.editButton = editProfileButton;
     }
     return self;
 }
@@ -157,17 +157,19 @@ int CTLPhoneLabelTag = 602;
 - (void)populateViewData:(CTLCDPerson *)contact
 {
     [self reset];
-    
-    NSString *nameStr = contact.firstName;
-    
-    if(contact.organization){
-        nameStr = [nameStr stringByAppendingFormat:@", %@", contact.organization];
-    }
-    self.nameLabel.text = nameStr;
+     
+    self.nameLabel.text = contact.compositeName;
     self.phoneLabel.text = (contact.phone) ? contact.phone : contact.email;
     
-
-    //self.pictureView.image = [abPerson picture];
+    if(contact.picture){
+        self.pictureView.image = [[UIImage alloc] initWithData:contact.picture];
+    }else{
+        self.pictureView.image = [UIImage imageNamed:@"default-pic"];
+    }
+    
+//    if(contact.organization){
+//        nameStr = [nameStr stringByAppendingFormat:@", %@", contact.organization];
+//    }
     
     [UILabel autoWidth:self.nameLabel];
     [UILabel autoWidth:self.phoneLabel];

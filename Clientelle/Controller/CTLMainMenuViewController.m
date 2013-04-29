@@ -22,7 +22,7 @@
     
     NSLog(@"MAIN MENU - VIEW DID LOAD");
     
-    //self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter.png"]];
+    //self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter"]];
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:40 green:40 blue:40 alpha:1.0f];
 
 //TODO: save this to nsuser defaults

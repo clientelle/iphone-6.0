@@ -18,9 +18,9 @@ CGFloat const CTLContactModeToolbarViewHeight = 70;
     self = [super initWithFrame:frame];
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
-        self.appointmentButton = [self createButton:@"11-clock.png" withIndex:0];
-        self.callButton = [self createButton:@"75-phone.png" withIndex:1];
-        self.smsButton = [self createButton:@"09-chat-2.png" withIndex:2];
+        self.appointmentButton = [self createButton:@"11-clock" withIndex:0];
+        self.callButton = [self createButton:@"75-phone" withIndex:1];
+        self.smsButton = [self createButton:@"09-chat-2" withIndex:2];
     }
     return self;
 }
@@ -65,7 +65,7 @@ CGFloat const CTLContactModeToolbarViewHeight = 70;
     self.layer.shadowColor = [UIColor blackColor].CGColor;
     self.layer.shadowOffset = CGSizeMake(0, 0);
     
-    UIColor *toolbarColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter.png"]];
+    UIColor *toolbarColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"dark_matter"]];
     
     CGContextSetFillColorWithColor(context, toolbarColor.CGColor);
     CGContextFillPath(context);

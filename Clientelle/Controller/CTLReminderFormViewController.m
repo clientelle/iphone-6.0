@@ -168,8 +168,8 @@ NSString *const CTLCalendarIDKey = @"com.clientelle.com.userDefaultsKey.calendar
     buttonFrame.origin.x += 10.0f;
     [addButton setFrame:buttonFrame];
     
-    UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
-    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
     
     // Set the background for any states you plan to use
     [addButton setBackgroundImage:buttonImage forState:UIControlStateNormal];

@@ -3,7 +3,7 @@
 NSString *const CTLABPersonSchemaPlist = @"ABPersonSchema";
 NSString *const CTLAddressSchemaPlist = @"AddressFields";
 
-NSString *const kCTLFieldName = @"name";
+NSString *const kCTLFieldName = @"field";
 NSString *const kCTLFieldValue = @"value";
 NSString *const kCTLFieldLabel = @"label";
 NSString *const kCTLFieldPlaceHolder = @"placeholder";

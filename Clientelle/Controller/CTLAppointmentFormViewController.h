@@ -33,12 +33,7 @@
 @property (nonatomic, weak) IBOutlet UITextField *titleTextField;
 @property (nonatomic, weak) IBOutlet UITextField *startTimeTextField;
 @property (nonatomic, weak) IBOutlet UITextField *endTimeTextField;
-@property (nonatomic, weak) IBOutlet UITextField *notesTextField;
-
 @property (nonatomic, weak) IBOutlet UITextField *addressTextField;
-@property (nonatomic, weak) IBOutlet UITextField *cityTextField;
-@property (nonatomic, weak) IBOutlet UITextField *stateTextField;
-@property (nonatomic, weak) IBOutlet UITextField *zipTextField;
 
 @property (nonatomic, assign) BOOL presentedAsModal;
 @property (nonatomic, assign) BOOL transitionedFromLocalNotification;
