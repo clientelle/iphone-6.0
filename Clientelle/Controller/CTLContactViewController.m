@@ -51,7 +51,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_private_tooltip_once"];
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(formDidChange:) name:CTLFormFieldAddedNotification object: nil];
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)]];
 }
 
@@ -116,36 +115,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         [_personDict setValue:input[kCTLFieldValue] forKey:input[kCTLFieldName]];
     }];
 }
-
-/*
-- (void)addressBookDidChange:(NSNotification *)notification
-{
-    //if changes came from app or user has no pending changes, simply reload the form view
-    if(_addressbookChangeDidComeFromApp){
-        [self reloadFormViewAfterAddressBookChange];
-        return;
-    }
-    
-    ABRecordID personID = [self.contact recordID];
-    NSString *personName = [self.contact firstName];
-    
-    CFErrorRef error;
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
-    self.addressBookRef = addressBookRef;
-    CTLABPerson *abPerson = [[CTLABPerson alloc] initWithRecordID:personID withAddressBookRef:addressBookRef];
-        
-    if(!self.contact){
-        [CTLCDPerson deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"recordID=%i", personID]];
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:[NSString stringWithFormat:NSLocalizedString(@"CONTACT_WAS_DELETED", nil), personName]
-                                                       delegate:self
-                                              cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-        [alert show];
-    }else{
-        [self reloadFormViewAfterAddressBookChange];
-    }
-}*/
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -263,7 +232,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     }
 }
 
-- (IBAction)togglePrivateButtonInactive:(UIButton *)button
+- (void)togglePrivateButtonInactive:(UIButton *)button
 {
     _isPrivate = NO;
     self.contactsTitleLabel.text = NSLocalizedString(@"CONTACT_INFO", nil);
@@ -328,8 +297,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         [self setAddressDictionary];
         [_personDict setValue:_addressDict forKey:CTLPersonAddressProperty];
     }*/
-    //TODO: Get AB Person and upate CD
-
+    
     if(!self.contact){
         self.contact = [CTLCDPerson MR_createEntity];
         [self.contact updatePerson:_personDict];
@@ -347,7 +315,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
         [self.contact updatePerson:_personDict];
         
-        __block CTLABPerson *abPerson = nil;
+        CTLABPerson *abPerson = nil;
         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
         
         if(_isPrivate == NO){
@@ -407,13 +375,12 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (void)registerNotificationObservers
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookDidChange:) name:kAddressBookDidChange object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(formDidChange:) name:CTLFormFieldAddedNotification object: nil];
 }
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLFormFieldAddedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddressBookDidChange object:nil];
 }
 
 @end

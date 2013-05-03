@@ -251,7 +251,7 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     
     [self.bubbleTextView setBackgroundColor:[UIColor clearColor]];
     [self.bubbleTextView setTextColor:[UIColor whiteColor]];
-    [self.bubbleTextView setFont:[UIFont fontWithName:@"Helvetica" size:13]];
+    [self.bubbleTextView setFont:[UIFont fontWithName:@"Helvetica" size:14]];
     [self.bubbleTextView setText:text];
     [self.bubbleTextView sizeToFit];
     bubbleFrame.size.height = self.bubbleTextView.contentSize.height;

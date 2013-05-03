@@ -79,7 +79,7 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)displaySortTooltip:(id)userInfo
 {
-    CGFloat bubbleWidth = 200.0f;
+    CGFloat bubbleWidth = 248.0f;
     CGFloat bubbleHeight = 100.0f;
     
     _sortTooltip = [[KBPopupBubbleView alloc] initWithFrame:CGRectMake((320.0f/2.0f)-(bubbleWidth/2), 0, bubbleWidth, bubbleHeight) text:NSLocalizedString(@"SORT_TOOTLIP", nil)];

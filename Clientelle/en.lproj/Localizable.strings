@@ -42,8 +42,13 @@ e†
 "ALLOW_ACCESS_TO_CALENDARS" = "Clientelle requires access to your Calendars.";
 "GO_TO_SETTINGS_CALENDARS" = "Settings > Privacy > Calendars";
 
+/* TOOLTIPS */
+"PRIVATE_TOOLTIP_MSG" = "Marking a contact private will keep it from appearing in your address book.";
+"EDIT_FORM_TOOLTIP" = "Tap on a row to hide or show the field in the contact form.";
+"SET_EXISTING_USER_AS_PRIVATE_WARNING" = "Changing this contact to private will remove them from your address book";
+
 /* SORT CONTACTS */
-"SORT_TOOTLIP" = "Sort your contacts by tapping on the title bar";
+"SORT_TOOTLIP" = "Sort contacts by tapping above";
 "SORT_BY" = "Sort by";
 "ACTIVITY" = "Most Active";
 "FIRST_NAME" = "First name";
@@ -68,13 +73,9 @@ e†
 "EDIT_CONTACT" = "Edit Contact";
 "ADD_CONTACT" = "Add Contact";
 "EDIT_FORM" = "Edit Form";
-"PRIVATE_TOOLTIP_MSG" = "Private contacts wont appear in your address book.";
-"CONTACT_IS_NOW_PRIVATE" = "Contact is now private";
-"CONTACT_IS_NO_LONGER_PRIVATE" = "Contact is no longer private";
+
 
 /* CONTACT FIELDS */
-"EDIT_FORM_TOOLTIP" = "Tap on a row to hide or show it on the contact form.";
-"EDIT_FIELDS_TOOLTIP" = "Customize this form.";
 
 "firstName" = "First Name";
 "lastName" = "Last Name";
