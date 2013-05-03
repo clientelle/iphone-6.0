@@ -53,20 +53,20 @@ enum {
 //
 #define kKBPopupDefaultUseDropShadow         YES
 #define kKBPopupDefaultUseRoundedCorners     YES
-#define kKBPopupDefaultUseBorders            YES
-#define kKBPopupDefaultUseGradient           YES
-#define kKBPopupDefaultDraggable             YES
+#define kKBPopupDefaultUseBorders            NO
+#define kKBPopupDefaultUseGradient           NO
+#define kKBPopupDefaultDraggable             NO
 #define kKBPopupDefaultShadowBackgroundColor [UIColor blackColor]
-#define kKBPopupDefaultDrawableColor         [UIColor colorWithRed:0.95f green:0.0f blue:0.0f alpha:1.0f]
+#define kKBPopupDefaultDrawableColor         [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f]
 #define kKBPopupDefaultBorderColor           [UIColor blackColor]
 #define kKBPopupDefaultShadowOpacity         0.4f
 #define kKBPopupDefaultShadowRadius          3.0f
 #define kKBPopupMinimumShadowRadius          3.0f
-#define kKBPopupDefaultCornerRadius          12.0f
+#define kKBPopupDefaultCornerRadius          6.0f
 #define kKBPopupDefaultAnimationDuration     0.4f
 #define kKBPopupDefaultBorderWidth           4.0f
 #define kKBPopupDefaultCompletionDelay       0.2f
-#define kKBPopupDefaultShadowOffset          CGSizeMake(5.0f, 5.0f)
+#define kKBPopupDefaultShadowOffset          CGSizeMake(0.5f, 0.5f)
 #define kKBPopupDefaultPosition              kKBPopupPointerPositionMiddle
 #define kKBPopupDefaultSide                  kKBPopupPointerSideTop
 
@@ -83,7 +83,7 @@ enum {
 
 #pragma mark -
 #pragma mark Interface (Public)
-@interface KBPopupBubbleView : UIView
+@interface KBPopupBubbleView : UIView<UIGestureRecognizerDelegate>
 
 @property (nonatomic, assign)   CGFloat position;
 @property (nonatomic, readonly) CGFloat margin;
@@ -109,7 +109,7 @@ enum {
 @property (nonatomic, assign) CGSize     shadowOffset;
 
 @property (nonatomic, strong) UILabel * label;
-
+@property (nonatomic, strong) UITextView *bubbleTextView;
 @property (nonatomic, assign) CGFloat completionBlockDelay;
 
 @property (nonatomic, assign) id<KBPopupBubbleViewDelegate> delegate;
@@ -120,6 +120,7 @@ enum {
 
 // Constructors
 - (id)initWithCenter:(CGPoint)center;
+- (id)initWithFrame:(CGRect)frame text:(NSString *)text;
 
 // View Lifecycle
 - (void)showInView:(UIView*)target animated:(BOOL)animated;

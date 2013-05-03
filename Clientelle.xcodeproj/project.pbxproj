@@ -41,7 +41,6 @@
 		41335F95172A9E2C00699F2E /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41335F93172A9E2C00699F2E /* 14-gear@2x.png */; };
 		41335F98172C77B000699F2E /* 40-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 41335F96172C77B000699F2E /* 40-forward.png */; };
 		41335F99172C77B000699F2E /* 40-forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41335F97172C77B000699F2E /* 40-forward@2x.png */; };
-		41335F9F172CC0D400699F2E /* CTLTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41335F9E172CC0D300699F2E /* CTLTooltipView.m */; };
 		413DB90016F022950018B38C /* CTLPickerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DB8FF16F022950018B38C /* CTLPickerButton.m */; };
 		4146971B16F7494F00B22EDD /* CTLFactoryAppointment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4146971A16F7494F00B22EDD /* CTLFactoryAppointment.m */; };
 		415A4F2B16F69DF6007A0BD4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415A4F2A16F69DF6007A0BD4 /* SystemConfiguration.framework */; };
@@ -114,6 +113,10 @@
 		417DC2B516AE1C9A0073199D /* 21-wrench@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B116AE1C9A0073199D /* 21-wrench@2x.png */; };
 		417DC2B616AE1C9A0073199D /* 24-person.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B216AE1C9A0073199D /* 24-person.png */; };
 		417DC2B716AE1C9A0073199D /* 24-person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC2B316AE1C9A0073199D /* 24-person@2x.png */; };
+		417F2824172F8C83003CC9A3 /* KBPopupBubbleView+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = 417F281E172F8C83003CC9A3 /* KBPopupBubbleView+Animations.m */; };
+		417F2825172F8C83003CC9A3 /* KBPopupBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 417F2820172F8C83003CC9A3 /* KBPopupBubbleView.m */; };
+		417F2826172F8C83003CC9A3 /* KBPopupDrawableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 417F2822172F8C83003CC9A3 /* KBPopupDrawableView.m */; };
+		417F2829173090A1003CC9A3 /* CTLMessagesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417F2828173090A1003CC9A3 /* CTLMessagesListViewController.m */; };
 		41848DD016B0271B004BFE30 /* _CTLCDFormSchema.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DC916B0271B004BFE30 /* _CTLCDFormSchema.m */; };
 		41848DD116B0271B004BFE30 /* _CTLCDPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DCB16B0271B004BFE30 /* _CTLCDPerson.m */; };
 		41848DD216B0271B004BFE30 /* CTLCDFormSchema.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DCD16B0271B004BFE30 /* CTLCDFormSchema.m */; };
@@ -217,7 +220,6 @@
 		41E56D091723A45C004B3CEB /* 258-checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E56D071723A45B004B3CEB /* 258-checkmark.png */; };
 		41E56D0A1723A45C004B3CEB /* 258-checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E56D081723A45B004B3CEB /* 258-checkmark@2x.png */; };
 		41E56D0D1724D2CB004B3CEB /* CTLLeadsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D0C1724D2CB004B3CEB /* CTLLeadsViewController.m */; };
-		41E56D141724D33C004B3CEB /* CTLMessagesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D0F1724D339004B3CEB /* CTLMessagesListViewController.m */; };
 		41E56D151724D33C004B3CEB /* CTLReminderFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D111724D33A004B3CEB /* CTLReminderFormViewController.m */; };
 		41E56D161724D33C004B3CEB /* CTLRemindersListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D131724D33B004B3CEB /* CTLRemindersListViewController.m */; };
 		41E56D1B1724D483004B3CEB /* _CTLCDReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D181724D483004B3CEB /* _CTLCDReminder.m */; };
@@ -323,8 +325,6 @@
 		41335F93172A9E2C00699F2E /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
 		41335F96172C77B000699F2E /* 40-forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "40-forward.png"; sourceTree = "<group>"; };
 		41335F97172C77B000699F2E /* 40-forward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "40-forward@2x.png"; sourceTree = "<group>"; };
-		41335F9D172CC0D300699F2E /* CTLTooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLTooltipView.h; sourceTree = "<group>"; };
-		41335F9E172CC0D300699F2E /* CTLTooltipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLTooltipView.m; sourceTree = "<group>"; };
 		413DB8FE16F022950018B38C /* CTLPickerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLPickerButton.h; sourceTree = "<group>"; };
 		413DB8FF16F022950018B38C /* CTLPickerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPickerButton.m; sourceTree = "<group>"; };
 		4146971916F7494F00B22EDD /* CTLFactoryAppointment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLFactoryAppointment.h; path = Factory/CTLFactoryAppointment.h; sourceTree = "<group>"; };
@@ -447,6 +447,15 @@
 		417DC2B116AE1C9A0073199D /* 21-wrench@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "21-wrench@2x.png"; sourceTree = "<group>"; };
 		417DC2B216AE1C9A0073199D /* 24-person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "24-person.png"; sourceTree = "<group>"; };
 		417DC2B316AE1C9A0073199D /* 24-person@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "24-person@2x.png"; sourceTree = "<group>"; };
+		417F281D172F8C82003CC9A3 /* KBPopupBubbleView+Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KBPopupBubbleView+Animations.h"; sourceTree = "<group>"; };
+		417F281E172F8C83003CC9A3 /* KBPopupBubbleView+Animations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KBPopupBubbleView+Animations.m"; sourceTree = "<group>"; };
+		417F281F172F8C83003CC9A3 /* KBPopupBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBPopupBubbleView.h; sourceTree = "<group>"; };
+		417F2820172F8C83003CC9A3 /* KBPopupBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBPopupBubbleView.m; sourceTree = "<group>"; };
+		417F2821172F8C83003CC9A3 /* KBPopupDrawableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBPopupDrawableView.h; sourceTree = "<group>"; };
+		417F2822172F8C83003CC9A3 /* KBPopupDrawableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBPopupDrawableView.m; sourceTree = "<group>"; };
+		417F2823172F8C83003CC9A3 /* KBPopupHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBPopupHeaders.h; sourceTree = "<group>"; };
+		417F2827173090A1003CC9A3 /* CTLMessagesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMessagesListViewController.h; sourceTree = "<group>"; };
+		417F2828173090A1003CC9A3 /* CTLMessagesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMessagesListViewController.m; sourceTree = "<group>"; };
 		41848DC816B0271B004BFE30 /* _CTLCDFormSchema.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CTLCDFormSchema.h; sourceTree = "<group>"; };
 		41848DC916B0271B004BFE30 /* _CTLCDFormSchema.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CTLCDFormSchema.m; sourceTree = "<group>"; };
 		41848DCA16B0271B004BFE30 /* _CTLCDPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CTLCDPerson.h; sourceTree = "<group>"; };
@@ -563,8 +572,6 @@
 		41E56D081723A45B004B3CEB /* 258-checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark@2x.png"; sourceTree = "<group>"; };
 		41E56D0B1724D2CA004B3CEB /* CTLLeadsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLLeadsViewController.h; sourceTree = "<group>"; };
 		41E56D0C1724D2CB004B3CEB /* CTLLeadsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLLeadsViewController.m; sourceTree = "<group>"; };
-		41E56D0E1724D339004B3CEB /* CTLMessagesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMessagesListViewController.h; sourceTree = "<group>"; };
-		41E56D0F1724D339004B3CEB /* CTLMessagesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMessagesListViewController.m; sourceTree = "<group>"; };
 		41E56D101724D33A004B3CEB /* CTLReminderFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLReminderFormViewController.h; sourceTree = "<group>"; };
 		41E56D111724D33A004B3CEB /* CTLReminderFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLReminderFormViewController.m; sourceTree = "<group>"; };
 		41E56D121724D33B004B3CEB /* CTLRemindersListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLRemindersListViewController.h; sourceTree = "<group>"; };
@@ -945,6 +952,7 @@
 		417DC27E16ADF2A00073199D /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				417F281C172F8C82003CC9A3 /* KBPopupBubble */,
 				83EB272D170B0B4D00EBB3D3 /* Appirater */,
 				415A4F3016F6A0AC007A0BD4 /* RMPhoneFormat */,
 				416DDA9316AFA9F100F2F8B3 /* MagicalRecord */,
@@ -965,8 +973,6 @@
 				41B546DE16B39C2300302652 /* CTLContactViewController.m */,
 				41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */,
 				41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */,
-				41E56D0E1724D339004B3CEB /* CTLMessagesListViewController.h */,
-				41E56D0F1724D339004B3CEB /* CTLMessagesListViewController.m */,
 				41E56D101724D33A004B3CEB /* CTLReminderFormViewController.h */,
 				41E56D111724D33A004B3CEB /* CTLReminderFormViewController.m */,
 				41E56D121724D33B004B3CEB /* CTLRemindersListViewController.h */,
@@ -995,6 +1001,8 @@
 				41E56D0C1724D2CB004B3CEB /* CTLLeadsViewController.m */,
 				41E56D201725ED61004B3CEB /* CTLClientsListViewController.h */,
 				41E56D211725ED62004B3CEB /* CTLClientsListViewController.m */,
+				417F2827173090A1003CC9A3 /* CTLMessagesListViewController.h */,
+				417F2828173090A1003CC9A3 /* CTLMessagesListViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1035,8 +1043,6 @@
 				4130CF8916F014CD00D398EF /* CTLPickerView.m */,
 				413DB8FE16F022950018B38C /* CTLPickerButton.h */,
 				413DB8FF16F022950018B38C /* CTLPickerButton.m */,
-				41335F9D172CC0D300699F2E /* CTLTooltipView.h */,
-				41335F9E172CC0D300699F2E /* CTLTooltipView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1136,6 +1142,20 @@
 				41D0D4CC16FC0F8500D343CA /* wht-down-arw@2x.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		417F281C172F8C82003CC9A3 /* KBPopupBubble */ = {
+			isa = PBXGroup;
+			children = (
+				417F281D172F8C82003CC9A3 /* KBPopupBubbleView+Animations.h */,
+				417F281E172F8C83003CC9A3 /* KBPopupBubbleView+Animations.m */,
+				417F281F172F8C83003CC9A3 /* KBPopupBubbleView.h */,
+				417F2820172F8C83003CC9A3 /* KBPopupBubbleView.m */,
+				417F2821172F8C83003CC9A3 /* KBPopupDrawableView.h */,
+				417F2822172F8C83003CC9A3 /* KBPopupDrawableView.m */,
+				417F2823172F8C83003CC9A3 /* KBPopupHeaders.h */,
+			);
+			path = KBPopupBubble;
 			sourceTree = "<group>";
 		};
 		41848DC716B0271B004BFE30 /* CoreData */ = {
@@ -1501,7 +1521,6 @@
 				83EB274B170B0B4D00EBB3D3 /* Appirater.m in Sources */,
 				41E56CEE1723242F004B3CEB /* Clientelle.xcdatamodeld in Sources */,
 				41E56D0D1724D2CB004B3CEB /* CTLLeadsViewController.m in Sources */,
-				41E56D141724D33C004B3CEB /* CTLMessagesListViewController.m in Sources */,
 				41E56D151724D33C004B3CEB /* CTLReminderFormViewController.m in Sources */,
 				41E56D161724D33C004B3CEB /* CTLRemindersListViewController.m in Sources */,
 				41E56D1B1724D483004B3CEB /* _CTLCDReminder.m in Sources */,
@@ -1509,7 +1528,10 @@
 				41E56D1F1724D4D9004B3CEB /* CTLReminderCell.m in Sources */,
 				41E56D221725ED64004B3CEB /* CTLClientsListViewController.m in Sources */,
 				41E56D251725FE77004B3CEB /* CTLContactsListViewController.m in Sources */,
-				41335F9F172CC0D400699F2E /* CTLTooltipView.m in Sources */,
+				417F2824172F8C83003CC9A3 /* KBPopupBubbleView+Animations.m in Sources */,
+				417F2825172F8C83003CC9A3 /* KBPopupBubbleView.m in Sources */,
+				417F2826172F8C83003CC9A3 /* KBPopupDrawableView.m in Sources */,
+				417F2829173090A1003CC9A3 /* CTLMessagesListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

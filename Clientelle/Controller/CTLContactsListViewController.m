@@ -23,6 +23,7 @@
 
 #import "CTLPickerView.h"
 #import "CTLPickerButton.h"
+#import "KBPopupBubbleView.h"
 
 NSString *const CTLContactsWereImportedNotification = @"com.clientelle.notifications.contactsWereImported";
 NSString *const CTLContactListReloadNotification = @"com.clientelle.notifications.reloadContacts";
@@ -58,9 +59,40 @@ int const CTLAddContactActionSheetTag = 424;
     
     [self buildSortPicker];
     
-    [self checkAddressbookPermission];
-    
+    //[self checkAddressbookPermission];
+    [self loadAllContacts];
     [self registerNotificationsObservers];
+    
+    if([_contacts count] > 0){
+        if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_sort_tooltip_once"]){
+            [self displaySortTooltip:nil];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_sort_tooltip_once"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [_sortTooltip removeFromSuperview];
+}
+
+- (void)displaySortTooltip:(id)userInfo
+{
+    CGFloat bubbleWidth = 200.0f;
+    CGFloat bubbleHeight = 100.0f;
+    
+    _sortTooltip = [[KBPopupBubbleView alloc] initWithFrame:CGRectMake((320.0f/2.0f)-(bubbleWidth/2), 0, bubbleWidth, bubbleHeight) text:NSLocalizedString(@"SORT_TOOTLIP", nil)];
+    [_sortTooltip setPosition:0.5f animated:NO];
+    [_sortTooltip setSide:kKBPopupPointerSideTop];
+    [_sortTooltip showInView:self.view animated:YES];
+}
+
+- (void)removeSortTooltip
+{
+    if(_sortTooltip){
+        [_sortTooltip removeFromSuperview];
+    }
 }
 
 - (void)checkAddressbookPermission
@@ -143,6 +175,12 @@ int const CTLAddContactActionSheetTag = 424;
 {
     _contacts = [CTLCDPerson findAll];
     [self loadAllContacts];
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_sort_tooltip_once"]){
+        [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(displaySortTooltip:) userInfo:nil repeats:NO];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_sort_tooltip_once"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 - (void)reloadContactList:(NSNotification *)notification
@@ -224,6 +262,7 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)showSortPicker
 {
+    [self removeSortTooltip];
     [_sortPickerView showPicker];
     [self rightTitlebarWithDoneButton];
     [self updateSortPickerButtonWithTitle:NSLocalizedString(@"SORT_BY", nil)];

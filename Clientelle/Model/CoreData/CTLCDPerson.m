@@ -40,7 +40,7 @@
     }
     
     cdPerson.lastAccessed = [NSDate date];
-
+    cdPerson.isPrivateValue = NO;
     return cdPerson;
 }
 

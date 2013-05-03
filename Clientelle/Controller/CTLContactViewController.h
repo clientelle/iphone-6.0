@@ -10,7 +10,7 @@
 
 @class CTLCDPerson;
 @class CTLCDFormSchema;
-@class CTLTooltipView;
+@class KBPopupBubbleView;
 
 @interface CTLContactViewController : UITableViewController<CTLFieldCellDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate>{
     BOOL _addressbookChangeDidComeFromApp;
@@ -22,7 +22,7 @@
     NSMutableArray *_fieldRows;
     NSDictionary *_textFieldsDict;
     BOOL _isPrivate;
-    CTLTooltipView *_privateTooltip;
+    KBPopupBubbleView *_privateTooltip;
 }
 
 /* CTLFieldCellDelegate */
@@ -36,6 +36,7 @@
 @property(nonatomic, strong) CTLCDPerson *contact;
 
 @property(nonatomic, weak) IBOutlet UIView *headerView;
+@property(nonatomic, weak) IBOutlet UIView *footerView;
 @property(nonatomic, weak) IBOutlet UILabel *contactsTitleLabel;
 @property(nonatomic, weak) IBOutlet UIButton *privateButton;
 @property(nonatomic, weak) IBOutlet UIButton *editFormButton;

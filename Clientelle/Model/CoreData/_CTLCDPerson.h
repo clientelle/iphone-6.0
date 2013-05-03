@@ -9,6 +9,7 @@ extern const struct CTLCDPersonAttributes {
 	__unsafe_unretained NSString *compositeName;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *firstName;
+	__unsafe_unretained NSString *isPrivate;
 	__unsafe_unretained NSString *jobTitle;
 	__unsafe_unretained NSString *lastAccessed;
 	__unsafe_unretained NSString *lastName;
@@ -25,6 +26,7 @@ extern const struct CTLCDPersonRelationships {
 
 extern const struct CTLCDPersonFetchedProperties {
 } CTLCDPersonFetchedProperties;
+
 
 
 
@@ -81,6 +83,18 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 //- (BOOL)validateFirstName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* isPrivate;
+
+
+@property BOOL isPrivateValue;
+- (BOOL)isPrivateValue;
+- (void)setIsPrivateValue:(BOOL)value_;
+
+//- (BOOL)validateIsPrivate:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -196,6 +210,15 @@ extern const struct CTLCDPersonFetchedProperties {
 
 - (NSString*)primitiveFirstName;
 - (void)setPrimitiveFirstName:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveIsPrivate;
+- (void)setPrimitiveIsPrivate:(NSNumber*)value;
+
+- (BOOL)primitiveIsPrivateValue;
+- (void)setPrimitiveIsPrivateValue:(BOOL)value_;
 
 
 

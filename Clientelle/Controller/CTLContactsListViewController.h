@@ -21,6 +21,7 @@ extern NSString *const CTLContactRowDidChangeNotification;
 @class CTLContactToolbarView;
 @class CTLContactHeaderView;
 @class CTLPickerView;
+@class KBPopupBubbleView;
 
 @interface CTLContactsListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CTLSlideMenuDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>{
     ABAddressBookRef _addressBookRef;
@@ -38,6 +39,8 @@ extern NSString *const CTLContactRowDidChangeNotification;
     CTLCDPerson *_selectedPerson;
     
     BOOL _shouldReorderListOnScroll;
+    
+    KBPopupBubbleView *_sortTooltip;
 }
 
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;

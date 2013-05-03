@@ -21,7 +21,7 @@
 #import "CTLABPerson.h"
 #import "CTLCDPerson.h"
 
-#import "CTLTooltipView.h"
+#import "KBPopupBubbleView.h"
 
 NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
@@ -45,6 +45,11 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     
     [self buildSchema];
     [self createHeaderView];
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_private_tooltip_once"]){
+        [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(displayInitialTooltip:) userInfo:nil repeats:NO];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_private_tooltip_once"];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(formDidChange:) name:CTLFormFieldAddedNotification object: nil];
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)]];
@@ -212,20 +217,19 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 - (void)createHeaderView
 {
     if(self.contact){
-        if([self.contact recordID]){ //has addressbook ID
-            [self setPrivateButtonInactive:self.privateButton];
+        if([self.contact isPrivateValue]){
+            [self togglePrivateButtonActive:self.privateButton];
         }else{
-            [self setPrivateButtonActive:self.privateButton];
+            [self togglePrivateButtonInactive:self.privateButton];
         }
     }else{
-        if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_private_tooltip_once"]){
-            [self setPrivateButtonInactive:self.privateButton];
-            [self createPrivateTooltipWithMessage:NSLocalizedString(@"PRIVATE_TOOLTIP_MSG", nil)];
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_private_tooltip_once"];
-        }else{
-            [self setPrivateButtonActive:self.privateButton];
-        }
+        [self togglePrivateButtonActive:self.privateButton];
     }
+}
+
+- (void)displayInitialTooltip:(id)userInfo
+{
+    [self createPrivateTooltipWithMessage:NSLocalizedString(@"PRIVATE_TOOLTIP_MSG", nil)];
 }
 
 - (void)createPrivateTooltipWithMessage:(NSString *)message
@@ -233,61 +237,49 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     if(_privateTooltip){
         [_privateTooltip removeFromSuperview];
     }
-    _privateTooltip = [[CTLTooltipView alloc] initWithFrame:CGRectMake(138, 35, 175.0f, 40.0f)];
-    [_privateTooltip setTipText:message];
-    [self.tableView addSubview:_privateTooltip];
+    _privateTooltip = [[KBPopupBubbleView alloc] initWithFrame:CGRectMake(108, 35, 212.0f, 40.0f) text:message];
+
+    [_privateTooltip setPosition:1 animated:NO];
+    [_privateTooltip setSide:kKBPopupPointerSideTop];
+    [_privateTooltip showInView:self.tableView animated:YES];
 }
 
-- (void)setPrivateButtonActive:(UIButton *)button
+- (IBAction)togglePrivateButtonActive:(UIButton *)button
 {
     _isPrivate = YES;
     self.contactsTitleLabel.text = NSLocalizedString(@"PRIVATE_CONTACT", nil);
     
     if(self.contact){
+        [self.contact setIsPrivate:@(1)];
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }
     
     [button setImage:[UIImage imageNamed:@"key-private"] forState:UIControlStateNormal];
     [button removeTarget:self action:@selector(togglePrivateButtonActive:) forControlEvents:UIControlEventTouchUpInside];
     [button addTarget:self action:@selector(togglePrivateButtonInactive:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if(_privateTooltip){
+        [_privateTooltip removeFromSuperview];
+    }
 }
 
-- (void)setPrivateButtonInactive:(UIButton *)button
+- (IBAction)togglePrivateButtonInactive:(UIButton *)button
 {
     _isPrivate = NO;
     self.contactsTitleLabel.text = NSLocalizedString(@"CONTACT_INFO", nil);
     
     if(self.contact){
+        [self.contact setIsPrivate:@(0)];
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }
     
     [button setImage:[UIImage imageNamed:@"key-public"] forState:UIControlStateNormal];
     [button removeTarget:self action:@selector(togglePrivateButtonInactive:) forControlEvents:UIControlEventTouchUpInside];
     [button addTarget:self action:@selector(togglePrivateButtonActive:) forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (IBAction)togglePrivateButtonActive:(UIButton *)button
-{
-    [self createPrivateTooltipWithMessage:NSLocalizedString(@"CONTACT_IS_NOW_PRIVATE", nil)];
-    [self performSelector:@selector(autoDismissTootlip:) withObject:_privateTooltip afterDelay:2.0];
-    [self setPrivateButtonActive:button];
-}
-
-- (void)togglePrivateButtonInactive:(UIButton *)button
-{
-    [self createPrivateTooltipWithMessage:NSLocalizedString(@"CONTACT_IS_NO_LONGER_PRIVATE", nil)];
-    [self performSelector:@selector(autoDismissTootlip:) withObject:_privateTooltip afterDelay:2.0];
-    [self setPrivateButtonInactive:button];
-}
-
-- (void)autoDismissTootlip:(id)sender
-{
-    UIView *tooltip = (UIView *)sender;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:1];
-    [UIView setAnimationDelegate:self];
-    tooltip.alpha = 0.0f;
-    [UIView commitAnimations];
+    
+    if(_privateTooltip){
+        [_privateTooltip removeFromSuperview];
+    }
 }
 
 #pragma mark - Segue
@@ -387,7 +379,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     [self.focusedTextField setBackgroundColor:[UIColor clearColor]];
     [textField setBackgroundColor:[UIColor ctlFadedGray]];
     self.focusedTextField = textField;
-    [self performSelector:@selector(autoDismissTootlip:) withObject:_privateTooltip afterDelay:0.25];
 }
 
 - (IBAction)textFieldDidChange:(UITextField *)textField

@@ -5,10 +5,12 @@
 //  Created by Kevin Liu on 6/24/12.
 //  Copyright (c) 2012 Clientelle Ltd.. All rights reserved.
 //
+
 #import "UIColor+CTLColor.h"
 #import "CTLContactFormEditorViewController.h"
 #import "CTLCDFormSchema.h"
 #import "UITableViewCell+CellShadows.h"
+#import "KBPopupBubbleView.h"
 
 NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 
@@ -31,6 +33,20 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
         [inputField setValue:[self.formSchema valueForKey:[self.fieldsFromPList[i] objectForKey:kCTLFieldName]] forKey:kCTLFieldEnabled];
         [_fieldRows addObject:inputField];
     }
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_form_editor_tooltip_once"]){
+        [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(displayTooltip:) userInfo:nil repeats:NO];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_form_editor_tooltip_once"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
+- (void)displayTooltip:(id)userInfo
+{
+    KBPopupBubbleView *bubble2 = [[KBPopupBubbleView alloc] initWithFrame:CGRectMake(55.0f, 60.0f, 210.0f, 60.0f) text:NSLocalizedString(@"EDIT_FORM_TOOLTIP", nil)];
+    [bubble2 setPosition:2 animated:NO];
+    [bubble2 setSide:kKBPopupPointerSideRight];
+    [bubble2 showInView:self.tableView animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

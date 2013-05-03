@@ -63,6 +63,7 @@ int CTLEndTimeInputTag = 3;
         
         self.cdAppointment.startDate = _appointment.startDate;
         self.cdAppointment.endDate = _appointment.endDate;
+        self.cdAppointment.location = _appointment.location;
         
     }else{
         _appointment = [_eventStore eventWithIdentifier:[self.cdAppointment eventID]];
@@ -155,7 +156,7 @@ int CTLEndTimeInputTag = 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

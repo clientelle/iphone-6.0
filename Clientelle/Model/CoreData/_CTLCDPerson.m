@@ -8,6 +8,7 @@ const struct CTLCDPersonAttributes CTLCDPersonAttributes = {
 	.compositeName = @"compositeName",
 	.email = @"email",
 	.firstName = @"firstName",
+	.isPrivate = @"isPrivate",
 	.jobTitle = @"jobTitle",
 	.lastAccessed = @"lastAccessed",
 	.lastName = @"lastName",
@@ -51,6 +52,10 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"isPrivateValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isPrivate"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"ratingValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"rating"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -89,6 +94,32 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 
 @dynamic firstName;
 
+
+
+
+
+
+@dynamic isPrivate;
+
+
+
+- (BOOL)isPrivateValue {
+	NSNumber *result = [self isPrivate];
+	return [result boolValue];
+}
+
+- (void)setIsPrivateValue:(BOOL)value_ {
+	[self setIsPrivate:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsPrivateValue {
+	NSNumber *result = [self primitiveIsPrivate];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsPrivateValue:(BOOL)value_ {
+	[self setPrimitiveIsPrivate:[NSNumber numberWithBool:value_]];
+}
 
 
 

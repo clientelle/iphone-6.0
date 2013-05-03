@@ -1,15 +1,27 @@
 //
-//  CTLLeadsViewController.m
+//  CTLMessagesListViewController.m
 //  Clientelle
 //
-//  Created by Kevin Liu on 4/21/13.
+//  Created by Kevin Liu on 4/30/13.
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
 #import "CTLMessagesListViewController.h"
 
+@interface CTLMessagesListViewController ()
+
+@end
 
 @implementation CTLMessagesListViewController
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -32,14 +44,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
+#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
+#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return 0;
 }
