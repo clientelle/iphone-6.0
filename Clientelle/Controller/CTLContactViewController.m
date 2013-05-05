@@ -32,102 +32,116 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    _addressbookChangeDidComeFromApp = NO;
+
+    [self createHeaderView];
+    [self buildContactForm];
     
     if(self.contact){
         self.navigationItem.title = NSLocalizedString(@"EDIT_CONTACT", nil);
+        [self populateContactForm];
     }else{
         self.navigationItem.title = NSLocalizedString(@"ADD_CONTACT", nil);
-    }
-
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
-    
-    [self buildSchema];
-    [self createHeaderView];
-    
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_private_tooltip_once"]){
+        //if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_private_tooltip_once"]){
         [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(displayInitialTooltip:) userInfo:nil repeats:NO];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_private_tooltip_once"];
+        //}
     }
-    
+ 
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)]];
+    
+    [self registerNotificationObservers];
 }
 
-- (void)buildSchema
+- (void)buildContactForm
 {
-    if(!_cdFormSchema){
-        _cdFormSchema = [CTLCDFormSchema MR_findFirst];
-        if(!_cdFormSchema){
-            _cdFormSchema = [CTLCDFormSchema MR_createEntity];
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-        }
+    _formSchema = [CTLCDFormSchema MR_findFirst];
+    if(!_formSchema){
+        _formSchema = [CTLCDFormSchema MR_createEntity];
+        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+        [context MR_saveToPersistentStoreAndWait];
     }
     
-    _fieldRows = [NSMutableArray array];
-    _formSchema = [NSMutableArray array];
+    _fields = [NSMutableArray array];
     _textFieldsDict = [NSMutableDictionary dictionary];
-    _personDict = [NSMutableDictionary dictionary];
+    
+    NSMutableArray *fieldsList = [[CTLCDFormSchema fieldsFromPlist:CTLContactFormSchema] mutableCopy];
+    NSMutableIndexSet *enabledIndexes = [[NSMutableIndexSet alloc] init];
+
+    for(NSUInteger i=0; i < [fieldsList count]; i++){
+
+        NSMutableDictionary *inputField = [fieldsList[i] mutableCopy];
+        BOOL isEnabled = [_formSchema fieldIsVisible:inputField[kCTLFieldName]];
+    
+        NSString *translatedLabelKey = [NSString stringWithFormat:@"CONTACT_LABEL_%@", [inputField valueForKey:kCTLFieldName]];
+        [inputField setValue:[inputField valueForKey:kCTLFieldName] forKey:kCTLFieldName];
+        [inputField setValue:NSLocalizedString(translatedLabelKey, nil) forKey:kCTLFieldPlaceholder];
+        [inputField setValue:@(isEnabled) forKey:kCTLFieldEnabled];
         
-    if(!_formFields){
-        _formFields = [[CTLCDFormSchema fieldsFromPlist:CTLABPersonSchemaPlist] mutableCopy];
+        fieldsList[i] = inputField;
+        [_fields addObject:inputField];
+        
+        if(isEnabled){
+            [enabledIndexes addIndex:i];
+        }
     }
 
-    for(NSUInteger i=0; i < [_formFields count]; i++){
-        NSMutableDictionary *inputField = nil;
-        NSString *field = _formFields[i][kCTLFieldName];
-        NSString *newValue = _personDict[field];
-        NSString *value = nil;
-        NSString *label = nil;
-        
-        if(newValue){
-            value = newValue;
-        }else if(self.contact != nil){
-            value = [[self.contact valueForKey:field] description];
-            if(value){
-                [_personDict setValue:value forKey:field];
-            }
-        }
+    _enabledFields = [[_fields objectsAtIndexes:enabledIndexes] mutableCopy];
+}
 
+- (void)populateContactForm
+{
+    _personDict = [NSMutableDictionary dictionary];
+    
+    for(NSUInteger i=0; i < [_enabledFields count]; i++){
+        NSString *field = _enabledFields[i][kCTLFieldName];
+        NSString *value = [[self.contact valueForKey:field] description];
+        
+        if(value){
+            [_personDict setValue:value forKey:field];
+        }
+        
         if([self fieldIsVisible:field]){
-            inputField = [_formFields[i] mutableCopy];
-            label = NSLocalizedString([inputField valueForKey:kCTLFieldName], nil);
-            [inputField setValue:label forKey:kCTLFieldLabel];
-            [inputField setValue:label forKey:kCTLFieldPlaceHolder];
-            
+            NSMutableDictionary *inputField = [_enabledFields[i] mutableCopy];
             if(value){
                 [inputField setValue:value forKey:kCTLFieldValue];
+                _enabledFields[i] = inputField;
             }
-            [_fieldRows addObject:inputField];
-        }
+         }
     }
 }
 
 - (BOOL)fieldIsVisible:(NSString *)fieldName
 {
-    return [[_cdFormSchema valueForKey:fieldName] isEqualToNumber:[NSNumber numberWithBool:YES]];
+    return [[_formSchema valueForKey:fieldName] isEqualToNumber:[NSNumber numberWithBool:YES]];
 }
 
 - (void)setPersonDictionary
 {
-    NSArray *fields = [NSArray arrayWithArray:_fieldRows];
-    [fields enumerateObjectsUsingBlock:^(id input, NSUInteger idx, BOOL *stop){
-        [_personDict setValue:input[kCTLFieldValue] forKey:input[kCTLFieldName]];
-    }];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactListReloadNotification object:nil];
-    [self.navigationController popViewControllerAnimated:YES];
+    for(NSUInteger i=0; i < [_enabledFields count]; i++){
+       [_personDict setValue:_enabledFields[i][kCTLFieldValue] forKey:_enabledFields[i][kCTLFieldName]];
+    }
 }
 
 - (void)reloadFormViewAfterAddressBookChange
 {
     [_personDict removeAllObjects];
-    [self buildSchema];
+    [self buildContactForm];
     [self.tableView reloadData];
 }
+
+#pragma mark - Something
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier] isEqualToString:CTLContactFormEditorSegueIdentifyer]){
+        CTLContactFormEditorViewController *viewController = [segue destinationViewController];
+        if(_fields){
+            [viewController setFormSchema:_formSchema];
+            [viewController setFields:_fields];
+        }
+    }
+}
+
 
 #pragma mark - TableViewController Delegate Methods
 
@@ -138,7 +152,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_fieldRows count];
+    return [_enabledFields count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -156,10 +170,11 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         cell = [[CTLFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
 
-    NSMutableDictionary *field = _fieldRows[indexPath.row];
+    NSMutableDictionary *field = _enabledFields[indexPath.row];
+    
     cell.textInput.tag = indexPath.row;
     cell.textInput.text = field[kCTLFieldValue];
-    cell.textInput.placeholder = field[kCTLFieldPlaceHolder];
+    cell.textInput.placeholder = field[kCTLFieldPlaceholder];
         
     UIKeyboardType keyboardType = (UIKeyboardType)[field[kCTLFieldKeyboardType] intValue];
     if(keyboardType != UIKeyboardTypeEmailAddress){
@@ -198,16 +213,11 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (void)displayInitialTooltip:(id)userInfo
 {
-    [self createPrivateTooltipWithMessage:NSLocalizedString(@"PRIVATE_TOOLTIP_MSG", nil)];
-}
-
-- (void)createPrivateTooltipWithMessage:(NSString *)message
-{
     if(_privateTooltip){
         [_privateTooltip removeFromSuperview];
     }
-    _privateTooltip = [[KBPopupBubbleView alloc] initWithFrame:CGRectMake(108, 35, 212.0f, 40.0f) text:message];
-
+    _privateTooltip = [[KBPopupBubbleView alloc] initWithFrame:CGRectMake(158.0f, 35.0f, 162.0f, 40.0f) text:NSLocalizedString(@"PRIVATE_TOOLTIP", nil)];
+    
     [_privateTooltip setPosition:1 animated:NO];
     [_privateTooltip setSide:kKBPopupPointerSideTop];
     [_privateTooltip showInView:self.tableView animated:YES];
@@ -253,15 +263,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 #pragma mark - Segue
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:CTLContactFormEditorSegueIdentifyer]){
-        CTLContactFormEditorViewController *formEditorViewController = [segue destinationViewController];
-        [formEditorViewController setFormSchema:_cdFormSchema];
-        [formEditorViewController setFieldsFromPList:_formFields];
-    }
-}
-
 - (void)cancel:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -273,7 +274,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     [self setPersonDictionary];
     
     if(![CTLABPerson validateContactInfo:_personDict]){
-        NSArray *fields = [NSArray arrayWithArray:_fieldRows];
+        NSArray *fields = [NSArray arrayWithArray:_enabledFields];
         [fields enumerateObjectsUsingBlock:^(id input, NSUInteger idx, BOOL *stop){
             NSString *fieldKey = input[kCTLFieldName];
             //light up required fields
@@ -326,14 +327,17 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactRowDidChangeNotification object:self.contact];
     }
     
-    //set flag to notifiy that changes came from within the app
-    _addressbookChangeDidComeFromApp = YES;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)formDidChange:(NSNotification *)notification{
-    _formSchema = [CTLCDFormSchema MR_findFirst];
-    [self buildSchema];
+- (void)formDidChange:(NSNotification *)notification
+{
+    [self buildContactForm];
+    
+    if(self.contact){
+        [self populateContactForm];
+    }
+    
     [self.tableView reloadData];
 }
 
@@ -354,7 +358,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     self.navigationItem.rightBarButtonItem.enabled = YES;
     
     //clear all inputs of error background
-    NSArray *fields = [NSArray arrayWithArray:_fieldRows];
+    NSArray *fields = [NSArray arrayWithArray:_enabledFields];
     [fields enumerateObjectsUsingBlock:^(id input, NSUInteger idx, BOOL *stop){
         UITextField *textField = (UITextField *)_textFieldsDict[input[kCTLFieldName]];
         textField.backgroundColor = [UIColor clearColor];
@@ -364,7 +368,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         textField.text = [NSString formatPhoneNumber:textField.text];
     }
 
-    [_fieldRows[textField.tag] setValue:textField.text forKey:kCTLFieldValue];
+    [_enabledFields[textField.tag] setValue:textField.text forKey:kCTLFieldValue];
     [self setPersonDictionary];
 }
 
@@ -380,7 +384,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLFormFieldAddedNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:CTLFormFieldAddedNotification object:nil];
 }
 
 @end

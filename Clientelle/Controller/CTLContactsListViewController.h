@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 
-extern int const CTLAllContactsGroupID;
-
 extern NSString *const CTLContactsWereImportedNotification;
-extern NSString *const CTLContactListReloadNotification;
 extern NSString *const CTLTimestampForRowNotification;
 extern NSString *const CTLNewContactWasAddedNotification;
 extern NSString *const CTLContactRowDidChangeNotification;
+extern NSString *const CTLImporterSegueIdentifyer;
+extern NSString *const CTLContactFormSegueIdentifyer;
 
+@class CTLCDFormSchema;
 @class CTLCDPerson;
 @class CTLContactToolbarView;
 @class CTLContactHeaderView;
@@ -24,21 +24,20 @@ extern NSString *const CTLContactRowDidChangeNotification;
 @class KBPopupBubbleView;
 
 @interface CTLContactsListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CTLSlideMenuDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>{
-    ABAddressBookRef _addressBookRef;
-    CTLPickerView *_sortPickerView;
-    NSArray *_sortArray;
-        
-    NSArray *_contacts;
-    NSMutableArray *_filteredContacts;
-
-    UISearchDisplayController *_searchController;
     
-    UIView *_emptyView;
-    BOOL _inContactMode;
+    NSArray *_contacts;
     NSIndexPath *_selectedIndexPath;
     CTLCDPerson *_selectedPerson;
     
+    CTLPickerView *_sortPickerView;
+    NSArray *_sortArray;
+    NSMutableArray *_filteredContacts;
+    
+    UIView *_emptyView;
+    BOOL _inContactMode;
     BOOL _shouldReorderListOnScroll;
+    
+    UISearchDisplayController *_searchController;
     
     KBPopupBubbleView *_sortTooltip;
 }
@@ -47,7 +46,6 @@ extern NSString *const CTLContactRowDidChangeNotification;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
-@property (nonatomic, assign) ABAddressBookRef addressBookRef;
 @property (nonatomic, strong) CTLContactHeaderView *contactHeader;
 @property (nonatomic, strong) CTLContactToolbarView *contactToolbar;
 

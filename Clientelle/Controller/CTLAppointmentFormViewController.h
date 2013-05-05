@@ -12,28 +12,30 @@
 @class CTLCDPerson;
 @class CTLCDAppointment;
 
-@interface CTLAppointmentFormViewController : UITableViewController<CTLFieldCellDelegate, CTLSlideMenuDelegate>{
+@interface CTLAppointmentFormViewController : UITableViewController<CTLSlideMenuDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>{
     UIDatePicker *_datePicker;
+    UIPickerView *_contactPicker;
     NSInteger _activeInputTag;
     EKEvent *_appointment;
     EKEventStore *_eventStore;
-    BOOL _hasCalendarAccess;
-    NSArray *_fields;
-    BOOL _hasAddress;
     EKCalendar *_calendar;
+    NSArray *_contacts;
+    BOOL _hasCalendarAccess;
+    BOOL _hasAddress;
+    BOOL _isPrivate;
+    BOOL _isNewAppointment;
+    ABAddressBookRef _addressBookRef;
 }
 
-/* CTLFieldCellDelegate */
-@property (nonatomic, weak) UITextField *focusedTextField;
-- (IBAction)highlightTextField:(UITextField *)textField;
-- (IBAction)textFieldDidChange:(UITextField *)textField;
-
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
-
+@property (nonatomic, assign) ABAddressBookRef addressBookRef;
 @property (nonatomic, weak) IBOutlet UITextField *titleTextField;
+@property (nonatomic, weak) IBOutlet UITextField *contactNameTextField;
 @property (nonatomic, weak) IBOutlet UITextField *startTimeTextField;
 @property (nonatomic, weak) IBOutlet UITextField *endTimeTextField;
+@property (nonatomic, weak) IBOutlet UITextField *feeTextField;
 @property (nonatomic, weak) IBOutlet UITextField *addressTextField;
+@property (nonatomic, weak) IBOutlet UITextField *address2TextField;
 
 @property (nonatomic, assign) BOOL presentedAsModal;
 @property (nonatomic, assign) BOOL transitionedFromLocalNotification;
@@ -41,6 +43,9 @@
 @property (nonatomic, strong) CTLCDAppointment *cdAppointment;
 @property (nonatomic, strong) CTLCDPerson *contact;
 
+- (IBAction)contactDidChange:(UITextField *)textField;
+- (IBAction)formatFeeString:(UITextField *)textField;
+- (IBAction)unformatCurrency:(UITextField *)textField;
 - (IBAction)showDatePicker:(id)sender;
 - (IBAction)saveAppointment:(id)sender;
 - (void)dismiss:(id)sender;

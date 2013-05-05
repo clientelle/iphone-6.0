@@ -12,17 +12,16 @@
 @class CTLCDFormSchema;
 @class KBPopupBubbleView;
 
-@interface CTLContactViewController : UITableViewController<CTLFieldCellDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate>{
-    BOOL _addressbookChangeDidComeFromApp;
+@interface CTLContactViewController : UITableViewController<UIActionSheetDelegate, UIGestureRecognizerDelegate>{
     ABAddressBookRef _addressBookRef;
-    CTLCDFormSchema *_cdFormSchema;
+    CTLCDFormSchema *_formSchema;
+    NSMutableArray *_fields;
+    NSMutableArray *_enabledFields;
     NSMutableDictionary *_personDict;
-    NSArray *_formFields;
-    NSMutableArray *_formSchema;
-    NSMutableArray *_fieldRows;
     NSDictionary *_textFieldsDict;
-    BOOL _isPrivate;
     KBPopupBubbleView *_privateTooltip;
+    
+    BOOL _isPrivate;
 }
 
 /* CTLFieldCellDelegate */
@@ -34,6 +33,7 @@
 
 @property(nonatomic, assign) ABAddressBookRef addressBookRef;
 @property(nonatomic, strong) CTLCDPerson *contact;
+@property(nonatomic, strong) CTLCDFormSchema *formSchema;
 
 @property(nonatomic, weak) IBOutlet UIView *headerView;
 @property(nonatomic, weak) IBOutlet UIView *footerView;

@@ -23,17 +23,6 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     self.navBar.topItem.title = NSLocalizedString(@"EDIT_FORM", nil);
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:206.0f green:206.0f blue:206.0f alpha:1.0f];
     
-    _fieldRows = [[NSMutableArray alloc] init];
-        
-    for(NSInteger i=0; i< [self.fieldsFromPList count]; i++){
-        NSMutableDictionary *inputField = [self.fieldsFromPList[i] mutableCopy];
-        NSString *label = NSLocalizedString([inputField valueForKey:kCTLFieldName], nil);
-        [inputField setValue:label forKey:kCTLFieldLabel];
-        [inputField setValue:label forKey:kCTLFieldPlaceHolder];
-        [inputField setValue:[self.formSchema valueForKey:[self.fieldsFromPList[i] objectForKey:kCTLFieldName]] forKey:kCTLFieldEnabled];
-        [_fieldRows addObject:inputField];
-    }
-    
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_form_editor_tooltip_once"]){
         [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(displayTooltip:) userInfo:nil repeats:NO];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_form_editor_tooltip_once"];
@@ -51,15 +40,15 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_fieldRows count];
+    return [_fields count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"fieldRow";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    NSMutableDictionary *field = [_fieldRows objectAtIndex:indexPath.row];
-    cell.textLabel.text = [field objectForKey:kCTLFieldLabel];
+    NSMutableDictionary *field = [_fields objectAtIndex:indexPath.row];
+    cell.textLabel.text = [field objectForKey:kCTLFieldPlaceholder];
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
@@ -78,20 +67,19 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.navBar.topItem.rightBarButtonItem.enabled = YES;
     [self setFieldAtIndexPath:indexPath];
 }
 
 - (void)setFieldAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    NSString *fieldName = [[_fieldRows objectAtIndex:indexPath.row] objectForKey:kCTLFieldName];
+    NSString *fieldName = [[_fields objectAtIndex:indexPath.row] objectForKey:kCTLFieldName];
     
     if(cell.accessoryType == UITableViewCellAccessoryCheckmark){
-        [self.formSchema setValue:@(0) forKey:fieldName];
+        [_formSchema setValue:@(0) forKey:fieldName];
         [self styleDisabledField:cell];
     }else{
-        [self.formSchema setValue:@(1) forKey:fieldName];
+        [_formSchema setValue:@(1) forKey:fieldName];
         [self styleEnabledField:cell];
     }
     
@@ -101,9 +89,9 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 - (void)requireMinimumContactFields
 {
     NSInteger disabledCount = 0;
-    NSDictionary *attributes = [self.formSchema.entity attributesByName];
+    NSDictionary *attributes = [_formSchema.entity attributesByName];
     for (NSString *attribute in attributes) {
-        NSNumber *value = (NSNumber *)[self.formSchema valueForKey: attribute];
+        NSNumber *value = (NSNumber *)[_formSchema valueForKey: attribute];
         if([value boolValue] == NO){
             disabledCount++;
         }
@@ -112,6 +100,7 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     if(disabledCount == [attributes count]){
         self.doneButton.enabled = NO;
     }else{
+        self.doneButton.enabled = YES;
         [self.doneButton setStyle:UIBarButtonItemStyleDone];
     }
 }

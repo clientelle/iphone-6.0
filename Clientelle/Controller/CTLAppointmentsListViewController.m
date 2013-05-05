@@ -59,8 +59,6 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     int selectedCalendarFilterRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLDefaultSelectedCalendarFilter];
     _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:_filterArray[selectedCalendarFilterRow][@"predicate"]];
     
-    [self setEventKeys];
-    
      _filterPickerView = [self createFilterPickerView];
     [_filterPickerView selectRow:selectedCalendarFilterRow inComponent:0 animated:NO];
     self.navigationItem.titleView = [self filterPickerButtonWithTitle:_filterArray[selectedCalendarFilterRow][@"title"]];
@@ -71,17 +69,6 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     //[self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPickerFromTap:)]];
     
     [self registerNotificationObservers];
-}
-
-- (void)setEventKeys
-{
-    _events = [NSMutableDictionary dictionary];
-    if([_appointments count] > 0){
-        for(NSInteger i=0;i<[_appointments count]; i++){
-            CTLCDAppointment *appt = _appointments[i];
-            [_events setObject:appt forKey:appt.eventID];
-        }
-    }
 }
 
 - (NSDictionary *)filterDict:title startDate:(NSDate *)startDate endDate:(NSDate *)endDate
@@ -157,7 +144,6 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     self.resultsController = [CTLCDAppointment fetchedResultsController];
     NSDictionary *filter = [_filterArray objectAtIndex:[_filterPickerView selectedRowInComponent:0]];
     _appointments = [[self.resultsController fetchedObjects] filteredArrayUsingPredicate:filter[@"predicate"]];
-    [self setEventKeys];
     [self.tableView reloadData];
 }
 
@@ -190,7 +176,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
     
     CTLCDAppointment *appointment = [_appointments objectAtIndex:indexPath.row];
     
-    if(appointment.location){
+    if(appointment.address || appointment.address2){
         cellIdentifier = @"apptCellHasMap";
     }else{
         cellIdentifier = @"apptCellNoMap";
@@ -311,7 +297,9 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     CTLCDAppointment *appointment = [_appointments objectAtIndex:indexPath.row];
-    NSString *encodedAddress = [appointment.location stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString *mapURL = [NSString stringWithFormat:@"%@ %@", appointment.address, appointment.address2];
+    NSString *encodedAddress = [mapURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *mapURLString = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@", encodedAddress];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mapURLString]];
 }
@@ -431,7 +419,7 @@ NSString *const CTLDefaultSelectedCalendarFilter  = @"com.clientelle.defaultKey.
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:CTLReloadAppointmentsNotification];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:CTLReloadAppointmentsNotification];
 }
 
 @end

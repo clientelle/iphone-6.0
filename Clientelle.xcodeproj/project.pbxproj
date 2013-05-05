@@ -194,6 +194,9 @@
 		41D0D4DE16FE220500D343CA /* redButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4DA16FE220500D343CA /* redButton@2x.png */; };
 		41D0D4E116FEB27D00D343CA /* 06-map-pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4DF16FEB27C00D343CA /* 06-map-pin.png */; };
 		41D0D4E216FEB27D00D343CA /* 06-map-pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4E016FEB27C00D343CA /* 06-map-pin@2x.png */; };
+		41D791511733EA8500FCA232 /* CTLContactSelectorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D791501733EA8500FCA232 /* CTLContactSelectorCell.m */; };
+		41D791541733EC5900FCA232 /* person-sm-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D791521733EC5900FCA232 /* person-sm-grey.png */; };
+		41D791551733EC5900FCA232 /* person-sm-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D791531733EC5900FCA232 /* person-sm-grey@2x.png */; };
 		41DA1DA816CB13F40017F71F /* CTLInboxControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */; };
 		41DA1DAA16CB14C00017F71F /* _CTLCDAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130653416C149D90063AC10 /* _CTLCDAccount.m */; };
 		41DA1DAB16CB14C00017F71F /* CTLCDAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130653616C149D90063AC10 /* CTLCDAccount.m */; };
@@ -220,11 +223,8 @@
 		41E56D091723A45C004B3CEB /* 258-checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E56D071723A45B004B3CEB /* 258-checkmark.png */; };
 		41E56D0A1723A45C004B3CEB /* 258-checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E56D081723A45B004B3CEB /* 258-checkmark@2x.png */; };
 		41E56D0D1724D2CB004B3CEB /* CTLLeadsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D0C1724D2CB004B3CEB /* CTLLeadsViewController.m */; };
-		41E56D151724D33C004B3CEB /* CTLReminderFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D111724D33A004B3CEB /* CTLReminderFormViewController.m */; };
-		41E56D161724D33C004B3CEB /* CTLRemindersListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D131724D33B004B3CEB /* CTLRemindersListViewController.m */; };
 		41E56D1B1724D483004B3CEB /* _CTLCDReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D181724D483004B3CEB /* _CTLCDReminder.m */; };
 		41E56D1C1724D483004B3CEB /* CTLCDReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D1A1724D483004B3CEB /* CTLCDReminder.m */; };
-		41E56D1F1724D4D9004B3CEB /* CTLReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D1E1724D4D9004B3CEB /* CTLReminderCell.m */; };
 		41E56D221725ED64004B3CEB /* CTLClientsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D211725ED62004B3CEB /* CTLClientsListViewController.m */; };
 		41E56D251725FE77004B3CEB /* CTLContactsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E56D241725FE76004B3CEB /* CTLContactsListViewController.m */; };
 		41E56D2C1728FE13004B3CEB /* sort.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E56D2A1728FE13004B3CEB /* sort.png */; };
@@ -547,6 +547,10 @@
 		41D0D4DA16FE220500D343CA /* redButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redButton@2x.png"; sourceTree = "<group>"; };
 		41D0D4DF16FEB27C00D343CA /* 06-map-pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-map-pin.png"; sourceTree = "<group>"; };
 		41D0D4E016FEB27C00D343CA /* 06-map-pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-map-pin@2x.png"; sourceTree = "<group>"; };
+		41D7914F1733EA8500FCA232 /* CTLContactSelectorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactSelectorCell.h; sourceTree = "<group>"; };
+		41D791501733EA8500FCA232 /* CTLContactSelectorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactSelectorCell.m; sourceTree = "<group>"; };
+		41D791521733EC5900FCA232 /* person-sm-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "person-sm-grey.png"; sourceTree = "<group>"; };
+		41D791531733EC5900FCA232 /* person-sm-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "person-sm-grey@2x.png"; sourceTree = "<group>"; };
 		41DA1DA616CB13F40017F71F /* CTLInboxControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInboxControllerTest.h; sourceTree = "<group>"; };
 		41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInboxControllerTest.m; sourceTree = "<group>"; };
 		41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAccountInterstitialViewController.h; sourceTree = "<group>"; };
@@ -572,16 +576,10 @@
 		41E56D081723A45B004B3CEB /* 258-checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark@2x.png"; sourceTree = "<group>"; };
 		41E56D0B1724D2CA004B3CEB /* CTLLeadsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLLeadsViewController.h; sourceTree = "<group>"; };
 		41E56D0C1724D2CB004B3CEB /* CTLLeadsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLLeadsViewController.m; sourceTree = "<group>"; };
-		41E56D101724D33A004B3CEB /* CTLReminderFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLReminderFormViewController.h; sourceTree = "<group>"; };
-		41E56D111724D33A004B3CEB /* CTLReminderFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLReminderFormViewController.m; sourceTree = "<group>"; };
-		41E56D121724D33B004B3CEB /* CTLRemindersListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLRemindersListViewController.h; sourceTree = "<group>"; };
-		41E56D131724D33B004B3CEB /* CTLRemindersListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLRemindersListViewController.m; sourceTree = "<group>"; };
 		41E56D171724D483004B3CEB /* _CTLCDReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CTLCDReminder.h; sourceTree = "<group>"; };
 		41E56D181724D483004B3CEB /* _CTLCDReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CTLCDReminder.m; sourceTree = "<group>"; };
 		41E56D191724D483004B3CEB /* CTLCDReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLCDReminder.h; path = CoreData/CTLCDReminder.h; sourceTree = "<group>"; };
 		41E56D1A1724D483004B3CEB /* CTLCDReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLCDReminder.m; path = CoreData/CTLCDReminder.m; sourceTree = "<group>"; };
-		41E56D1D1724D4D9004B3CEB /* CTLReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLReminderCell.h; sourceTree = "<group>"; };
-		41E56D1E1724D4D9004B3CEB /* CTLReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLReminderCell.m; sourceTree = "<group>"; };
 		41E56D201725ED61004B3CEB /* CTLClientsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLClientsListViewController.h; sourceTree = "<group>"; };
 		41E56D211725ED62004B3CEB /* CTLClientsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLClientsListViewController.m; sourceTree = "<group>"; };
 		41E56D231725FE75004B3CEB /* CTLContactsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactsListViewController.h; sourceTree = "<group>"; };
@@ -973,10 +971,6 @@
 				41B546DE16B39C2300302652 /* CTLContactViewController.m */,
 				41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */,
 				41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */,
-				41E56D101724D33A004B3CEB /* CTLReminderFormViewController.h */,
-				41E56D111724D33A004B3CEB /* CTLReminderFormViewController.m */,
-				41E56D121724D33B004B3CEB /* CTLRemindersListViewController.h */,
-				41E56D131724D33B004B3CEB /* CTLRemindersListViewController.m */,
 				41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */,
 				41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */,
 				416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */,
@@ -1050,6 +1044,8 @@
 		417DC2A716AE16220073199D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				41D791521733EC5900FCA232 /* person-sm-grey.png */,
+				41D791531733EC5900FCA232 /* person-sm-grey@2x.png */,
 				41335F96172C77B000699F2E /* 40-forward.png */,
 				41335F97172C77B000699F2E /* 40-forward@2x.png */,
 				41335F82172911F900699F2E /* 04-eye.png */,
@@ -1180,8 +1176,6 @@
 		41B546CD16B39A8900302652 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				41E56D1D1724D4D9004B3CEB /* CTLReminderCell.h */,
-				41E56D1E1724D4D9004B3CEB /* CTLReminderCell.m */,
 				41B546CF16B39A9F00302652 /* CTLContactCell.h */,
 				41B546D016B39A9F00302652 /* CTLContactCell.m */,
 				41B5472E16B4556500302652 /* CTLFieldCell.h */,
@@ -1190,6 +1184,8 @@
 				41AEBDA516EC792900BC397F /* CTLMenuItemCell.m */,
 				41AEBDB416EEEE6F00BC397F /* CTLAppointmentCell.h */,
 				41AEBDB516EEEE6F00BC397F /* CTLAppointmentCell.m */,
+				41D7914F1733EA8500FCA232 /* CTLContactSelectorCell.h */,
+				41D791501733EA8500FCA232 /* CTLContactSelectorCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1402,6 +1398,8 @@
 				41335F95172A9E2C00699F2E /* 14-gear@2x.png in Resources */,
 				41335F98172C77B000699F2E /* 40-forward.png in Resources */,
 				41335F99172C77B000699F2E /* 40-forward@2x.png in Resources */,
+				41D791541733EC5900FCA232 /* person-sm-grey.png in Resources */,
+				41D791551733EC5900FCA232 /* person-sm-grey@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1521,17 +1519,15 @@
 				83EB274B170B0B4D00EBB3D3 /* Appirater.m in Sources */,
 				41E56CEE1723242F004B3CEB /* Clientelle.xcdatamodeld in Sources */,
 				41E56D0D1724D2CB004B3CEB /* CTLLeadsViewController.m in Sources */,
-				41E56D151724D33C004B3CEB /* CTLReminderFormViewController.m in Sources */,
-				41E56D161724D33C004B3CEB /* CTLRemindersListViewController.m in Sources */,
 				41E56D1B1724D483004B3CEB /* _CTLCDReminder.m in Sources */,
 				41E56D1C1724D483004B3CEB /* CTLCDReminder.m in Sources */,
-				41E56D1F1724D4D9004B3CEB /* CTLReminderCell.m in Sources */,
 				41E56D221725ED64004B3CEB /* CTLClientsListViewController.m in Sources */,
 				41E56D251725FE77004B3CEB /* CTLContactsListViewController.m in Sources */,
 				417F2824172F8C83003CC9A3 /* KBPopupBubbleView+Animations.m in Sources */,
 				417F2825172F8C83003CC9A3 /* KBPopupBubbleView.m in Sources */,
 				417F2826172F8C83003CC9A3 /* KBPopupDrawableView.m in Sources */,
 				417F2829173090A1003CC9A3 /* CTLMessagesListViewController.m in Sources */,
+				41D791511733EA8500FCA232 /* CTLContactSelectorCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

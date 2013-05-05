@@ -28,18 +28,19 @@
     [Appirater setUsesUntilPrompt:kAppiraterUsesUntilPrompt];
     [Appirater setTimeBeforeReminding:kAppiraterTimeBeforeReminding];
     [Appirater appLaunched:YES];
-    
-    //Register for External Changes
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
-        ABAddressBookRegisterExternalChangeCallback(addressBookRef, addressBookChanged, NULL);
-    }
 
+    //When app is launched from a local notification
     UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if(notification && [[notification userInfo][@"navigationController"] length] > 0){
         application.applicationIconBadgeNumber = notification.applicationIconBadgeNumber-1;
         CTLSlideMenuController *rootViewController = (CTLSlideMenuController *)[self.window rootViewController];
         [rootViewController launchWithViewFromNotification:notification];
+    }
+    
+    //Register for External Changes
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        ABAddressBookRegisterExternalChangeCallback(addressBookRef, addressBookChanged, NULL);
     }
     
     return YES;
@@ -63,6 +64,7 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
+    // Recieved local notification while using app
     CTLSlideMenuController *rootViewController = (CTLSlideMenuController *)[self.window rootViewController];
     [rootViewController setMainViewFromNotification:notification applicationState:application.applicationState];
     application.applicationIconBadgeNumber = notification.applicationIconBadgeNumber-1;

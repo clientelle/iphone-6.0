@@ -7,10 +7,8 @@
 #import "CTLSlideMenuController.h"
 
 #import "CTLContactsListViewController.h"
-
 #import "CTLContactViewController.h"
 #import "CTLContactImportViewController.h"
-
 #import "CTLAppointmentFormViewController.h"
 
 #import "CTLContactCell.h"
@@ -19,7 +17,6 @@
 
 #import "CTLABPerson.h"
 #import "CTLCDPerson.h"
-#import "CTLCDFormSchema.h"
 
 #import "CTLPickerView.h"
 #import "CTLPickerButton.h"
@@ -54,27 +51,27 @@ int const CTLAddContactActionSheetTag = 424;
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
 
     [self rightTitlebarWithAddContactButton];
-    
-    [self prepareContactViewMode];
-    
     [self buildSortPicker];
-    
-    //[self checkAddressbookPermission];
+    [self prepareContactViewMode];
     [self loadAllContacts];
+    [self prepareSortTooltip];
     [self registerNotificationsObservers];
-    
-    if([_contacts count] > 0){
-        if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_sort_tooltip_once"]){
-            [self displaySortTooltip:nil];
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_sort_tooltip_once"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [_sortTooltip removeFromSuperview];
+    if(_sortTooltip){
+        [_sortTooltip removeFromSuperview];
+    }
+}
+
+- (void)prepareSortTooltip
+{
+    if([_contacts count] > 1 && ![[NSUserDefaults standardUserDefaults] boolForKey:@"display_sort_tooltip_once"]){
+        [self displaySortTooltip:nil];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_sort_tooltip_once"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 - (void)displaySortTooltip:(id)userInfo
@@ -93,41 +90,6 @@ int const CTLAddContactActionSheetTag = 424;
     if(_sortTooltip){
         [_sortTooltip removeFromSuperview];
     }
-}
-
-- (void)checkAddressbookPermission
-{
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
-        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
-            // First time access has been granted
-            if(granted){
-                self.addressBookRef = addressBookRef;
-                [self loadAllContacts];
-            }else{
-                [self displayPermissionPrompt];
-            }
-        });
-    } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
-        // The user has previously given access.
-        self.addressBookRef = addressBookRef;
-        [self loadAllContacts];
-        
-    } else {
-        // The user has previously denied access
-        [self displayPermissionPrompt];
-    }
-}
-
-- (void)displayPermissionPrompt
-{
-    UIAlertView *requirePermission = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"REQUIRES_ACCESS_TO_CONTACTS", nil)
-                                                                message:NSLocalizedString(@"GO_TO_SETTINGS_CONTACTS", nil)
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil, nil];
-    
-    [requirePermission show];
 }
 
 #pragma mark - Loading Contact List
@@ -173,7 +135,6 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)reloadContactListAfterImport:(NSNotification *)notification
 {
-    _contacts = [CTLCDPerson findAll];
     [self loadAllContacts];
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_sort_tooltip_once"]){
@@ -185,9 +146,6 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)reloadContactList:(NSNotification *)notification
 {
-    _contacts = nil;
-    CFErrorRef error;
-    self.addressBookRef = ABAddressBookCreateWithOptions(NULL, &error);
     [self loadAllContacts];
 }
 
@@ -422,25 +380,19 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)showImporter:(id)sender
 {
-    if(!self.addressBookRef){
-        [self displayPermissionPrompt];
-    }else{
-        [self hideSortPicker];
-        [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
-    }
+    [self hideSortPicker];
+    [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if([[segue identifier] isEqualToString:CTLImporterSegueIdentifyer]){
-        CTLContactImportViewController *importer = [segue destinationViewController];
-        [importer setAddressBookRef:self.addressBookRef];
-        return;
-    }
+//    if([[segue identifier] isEqualToString:CTLImporterSegueIdentifyer]){
+//        CTLContactImportViewController *importer = [segue destinationViewController];
+//        return;
+//    }
     
     if ([[segue identifier] isEqualToString:CTLContactFormSegueIdentifyer]) {
         CTLContactViewController *contactFormViewController = [segue destinationViewController];
-        [contactFormViewController setAddressBookRef:self.addressBookRef];
         if(_selectedPerson){
             [contactFormViewController setContact:_selectedPerson];
         }

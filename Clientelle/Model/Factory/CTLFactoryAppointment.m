@@ -40,7 +40,7 @@
         appointment.title = [self withRandomPerson];
         appointment.startDate = date;
         appointment.endDate = date;
-        appointment.location = [self randomLocation];
+        appointment.address = [self randomLocation];
         
         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     }

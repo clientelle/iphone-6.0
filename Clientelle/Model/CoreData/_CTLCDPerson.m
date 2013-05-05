@@ -5,6 +5,7 @@
 
 const struct CTLCDPersonAttributes CTLCDPersonAttributes = {
 	.address = @"address",
+	.address2 = @"address2",
 	.compositeName = @"compositeName",
 	.email = @"email",
 	.firstName = @"firstName",
@@ -21,6 +22,7 @@ const struct CTLCDPersonAttributes CTLCDPersonAttributes = {
 };
 
 const struct CTLCDPersonRelationships CTLCDPersonRelationships = {
+	.appointment = @"appointment",
 };
 
 const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
@@ -72,6 +74,13 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 
 
 @dynamic address;
+
+
+
+
+
+
+@dynamic address2;
 
 
 
@@ -225,6 +234,19 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 
 
 
+
+@dynamic appointment;
+
+	
+- (NSMutableSet*)appointmentSet {
+	[self willAccessValueForKey:@"appointment"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"appointment"];
+  
+	[self didAccessValueForKey:@"appointment"];
+	return result;
+}
+	
 
 
 

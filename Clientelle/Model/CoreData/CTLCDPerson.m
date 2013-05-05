@@ -3,45 +3,43 @@
 
 @implementation CTLCDPerson
 
-+ (id)createFromABPerson:(CTLABPerson *)person
+- (void)updateFromABPerson:(CTLABPerson *)person
 {
-    CTLCDPerson *cdPerson = [CTLCDPerson MR_createEntity];
-    cdPerson.recordID = @(person.recordID);
-    
-    cdPerson.compositeName = person.compositeName;
+    self.compositeName = person.compositeName;
     
     if(person.firstName){
-        cdPerson.firstName = person.firstName;
+        self.firstName = person.firstName;
     }
     if(person.lastName){
-        cdPerson.lastName = person.lastName;
+        self.lastName = person.lastName;
     }
     if(person.phone){
-        cdPerson.phone = person.phone;
+        self.phone = person.phone;
     }
     if(person.email){
-        cdPerson.email = person.email;
+        self.email = person.email;
     }
     if(person.jobTitle){
-        cdPerson.jobTitle  = person.jobTitle;
+        self.jobTitle  = person.jobTitle;
     }
     if(person.organization){
-        cdPerson.organization = person.organization;
+        self.organization = person.organization;
     }
     if(person.note){
-        cdPerson.note = person.note;
+        self.note = person.note;
     }
     
     if(person.picture){
-        cdPerson.picture = UIImagePNGRepresentation(person.picture);
-    }
-    if(person.addressDict){
-        cdPerson.address = [CTLCDPerson addressString:person.addressDict];
+        self.picture = UIImagePNGRepresentation(person.picture);
     }
     
-    cdPerson.lastAccessed = [NSDate date];
-    cdPerson.isPrivateValue = NO;
-    return cdPerson;
+    if(person.addressDict){
+        if(person.addressDict[CTLAddressStreetProperty]){
+            self.address = person.addressDict[CTLAddressStreetProperty];
+        }
+        self.address2 = [self cityStateZipFromAddressDict:person.addressDict];
+    }
+    self.lastAccessed = [NSDate date];
 }
 
 - (void)updatePerson:(NSDictionary *)personDict
@@ -53,7 +51,11 @@
     }
     
     if([personDict[CTLPersonLastNameProperty] length] > 0){
-        compositeName = [compositeName stringByAppendingFormat:@" %@", personDict[CTLPersonLastNameProperty]];
+        if([compositeName length] > 0){
+            compositeName = [compositeName stringByAppendingFormat:@" %@", personDict[CTLPersonLastNameProperty]];
+        }else{
+            compositeName = personDict[CTLPersonLastNameProperty];
+        }
     }
     
     self.compositeName = compositeName;
@@ -69,13 +71,9 @@
     self.lastAccessed = [NSDate date];
 }
 
-+ (NSString *)addressString:(NSDictionary *)addressDict
+- (NSString *)cityStateZipFromAddressDict:(NSDictionary *)addressDict
 {
     NSMutableArray *addressArr = [NSMutableArray array];
-    
-    if(addressDict[CTLAddressStreetProperty]){
-        [addressArr addObject:addressDict[CTLAddressStreetProperty]];
-    }
     
     if(addressDict[CTLAddressCityProperty]){
         [addressArr addObject:addressDict[CTLAddressCityProperty]];
@@ -89,7 +87,7 @@
         [addressArr addObject:addressDict[CTLAddressZIPProperty]];
     }
     
-    return [addressArr componentsJoinedByString:@", "];
+    return [addressArr componentsJoinedByString:@" "];
 }
 
 @end

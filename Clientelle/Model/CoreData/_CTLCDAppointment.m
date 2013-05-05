@@ -4,15 +4,21 @@
 #import "_CTLCDAppointment.h"
 
 const struct CTLCDAppointmentAttributes CTLCDAppointmentAttributes = {
+	.address = @"address",
+	.address2 = @"address2",
+	.completed = @"completed",
 	.endDate = @"endDate",
 	.eventID = @"eventID",
-	.location = @"location",
+	.fee = @"fee",
 	.notes = @"notes",
+	.paid = @"paid",
+	.private = @"private",
 	.startDate = @"startDate",
 	.title = @"title",
 };
 
 const struct CTLCDAppointmentRelationships CTLCDAppointmentRelationships = {
+	.contact = @"contact",
 };
 
 const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties = {
@@ -44,9 +50,61 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"completedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"completed"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"paidValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"paid"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"privateValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"private"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic address;
+
+
+
+
+
+
+@dynamic address2;
+
+
+
+
+
+
+@dynamic completed;
+
+
+
+- (BOOL)completedValue {
+	NSNumber *result = [self completed];
+	return [result boolValue];
+}
+
+- (void)setCompletedValue:(BOOL)value_ {
+	[self setCompleted:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveCompletedValue {
+	NSNumber *result = [self primitiveCompleted];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveCompletedValue:(BOOL)value_ {
+	[self setPrimitiveCompleted:[NSNumber numberWithBool:value_]];
+}
+
 
 
 
@@ -65,7 +123,7 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 
 
 
-@dynamic location;
+@dynamic fee;
 
 
 
@@ -74,6 +132,58 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 
 @dynamic notes;
 
+
+
+
+
+
+@dynamic paid;
+
+
+
+- (BOOL)paidValue {
+	NSNumber *result = [self paid];
+	return [result boolValue];
+}
+
+- (void)setPaidValue:(BOOL)value_ {
+	[self setPaid:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitivePaidValue {
+	NSNumber *result = [self primitivePaid];
+	return [result boolValue];
+}
+
+- (void)setPrimitivePaidValue:(BOOL)value_ {
+	[self setPrimitivePaid:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic private;
+
+
+
+- (BOOL)privateValue {
+	NSNumber *result = [self private];
+	return [result boolValue];
+}
+
+- (void)setPrivateValue:(BOOL)value_ {
+	[self setPrivate:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitivePrivateValue {
+	NSNumber *result = [self primitivePrivate];
+	return [result boolValue];
+}
+
+- (void)setPrimitivePrivateValue:(BOOL)value_ {
+	[self setPrimitivePrivate:[NSNumber numberWithBool:value_]];
+}
 
 
 
@@ -92,6 +202,10 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 
 
 
+
+@dynamic contact;
+
+	
 
 
 

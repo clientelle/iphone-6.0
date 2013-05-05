@@ -20,7 +20,6 @@ extern NSString *const CTLReloadAppointmentsNotification;
     CTLPickerView *_filterPickerView;
     NSArray *_filterArray;
     NSArray *_appointments;
-    NSMutableDictionary *_events;
     EKEventStore *_eventStore;
 }
 

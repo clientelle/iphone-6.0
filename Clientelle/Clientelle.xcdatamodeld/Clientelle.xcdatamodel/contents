@@ -14,12 +14,18 @@
         <attribute name="user_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Appointment" representedClassName="CTLCDAppointment" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="completed" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="eventID" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fee" optional="YES" attributeType="Decimal" defaultValueString="0" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="paid" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="private" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="startDate" attributeType="Date" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contact" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="appointment" inverseEntity="Person" syncable="YES"/>
     </entity>
     <entity name="FormSchema" representedClassName="CTLCDFormSchema" syncable="YES">
         <attribute name="address" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -39,6 +45,7 @@
     </entity>
     <entity name="Person" representedClassName="CTLCDPerson" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="compositeName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
@@ -52,6 +59,7 @@
         <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="recordID" optional="YES" attributeType="Integer 16" indexed="YES" syncable="YES"/>
+        <relationship name="appointment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Appointment" inverseName="contact" inverseEntity="Appointment" syncable="YES"/>
     </entity>
     <entity name="Reminder" representedClassName="CTLCDReminder" syncable="YES">
         <attribute name="compeleted" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -61,11 +69,11 @@
         <attribute name="title" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-171" positionY="-495" width="128" height="210"/>
-        <element name="Appointment" positionX="160" positionY="192" width="128" height="135"/>
-        <element name="FormSchema" positionX="-0" positionY="-198" width="128" height="165"/>
-        <element name="Inbox" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Person" positionX="-326" positionY="-361" width="128" height="255"/>
-        <element name="Reminder" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="Account" positionX="-216" positionY="-120" width="128" height="210"/>
+        <element name="Appointment" positionX="-567" positionY="-288" width="128" height="225"/>
+        <element name="FormSchema" positionX="-2" positionY="-237" width="128" height="165"/>
+        <element name="Inbox" positionX="-486" positionY="126" width="128" height="105"/>
+        <element name="Person" positionX="-380" positionY="-273" width="128" height="285"/>
+        <element name="Reminder" positionX="-200" positionY="-261" width="128" height="120"/>
     </elements>
 </model>

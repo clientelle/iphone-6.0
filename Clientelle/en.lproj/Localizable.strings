@@ -24,28 +24,28 @@ e†
 "COPY" = "Copy";
 "SHARE" = "Share";
 "BACK" = "Back";
-"PARENS_OPTIONAL" = "(Optional)";
 "CLOSE" = "Close";
 "VIEW" = "View";
 "DONE" = "Done";
 
+
 /* GENERIC TERMS */
 "CLIENTS" = "Clients";
+"OPTIONAL" = "Optional";
 
 
 /* PERMISSIONS */
 "REQUIRES_ACCESS_TO_CONTACTS" = "To continue, please allow access to Contacts:";
 "ALLOW_ACCESS_TO_CONTACTS" = "Clientelle requires access to your Contacts.";
-"GO_TO_SETTINGS_CONTACTS" = "Settings > Privacy > Contacts";
+"GO_TO_SETTINGS_CONTACTS" = "Settings > Privacy > Contacts"; 
 
 "REQUIRES_ACCESS_TO_CALENDARS" = "To continue, please allow access to Calendars:";
 "ALLOW_ACCESS_TO_CALENDARS" = "Clientelle requires access to your Calendars.";
 "GO_TO_SETTINGS_CALENDARS" = "Settings > Privacy > Calendars";
 
 /* TOOLTIPS */
-"PRIVATE_TOOLTIP_MSG" = "Marking a contact private will keep it from appearing in your address book.";
-"EDIT_FORM_TOOLTIP" = "Tap on a row to hide or show the field in the contact form.";
-"SET_EXISTING_USER_AS_PRIVATE_WARNING" = "Changing this contact to private will remove them from your address book";
+"PRIVATE_TOOLTIP" = "Private contacts do not appear in your address book.";
+"EDIT_FORM_TOOLTIP" = "Tap on a row to hide/show the field in the contact form.";
 
 /* SORT CONTACTS */
 "SORT_TOOTLIP" = "Sort contacts by tapping above";
@@ -62,7 +62,11 @@ e†
 /* ADD CONTACTS */
 "ADD_NEW_CONTACT" = "Add a new Contact";
 "NEW_CONTACT" = "New Contact";
-"IMPORT_CONTACTS" = "Import Contact";
+"IMPORT_CONTACTS" = "Import Contacts";
+"ADD_CONTACT" = "Add Contact";
+"IMPORT" = "Import";
+"ADD" = "Add";
+"IMPORT_FAILED" = "An error occured while trying to import your contacts.";
 
 "PRIVATE" = "Private";
 "PUBLIC" = "Public";
@@ -77,14 +81,15 @@ e†
 
 /* CONTACT FIELDS */
 
-"firstName" = "First Name";
-"lastName" = "Last Name";
-"phone" = "Phone";
-"email" = "Email";
-"jobTitle" = "Title";
-"organization" = "Organization";
-"note" = "Note";
-"address" = "Address";
+"CONTACT_LABEL_firstName" = "First Name";
+"CONTACT_LABEL_lastName" = "Last Name";
+"CONTACT_LABEL_phone" = "Phone";
+"CONTACT_LABEL_email" = "Email";
+"CONTACT_LABEL_jobTitle" = "Title";
+"CONTACT_LABEL_organization" = "Organization";
+"CONTACT_LABEL_note" = "Note";
+"CONTACT_LABEL_address" = "Address";
+
 "Street" = "Street";
 "City" = "City";
 "ZIP" = "ZIP Code";
@@ -146,14 +151,20 @@ e†
 /* Set Appointment */
 "APPOINTMENT" = "Appointment";
 "SET_APPOINTMENT" = "Set Appointment";
-"APPOINTMENT_INFO" = "Appointment Info";
+"SCHEDULE_AN_APPOINTMENT" = "Schedule an Appointment";
+"EDIT_APPOINTMENT" = "Edit Appointment";
+"APPOINTMENT_DESCRIPTION" = "Appointment Description";
+
+"YOU_DO_NOT_HAVE_CONTACTS_YET" = "You do not have any contacts yet";
+
 "MEETING_WITH" = "Meeting with %@";
-"APPOINTMENT_TITLE" = "Title";
-"APPOINTMENT_NOTES" = "Notes";
+"CHOOSE_A_CONTACT" = "Choose a contact";
 "START_TIME" = "Start Time";
 "END_TIME" = "End Time";
+"BILL_AMOUNT" = "Bill Amount";
+"STREET_ADDRESS" = "Street Address";
+"CITY_STATE_ZIP" = "City, State or ZIP code";
+
 "LOCATION" = "Location (example: \"My Office\")";
 "NO_CALENDAR_FOUND" = "Could not add event because local Calendar is not configured.";
-"APPOINTMENT_LOCATION" = "Address";
 "VIEW_APPOINTMENT" = "View Appointment";
-

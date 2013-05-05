@@ -79,6 +79,7 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID != nil"];
         NSArray *contacts = [CTLCDPerson MR_findAllWithPredicate:predicate];
         
+        //filter out contacts that have been added
         for(NSInteger i=0;i<[contacts count];i++){
             CTLCDPerson *person = contacts[i];
             [people removeObjectForKey:person.recordID];
@@ -253,14 +254,30 @@
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
     __block NSMutableArray *cdPeople = [NSMutableArray array];
     [_selectedPeople enumerateKeysAndObjectsUsingBlock:^(NSNumber *recordID, CTLABPerson *person, BOOL *stop){
-        CTLCDPerson *cdPerson = [CTLCDPerson createFromABPerson:person];
+        CTLCDPerson *cdPerson = [CTLCDPerson MR_createEntity];
+        cdPerson.recordID = @(person.recordID);
+        cdPerson.isPrivateValue = NO;
+        [cdPerson updateFromABPerson:person];
         [cdPeople addObject:cdPerson];
     }];
     
-    [context MR_saveToPersistentStoreAndWait];
-        
-    [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactsWereImportedNotification object:cdPeople];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [context MR_saveToPersistentStoreWithCompletion:^(BOOL result, NSError *error){
+        if(result){
+            [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactsWereImportedNotification object:cdPeople];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }else{
+            NSString *message = NSLocalizedString(@"IMPORT_FAILED", nil);
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            [alertView show];
+        }
+    }];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (IBAction)cancelImport:(id)sender{

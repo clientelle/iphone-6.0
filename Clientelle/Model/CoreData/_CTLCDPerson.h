@@ -6,6 +6,7 @@
 
 extern const struct CTLCDPersonAttributes {
 	__unsafe_unretained NSString *address;
+	__unsafe_unretained NSString *address2;
 	__unsafe_unretained NSString *compositeName;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *firstName;
@@ -22,10 +23,13 @@ extern const struct CTLCDPersonAttributes {
 } CTLCDPersonAttributes;
 
 extern const struct CTLCDPersonRelationships {
+	__unsafe_unretained NSString *appointment;
 } CTLCDPersonRelationships;
 
 extern const struct CTLCDPersonFetchedProperties {
 } CTLCDPersonFetchedProperties;
+
+@class CTLCDAppointment;
 
 
 
@@ -59,6 +63,14 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 //- (BOOL)validateAddress:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* address2;
+
+
+//- (BOOL)validateAddress2:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -180,10 +192,22 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSSet* appointment;
+
+- (NSMutableSet*)appointmentSet;
+
+
+
+
 
 @end
 
 @interface _CTLCDPerson (CoreDataGeneratedAccessors)
+
+- (void)addAppointment:(NSSet*)value_;
+- (void)removeAppointment:(NSSet*)value_;
+- (void)addAppointmentObject:(CTLCDAppointment*)value_;
+- (void)removeAppointmentObject:(CTLCDAppointment*)value_;
 
 @end
 
@@ -192,6 +216,12 @@ extern const struct CTLCDPersonFetchedProperties {
 
 - (NSString*)primitiveAddress;
 - (void)setPrimitiveAddress:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveAddress2;
+- (void)setPrimitiveAddress2:(NSString*)value;
 
 
 
@@ -281,6 +311,11 @@ extern const struct CTLCDPersonFetchedProperties {
 - (void)setPrimitiveRecordIDValue:(int16_t)value_;
 
 
+
+
+
+- (NSMutableSet*)primitiveAppointment;
+- (void)setPrimitiveAppointment:(NSMutableSet*)value;
 
 
 @end
