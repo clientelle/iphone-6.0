@@ -88,19 +88,20 @@ e†
 "CONTACT_LABEL_email" = "Email";
 "CONTACT_LABEL_jobTitle" = "Title";
 "CONTACT_LABEL_organization" = "Organization";
-"CONTACT_LABEL_note" = "Note";
+"CONTACT_LABEL_note" = "Notes";
 "CONTACT_LABEL_address" = "Address";
+"CONTACT_LABEL_address2" = "City, State Zip";
 
 "CONTACT_PLACEHOLDER_firstName" = "First Name";
 "CONTACT_PLACEHOLDER_lastName" = "Last Name";
-"CONTACT_PLACEHOLDER_nickName" = "Last Name";
+"CONTACT_PLACEHOLDER_nickName" = "Nick Name";
 "CONTACT_PLACEHOLDER_phone" = "Phone";
 "CONTACT_PLACEHOLDER_email" = "Email";
 "CONTACT_PLACEHOLDER_jobTitle" = "Title";
 "CONTACT_PLACEHOLDER_organization" = "Organization";
-"CONTACT_PLACEHOLDER_note" = "Note";
+"CONTACT_PLACEHOLDER_note" = "Notes";
 "CONTACT_PLACEHOLDER_address" = "Street Address";
-"CONTACT_PLACEHOLDER_address2" = "City, State or ZIP";
+"CONTACT_PLACEHOLDER_address2" = "City, State, Zip";
 
 
 "Street" = "Street";

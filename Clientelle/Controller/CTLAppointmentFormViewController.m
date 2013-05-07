@@ -339,8 +339,8 @@ int CTLEndTimeInputTag = 3;
     if ([[segue identifier] isEqualToString:CTLContactFormSegueIdentifier]) {
         //reset context because a placeholder appointment has been created in memory
         [[NSManagedObjectContext MR_contextForCurrentThread] reset];
-        CTLContactViewController *contactFormViewController = [segue destinationViewController];
-        [contactFormViewController setAddressBookRef:self.addressBookRef];
+        //CTLContactViewController *contactFormViewController = [segue destinationViewController];
+        //[contactFormViewController setAddressBookRef:self.addressBookRef];
         return;
     }
 }

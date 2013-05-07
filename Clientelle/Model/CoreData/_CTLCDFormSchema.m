@@ -52,6 +52,10 @@ const struct CTLCDFormSchemaFetchedProperties CTLCDFormSchemaFetchedProperties =
 		NSSet *affectingKey = [NSSet setWithObject:@"address"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
+	if ([key isEqualToString:@"address2Value"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"address2"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"emailValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"email"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -66,6 +70,10 @@ const struct CTLCDFormSchemaFetchedProperties CTLCDFormSchemaFetchedProperties =
 	}
 	if ([key isEqualToString:@"lastNameValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"lastName"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"nickNameValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"nickName"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"noteValue"]) {
@@ -115,6 +123,25 @@ const struct CTLCDFormSchemaFetchedProperties CTLCDFormSchemaFetchedProperties =
 
 @dynamic address2;
 
+
+
+- (BOOL)address2Value {
+	NSNumber *result = [self address2];
+	return [result boolValue];
+}
+
+- (void)setAddress2Value:(BOOL)value_ {
+	[self setAddress2:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveAddress2Value {
+	NSNumber *result = [self primitiveAddress2];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveAddress2Value:(BOOL)value_ {
+	[self setPrimitiveAddress2:[NSNumber numberWithBool:value_]];
+}
 
 
 
@@ -226,6 +253,25 @@ const struct CTLCDFormSchemaFetchedProperties CTLCDFormSchemaFetchedProperties =
 
 @dynamic nickName;
 
+
+
+- (BOOL)nickNameValue {
+	NSNumber *result = [self nickName];
+	return [result boolValue];
+}
+
+- (void)setNickNameValue:(BOOL)value_ {
+	[self setNickName:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveNickNameValue {
+	NSNumber *result = [self primitiveNickName];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveNickNameValue:(BOOL)value_ {
+	[self setPrimitiveNickName:[NSNumber numberWithBool:value_]];
+}
 
 
 

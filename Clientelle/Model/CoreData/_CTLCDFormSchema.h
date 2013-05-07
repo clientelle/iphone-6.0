@@ -59,8 +59,12 @@ extern const struct CTLCDFormSchemaFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* address2;
+@property (nonatomic, strong) NSNumber* address2;
 
+
+@property BOOL address2Value;
+- (BOOL)address2Value;
+- (void)setAddress2Value:(BOOL)value_;
 
 //- (BOOL)validateAddress2:(id*)value_ error:(NSError**)error_;
 
@@ -115,8 +119,12 @@ extern const struct CTLCDFormSchemaFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* nickName;
+@property (nonatomic, strong) NSNumber* nickName;
 
+
+@property BOOL nickNameValue;
+- (BOOL)nickNameValue;
+- (void)setNickNameValue:(BOOL)value_;
 
 //- (BOOL)validateNickName:(id*)value_ error:(NSError**)error_;
 
@@ -179,8 +187,11 @@ extern const struct CTLCDFormSchemaFetchedProperties {
 
 
 
-- (NSString*)primitiveAddress2;
-- (void)setPrimitiveAddress2:(NSString*)value;
+- (NSNumber*)primitiveAddress2;
+- (void)setPrimitiveAddress2:(NSNumber*)value;
+
+- (BOOL)primitiveAddress2Value;
+- (void)setPrimitiveAddress2Value:(BOOL)value_;
 
 
 
@@ -221,8 +232,11 @@ extern const struct CTLCDFormSchemaFetchedProperties {
 
 
 
-- (NSString*)primitiveNickName;
-- (void)setPrimitiveNickName:(NSString*)value;
+- (NSNumber*)primitiveNickName;
+- (void)setPrimitiveNickName:(NSNumber*)value;
+
+- (BOOL)primitiveNickNameValue;
+- (void)setPrimitiveNickNameValue:(BOOL)value_;
 
 
 

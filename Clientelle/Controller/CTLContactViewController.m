@@ -16,9 +16,9 @@
 
 #import "CTLContactViewController.h"
 #import "CTLFieldCell.h"
-#import "CTLCDFormSchema.h"
 #import "CTLABPerson.h"
 #import "CTLCDContact.h"
+#import "CTLCDContactField.h"
 
 NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
@@ -30,16 +30,15 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 {
     [super viewDidLoad];
 
-
-    [self buildContactForm];
-    
     if(self.contact == nil){
         _isNewContact = YES;
-        self.contact = [CTLCDContact MR_createEntity];
         self.navigationItem.title = NSLocalizedString(@"ADD_CONTACT", nil);
+        self.contact = [CTLCDContact MR_createEntity];
+        [self buildContactForm];
     }else{
         _isNewContact = NO;
         self.navigationItem.title = NSLocalizedString(@"EDIT_CONTACT", nil);
+        [self buildContactForm];
         [self populateContactForm];
     }
 
@@ -68,48 +67,41 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 {
     _fields = [NSMutableArray array];
     _textFieldsDict = [NSMutableDictionary dictionary];
-    _formSchema = [CTLCDFormSchema MR_findFirst];
     
-    if(!_formSchema){
-        _formSchema = [CTLCDFormSchema MR_createEntity];
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-        [context MR_saveToPersistentStoreAndWait];
+    NSArray *fieldsArray = [CTLCDContactField fetchSortedFields];
+    
+    if([fieldsArray count] == 0){
+        fieldsArray = [CTLCDContactField generateFieldsFromSchema:[self.contact entity]];
     }
     
-    NSMutableArray *fieldsList = [[CTLCDFormSchema fieldsFromPlist:CTLContactFormSchemaPlist] mutableCopy];
     NSMutableIndexSet *enabledIndexes = [[NSMutableIndexSet alloc] init];
-
-    for(NSUInteger i=0; i < [fieldsList count]; i++){
-
-        NSMutableDictionary *inputField = [fieldsList[i] mutableCopy];
-        BOOL isEnabled = [_formSchema fieldIsVisible:inputField[kCTLFieldName]];
+    NSArray *fieldKeys = [[[fieldsArray[0] entity] attributesByName] allKeys];
+     
+    for(NSUInteger i=0; i < [fieldsArray count]; i++){
+        CTLCDContactField *row = fieldsArray[i];
+        NSMutableDictionary *inputField = [[row dictionaryWithValuesForKeys:fieldKeys] mutableCopy];
         
-        NSString *translatedLabelKey = [NSString stringWithFormat:@"CONTACT_LABEL_%@", [inputField valueForKey:kCTLFieldName]];
-        NSString *translatedPlaceholderKey = [NSString stringWithFormat:@"CONTACT_PLACEHOLDER_%@", [inputField valueForKey:kCTLFieldName]];
-        [inputField setValue:[inputField valueForKey:kCTLFieldName] forKey:kCTLFieldName];
-        [inputField setValue:NSLocalizedString(translatedLabelKey, nil) forKey:kCTLFieldLabel];
-        [inputField setValue:NSLocalizedString(translatedPlaceholderKey, nil) forKey:kCTLFieldPlaceholder];
-        [inputField setValue:@(isEnabled) forKey:kCTLFieldEnabled];
+        NSString *placeholder = [NSString stringWithFormat:@"CONTACT_PLACEHOLDER_%@", row.field];
+        [inputField setValue:NSLocalizedString(placeholder, nil) forKey:kCTLFieldPlaceholder];
         
-        fieldsList[i] = inputField;
         [_fields addObject:inputField];
         
-        if(isEnabled){
+        if([[row valueForKey:kCTLFieldEnabled] isEqualToNumber:[NSNumber numberWithBool:YES]]){
             [enabledIndexes addIndex:i];
         }
     }
-
+    
     _enabledFields = [[_fields objectsAtIndexes:enabledIndexes] mutableCopy];
+
 }
 
 - (void)populateContactForm
 {
     for(NSUInteger i=0; i < [_enabledFields count]; i++){
-        NSString *field = _enabledFields[i][kCTLFieldName];
-        NSString *value = [[self.contact valueForKey:field] description];
+        NSMutableDictionary *inputField = [_enabledFields[i] mutableCopy];
+        NSString *value = [[self.contact valueForKey:_enabledFields[i][kCTLFieldName]] description];
 
-        if([_formSchema fieldIsVisible:field]){
-            NSMutableDictionary *inputField = [_enabledFields[i] mutableCopy];
+        if([[inputField valueForKey:kCTLFieldEnabled] isEqualToNumber:[NSNumber numberWithBool:YES]]){
             if(value){
                 [inputField setValue:value forKey:kCTLFieldValue];
                 _enabledFields[i] = inputField;
@@ -123,19 +115,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     [self buildContactForm];
     [self.tableView reloadData];
 }
-
-#pragma mark - Something
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([[segue identifier] isEqualToString:CTLContactFormEditorSegueIdentifyer]){
-        CTLContactFormEditorViewController *viewController = [segue destinationViewController];
-        if(_fields){
-            [viewController setFormSchema:_formSchema];
-            [viewController setFields:_fields];
-        }
-    }
-}
-
 
 #pragma mark - TableViewController Delegate Methods
 
@@ -168,22 +147,24 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     cell.textInput.tag = indexPath.row;
     cell.textInput.text = field[kCTLFieldValue];
     cell.textInput.placeholder = field[kCTLFieldPlaceholder];
+    
+    cell.textInput.keyboardType = (UIKeyboardType)[field[kCTLFieldKeyboardType] intValue];
+    cell.textInput.autocapitalizationType = (UITextAutocapitalizationType)[field[kCTLFieldAutoCapitalizeType] intValue];
+    cell.textInput.autocorrectionType = (UITextAutocorrectionType)[field[kCTLFieldAutoCorrectionType] intValue];
         
-    UIKeyboardType keyboardType = (UIKeyboardType)[field[kCTLFieldKeyboardType] intValue];
-    if(keyboardType != UIKeyboardTypeEmailAddress){
-        cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeWords;
-        cell.textInput.autocorrectionType = UITextAutocorrectionTypeYes;
-    }
-
-    if([field[kCTLFieldName] isEqualToString:CTLPersonNoteProperty]){
-        cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeSentences;
-    }
-    
-    if([field[kCTLFieldName] isEqualToString:CTLAddressStateProperty]){
-        cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
-    }
-    
-    [cell.textInput setKeyboardType:keyboardType];
+//    UIKeyboardType keyboardType = (UIKeyboardType)[field[kCTLFieldKeyboardType] intValue];
+//    
+//    if(keyboardType != UIKeyboardTypeEmailAddress){
+//        cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeWords;
+//        cell.textInput.autocorrectionType = UITextAutocorrectionTypeYes;
+//    }
+//
+//    if([field[kCTLFieldName] isEqualToString:CTLPersonNoteProperty]){
+//        cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+//    }
+//
+//    
+//    [cell.textInput setKeyboardType:keyboardType];
     [_textFieldsDict setValue:cell.textInput forKey:field[kCTLFieldName]];
     
     return cell;

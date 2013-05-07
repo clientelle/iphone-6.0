@@ -2,15 +2,6 @@
 
 NSString *const CTLContactFormSchemaPlist = @"ABPersonSchema";
 
-NSString *const kCTLFieldName = @"field";
-NSString *const kCTLFieldValue = @"value";
-NSString *const kCTLFieldLabel = @"label";
-
-NSString *const kCTLFieldEnabled = @"enabled";
-NSString *const kCTLFieldPlaceholder = @"placeholder";
-NSString *const kCTLFieldKeyboardType = @"keyboardType";
-
-
 @implementation CTLCDFormSchema
 
 + (NSArray *)fieldsFromPlist:(NSString *)plist{

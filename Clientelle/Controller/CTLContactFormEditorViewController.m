@@ -8,7 +8,7 @@
 
 #import "UIColor+CTLColor.h"
 #import "CTLContactFormEditorViewController.h"
-#import "CTLCDFormSchema.h"
+#import "CTLCDContactField.h"
 #import "UITableViewCell+CellShadows.h"
 #import "KBPopupBubbleView.h"
 
@@ -23,16 +23,9 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     self.navBar.topItem.title = NSLocalizedString(@"EDIT_FORM", nil);
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:206.0f green:206.0f blue:206.0f alpha:1.0f];
     
-    if(self.formSchema && self.fields){
-        NSMutableIndexSet *removableIndexes = [[NSMutableIndexSet alloc] init];
-        for(NSInteger i=0;i<[self.fields count];i++){
-            if([[self.fields[i] objectForKey:kCTLFieldName] isEqualToString:@"address2"]){
-                [removableIndexes addIndex:i];
-            }
-        }
-        
-        [self.fields removeObjectsAtIndexes:removableIndexes];
-    }
+    [self setupFetchedResultsController];
+    
+    _fields = [self.fetchedResultsController fetchedObjects];
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_form_editor_tooltip_once"]){
         [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(displayTooltip:) userInfo:nil repeats:NO];
@@ -49,17 +42,58 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     [bubble2 showInView:self.tableView animated:YES];
 }
 
+#pragma mark NSFetchResultsControllerDelegate
+
+- (void)setupFetchedResultsController
+{
+    self.fetchedResultsController = [CTLCDContactField fetchAllSortedBy:@"sortOrder" ascending:YES withPredicate:nil groupBy:nil delegate:self];
+    [self.fetchedResultsController performFetch:nil];
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)object atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate: {
+            // do nothing
+        }
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView endUpdates];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_fields count];
+    return [[self.fetchedResultsController fetchedObjects] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"fieldRow";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    NSMutableDictionary *field = [_fields objectAtIndex:indexPath.row];
-    cell.textLabel.text = [field objectForKey:kCTLFieldLabel];
+    CTLCDContactField *field = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = field.label;
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
@@ -84,18 +118,19 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 - (void)setFieldAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    NSString *fieldName = [[_fields objectAtIndex:indexPath.row] objectForKey:kCTLFieldName];
+    CTLCDContactField *row = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
     
     if(cell.accessoryType == UITableViewCellAccessoryCheckmark){
-        [_formSchema setValue:@(0) forKey:fieldName];
-        if([fieldName isEqualToString:@"address"]){
-            [_formSchema setValue:@(0) forKey:@"address2"];
+        [row setValue:@(0) forKey:kCTLFieldEnabled];
+        
+        if([row.field isEqualToString:@"address"]){
+            [self triggerAddress2Save:@(0)];
         }
         [self styleDisabledField:cell];
     }else{
-        [_formSchema setValue:@(1) forKey:fieldName];
-        if([fieldName isEqualToString:@"address"]){
-            [_formSchema setValue:@(1) forKey:@"address2"];
+        [row setValue:@(1) forKey:kCTLFieldEnabled];
+        if([row.field isEqualToString:@"address"]){
+            [self triggerAddress2Save:@(1)];
         }
         [self styleEnabledField:cell];
     }
@@ -103,18 +138,29 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     [self requireMinimumContactFields];
 }
 
+- (void)triggerAddress2Save:(NSNumber *)enable
+{
+    for (NSInteger i=0;i<[_fields count];i++) {
+        CTLCDContactField *row = (CTLCDContactField *)_fields[i];
+        if([row.field isEqualToString:@"address2"]){
+            row.enabled = enable;
+            break;
+        }
+    }
+}
+
 - (void)requireMinimumContactFields
 {
     NSInteger disabledCount = 0;
-    NSDictionary *attributes = [_formSchema.entity attributesByName];
-    for (NSString *attribute in attributes) {
-        NSNumber *value = (NSNumber *)[_formSchema valueForKey: attribute];
-        if([value boolValue] == NO){
+    
+    for (NSInteger i=0;i<[_fields count];i++) {
+        CTLCDContactField *row = (CTLCDContactField *)_fields[i];
+        if([row.enabled boolValue] == NO){
             disabledCount++;
         }
     }
     
-    if(disabledCount == [attributes count]){
+    if(disabledCount == [_fields count]){
         self.doneButton.enabled = NO;
     }else{
         self.doneButton.enabled = YES;

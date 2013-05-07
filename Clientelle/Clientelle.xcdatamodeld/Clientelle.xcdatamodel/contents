@@ -40,22 +40,16 @@
         <attribute name="organization" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="private" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="recordID" optional="YES" attributeType="Integer 16" indexed="YES" syncable="YES"/>
         <relationship name="appointment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Appointment" inverseName="contact" inverseEntity="Appointment" syncable="YES"/>
     </entity>
-    <entity name="FormSchema" representedClassName="CTLCDFormSchema" syncable="YES">
-        <attribute name="address" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="email" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="firstName" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="jobTitle" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="lastName" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="note" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="organization" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="phone" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+    <entity name="ContactField" representedClassName="CTLCDContactField" syncable="YES">
+        <attribute name="autocapitalizationType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="autocorrectionType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="enabled" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="field" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="keyboardType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="sortOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Inbox" representedClassName="CTLCDInbox" syncable="YES">
         <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
@@ -66,8 +60,8 @@
     <elements>
         <element name="Account" positionX="-540" positionY="-81" width="128" height="210"/>
         <element name="Appointment" positionX="-173" positionY="-270" width="128" height="225"/>
-        <element name="Contact" positionX="-380" positionY="-273" width="128" height="283"/>
-        <element name="FormSchema" positionX="-711" positionY="-273" width="128" height="193"/>
+        <element name="Contact" positionX="-380" positionY="-273" width="128" height="253"/>
         <element name="Inbox" positionX="-378" positionY="30" width="128" height="105"/>
+        <element name="ContactField" positionX="-396" positionY="-441" width="128" height="133"/>
     </elements>
 </model>

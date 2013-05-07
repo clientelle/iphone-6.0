@@ -16,8 +16,6 @@ const struct CTLCDContactAttributes CTLCDContactAttributes = {
 	.organization = @"organization",
 	.phone = @"phone",
 	.picture = @"picture",
-	.private = @"private",
-	.rating = @"rating",
 	.recordID = @"recordID",
 };
 
@@ -54,14 +52,6 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"privateValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"private"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"ratingValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"rating"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 	if ([key isEqualToString:@"recordIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"recordID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -152,58 +142,6 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 
 @dynamic picture;
 
-
-
-
-
-
-@dynamic private;
-
-
-
-- (BOOL)privateValue {
-	NSNumber *result = [self private];
-	return [result boolValue];
-}
-
-- (void)setPrivateValue:(BOOL)value_ {
-	[self setPrivate:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitivePrivateValue {
-	NSNumber *result = [self primitivePrivate];
-	return [result boolValue];
-}
-
-- (void)setPrimitivePrivateValue:(BOOL)value_ {
-	[self setPrimitivePrivate:[NSNumber numberWithBool:value_]];
-}
-
-
-
-
-
-@dynamic rating;
-
-
-
-- (int16_t)ratingValue {
-	NSNumber *result = [self rating];
-	return [result shortValue];
-}
-
-- (void)setRatingValue:(int16_t)value_ {
-	[self setRating:[NSNumber numberWithShort:value_]];
-}
-
-- (int16_t)primitiveRatingValue {
-	NSNumber *result = [self primitiveRating];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveRatingValue:(int16_t)value_ {
-	[self setPrimitiveRating:[NSNumber numberWithShort:value_]];
-}
 
 
 

@@ -7,24 +7,16 @@
 //
 
 @class CTLCDContact;
-@class CTLABPerson;
-@class CTLCDFormSchema;
 
 @interface CTLContactViewController : UITableViewController<UIActionSheetDelegate, UIGestureRecognizerDelegate>{
-    CTLCDFormSchema *_formSchema;
     NSMutableArray *_fields;
     NSMutableArray *_enabledFields;
     NSDictionary *_textFieldsDict;
     BOOL _isNewContact;
 }
 
-@property(nonatomic, weak) IBOutlet UIBarButtonItem *saveContactButton;
-
-@property(nonatomic, assign) ABAddressBookRef addressBookRef;
 @property(nonatomic, strong) CTLCDContact *contact;
-@property(nonatomic, strong) CTLABPerson *person;
-@property(nonatomic, strong) CTLCDFormSchema *formSchema;
-
+@property(nonatomic, weak) IBOutlet UIBarButtonItem *saveContactButton;
 @property(nonatomic, weak) IBOutlet UIView *footerView;
 @property(nonatomic, weak) IBOutlet UIButton *editFormButton;
 

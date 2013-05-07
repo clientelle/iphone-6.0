@@ -17,8 +17,6 @@ extern const struct CTLCDContactAttributes {
 	__unsafe_unretained NSString *organization;
 	__unsafe_unretained NSString *phone;
 	__unsafe_unretained NSString *picture;
-	__unsafe_unretained NSString *private;
-	__unsafe_unretained NSString *rating;
 	__unsafe_unretained NSString *recordID;
 } CTLCDContactAttributes;
 
@@ -30,8 +28,6 @@ extern const struct CTLCDContactFetchedProperties {
 } CTLCDContactFetchedProperties;
 
 @class CTLCDAppointment;
-
-
 
 
 
@@ -155,30 +151,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* private;
-
-
-@property BOOL privateValue;
-- (BOOL)privateValue;
-- (void)setPrivateValue:(BOOL)value_;
-
-//- (BOOL)validatePrivate:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSNumber* rating;
-
-
-@property int16_t ratingValue;
-- (int16_t)ratingValue;
-- (void)setRatingValue:(int16_t)value_;
-
-//- (BOOL)validateRating:(id*)value_ error:(NSError**)error_;
-
-
-
-
 @property (nonatomic, strong) NSNumber* recordID;
 
 
@@ -282,24 +254,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 - (NSData*)primitivePicture;
 - (void)setPrimitivePicture:(NSData*)value;
-
-
-
-
-- (NSNumber*)primitivePrivate;
-- (void)setPrimitivePrivate:(NSNumber*)value;
-
-- (BOOL)primitivePrivateValue;
-- (void)setPrimitivePrivateValue:(BOOL)value_;
-
-
-
-
-- (NSNumber*)primitiveRating;
-- (void)setPrimitiveRating:(NSNumber*)value;
-
-- (int16_t)primitiveRatingValue;
-- (void)setPrimitiveRatingValue:(int16_t)value_;
 
 
 
