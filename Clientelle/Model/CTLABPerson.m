@@ -6,12 +6,14 @@
 //  Copyright (c) 2012 Clientelle Ltd.. All rights reserved.
 //
 #import "CTLABPerson.h"
+#import "CTLCDContact.h"
 #import "NSString+CTLString.h"
 
 NSString *const CTLPersonCompositeNameProperty = @"compositeName";
 NSString *const CTLPersonRecordIDProperty = @"recordID";
 NSString *const CTLPersonFirstNameProperty = @"firstName";
 NSString *const CTLPersonLastNameProperty = @"lastName";
+NSString *const CTLPersonNickNameProperty = @"nickName";
 NSString *const CTLPersonOrganizationProperty = @"organization";
 NSString *const CTLPersonJobTitleProperty = @"jobTitle";
 NSString *const CTLPersonEmailProperty = @"email";
@@ -19,6 +21,7 @@ NSString *const CTLPersonPhoneProperty = @"phone";
 NSString *const CTLPersonNoteProperty = @"note";
 NSString *const CTLPersonCreatedDateProperty = @"creationDate";
 NSString *const CTLPersonAddressProperty = @"address";
+NSString *const CTLPersonAddress2Property = @"address2";
 NSString *const CTLAddressStreetProperty = @"Street";
 NSString *const CTLAddressCityProperty = @"City";
 NSString *const CTLAddressStateProperty = @"State";
@@ -26,6 +29,7 @@ NSString *const CTLAddressZIPProperty = @"ZIP";
 
 NSString *const CTLLabelKey = @"label";
 NSString *const CTLFieldKey = @"field";
+
 
 @interface CTLABPerson()
     id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef labelKey);
@@ -275,6 +279,7 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
         _keyMap = @{
             CTLPersonFirstNameProperty: @(kABPersonFirstNameProperty),
             CTLPersonLastNameProperty: @(kABPersonLastNameProperty),
+            CTLPersonNickNameProperty: @(kABPersonNicknameProperty),
             CTLPersonOrganizationProperty: @(kABPersonOrganizationProperty),
             CTLPersonJobTitleProperty: @(kABPersonJobTitleProperty),
             CTLPersonEmailProperty: @(kABPersonEmailProperty),
@@ -331,30 +336,34 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
                 CFRelease(multiRef);
 
             }else{
-                //only save fields that changed
-                if(propertyValue != [self valueForKey:fieldName]){
-                    CFErrorRef error = NULL;
-                    ABMutableMultiValueRef multiRef = NULL;
+                
+                if ( [self respondsToSelector:@selector(fieldName)] ) {
                     
-                    if([fieldName isEqualToString:CTLPersonEmailProperty]){
-                        multiRef = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-                        ABMultiValueAddValueAndLabel(multiRef, (__bridge CFStringRef)(propertyValue), emailPropertyLabel, NULL);
-                    }
-                    
-                    if([fieldName isEqualToString:CTLPersonPhoneProperty]){
-                        multiRef = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-                        ABMultiValueAddValueAndLabel(multiRef, (__bridge CFStringRef)(propertyValue), phonePropertyLabel, NULL);
-                    }
-
-                    if(multiRef){
-                        if(ABRecordSetValue(self.recordRef, propertyKey, multiRef, &error)){
-                            contactDidChange = YES;
+                    //only save fields that changed
+                    if(propertyValue != [self valueForKey:fieldName]){
+                        CFErrorRef error = NULL;
+                        ABMutableMultiValueRef multiRef = NULL;
+                        
+                        if([fieldName isEqualToString:CTLPersonEmailProperty]){
+                            multiRef = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+                            ABMultiValueAddValueAndLabel(multiRef, (__bridge CFStringRef)(propertyValue), emailPropertyLabel, NULL);
                         }
-                        CFRelease(multiRef);
-                    }else{
-                        CFErrorRef setValError = NULL;
-                        if(ABRecordSetValue(self.recordRef, propertyKey, (__bridge CFStringRef)propertyValue, &setValError)){
-                           contactDidChange = YES;
+                        
+                        if([fieldName isEqualToString:CTLPersonPhoneProperty]){
+                            multiRef = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+                            ABMultiValueAddValueAndLabel(multiRef, (__bridge CFStringRef)(propertyValue), phonePropertyLabel, NULL);
+                        }
+
+                        if(multiRef){
+                            if(ABRecordSetValue(self.recordRef, propertyKey, multiRef, &error)){
+                                contactDidChange = YES;
+                            }
+                            CFRelease(multiRef);
+                        }else{
+                            CFErrorRef setValError = NULL;
+                            if(ABRecordSetValue(self.recordRef, propertyKey, (__bridge CFStringRef)propertyValue, &setValError)){
+                               contactDidChange = YES;
+                            }
                         }
                     }
                 }

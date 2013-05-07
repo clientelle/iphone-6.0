@@ -16,7 +16,7 @@
 #import "CTLContactToolbarView.h"
 
 #import "CTLABPerson.h"
-#import "CTLCDPerson.h"
+#import "CTLCDContact.h"
 
 #import "CTLPickerView.h"
 #import "CTLPickerButton.h"
@@ -29,12 +29,10 @@ NSString *const CTLNewContactWasAddedNotification = @"com.clientelle.com.notific
 NSString *const CTLContactRowDidChangeNotification = @"com.clientelle.com.notifications.contactRowDidChange";
 NSString *const CTLSortOrderSelectedIndex = @"com.clientelle.notifcations.selectedSortOrder";
 
-NSString *const CTLImporterSegueIdentifyer = @"toImporter";
-NSString *const CTLContactListSegueIdentifyer = @"toContacts";
-NSString *const CTLContactFormSegueIdentifyer = @"toContactForm";
-NSString *const CTLAppointmentSegueIdentifyer = @"toSetAppointment";
+NSString *const CTLImporterSegueIdentifier = @"toImporter";
+NSString *const CTLContactFormSegueIdentifier = @"toContactForm";
+NSString *const CTLAppointmentSegueIdentifier = @"toSetAppointment";
 
-int const CTLAllContactsGroupID = 0;
 int const CTLShareContactActionSheetTag = 234;
 int const CTLAddContactActionSheetTag = 424;
 
@@ -67,7 +65,7 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)prepareSortTooltip
 {
-    if([_contacts count] > 1 && ![[NSUserDefaults standardUserDefaults] boolForKey:@"display_sort_tooltip_once"]){
+    if([[self.fetchedResultsController fetchedObjects] count] > 1 && ![[NSUserDefaults standardUserDefaults] boolForKey:@"display_sort_tooltip_once"]){
         [self displaySortTooltip:nil];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_sort_tooltip_once"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -108,22 +106,21 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)loadAllContacts
 {
-    _contacts = [CTLCDPerson findAll];
     _filteredContacts = [NSMutableArray array];
+    [self setupFetchedResultsController];
     
-    if([_contacts count] > 0){
+    if([[self.fetchedResultsController fetchedObjects] count] > 0){
         
         [self buildSearchBar];
        
         NSInteger row = [_sortPickerView selectedRowInComponent:0];
-        
         NSString *field = _sortArray[row][@"field"];
         BOOL asc = [_sortArray[row][@"asc"] boolValue];
         
         NSSortDescriptor *sortByAccessDate = [NSSortDescriptor sortDescriptorWithKey:field ascending:asc];
         NSArray *sortDescriptors = [NSArray arrayWithObject:sortByAccessDate];
-         
-        _contacts = [_contacts sortedArrayUsingDescriptors:sortDescriptors];
+        
+        [[self.fetchedResultsController fetchedObjects] sortedArrayUsingDescriptors:sortDescriptors];
      
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView setContentOffset:CGPointMake(0.0f, CGRectGetHeight(self.searchBar.bounds))];
@@ -131,6 +128,46 @@ int const CTLAddContactActionSheetTag = 424;
     }
     
     [self.tableView reloadData];
+}
+
+- (void)setupFetchedResultsController
+{
+    self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:@"lastAccessed" ascending:YES withPredicate:nil groupBy:nil delegate:self];
+    [self.fetchedResultsController performFetch:nil];
+}
+
+#pragma mark NSFetchResultsControllerDelegate
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)object atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate: {
+            // do nothing
+        }
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView endUpdates];
 }
 
 - (void)reloadContactListAfterImport:(NSNotification *)notification
@@ -346,11 +383,10 @@ int const CTLAddContactActionSheetTag = 424;
             switch(buttonIndex){
                 case 0:
                     _selectedPerson = nil;
-                    [self performSegueWithIdentifier:CTLContactFormSegueIdentifyer sender:self];
+                    [self performSegueWithIdentifier:CTLContactFormSegueIdentifier sender:self];
                     break;
                 case 1:
-                    //if group selector is set to "all contacts" the import button is hidden because it doesnt make sense
-                    [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
+                    [self performSegueWithIdentifier:CTLImporterSegueIdentifier sender:self];
                     break;
             }
             break;
@@ -367,7 +403,6 @@ int const CTLAddContactActionSheetTag = 424;
                     break;
             }
             break;
-            
     }
 }
 
@@ -375,23 +410,18 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)editContact:(id)sender
 {
-    [self performSegueWithIdentifier:CTLContactFormSegueIdentifyer sender:self];
+    [self performSegueWithIdentifier:CTLContactFormSegueIdentifier sender:self];
 }
 
 - (void)showImporter:(id)sender
 {
     [self hideSortPicker];
-    [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:self];
+    [self performSegueWithIdentifier:CTLImporterSegueIdentifier sender:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-//    if([[segue identifier] isEqualToString:CTLImporterSegueIdentifyer]){
-//        CTLContactImportViewController *importer = [segue destinationViewController];
-//        return;
-//    }
-    
-    if ([[segue identifier] isEqualToString:CTLContactFormSegueIdentifyer]) {
+    if ([[segue identifier] isEqualToString:CTLContactFormSegueIdentifier]) {
         CTLContactViewController *contactFormViewController = [segue destinationViewController];
         if(_selectedPerson){
             [contactFormViewController setContact:_selectedPerson];
@@ -399,7 +429,7 @@ int const CTLAddContactActionSheetTag = 424;
         return;
     }
     
-    if([[segue identifier] isEqualToString:CTLAppointmentSegueIdentifyer]){
+    if([[segue identifier] isEqualToString:CTLAppointmentSegueIdentifier]){
         UINavigationController *navigationController = [segue destinationViewController];
         CTLAppointmentFormViewController *appointmentViewController = (CTLAppointmentFormViewController *)navigationController.topViewController;
         [appointmentViewController setPresentedAsModal:YES];
@@ -575,7 +605,7 @@ int const CTLAddContactActionSheetTag = 424;
         return [_filteredContacts count];
     }
     
-    return [_contacts count];
+    return [[self.fetchedResultsController fetchedObjects] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -586,11 +616,11 @@ int const CTLAddContactActionSheetTag = 424;
         cell = [[CTLContactCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
     
-    CTLCDPerson *person = nil;
+    CTLCDContact *person = nil;
     if (tableView == self.searchDisplayController.searchResultsTableView){
         person = [_filteredContacts objectAtIndex:indexPath.row];
     }else{
-        person = [_contacts objectAtIndex:indexPath.row];
+        person = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
     }
      
     cell.nameLabel.text = [self generatePersonName:person];
@@ -614,14 +644,18 @@ int const CTLAddContactActionSheetTag = 424;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(editingStyle == UITableViewCellEditingStyleDelete){
-        CTLCDPerson *person = [_contacts objectAtIndex:indexPath.row];
-        [self deleteContact:person];
+        CTLCDContact *contact = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+        [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
+            [contact deleteInContext:localContext];
+        } completion:^(BOOL success, NSError *error) {
+            //NOTE: Clean up appointments?
+        }];
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if([_contacts count] == 0){
+    if([[self.fetchedResultsController fetchedObjects] count] == 0){
         return self.view.bounds.size.height;
     }
     return 0;
@@ -629,7 +663,7 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if([_contacts count] == 0){
+    if([[self.fetchedResultsController fetchedObjects] count] == 0){
         return _emptyView;
     }
     return nil;
@@ -657,21 +691,22 @@ int const CTLAddContactActionSheetTag = 424;
         _selectedPerson = [_filteredContacts objectAtIndex:indexPath.row];
         [self.searchDisplayController setActive:NO animated:YES];
     }else{
-        _selectedPerson = [_contacts objectAtIndex:indexPath.row];
+        _selectedPerson = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
     }
 
     _selectedIndexPath = indexPath;
     [self enterContactMode];
 }
 
-- (void)deleteContact:(CTLCDPerson *)contact
+- (void)deleteContact:(CTLCDContact *)contact
 {
     [contact MR_deleteEntity];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-    [self loadAllContacts];
+    //[self loadAllContacts];
+    
 }
 
-- (NSString *)generateContactString:(CTLCDPerson *)person
+- (NSString *)generateContactString:(CTLCDContact *)person
 {
     NSString *contactStr = @"";
     
@@ -683,7 +718,7 @@ int const CTLAddContactActionSheetTag = 424;
     return contactStr;
 }
 
-- (NSString *)generatePersonName:(CTLCDPerson *)person
+- (NSString *)generatePersonName:(CTLCDContact *)person
 {
     NSString *compositeName = @"";
     
@@ -716,7 +751,7 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)showAppointmentScheduler:(id)sender
 {
-    [self performSegueWithIdentifier:CTLAppointmentSegueIdentifyer sender:sender];
+    [self performSegueWithIdentifier:CTLAppointmentSegueIdentifier sender:sender];
 }
 
 - (void)showDialPerson:(id)sender
@@ -789,22 +824,15 @@ int const CTLAddContactActionSheetTag = 424;
 
 #pragma mark - UISearchDisplayController Delegate Methods
 
-/*
--(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    NSLog(@"SEARCH %@", searchText);
-    [self filterContactListForSearchText:[self.searchDisplayController.searchBar text] scope:
-     [[searchBar scopeButtonTitles] objectAtIndex:0]];
-}*/
-
 - (void)filterContactListForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
 	[_filteredContacts removeAllObjects];
     
-	for (NSInteger i=0;i<[_contacts count]; i++){
-        CTLCDPerson *person = _contacts[i];
-        //TODO: composite name
-        NSComparisonResult result = [person.firstName compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+    NSArray *contacts = [self.fetchedResultsController fetchedObjects];
+    
+	for (NSInteger i=0;i<[contacts count]; i++){
+        CTLCDContact *person = contacts[i];
+        NSComparisonResult result = [person.compositeName compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
         if (result == NSOrderedSame){
             [_filteredContacts addObject:person];
         }
@@ -887,7 +915,7 @@ int const CTLAddContactActionSheetTag = 424;
 #pragma mark - Handle Notifications
 - (void)newContactWasAdded:(NSNotification *)notification
 {
-    if([notification.object isKindOfClass:[CTLCDPerson class]]){
+    if([notification.object isKindOfClass:[CTLCDContact class]]){
         _selectedPerson = notification.object;
         _shouldReorderListOnScroll = YES;
         [self loadAllContacts];
@@ -897,7 +925,7 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)contactRowDidChange:(NSNotification *)notification
 {
-    if([notification.object isKindOfClass:[CTLCDPerson class]]){
+    if([notification.object isKindOfClass:[CTLCDContact class]]){
         _selectedPerson = notification.object;
         _shouldReorderListOnScroll = YES;
         [self loadAllContacts];

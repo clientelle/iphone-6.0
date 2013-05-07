@@ -13,21 +13,19 @@ extern NSString *const CTLContactsWereImportedNotification;
 extern NSString *const CTLTimestampForRowNotification;
 extern NSString *const CTLNewContactWasAddedNotification;
 extern NSString *const CTLContactRowDidChangeNotification;
-extern NSString *const CTLImporterSegueIdentifyer;
-extern NSString *const CTLContactFormSegueIdentifyer;
+extern NSString *const CTLImporterSegueIdentifier;
+extern NSString *const CTLContactFormSegueIdentifier;
 
-@class CTLCDFormSchema;
-@class CTLCDPerson;
+@class CTLCDContact;
 @class CTLContactToolbarView;
 @class CTLContactHeaderView;
 @class CTLPickerView;
 @class KBPopupBubbleView;
 
-@interface CTLContactsListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CTLSlideMenuDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>{
+@interface CTLContactsListViewController : UIViewController <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CTLSlideMenuDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>{
     
-    NSArray *_contacts;
     NSIndexPath *_selectedIndexPath;
-    CTLCDPerson *_selectedPerson;
+    CTLCDContact *_selectedPerson;
     
     CTLPickerView *_sortPickerView;
     NSArray *_sortArray;
@@ -48,6 +46,7 @@ extern NSString *const CTLContactFormSegueIdentifyer;
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
 @property (nonatomic, strong) CTLContactHeaderView *contactHeader;
 @property (nonatomic, strong) CTLContactToolbarView *contactToolbar;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 - (IBAction)dismissSortPickerFromTap:(UITapGestureRecognizer *)recognizer;
 

@@ -23,6 +23,17 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     self.navBar.topItem.title = NSLocalizedString(@"EDIT_FORM", nil);
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:206.0f green:206.0f blue:206.0f alpha:1.0f];
     
+    if(self.formSchema && self.fields){
+        NSMutableIndexSet *removableIndexes = [[NSMutableIndexSet alloc] init];
+        for(NSInteger i=0;i<[self.fields count];i++){
+            if([[self.fields[i] objectForKey:kCTLFieldName] isEqualToString:@"address2"]){
+                [removableIndexes addIndex:i];
+            }
+        }
+        
+        [self.fields removeObjectsAtIndexes:removableIndexes];
+    }
+    
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_form_editor_tooltip_once"]){
         [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(displayTooltip:) userInfo:nil repeats:NO];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_form_editor_tooltip_once"];
@@ -48,7 +59,7 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     static NSString *cellIdentifier = @"fieldRow";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     NSMutableDictionary *field = [_fields objectAtIndex:indexPath.row];
-    cell.textLabel.text = [field objectForKey:kCTLFieldPlaceholder];
+    cell.textLabel.text = [field objectForKey:kCTLFieldLabel];
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
@@ -77,9 +88,15 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     
     if(cell.accessoryType == UITableViewCellAccessoryCheckmark){
         [_formSchema setValue:@(0) forKey:fieldName];
+        if([fieldName isEqualToString:@"address"]){
+            [_formSchema setValue:@(0) forKey:@"address2"];
+        }
         [self styleDisabledField:cell];
     }else{
         [_formSchema setValue:@(1) forKey:fieldName];
+        if([fieldName isEqualToString:@"address"]){
+            [_formSchema setValue:@(1) forKey:@"address2"];
+        }
         [self styleEnabledField:cell];
     }
     

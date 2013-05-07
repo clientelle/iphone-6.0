@@ -25,14 +25,34 @@
         <attribute name="private" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="startDate" attributeType="Date" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="contact" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="appointment" inverseEntity="Person" syncable="YES"/>
+        <relationship name="contact" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="appointment" inverseEntity="Contact" syncable="YES"/>
+    </entity>
+    <entity name="Contact" representedClassName="CTLCDContact" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="jobTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastAccessed" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="organization" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="private" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="recordID" optional="YES" attributeType="Integer 16" indexed="YES" syncable="YES"/>
+        <relationship name="appointment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Appointment" inverseName="contact" inverseEntity="Appointment" syncable="YES"/>
     </entity>
     <entity name="FormSchema" representedClassName="CTLCDFormSchema" syncable="YES">
         <attribute name="address" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="firstName" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="jobTitle" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="lastName" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="organization" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="phone" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
@@ -43,37 +63,11 @@
         <attribute name="install_code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="schema" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Person" representedClassName="CTLCDPerson" syncable="YES">
-        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="compositeName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isPrivate" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="jobTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastAccessed" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="organization" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="recordID" optional="YES" attributeType="Integer 16" indexed="YES" syncable="YES"/>
-        <relationship name="appointment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Appointment" inverseName="contact" inverseEntity="Appointment" syncable="YES"/>
-    </entity>
-    <entity name="Reminder" representedClassName="CTLCDReminder" syncable="YES">
-        <attribute name="compeleted" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="completedDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="dueDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="eventID" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="title" attributeType="String" syncable="YES"/>
-    </entity>
     <elements>
-        <element name="Account" positionX="-216" positionY="-120" width="128" height="210"/>
-        <element name="Appointment" positionX="-567" positionY="-288" width="128" height="225"/>
-        <element name="FormSchema" positionX="-2" positionY="-237" width="128" height="165"/>
-        <element name="Inbox" positionX="-486" positionY="126" width="128" height="105"/>
-        <element name="Person" positionX="-380" positionY="-273" width="128" height="285"/>
-        <element name="Reminder" positionX="-200" positionY="-261" width="128" height="120"/>
+        <element name="Account" positionX="-540" positionY="-81" width="128" height="210"/>
+        <element name="Appointment" positionX="-173" positionY="-270" width="128" height="225"/>
+        <element name="Contact" positionX="-380" positionY="-273" width="128" height="283"/>
+        <element name="FormSchema" positionX="-711" positionY="-273" width="128" height="193"/>
+        <element name="Inbox" positionX="-378" positionY="30" width="128" height="105"/>
     </elements>
 </model>

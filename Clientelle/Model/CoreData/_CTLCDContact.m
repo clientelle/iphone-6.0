@@ -1,17 +1,17 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to CTLCDPerson.m instead.
+// Make changes to CTLCDContact.m instead.
 
-#import "_CTLCDPerson.h"
+#import "_CTLCDContact.h"
 
-const struct CTLCDPersonAttributes CTLCDPersonAttributes = {
+const struct CTLCDContactAttributes CTLCDContactAttributes = {
 	.address = @"address",
 	.address2 = @"address2",
-	.compositeName = @"compositeName",
 	.email = @"email",
 	.firstName = @"firstName",
 	.jobTitle = @"jobTitle",
 	.lastAccessed = @"lastAccessed",
 	.lastName = @"lastName",
+	.nickName = @"nickName",
 	.note = @"note",
 	.organization = @"organization",
 	.phone = @"phone",
@@ -21,34 +21,34 @@ const struct CTLCDPersonAttributes CTLCDPersonAttributes = {
 	.recordID = @"recordID",
 };
 
-const struct CTLCDPersonRelationships CTLCDPersonRelationships = {
+const struct CTLCDContactRelationships CTLCDContactRelationships = {
 	.appointment = @"appointment",
 };
 
-const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
+const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 };
 
-@implementation CTLCDPersonID
+@implementation CTLCDContactID
 @end
 
-@implementation _CTLCDPerson
+@implementation _CTLCDContact
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:moc_];
+	return [NSEntityDescription insertNewObjectForEntityForName:@"Contact" inManagedObjectContext:moc_];
 }
 
 + (NSString*)entityName {
-	return @"Person";
+	return @"Contact";
 }
 
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription entityForName:@"Person" inManagedObjectContext:moc_];
+	return [NSEntityDescription entityForName:@"Contact" inManagedObjectContext:moc_];
 }
 
-- (CTLCDPersonID*)objectID {
-	return (CTLCDPersonID*)[super objectID];
+- (CTLCDContactID*)objectID {
+	return (CTLCDContactID*)[super objectID];
 }
 
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
@@ -87,13 +87,6 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 
 
 
-@dynamic compositeName;
-
-
-
-
-
-
 @dynamic email;
 
 
@@ -123,6 +116,13 @@ const struct CTLCDPersonFetchedProperties CTLCDPersonFetchedProperties = {
 
 
 @dynamic lastName;
+
+
+
+
+
+
+@dynamic nickName;
 
 
 

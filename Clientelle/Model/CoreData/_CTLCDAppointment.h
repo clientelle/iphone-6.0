@@ -25,7 +25,7 @@ extern const struct CTLCDAppointmentRelationships {
 extern const struct CTLCDAppointmentFetchedProperties {
 } CTLCDAppointmentFetchedProperties;
 
-@class CTLCDPerson;
+@class CTLCDContact;
 
 
 
@@ -152,7 +152,7 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
-@property (nonatomic, strong) CTLCDPerson* contact;
+@property (nonatomic, strong) CTLCDContact* contact;
 
 //- (BOOL)validateContact:(id*)value_ error:(NSError**)error_;
 
@@ -245,8 +245,8 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
-- (CTLCDPerson*)primitiveContact;
-- (void)setPrimitiveContact:(CTLCDPerson*)value;
+- (CTLCDContact*)primitiveContact;
+- (void)setPrimitiveContact:(CTLCDContact*)value;
 
 
 @end

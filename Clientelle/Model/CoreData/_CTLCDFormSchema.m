@@ -5,10 +5,12 @@
 
 const struct CTLCDFormSchemaAttributes CTLCDFormSchemaAttributes = {
 	.address = @"address",
+	.address2 = @"address2",
 	.email = @"email",
 	.firstName = @"firstName",
 	.jobTitle = @"jobTitle",
 	.lastName = @"lastName",
+	.nickName = @"nickName",
 	.note = @"note",
 	.organization = @"organization",
 	.phone = @"phone",
@@ -106,6 +108,13 @@ const struct CTLCDFormSchemaFetchedProperties CTLCDFormSchemaFetchedProperties =
 - (void)setPrimitiveAddressValue:(BOOL)value_ {
 	[self setPrimitiveAddress:[NSNumber numberWithBool:value_]];
 }
+
+
+
+
+
+@dynamic address2;
+
 
 
 
@@ -210,6 +219,13 @@ const struct CTLCDFormSchemaFetchedProperties CTLCDFormSchemaFetchedProperties =
 - (void)setPrimitiveLastNameValue:(BOOL)value_ {
 	[self setPrimitiveLastName:[NSNumber numberWithBool:value_]];
 }
+
+
+
+
+
+@dynamic nickName;
+
 
 
 

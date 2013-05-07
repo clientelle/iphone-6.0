@@ -7,11 +7,11 @@
 //
 
 typedef void (^CTLDictionayBlock)(NSDictionary* results);
-
-extern NSString *const CTLPersonCompositeNameProperty;
 extern NSString *const CTLPersonRecordIDProperty;
+extern NSString *const CTLPersonCompositeNameProperty;
 extern NSString *const CTLPersonFirstNameProperty;
 extern NSString *const CTLPersonLastNameProperty;
+extern NSString *const CTLPersonNickNameProperty;
 extern NSString *const CTLPersonOrganizationProperty;
 extern NSString *const CTLPersonJobTitleProperty;
 extern NSString *const CTLPersonEmailProperty;
@@ -19,6 +19,7 @@ extern NSString *const CTLPersonPhoneProperty;
 extern NSString *const CTLPersonNoteProperty;
 extern NSString *const CTLPersonCreatedDateProperty;
 extern NSString *const CTLPersonAddressProperty;
+extern NSString *const CTLPersonAddress2Property;
 extern NSString *const CTLAddressStreetProperty;
 extern NSString *const CTLAddressCityProperty;
 extern NSString *const CTLAddressStateProperty;
@@ -32,6 +33,7 @@ extern NSString *const CTLAddressZIPProperty;
 @property (nonatomic, copy) NSString *compositeName;
 @property (nonatomic, copy) NSString *firstName;
 @property (nonatomic, copy) NSString *lastName;
+@property (nonatomic, copy) NSString *nickName;
 @property (nonatomic, copy) NSString *organization;
 @property (nonatomic, copy) NSString *jobTitle;
 @property (nonatomic, copy) NSString *phone;

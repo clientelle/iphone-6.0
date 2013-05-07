@@ -1,7 +1,6 @@
 #import "CTLCDFormSchema.h"
 
-NSString *const CTLContactFormSchema = @"ABPersonSchema";
-NSString *const CTLAddressSchemaPlist = @"AddressFields";
+NSString *const CTLContactFormSchemaPlist = @"ABPersonSchema";
 
 NSString *const kCTLFieldName = @"field";
 NSString *const kCTLFieldValue = @"value";
@@ -20,12 +19,7 @@ NSString *const kCTLFieldKeyboardType = @"keyboardType";
 
 - (BOOL)fieldIsVisible:(id)field
 {
-    
-    BOOL result = [[self valueForKey:field] isEqualToNumber:[NSNumber numberWithBool:YES]];
-    
-    NSLog(@"FIELD %@ | HIDDEN %i", field, result);
-    
-    return result;
+    return [[self valueForKey:field] isEqualToNumber:[NSNumber numberWithBool:YES]];
 }
 
 @end

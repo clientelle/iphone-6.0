@@ -9,7 +9,7 @@
 #import <EventKit/EventKit.h>
 #import "CTLFieldCell.h"
 
-@class CTLCDPerson;
+@class CTLCDContact;
 @class CTLCDAppointment;
 
 @interface CTLAppointmentFormViewController : UITableViewController<CTLSlideMenuDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>{
@@ -22,7 +22,6 @@
     NSArray *_contacts;
     BOOL _hasCalendarAccess;
     BOOL _hasAddress;
-    BOOL _isPrivate;
     BOOL _isNewAppointment;
     ABAddressBookRef _addressBookRef;
 }
@@ -41,7 +40,7 @@
 @property (nonatomic, assign) BOOL transitionedFromLocalNotification;
 
 @property (nonatomic, strong) CTLCDAppointment *cdAppointment;
-@property (nonatomic, strong) CTLCDPerson *contact;
+@property (nonatomic, strong) CTLCDContact *contact;
 
 - (IBAction)contactDidChange:(UITextField *)textField;
 - (IBAction)formatFeeString:(UITextField *)textField;

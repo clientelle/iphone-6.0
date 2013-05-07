@@ -16,6 +16,12 @@
 	</dict>
 	<dict>
 		<key>field</key>
+		<string>nickName</string>
+		<key>keyboardType</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>field</key>
 		<string>organization</string>
 		<key>keyboardType</key>
 		<integer>0</integer>
@@ -47,6 +53,12 @@
 	<dict>
 		<key>field</key>
 		<string>address</string>
+		<key>keyboardType</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>field</key>
+		<string>address2</string>
 		<key>keyboardType</key>
 		<integer>0</integer>
 	</dict>

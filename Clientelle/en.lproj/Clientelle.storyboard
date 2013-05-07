@@ -213,47 +213,13 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="o83-JC-y9P">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="vLr-i4-aNe">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="15"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Contact" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFR-oR-rc8">
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="224" id="5uh-4z-F5B"/>
-                                        <constraint firstAttribute="height" constant="21" id="NC1-VT-QLE"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X0f-VJ-KN3">
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="40" id="TQZ-1k-fsG"/>
-                                        <constraint firstAttribute="height" constant="25" id="c6I-eV-iJm"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                    <state key="normal" image="key-public.png" backgroundImage="whiteButton.png">
-                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <state key="highlighted" backgroundImage="whiteButtonHighlight.png">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="togglePrivateButtonActive:" destination="UoD-9H-AyX" eventType="touchUpInside" id="R6r-BZ-Tbd"/>
-                                    </connections>
-                                </button>
-                            </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstItem="KFR-oR-rc8" firstAttribute="leading" secondItem="o83-JC-y9P" secondAttribute="leading" constant="13" id="3ED-Zw-V6H"/>
-                                <constraint firstAttribute="trailing" secondItem="X0f-VJ-KN3" secondAttribute="trailing" constant="14" id="Fgw-UJ-4Ns"/>
-                                <constraint firstItem="KFR-oR-rc8" firstAttribute="top" secondItem="o83-JC-y9P" secondAttribute="top" constant="14" id="JgW-St-AMI"/>
-                                <constraint firstItem="X0f-VJ-KN3" firstAttribute="top" secondItem="o83-JC-y9P" secondAttribute="top" constant="11" id="tiN-BQ-4pY"/>
-                            </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Zmb-Rx-c0Z">
-                            <rect key="frame" x="0.0" y="106" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="81" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qB3-o4-KyU">
@@ -289,7 +255,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleAspectFit" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="inputRow" id="nBf-Ba-D1I" customClass="CTLFieldCell">
-                                <rect key="frame" x="0.0" y="62" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="37" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -303,8 +269,8 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
-                                                <action selector="highlightTextField:" destination="UoD-9H-AyX" eventType="editingDidBegin" id="3ST-Ay-Cfo"/>
                                                 <action selector="textFieldDidChange:" destination="UoD-9H-AyX" eventType="editingChanged" id="wru-87-JrN"/>
+                                                <outlet property="delegate" destination="UoD-9H-AyX" id="SuW-m8-r1l"/>
                                             </connections>
                                         </textField>
                                     </subviews>
@@ -333,11 +299,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="contactsTitleLabel" destination="KFR-oR-rc8" id="UfJ-YX-dce"/>
                         <outlet property="editFormButton" destination="qB3-o4-KyU" id="Gb1-As-7ru"/>
                         <outlet property="footerView" destination="Zmb-Rx-c0Z" id="GZa-Jw-8UT"/>
-                        <outlet property="headerView" destination="o83-JC-y9P" id="SjQ-wx-uow"/>
-                        <outlet property="privateButton" destination="X0f-VJ-KN3" id="H13-38-f9v"/>
                         <outlet property="saveContactButton" destination="ZOh-Ol-25m" id="lAg-sZ-fyR"/>
                         <segue destination="uBe-ki-BBC" kind="modal" identifier="toContactFormEditor" id="IlY-wz-pWc"/>
                     </connections>
@@ -364,7 +327,7 @@
                                 <color key="separatorColor" red="0.80000007149999997" green="0.80000007149999997" blue="0.80000007149999997" alpha="1" colorSpace="deviceRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fieldRow" textLabel="fvi-q2-uCb" style="IBUITableViewCellStyleDefault" id="HJu-O1-HnZ">
-                                        <rect key="frame" x="0.0" y="46" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="46" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -581,7 +544,7 @@
                                         <rect key="frame" x="0.0" y="10" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="48"/>
+                                            <rect key="frame" x="10" y="1" width="300" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Choose a contact" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ob5-Nn-Lx3">
@@ -1320,7 +1283,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="1Sv-5i-Se8">
-                                        <rect key="frame" x="0.0" y="55" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="55" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -1376,7 +1339,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="84c-LQ-Bdp" style="IBUITableViewCellStyleDefault" id="hvx-yT-Wfk">
-                                        <rect key="frame" x="0.0" y="208" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="208" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -2183,7 +2146,6 @@
         <image name="44-shoebox.png" width="24" height="22"/>
         <image name="clock-grn.png" width="18" height="18"/>
         <image name="clock-red.png" width="18" height="18"/>
-        <image name="key-public.png" width="26" height="12"/>
         <image name="menu.png" width="18" height="18"/>
         <image name="person-sm-grey.png" width="18" height="16"/>
         <image name="plus.png" width="19" height="19"/>
@@ -2268,16 +2230,11 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactViewController.h"/>
             <relationships>
                 <relationship kind="action" name="dismissKeyboard:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="highlightTextField:" candidateClass="UITextField"/>
                 <relationship kind="action" name="showAddFieldsModal:"/>
                 <relationship kind="action" name="submit:"/>
                 <relationship kind="action" name="textFieldDidChange:" candidateClass="UITextField"/>
-                <relationship kind="action" name="togglePrivateButtonActive:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="contactsTitleLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="editFormButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="headerView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="privateButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="saveContactButton" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>

@@ -11,7 +11,7 @@
 #import "UILabel+CTLLabel.h"
 #import "NSString+CTLString.h"
 #import "CTLContactHeaderView.h"
-#import "CTLCDPerson.h"
+#import "CTLCDContact.h"
 
 NSString *const CTLFontName = @"HelveticaNeue";
 NSString *const CTLFontNameBold = @"HelveticaNeue-Bold";
@@ -154,7 +154,7 @@ int CTLPhoneLabelTag = 602;
 	[[NSNotificationCenter defaultCenter] postNotificationName:CTLShareContactNotification object:nil];
 }
 
-- (void)populateViewData:(CTLCDPerson *)contact
+- (void)populateViewData:(CTLCDContact *)contact
 {
     [self reset];
      

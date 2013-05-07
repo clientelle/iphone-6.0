@@ -1,7 +1,6 @@
 #import "_CTLCDFormSchema.h"
 
-extern NSString *const CTLContactFormSchema;
-extern NSString *const CTLAddressSchemaPlist;
+extern NSString *const CTLContactFormSchemaPlist;
 
 extern NSString *const kCTLFieldName;
 extern NSString *const kCTLFieldValue;

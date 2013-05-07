@@ -1,18 +1,18 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to CTLCDPerson.h instead.
+// Make changes to CTLCDContact.h instead.
 
 #import <CoreData/CoreData.h>
 
 
-extern const struct CTLCDPersonAttributes {
+extern const struct CTLCDContactAttributes {
 	__unsafe_unretained NSString *address;
 	__unsafe_unretained NSString *address2;
-	__unsafe_unretained NSString *compositeName;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *firstName;
 	__unsafe_unretained NSString *jobTitle;
 	__unsafe_unretained NSString *lastAccessed;
 	__unsafe_unretained NSString *lastName;
+	__unsafe_unretained NSString *nickName;
 	__unsafe_unretained NSString *note;
 	__unsafe_unretained NSString *organization;
 	__unsafe_unretained NSString *phone;
@@ -20,14 +20,14 @@ extern const struct CTLCDPersonAttributes {
 	__unsafe_unretained NSString *private;
 	__unsafe_unretained NSString *rating;
 	__unsafe_unretained NSString *recordID;
-} CTLCDPersonAttributes;
+} CTLCDContactAttributes;
 
-extern const struct CTLCDPersonRelationships {
+extern const struct CTLCDContactRelationships {
 	__unsafe_unretained NSString *appointment;
-} CTLCDPersonRelationships;
+} CTLCDContactRelationships;
 
-extern const struct CTLCDPersonFetchedProperties {
-} CTLCDPersonFetchedProperties;
+extern const struct CTLCDContactFetchedProperties {
+} CTLCDContactFetchedProperties;
 
 @class CTLCDAppointment;
 
@@ -47,14 +47,14 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 
-@interface CTLCDPersonID : NSManagedObjectID {}
+@interface CTLCDContactID : NSManagedObjectID {}
 @end
 
-@interface _CTLCDPerson : NSManagedObject {}
+@interface _CTLCDContact : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (CTLCDPersonID*)objectID;
+- (CTLCDContactID*)objectID;
 
 
 
@@ -71,14 +71,6 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 //- (BOOL)validateAddress2:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSString* compositeName;
-
-
-//- (BOOL)validateCompositeName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -119,6 +111,14 @@ extern const struct CTLCDPersonFetchedProperties {
 
 
 //- (BOOL)validateLastName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* nickName;
+
+
+//- (BOOL)validateNickName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -202,7 +202,7 @@ extern const struct CTLCDPersonFetchedProperties {
 
 @end
 
-@interface _CTLCDPerson (CoreDataGeneratedAccessors)
+@interface _CTLCDContact (CoreDataGeneratedAccessors)
 
 - (void)addAppointment:(NSSet*)value_;
 - (void)removeAppointment:(NSSet*)value_;
@@ -211,7 +211,7 @@ extern const struct CTLCDPersonFetchedProperties {
 
 @end
 
-@interface _CTLCDPerson (CoreDataGeneratedPrimitiveAccessors)
+@interface _CTLCDContact (CoreDataGeneratedPrimitiveAccessors)
 
 
 - (NSString*)primitiveAddress;
@@ -222,12 +222,6 @@ extern const struct CTLCDPersonFetchedProperties {
 
 - (NSString*)primitiveAddress2;
 - (void)setPrimitiveAddress2:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveCompositeName;
-- (void)setPrimitiveCompositeName:(NSString*)value;
 
 
 
@@ -258,6 +252,12 @@ extern const struct CTLCDPersonFetchedProperties {
 
 - (NSString*)primitiveLastName;
 - (void)setPrimitiveLastName:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveNickName;
+- (void)setPrimitiveNickName:(NSString*)value;
 
 
 

@@ -10,7 +10,7 @@
 #import "NSDate+CTLDate.h"
 #import "UILabel+CTLLabel.h"
 
-#import "CTLCDPerson.h"
+#import "CTLCDContact.h"
 #import "CTLABPerson.h"
 #import "CTLAppointmentFormViewController.h"
 #import "CTLAppointmentsListViewController.h"
@@ -118,7 +118,7 @@ int CTLEndTimeInputTag = 3;
 
 - (void)contactWasAdded:(NSNotification *)notification
 {
-    if([notification.object isKindOfClass:[CTLCDPerson class]]){
+    if([notification.object isKindOfClass:[CTLCDContact class]]){
         self.contact = notification.object;
         _contacts = @[self.contact];
         [_contactPicker reloadAllComponents];
@@ -139,7 +139,7 @@ int CTLEndTimeInputTag = 3;
 
 - (void)loadContactsInPickerView
 {
-    _contacts = [CTLCDPerson MR_findAllSortedBy:@"firstName" ascending:YES];
+    _contacts = [CTLCDContact MR_findAllSortedBy:@"firstName" ascending:YES];
     [_contactPicker reloadAllComponents];
 }
 
@@ -188,13 +188,13 @@ int CTLEndTimeInputTag = 3;
 {
     [CTLABPerson peopleFromAddressBook:self.addressBookRef withBlock:^(NSDictionary *results){
         NSMutableDictionary *peopleDict = [results mutableCopy];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID != nil AND isPrivate = NO"];
-        NSArray *contactsArr = [CTLCDPerson MR_findAllWithPredicate:predicate];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID != nil AND private = NO"];
+        NSArray *contactsArr = [CTLCDContact MR_findAllWithPredicate:predicate];
         
         for(NSInteger i=0;i<[contactsArr count];i++){
-            CTLCDPerson *contact = contactsArr[i];
+            CTLCDContact *contact = contactsArr[i];
             CTLABPerson *person = [peopleDict objectForKey:contact.recordID];
-            [contact updateFromABPerson:person];
+            [contact createFromABPerson:person];
         }
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -320,15 +320,15 @@ int CTLEndTimeInputTag = 3;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
-        [self performSegueWithIdentifier:CTLImporterSegueIdentifyer sender:alertView];
+        [self performSegueWithIdentifier:CTLImporterSegueIdentifier sender:alertView];
     }else if (buttonIndex == 1) {
-        [self performSegueWithIdentifier:CTLContactFormSegueIdentifyer sender:alertView];
+        [self performSegueWithIdentifier:CTLContactFormSegueIdentifier sender:alertView];
     }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if([[segue identifier] isEqualToString:CTLImporterSegueIdentifyer]){
+    if([[segue identifier] isEqualToString:CTLImporterSegueIdentifier]){
         //reset context because a placeholder appointment has been created in memory
         [[NSManagedObjectContext MR_contextForCurrentThread] reset];
         CTLContactImportViewController *importer = [segue destinationViewController];
@@ -336,7 +336,7 @@ int CTLEndTimeInputTag = 3;
         return;
     }
     
-    if ([[segue identifier] isEqualToString:CTLContactFormSegueIdentifyer]) {
+    if ([[segue identifier] isEqualToString:CTLContactFormSegueIdentifier]) {
         //reset context because a placeholder appointment has been created in memory
         [[NSManagedObjectContext MR_contextForCurrentThread] reset];
         CTLContactViewController *contactFormViewController = [segue destinationViewController];
@@ -352,14 +352,14 @@ int CTLEndTimeInputTag = 3;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    CTLCDPerson *person = [_contacts objectAtIndex:row];
+    CTLCDContact *person = [_contacts objectAtIndex:row];
     [self.cdAppointment setContact:person];
     self.contactNameTextField.text = person.compositeName;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    CTLCDPerson *person = [_contacts objectAtIndex:row];
+    CTLCDContact *person = [_contacts objectAtIndex:row];
     return person.compositeName;
 }
 

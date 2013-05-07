@@ -9,7 +9,7 @@
 #import "CTLContactsListViewController.h"
 #import "CTLContactImportViewController.h"
 #import "CTLABPerson.h"
-#import "CTLCDPerson.h"
+#import "CTLCDContact.h"
 
 @interface CTLContactImportViewController ()
 - (void)loadAddressBookContacts;
@@ -77,11 +77,11 @@
     [CTLABPerson peopleFromAddressBook:self.addressBookRef withBlock:^(NSDictionary *results){
         NSMutableDictionary *people = [results mutableCopy];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID != nil"];
-        NSArray *contacts = [CTLCDPerson MR_findAllWithPredicate:predicate];
+        NSArray *contacts = [CTLCDContact MR_findAllWithPredicate:predicate];
         
         //filter out contacts that have been added
         for(NSInteger i=0;i<[contacts count];i++){
-            CTLCDPerson *person = contacts[i];
+            CTLCDContact *person = contacts[i];
             [people removeObjectForKey:person.recordID];
         }
         
@@ -254,11 +254,10 @@
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
     __block NSMutableArray *cdPeople = [NSMutableArray array];
     [_selectedPeople enumerateKeysAndObjectsUsingBlock:^(NSNumber *recordID, CTLABPerson *person, BOOL *stop){
-        CTLCDPerson *cdPerson = [CTLCDPerson MR_createEntity];
-        cdPerson.recordID = @(person.recordID);
-        cdPerson.isPrivateValue = NO;
-        [cdPerson updateFromABPerson:person];
-        [cdPeople addObject:cdPerson];
+        CTLCDContact *contact = [CTLCDContact MR_createEntity];
+        contact.recordID = @(person.recordID);
+        [contact createFromABPerson:person];
+        [cdPeople addObject:contact];
     }];
     
     [context MR_saveToPersistentStoreWithCompletion:^(BOOL result, NSError *error){
