@@ -326,8 +326,8 @@
                                 <color key="backgroundColor" red="0.91764712329999998" green="0.91764712329999998" blue="0.91764712329999998" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="separatorColor" red="0.80000007149999997" green="0.80000007149999997" blue="0.80000007149999997" alpha="1" colorSpace="deviceRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fieldRow" textLabel="fvi-q2-uCb" style="IBUITableViewCellStyleDefault" id="HJu-O1-HnZ">
-                                        <rect key="frame" x="0.0" y="46" width="320" height="46"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" showsReorderControl="YES" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fieldRow" textLabel="fvi-q2-uCb" style="IBUITableViewCellStyleDefault" id="HJu-O1-HnZ">
+                                        <rect key="frame" x="0.0" y="46" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -354,14 +354,14 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I95-eH-7N3">
                                 <items>
                                     <navigationItem title="Add Fields" id="mEI-NV-E2G">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="yKc-De-LVw">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="yKc-De-LVw">
                                             <connections>
-                                                <action selector="cancel:" destination="uBe-ki-BBC" id="2Bx-OO-IUG"/>
+                                                <action selector="enableReordering:" destination="uBe-ki-BBC" id="Dbv-OJ-pUN"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="AZD-Jd-UFv">
                                             <connections>
-                                                <action selector="save:" destination="uBe-ki-BBC" id="JmS-bP-VKH"/>
+                                                <action selector="save:" destination="uBe-ki-BBC" id="sUB-7y-FOk"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -381,7 +381,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="TTm-qT-DXB"/>
                     <connections>
-                        <outlet property="doneButton" destination="AZD-Jd-UFv" id="F7s-Bz-yU8"/>
+                        <outlet property="cancelButton" destination="yKc-De-LVw" id="qlC-FW-PSk"/>
+                        <outlet property="editButton" destination="AZD-Jd-UFv" id="b9g-gE-erT"/>
                         <outlet property="navBar" destination="I95-eH-7N3" id="LsF-KE-i16"/>
                         <outlet property="tableView" destination="Dat-OO-kbW" id="LP8-SC-Y3i"/>
                     </connections>
@@ -2209,9 +2210,10 @@
         <class className="CTLContactFormEditorViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactFormEditorViewController.h"/>
             <relationships>
-                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="enableReordering:"/>
                 <relationship kind="action" name="save:"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>

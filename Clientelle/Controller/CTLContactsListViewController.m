@@ -608,6 +608,10 @@ int const CTLAddContactActionSheetTag = 424;
     return [[self.fetchedResultsController fetchedObjects] count];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"contactRow";
@@ -629,6 +633,8 @@ int const CTLAddContactActionSheetTag = 424;
     if(person.lastAccessed){
         cell.timestampLabel.text = [self generateDateStamp:person.lastAccessed];
     }
+    
+    [cell showingDeleteConfirmation];
     
     return cell;
 }

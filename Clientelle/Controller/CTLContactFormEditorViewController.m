@@ -32,6 +32,8 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_form_editor_tooltip_once"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    
+    [self.tableView setEditing:YES animated:YES];
 }
 
 - (void)displayTooltip:(id)userInfo
@@ -82,6 +84,49 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     [self.tableView endUpdates];
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellAccessoryNone;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+   
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
+   
+    NSArray *fieldsArray = [self.fetchedResultsController fetchedObjects];
+    
+    //NSDictionary *section = [fieldsArray objectAtIndex:sourceIndexPath.section];
+    
+    NSUInteger sectionCount = [fieldsArray count];
+    
+    if (sourceIndexPath.section != proposedDestinationIndexPath.section) {
+        NSUInteger rowInSourceSection = (sourceIndexPath.section > proposedDestinationIndexPath.section) ? 0 : sectionCount - 1;
+        return [NSIndexPath indexPathForRow:rowInSourceSection inSection:sourceIndexPath.section];
+    } else if (proposedDestinationIndexPath.row >= sectionCount) {
+        return [NSIndexPath indexPathForRow:sectionCount - 1 inSection:sourceIndexPath.section];
+    }
+    
+    // Allow the proposed destination.
+    return proposedDestinationIndexPath;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return YES;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [[self.fetchedResultsController fetchedObjects] count];
@@ -94,6 +139,8 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     CTLCDContactField *field = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
     
     cell.textLabel.text = field.label;
+    
+    cell.showsReorderControl = YES;
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
@@ -161,10 +208,10 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     }
     
     if(disabledCount == [_fields count]){
-        self.doneButton.enabled = NO;
+        self.editButton.enabled = NO;
     }else{
-        self.doneButton.enabled = YES;
-        [self.doneButton setStyle:UIBarButtonItemStyleDone];
+        self.editButton.enabled = YES;
+        [self.editButton setStyle:UIBarButtonItemStyleDone];
     }
 }
 
@@ -188,14 +235,23 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 
 - (IBAction)save:(id)sender
 {
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_contextForCurrentThread]  MR_saveToPersistentStoreAndWait];
     [[NSNotificationCenter defaultCenter] postNotificationName:CTLFormFieldAddedNotification object:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)cancel:(id)sender
+- (IBAction)enableReordering:(UIBarButtonItem *)button
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.tableView setEditing:YES animated:YES];
+    [button setAction:@selector(doneReordering:)];
+    [button setStyle:UIBarButtonItemStyleDone];
+}
+
+- (void)doneReordering:(UIBarButtonItem *)button
+{
+    [self.tableView setEditing:NO animated:YES];
+    [button setAction:@selector(enableReordering:)];
+    [button setStyle:UIBarButtonItemStylePlain];
 }
 
 @end

@@ -14,10 +14,12 @@ extern NSString *const CTLFormFieldAddedNotification;
 
 @property (nonatomic, weak) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
+
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *cancelButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *editButton;
 
 - (IBAction)save:(id)sender;
-- (IBAction)cancel:(id)sender;
+- (IBAction)enableReordering:(id)sender;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
