@@ -84,6 +84,7 @@ e†
 "CONTACT_LABEL_firstName" = "First Name";
 "CONTACT_LABEL_lastName" = "Last Name";
 "CONTACT_LABEL_nickName" = "Nick Name";
+"CONTACT_LABEL_mobilePhone" = "Mobile Phone";
 "CONTACT_LABEL_phone" = "Phone";
 "CONTACT_LABEL_email" = "Email";
 "CONTACT_LABEL_jobTitle" = "Title";
@@ -95,6 +96,7 @@ e†
 "CONTACT_PLACEHOLDER_firstName" = "First Name";
 "CONTACT_PLACEHOLDER_lastName" = "Last Name";
 "CONTACT_PLACEHOLDER_nickName" = "Nick Name";
+"CONTACT_PLACEHOLDER_mobilePhone" = "Mobile Phone";
 "CONTACT_PLACEHOLDER_phone" = "Phone";
 "CONTACT_PLACEHOLDER_email" = "Email";
 "CONTACT_PLACEHOLDER_jobTitle" = "Title";

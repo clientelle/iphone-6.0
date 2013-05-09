@@ -196,7 +196,6 @@
     
     if(cell.accessoryType == UITableViewCellAccessoryNone){
         [self styleEnabledField:cell];
-        [person setAccessDate:[NSDate date]];
         [_selectedPeople setObject:person forKey:@(person.recordID)];
         [self.doneButton setStyle:UIBarButtonItemStyleDone];
         [self.doneButton setEnabled:YES];

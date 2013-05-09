@@ -18,8 +18,8 @@ NSString *const CTLPersonOrganizationProperty = @"organization";
 NSString *const CTLPersonJobTitleProperty = @"jobTitle";
 NSString *const CTLPersonEmailProperty = @"email";
 NSString *const CTLPersonPhoneProperty = @"phone";
+NSString *const CTLPersonMobilePhoneProperty = @"mobilePhone";
 NSString *const CTLPersonNoteProperty = @"note";
-NSString *const CTLPersonCreatedDateProperty = @"creationDate";
 NSString *const CTLPersonAddressProperty = @"address";
 NSString *const CTLPersonAddress2Property = @"address2";
 NSString *const CTLAddressStreetProperty = @"Street";
@@ -105,7 +105,7 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
         self.addressBookRef = addressBookRef;
         self.recordID = recordID;
         self.recordRef = recordRef;
-        [self personFromRef:recordRef];
+        [self personFromAddressbookRef];
     }
     return self;
 }
@@ -121,68 +121,33 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
         self.addressBookRef = addressBookRef;
         self.recordID = recordID;
         self.recordRef = recordRef;
-        [self personFromRef:recordRef];
+        [self personFromAddressbookRef];
     }
     return self;
 }
 
-- (id)initWithDictionary:(NSDictionary *)fields withAddressBookRef:(ABAddressBookRef)addressBookRef
+- (void)personFromAddressbookRef
 {
-    self = [super init];
-	if(self != nil){
-        ABRecordRef sourceRef = [CTLABPerson sourceByType:kABSourceTypeLocal addessBookRef:addressBookRef];
-        ABRecordRef recordRef = ABPersonCreateInSource(sourceRef);
-        if(!recordRef){
-            return nil;
-        }
-        self.addressBookRef = addressBookRef;
-        self.recordRef = recordRef;
-        
-        BOOL result = [self setFieldsToDictionary:fields];
-        if(result){
-            CFErrorRef abAddRecordError = NULL, abSaveError = NULL;
-            //TODO: Error Handling
-            if(ABAddressBookAddRecord(self.addressBookRef, self.recordRef, &abAddRecordError)){
-                if(ABAddressBookSave(self.addressBookRef, &abSaveError)){
-                    NSLog(@"SAVED!! YAY");
-                    self.recordID = ABRecordGetRecordID(recordRef);
-                    [self personFromRef:recordRef];
-                }else{
-                    NSLog(@"ERROR!! BOO %@", abSaveError);
-                }
-            }else{
-                 NSLog(@"ERROR!! BOO %@", abAddRecordError);
-            }
-        }
-    }
-    
-    return self;
-}
-
-- (void)personFromRef:(ABRecordRef)recordRef
-{
-    CFStringRef compositeName = ABRecordCopyCompositeName(recordRef);
-    if(compositeName){
-        self.compositeName = (__bridge NSString *)compositeName;
-        CFRelease(compositeName);
-    }
-    
-    if(ABPersonHasImageData(recordRef)){
-        NSData *imageData = (__bridge NSData *)ABPersonCopyImageDataWithFormat(recordRef, kABPersonImageFormatThumbnail);
-        self.picture = [UIImage imageWithData:imageData];
-    }else{
-        //self.picture = [UIImage imageNamed:@"default-pic"];
-    }
-    
+    [self setProperty:kABPersonNicknameProperty];
     [self setProperty:kABPersonFirstNameProperty];
     [self setProperty:kABPersonLastNameProperty];
     [self setProperty:kABPersonOrganizationProperty];
     [self setProperty:kABPersonJobTitleProperty];
     [self setProperty:kABPersonNoteProperty];
-    [self setProperty:kABPersonCreationDateProperty];
+    
+    CFStringRef compositeName = ABRecordCopyCompositeName(self.recordRef);
+    if(compositeName){
+        self.compositeName = (__bridge NSString *)compositeName;
+        CFRelease(compositeName);
+    }    
+    
+    if(ABPersonHasImageData(self.recordRef)){
+        NSData *imageData = (__bridge NSData *)ABPersonCopyImageDataWithFormat(self.recordRef, kABPersonImageFormatThumbnail);
+        self.picture = [UIImage imageWithData:imageData];
+    }
     
     //set email
-    CFStringRef email = ABRecordCopyValue(recordRef, kABPersonEmailProperty);
+    CFStringRef email = ABRecordCopyValue(self.recordRef, kABPersonEmailProperty);
     if(email){
         //prefer work email. then work down the list
         NSDictionary *emailData = copyValueFromMultiValueWithLabelKey(email, kABWorkLabel);
@@ -200,29 +165,37 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
     }
     
     //set phone number
-    ABMultiValueRef phone = ABRecordCopyValue(recordRef, kABPersonPhoneProperty);
+    ABMultiValueRef phone = ABRecordCopyValue(self.recordRef, kABPersonPhoneProperty);
     if(phone){
-        NSDictionary *phoneData = copyValueFromMultiValueWithLabelKey(phone, kABPersonPhoneMobileLabel);
-        if(!phoneData){
-            phoneData = copyValueFromMultiValueWithLabelKey(phone, kABPersonPhoneMainLabel);
+        
+        NSDictionary *phoneDict = copyValueFromMultiValueWithLabelKey(phone, kABPersonPhoneMainLabel);
+        
+        if(phoneDict){
+            self.phone = [NSString formatPhoneNumber:[phoneDict objectForKey:CTLFieldKey]];
+            //self.phoneLabel = [phoneDict objectForKey:CTLLabelKey];
         }
-        if(!phoneData){
-            phoneData = copyValueFromMultiValueWithLabelKey(phone, kABPersonPhoneIPhoneLabel);
-        }
-        if(!phoneData){
-            //take anything!
-            phoneData = copyValueFromMultiValueWithLabelKey(phone, nil);
-        }
-        if(phoneData){
-            NSString *phoneNumber = [phoneData objectForKey:CTLFieldKey];
-            self.phone = [NSString formatPhoneNumber:phoneNumber];
-            self.phoneLabel = [phoneData objectForKey:CTLLabelKey];
-        }
+        
+        NSDictionary *mobileDict = copyValueFromMultiValueWithLabelKey(phone, kABPersonPhoneMobileLabel);
+        
+        if(mobileDict){
+            NSString *mobileNumber = [mobileDict objectForKey:CTLFieldKey];
+            self.mobilePhone = [NSString formatPhoneNumber:mobileNumber];
+            //self.mobilePhoneLabel = [mobileDict objectForKey:CTLLabelKey];
+        }else{
+            mobileDict = copyValueFromMultiValueWithLabelKey(phone, kABPersonPhoneIPhoneLabel);
+            if(mobileDict){
+                self.mobilePhone = [NSString formatPhoneNumber:[mobileDict objectForKey:CTLFieldKey]];
+                //self.mobilePhoneLabel = [mobileDict objectForKey:CTLLabelKey];
+            }
+        }        
+
+        
+        
         CFRelease(phone);
     }
     
     //set address (location)
-    ABMultiValueRef address = ABRecordCopyValue(recordRef, kABPersonAddressProperty);
+    ABMultiValueRef address = ABRecordCopyValue(self.recordRef, kABPersonAddressProperty);
     if(address){
         NSDictionary *addressData = copyValueFromMultiValueWithLabelKey(address, kABWorkLabel);
         if(!addressData){
@@ -233,32 +206,6 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
             self.addressLabel = [addressData objectForKey:CTLLabelKey];
         }
         CFRelease(address);
-    }
-}
-
-- (CTLABPerson *)updateWithDictionary:(NSDictionary *)fields
-{
-    BOOL result = [self setFieldsToDictionary:fields];
-    
-    if(!result){
-        return self;
-    }else{
-        ABRecordID recordID = self.recordID; //memoize to use later
-        CFErrorRef abAddError = NULL, abSaveError = NULL;
-        if(ABAddressBookAddRecord(self.addressBookRef, self.recordRef, &abAddError)){
-            if(ABAddressBookSave(self.addressBookRef, &abSaveError)){
-                NSLog(@"SAVED!!");
-            }
-        }else{
-            NSLog(@"ERROR2 %@", abAddError);
-        }
-        
-        //After record is updated get new copy of abPerson
-        CFErrorRef error;
-        ABAddressBookRef newABRef = ABAddressBookCreateWithOptions(NULL, &error); //Requires new ABRef
-        CTLABPerson *abPerson = [[CTLABPerson alloc] initWithRecordID:recordID withAddressBookRef:newABRef];
-        abPerson.addressBookRef = self.addressBookRef;
-        return abPerson;
     }
 }
 
@@ -285,7 +232,6 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
             CTLPersonEmailProperty: @(kABPersonEmailProperty),
             CTLPersonPhoneProperty: @(kABPersonPhoneProperty),
             CTLPersonNoteProperty : @(kABPersonNoteProperty),
-            CTLPersonCreatedDateProperty: @(kABPersonCreationDateProperty),
             CTLPersonAddressProperty : @(kABPersonAddressProperty)
         };
     }
@@ -295,112 +241,6 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
 
 - (NSString *)description{
     return [NSString stringWithFormat:@"<%@: %@, %@>", [self class], [self compositeName], [self email]];
-}
-
-- (BOOL)setFieldsToDictionary:(NSDictionary *)fields
-{
-    CFStringRef emailPropertyLabel = NULL;
-    CFStringRef phonePropertyLabel = NULL;
-    CFStringRef addressPropertyLabel = NULL;
-    
-    if(!self.recordID){
-        //new user; default phone and email label keys
-        emailPropertyLabel = kABWorkLabel;
-        phonePropertyLabel = kABPersonPhoneMainLabel;
-        addressPropertyLabel = kABHomeLabel;
-    }else{
-        emailPropertyLabel = (__bridge CFStringRef)(self.emailLabel);
-        phonePropertyLabel = (__bridge CFStringRef)(self.phoneLabel);
-        addressPropertyLabel = (__bridge CFStringRef)(self.addressLabel);
-    }
-
-    __block BOOL contactDidChange = NO;
-    
-    [fields enumerateKeysAndObjectsUsingBlock:^(id fieldName, id propertyValue, BOOL *stop){
-        
-        //filter out non keyed values
-        NSNumber *fieldKey = [self.keyMap objectForKey:fieldName];
-        
-        if(fieldKey != (id)[NSNull null]){
-            ABPropertyID propertyKey = (ABPropertyID)[fieldKey intValue];
-            
-            if(propertyKey == kABPersonAddressProperty){
-                CFErrorRef error = NULL;
-                ABMutableMultiValueRef multiRef = ABMultiValueCreateMutable(kABDictionaryPropertyType);
-                ABMultiValueAddValueAndLabel(multiRef, (__bridge CFDictionaryRef)(propertyValue), addressPropertyLabel, NULL);
-                
-                if(ABRecordSetValue(self.recordRef, propertyKey, multiRef, &error)){
-                    contactDidChange = YES;
-                }
-
-                CFRelease(multiRef);
-
-            }else{
-                
-                if ( [self respondsToSelector:@selector(fieldName)] ) {
-                    
-                    //only save fields that changed
-                    if(propertyValue != [self valueForKey:fieldName]){
-                        CFErrorRef error = NULL;
-                        ABMutableMultiValueRef multiRef = NULL;
-                        
-                        if([fieldName isEqualToString:CTLPersonEmailProperty]){
-                            multiRef = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-                            ABMultiValueAddValueAndLabel(multiRef, (__bridge CFStringRef)(propertyValue), emailPropertyLabel, NULL);
-                        }
-                        
-                        if([fieldName isEqualToString:CTLPersonPhoneProperty]){
-                            multiRef = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-                            ABMultiValueAddValueAndLabel(multiRef, (__bridge CFStringRef)(propertyValue), phonePropertyLabel, NULL);
-                        }
-
-                        if(multiRef){
-                            if(ABRecordSetValue(self.recordRef, propertyKey, multiRef, &error)){
-                                contactDidChange = YES;
-                            }
-                            CFRelease(multiRef);
-                        }else{
-                            CFErrorRef setValError = NULL;
-                            if(ABRecordSetValue(self.recordRef, propertyKey, (__bridge CFStringRef)propertyValue, &setValError)){
-                               contactDidChange = YES;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }];
-    
-    return contactDidChange;
-}
-
-+ (BOOL)validateContactInfo:(NSDictionary *)fieldsDict
-{
-    int validityScore = 0;
-    BOOL isValid = NO;
-    
-    if((fieldsDict[CTLPersonFirstNameProperty] && [fieldsDict[CTLPersonFirstNameProperty] length] > 0) ||
-       (fieldsDict[CTLPersonLastNameProperty] && [fieldsDict[CTLPersonLastNameProperty] length] > 0)){
-        validityScore++;
-    }
-
-    if(fieldsDict[CTLPersonOrganizationProperty] && [fieldsDict[CTLPersonOrganizationProperty] length] > 0){
-        validityScore++;
-    }
-    
-    if(fieldsDict[CTLPersonEmailProperty] && [fieldsDict[CTLPersonEmailProperty] length] > 0){
-        validityScore++;
-    }
-    
-    if(fieldsDict[CTLPersonPhoneProperty] && [fieldsDict[CTLPersonPhoneProperty] length] > 0){
-        validityScore++;
-    }
-    
-    if(validityScore >= 2){
-        isValid = YES;
-    }
-    
-    return isValid;
 }
 
 + (void)peopleFromAddressBook:(ABAddressBookRef)addressBookRef withBlock:(CTLDictionayBlock)block

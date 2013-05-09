@@ -19,6 +19,11 @@
     if(person.phone){
         self.phone = person.phone;
     }
+    
+    if(person.mobilePhone){
+        self.mobilePhone = person.mobilePhone;
+    }
+    
     if(person.email){
         self.email = person.email;
     }

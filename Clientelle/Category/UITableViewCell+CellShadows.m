@@ -49,17 +49,17 @@
 - (void)addTopBorder:(CGRect)frame
 {
     CALayer *topBorder = [CALayer layer];
-    topBorder.frame = CGRectMake(9.0f, 0.0f, frame.size.width-18, 1.0f);
+    topBorder.frame = CGRectMake(0.0f, 0.0f, frame.size.width-18, 1.0f);
     [topBorder setBackgroundColor:[UIColor whiteColor].CGColor];
-    [self.layer addSublayer:topBorder];
+    [self.backgroundView.layer addSublayer:topBorder];
 }
 
 - (void)addBottomBorder:(CGRect)frame
 {
     CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(9.0f, frame.size.height-1, frame.size.width-18, 1.0f);
+    bottomBorder.frame = CGRectMake(0.0f, frame.size.height-1, frame.size.width-18, 1.0f);
     [bottomBorder setBackgroundColor:[UIColor colorFromUnNormalizedRGB:195.0f green:195.0f blue:195.0f alpha:1.0f].CGColor];
-    [self.layer addSublayer:bottomBorder];
+    [self.backgroundView.layer addSublayer:bottomBorder];
 }
 
 - (void)addShadowToCellInTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath

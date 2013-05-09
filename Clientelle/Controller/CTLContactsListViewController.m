@@ -117,8 +117,8 @@ int const CTLAddContactActionSheetTag = 424;
         NSString *field = _sortArray[row][@"field"];
         BOOL asc = [_sortArray[row][@"asc"] boolValue];
         
-        NSSortDescriptor *sortByAccessDate = [NSSortDescriptor sortDescriptorWithKey:field ascending:asc];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByAccessDate];
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:field ascending:asc];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
         
         [[self.fetchedResultsController fetchedObjects] sortedArrayUsingDescriptors:sortDescriptors];
      

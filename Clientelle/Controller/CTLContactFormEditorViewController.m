@@ -32,8 +32,6 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_form_editor_tooltip_once"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    
-    [self.tableView setEditing:YES animated:YES];
 }
 
 - (void)displayTooltip:(id)userInfo
@@ -96,26 +94,30 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-   
-}
-
-- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
-   
-    NSArray *fieldsArray = [self.fetchedResultsController fetchedObjects];
-    
-    //NSDictionary *section = [fieldsArray objectAtIndex:sourceIndexPath.section];
-    
-    NSUInteger sectionCount = [fieldsArray count];
-    
-    if (sourceIndexPath.section != proposedDestinationIndexPath.section) {
-        NSUInteger rowInSourceSection = (sourceIndexPath.section > proposedDestinationIndexPath.section) ? 0 : sectionCount - 1;
-        return [NSIndexPath indexPathForRow:rowInSourceSection inSection:sourceIndexPath.section];
-    } else if (proposedDestinationIndexPath.row >= sectionCount) {
-        return [NSIndexPath indexPathForRow:sectionCount - 1 inSection:sourceIndexPath.section];
+    if(self.editButton.enabled == NO){
+        self.editButton.enabled = YES;
     }
+
+    if([fromIndexPath isEqual:toIndexPath]){
+        return;
+    }
+
+    CTLCDContactField *targetField = [self.fetchedResultsController fetchedObjects][fromIndexPath.row];
+    CTLCDContactField *displacedField = [self.fetchedResultsController fetchedObjects][toIndexPath.row];
+
+    targetField.sortOrder = @(toIndexPath.row);
+    displacedField.sortOrder = @(fromIndexPath.row);
+
+    UITableViewCell *toCell = [tableView cellForRowAtIndexPath:toIndexPath];
+    UITableViewCell *fromCell = [tableView cellForRowAtIndexPath:fromIndexPath];
+
+    [toCell addShadowToCellInGroupedTableView:self.tableView atIndexPath:toIndexPath];
+    [fromCell addShadowToCellInGroupedTableView:self.tableView atIndexPath:fromIndexPath];
     
-    // Allow the proposed destination.
-    return proposedDestinationIndexPath;
+    [toCell.backgroundView setNeedsDisplay];
+    [fromCell.backgroundView setNeedsDisplay];
+    
+    [self.tableView reloadData];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -140,14 +142,12 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
     
     cell.textLabel.text = field.label;
     
-    cell.showsReorderControl = YES;
-    
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
     [cell addShadowToCellInGroupedTableView:self.tableView atIndexPath:indexPath];
-    
+
     if([[field valueForKey:kCTLFieldEnabled] isEqualToNumber:[NSNumber numberWithBool:NO]]){
         [self styleDisabledField:cell];
     }else{

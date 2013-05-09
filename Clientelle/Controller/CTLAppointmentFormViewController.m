@@ -65,7 +65,8 @@ int CTLEndTimeInputTag = 3;
 
         [self populateForm:self.cdAppointment];
     }
-     
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissInputViews:)]];
     
     /*** GENERATE FAKE APPOINTMENTS ***/
@@ -93,7 +94,6 @@ int CTLEndTimeInputTag = 3;
         }
     }
 }
-
 
 - (void)createPlaceholderAppointment
 {
@@ -188,7 +188,7 @@ int CTLEndTimeInputTag = 3;
 {
     [CTLABPerson peopleFromAddressBook:self.addressBookRef withBlock:^(NSDictionary *results){
         NSMutableDictionary *peopleDict = [results mutableCopy];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID != nil AND private = NO"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID != nil"];
         NSArray *contactsArr = [CTLCDContact MR_findAllWithPredicate:predicate];
         
         for(NSInteger i=0;i<[contactsArr count];i++){
@@ -381,7 +381,7 @@ int CTLEndTimeInputTag = 3;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    [cell addShadowToCellInTableView:self.tableView atIndexPath:indexPath];
+    //[cell addShadowToCellInTableView:self.tableView atIndexPath:indexPath];
     return cell;
 }
 

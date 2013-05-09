@@ -35,6 +35,7 @@
         <attribute name="jobTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastAccessed" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mobilePhone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="organization" optional="YES" attributeType="String" syncable="YES"/>
@@ -60,8 +61,8 @@
     <elements>
         <element name="Account" positionX="-540" positionY="-81" width="128" height="210"/>
         <element name="Appointment" positionX="-173" positionY="-270" width="128" height="225"/>
-        <element name="Contact" positionX="-380" positionY="-273" width="128" height="253"/>
-        <element name="Inbox" positionX="-378" positionY="30" width="128" height="105"/>
+        <element name="Contact" positionX="-380" positionY="-273" width="128" height="270"/>
         <element name="ContactField" positionX="-396" positionY="-441" width="128" height="133"/>
+        <element name="Inbox" positionX="-378" positionY="30" width="128" height="105"/>
     </elements>
 </model>
