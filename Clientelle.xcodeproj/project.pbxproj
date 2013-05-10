@@ -118,7 +118,6 @@
 		417F2826172F8C83003CC9A3 /* KBPopupDrawableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 417F2822172F8C83003CC9A3 /* KBPopupDrawableView.m */; };
 		417F2829173090A1003CC9A3 /* CTLMessagesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417F2828173090A1003CC9A3 /* CTLMessagesListViewController.m */; };
 		41848DD316B0271B004BFE30 /* CTLCDContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DCF16B0271B004BFE30 /* CTLCDContact.m */; };
-		41848DD616B05C9C004BFE30 /* CTLABGroupTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 41848DD516B05C9C004BFE30 /* CTLABGroupTest.m */; };
 		41848E0616B1CC0F004BFE30 /* group-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 41848E0216B1CC0F004BFE30 /* group-gray.png */; };
 		41848E0716B1CC0F004BFE30 /* group-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 41848E0216B1CC0F004BFE30 /* group-gray.png */; };
 		41848E0816B1CC0F004BFE30 /* group-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41848E0316B1CC0F004BFE30 /* group-gray@2x.png */; };
@@ -199,7 +198,6 @@
 		41D7916A1738C97400FCA232 /* _CTLCDContactField.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D791671738C97400FCA232 /* _CTLCDContactField.m */; };
 		41D7916B1738C97400FCA232 /* CTLCDContactField.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D791691738C97400FCA232 /* CTLCDContactField.m */; };
 		41D7916D1738D36900FCA232 /* ContactFormDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41D7916C1738D36900FCA232 /* ContactFormDefaults.plist */; };
-		41DA1DA816CB13F40017F71F /* CTLInboxControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */; };
 		41DA1DAA16CB14C00017F71F /* _CTLCDAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130653416C149D90063AC10 /* _CTLCDAccount.m */; };
 		41DA1DAB16CB14C00017F71F /* CTLCDAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130653616C149D90063AC10 /* CTLCDAccount.m */; };
 		41DA1DAC16CB14D70017F71F /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41FEEE5016AFD13700094A70 /* AddressBook.framework */; };
@@ -269,7 +267,6 @@
 		41E9BA5316B459E100FEF1FE /* DevConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E9BA4F16B459E100FEF1FE /* DevConfig.plist */; };
 		41FEEE4216AFC7FE00094A70 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41FEEE4416AFC7FE00094A70 /* Localizable.strings */; };
 		41FEEE5116AFD13700094A70 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41FEEE5016AFD13700094A70 /* AddressBook.framework */; };
-		41FEEE5F16AFD3F600094A70 /* CTLAddressBookTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FEEE5E16AFD3F600094A70 /* CTLAddressBookTest.m */; };
 		83EB274B170B0B4D00EBB3D3 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EB2730170B0B4D00EBB3D3 /* Appirater.m */; };
 		83EB274F170B0C5100EBB3D3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83EB274E170B0C5100EBB3D3 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
@@ -452,8 +449,6 @@
 		417F2828173090A1003CC9A3 /* CTLMessagesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMessagesListViewController.m; sourceTree = "<group>"; };
 		41848DCE16B0271B004BFE30 /* CTLCDContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLCDContact.h; path = CoreData/CTLCDContact.h; sourceTree = "<group>"; };
 		41848DCF16B0271B004BFE30 /* CTLCDContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLCDContact.m; path = CoreData/CTLCDContact.m; sourceTree = "<group>"; };
-		41848DD416B05C9C004BFE30 /* CTLABGroupTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLABGroupTest.h; sourceTree = "<group>"; };
-		41848DD516B05C9C004BFE30 /* CTLABGroupTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLABGroupTest.m; sourceTree = "<group>"; };
 		41848DFE16B17430004BFE30 /* CTLABPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLABPerson.h; sourceTree = "<group>"; };
 		41848E0216B1CC0F004BFE30 /* group-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group-gray.png"; sourceTree = "<group>"; };
 		41848E0316B1CC0F004BFE30 /* group-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group-gray@2x.png"; sourceTree = "<group>"; };
@@ -548,8 +543,6 @@
 		41D791681738C97400FCA232 /* CTLCDContactField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLCDContactField.h; path = CoreData/CTLCDContactField.h; sourceTree = "<group>"; };
 		41D791691738C97400FCA232 /* CTLCDContactField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLCDContactField.m; path = CoreData/CTLCDContactField.m; sourceTree = "<group>"; };
 		41D7916C1738D36900FCA232 /* ContactFormDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ContactFormDefaults.plist; sourceTree = "<group>"; };
-		41DA1DA616CB13F40017F71F /* CTLInboxControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInboxControllerTest.h; sourceTree = "<group>"; };
-		41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInboxControllerTest.m; sourceTree = "<group>"; };
 		41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAccountInterstitialViewController.h; sourceTree = "<group>"; };
 		41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAccountInterstitialViewController.m; sourceTree = "<group>"; };
 		41DA1DB716CC8B4D0017F71F /* CTLInboxInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInboxInterstitialViewController.h; sourceTree = "<group>"; };
@@ -586,8 +579,6 @@
 		41FEEE4916AFC80E00094A70 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		41FEEE4B16AFC80F00094A70 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		41FEEE5016AFD13700094A70 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
-		41FEEE5D16AFD3F600094A70 /* CTLAddressBookTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAddressBookTest.h; sourceTree = "<group>"; };
-		41FEEE5E16AFD3F600094A70 /* CTLAddressBookTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAddressBookTest.m; sourceTree = "<group>"; };
 		83EB272F170B0B4D00EBB3D3 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
 		83EB2730170B0B4D00EBB3D3 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
 		83EB2731170B0B4D00EBB3D3 /* AppiraterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppiraterDelegate.h; sourceTree = "<group>"; };
@@ -918,12 +909,6 @@
 			isa = PBXGroup;
 			children = (
 				417DC26816ADF1140073199D /* Supporting Files */,
-				41DA1DA616CB13F40017F71F /* CTLInboxControllerTest.h */,
-				41DA1DA716CB13F40017F71F /* CTLInboxControllerTest.m */,
-				41FEEE5D16AFD3F600094A70 /* CTLAddressBookTest.h */,
-				41FEEE5E16AFD3F600094A70 /* CTLAddressBookTest.m */,
-				41848DD416B05C9C004BFE30 /* CTLABGroupTest.h */,
-				41848DD516B05C9C004BFE30 /* CTLABGroupTest.m */,
 			);
 			path = ClientelleTests;
 			sourceTree = "<group>";
@@ -1555,8 +1540,6 @@
 				41E9BA2316B457E800FEF1FE /* CTLAccountViewController.m in Sources */,
 				41E9BA2416B457E800FEF1FE /* CTLInboxViewController.m in Sources */,
 				41E9BA2516B457E800FEF1FE /* CTLSettingsViewController.m in Sources */,
-				41FEEE5F16AFD3F600094A70 /* CTLAddressBookTest.m in Sources */,
-				41848DD616B05C9C004BFE30 /* CTLABGroupTest.m in Sources */,
 				41B546D116B39A9F00302652 /* CTLContactCell.m in Sources */,
 				41B546D916B39BC500302652 /* CTLContactHeaderView.m in Sources */,
 				41B546DA16B39BC500302652 /* CTLContactToolbarView.m in Sources */,
@@ -1566,7 +1549,6 @@
 				41B546EB16B39C2600302652 /* CTLAppointmentFormViewController.m in Sources */,
 				41B5473016B4556500302652 /* CTLFieldCell.m in Sources */,
 				4130654016C14A980063AC10 /* CTLRegisterViewController.m in Sources */,
-				41DA1DA816CB13F40017F71F /* CTLInboxControllerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

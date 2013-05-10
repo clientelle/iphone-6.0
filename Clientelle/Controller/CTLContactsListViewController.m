@@ -696,27 +696,27 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (NSString *)generatePersonName:(CTLCDContact *)person
 {
-    NSString *compositeName = @"";
+    NSMutableString *compositeName = [NSMutableString stringWithString:@""];
     
     if([_sortPickerView selectedRowInComponent:0] == 2){
         if([person.lastName length] > 0){
-            compositeName = [compositeName stringByAppendingString:person.lastName];
+            [compositeName appendString:person.lastName];
         }
         
         if([person.firstName length] > 0){
             if([person.lastName length] > 0){
-                compositeName = [compositeName stringByAppendingFormat:@", %@", person.firstName];
+                [compositeName appendFormat:@", %@", person.firstName];
             }else{
-                compositeName = [compositeName stringByAppendingFormat:@" %@", person.firstName];
+                [compositeName appendFormat:@" %@", person.firstName];
             }
         }
     }else{
         if([person.firstName length] > 0){
-            compositeName = [compositeName stringByAppendingString:person.firstName];
+            [compositeName appendString:person.firstName];
         }
         
         if([person.lastName length] > 0){
-            compositeName = [compositeName stringByAppendingFormat:@" %@", person.lastName];
+            [compositeName appendFormat:@" %@", person.lastName];
         }
     }
     
