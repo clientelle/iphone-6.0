@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class CTLABGroup;
-
 @interface CTLContactImportViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>{
     NSArray *_contacts;
     NSMutableArray *_filteredContacts;

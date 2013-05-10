@@ -106,9 +106,9 @@ int const CTLAddContactActionSheetTag = 424;
 - (void)loadAllContacts
 {
     _filteredContacts = [NSMutableArray array];
-    [self setupFetchedResultsController];
     
-    if([[self.fetchedResultsController fetchedObjects] count] > 0){
+    
+    if([CTLCDContact countOfEntities] > 0){
         
         [self buildSearchBar];
        
@@ -116,23 +116,20 @@ int const CTLAddContactActionSheetTag = 424;
         NSString *field = _sortArray[row][@"field"];
         BOOL asc = [_sortArray[row][@"asc"] boolValue];
         
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:field ascending:asc];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
         
-        [[self.fetchedResultsController fetchedObjects] sortedArrayUsingDescriptors:sortDescriptors];
-     
+        //NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:field ascending:asc];
+        //NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        
+        self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:field ascending:asc withPredicate:nil groupBy:nil delegate:self];
+        [self.fetchedResultsController performFetch:nil];
+        //[[self.fetchedResultsController fetchedObjects] sortedArrayUsingDescriptors:sortDescriptors];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView setContentOffset:CGPointMake(0.0f, CGRectGetHeight(self.searchBar.bounds))];
         });
     }
     
     [self.tableView reloadData];
-}
-
-- (void)setupFetchedResultsController
-{
-    self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:@"lastAccessed" ascending:YES withPredicate:nil groupBy:nil delegate:self];
-    [self.fetchedResultsController performFetch:nil];
 }
 
 #pragma mark NSFetchResultsControllerDelegate
@@ -265,16 +262,11 @@ int const CTLAddContactActionSheetTag = 424;
 - (void)rightTitlebarWithEditContactButton
 {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"40-forward"] style:UIBarButtonItemStyleDone target:self action:@selector(editContact:)];
-    
-    //[self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStyleDone];
-    
-    //[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"14-gear"] style:UIBarButtonItemStyleDone target:self action:@selector(editContact:)];
 }
 
 - (void)rightTitlebarWithAddContactButton
 {
-    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus"] style:UIBarButtonItemStylePlain target:self action:@selector(displayAddContactActionSheet:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(displayAddContactActionSheet:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus"] style:UIBarButtonItemStylePlain target:self action:@selector(displayAddContactActionSheet:)];
 }
 
 - (void)rightTitlebarWithDoneButton
@@ -293,20 +285,12 @@ int const CTLAddContactActionSheetTag = 424;
     [self hideSortPicker];
 }
 
-
 - (IBAction)dismissSortPickerFromTap:(UITapGestureRecognizer *)recognizer
 {
     [self hideSortPicker];
 }
 
-- (CTLABGroup *)selectedGroup
-{
-    NSInteger selectedRow = [_sortPickerView selectedRowInComponent:0];
-    CTLABGroup *selectedGroup = [_sortArray objectAtIndex:selectedRow];
-    return selectedGroup;
-}
-
-#pragma mark - Group Picker Delegate
+#pragma mark - Sort Picker Delegate
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
 	return 1;
@@ -355,25 +339,6 @@ int const CTLAddContactActionSheetTag = 424;
 }
 
 #pragma mark - Prompt Delegate Methods
-
-- (void)displayAddGroupPrompt:(id)sender
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"CREATE_NEW_GROUP", nil)
-                                                        message:nil
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                              otherButtonTitles:NSLocalizedString(@"CREATE", nil), nil];
-    
-    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    
-    UITextField *textField = [alertView textFieldAtIndex:0];
-    textField.placeholder = NSLocalizedString(@"ENTER_GROUP_NAME", nil);
-    textField.clearButtonMode = YES;
-    textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-    textField.autocorrectionType = UITextAutocorrectionTypeYes;
-    
-    [alertView show];
-}
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
