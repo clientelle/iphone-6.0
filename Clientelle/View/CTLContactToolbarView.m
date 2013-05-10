@@ -17,10 +17,16 @@ CGFloat const CTLContactModeToolbarViewHeight = 70;
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        
         [self setBackgroundColor:[UIColor clearColor]];
         self.appointmentButton = [self createButton:@"11-clock" withIndex:0];
         self.callButton = [self createButton:@"75-phone" withIndex:1];
         self.smsButton = [self createButton:@"09-chat-2" withIndex:2];
+        
+        [self.appointmentButton addTarget:self.delegate action:@selector(showAppointmentScheduler:) forControlEvents:UIControlEventTouchUpInside];
+        [self.emailButton addTarget:self.delegate action:@selector(showEmailForPerson:) forControlEvents:UIControlEventTouchUpInside];
+        [self.callButton addTarget:self.delegate action:@selector(showDialPerson:) forControlEvents:UIControlEventTouchUpInside];
+        [self.smsButton addTarget:self.delegate action:@selector(showSMSForPerson:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }

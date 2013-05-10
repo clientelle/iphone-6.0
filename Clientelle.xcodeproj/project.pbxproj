@@ -154,7 +154,7 @@
 		41B546D116B39A9F00302652 /* CTLContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546D016B39A9F00302652 /* CTLContactCell.m */; };
 		41B546D916B39BC500302652 /* CTLContactHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546D316B39BC500302652 /* CTLContactHeaderView.m */; };
 		41B546DA16B39BC500302652 /* CTLContactToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546D516B39BC500302652 /* CTLContactToolbarView.m */; };
-		41B546E716B39C2600302652 /* CTLContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546DE16B39C2300302652 /* CTLContactViewController.m */; };
+		41B546E716B39C2600302652 /* CTLContactDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546DE16B39C2300302652 /* CTLContactDetailsViewController.m */; };
 		41B546E816B39C2600302652 /* CTLContactImportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E016B39C2400302652 /* CTLContactImportViewController.m */; };
 		41B546E916B39C2600302652 /* CTLContactFormEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */; };
 		41B546EB16B39C2600302652 /* CTLAppointmentFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E616B39C2500302652 /* CTLAppointmentFormViewController.m */; };
@@ -234,7 +234,7 @@
 		41E9BA2416B457E800FEF1FE /* CTLInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83616AF9D9B00F2F8B3 /* CTLInboxViewController.m */; };
 		41E9BA2516B457E800FEF1FE /* CTLSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */; };
 		41E9BA2716B4580D00FEF1FE /* CTLFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B5472F16B4556500302652 /* CTLFieldCell.m */; };
-		41E9BA2816B4580D00FEF1FE /* CTLContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546DE16B39C2300302652 /* CTLContactViewController.m */; };
+		41E9BA2816B4580D00FEF1FE /* CTLContactDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546DE16B39C2300302652 /* CTLContactDetailsViewController.m */; };
 		41E9BA2916B4580D00FEF1FE /* CTLContactImportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E016B39C2400302652 /* CTLContactImportViewController.m */; };
 		41E9BA2A16B4580D00FEF1FE /* CTLContactFormEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */; };
 		41E9BA2C16B4580D00FEF1FE /* CTLAppointmentFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B546E616B39C2500302652 /* CTLAppointmentFormViewController.m */; };
@@ -496,8 +496,8 @@
 		41B546D316B39BC500302652 /* CTLContactHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactHeaderView.m; sourceTree = "<group>"; };
 		41B546D416B39BC500302652 /* CTLContactToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactToolbarView.h; sourceTree = "<group>"; };
 		41B546D516B39BC500302652 /* CTLContactToolbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactToolbarView.m; sourceTree = "<group>"; };
-		41B546DD16B39C2300302652 /* CTLContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactViewController.h; sourceTree = "<group>"; };
-		41B546DE16B39C2300302652 /* CTLContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactViewController.m; sourceTree = "<group>"; };
+		41B546DD16B39C2300302652 /* CTLContactDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactDetailsViewController.h; sourceTree = "<group>"; };
+		41B546DE16B39C2300302652 /* CTLContactDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactDetailsViewController.m; sourceTree = "<group>"; };
 		41B546DF16B39C2300302652 /* CTLContactImportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactImportViewController.h; sourceTree = "<group>"; };
 		41B546E016B39C2400302652 /* CTLContactImportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactImportViewController.m; sourceTree = "<group>"; };
 		41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactFormEditorViewController.h; sourceTree = "<group>"; };
@@ -955,12 +955,12 @@
 				416DD83416AF9C2D00F2F8B3 /* SliderMenu */,
 				41E56D231725FE75004B3CEB /* CTLContactsListViewController.h */,
 				41D791611737EAF600FCA232 /* CTLContactsListViewController.m */,
-				41B546DF16B39C2300302652 /* CTLContactImportViewController.h */,
-				41B546E016B39C2400302652 /* CTLContactImportViewController.m */,
-				41B546DD16B39C2300302652 /* CTLContactViewController.h */,
-				41B546DE16B39C2300302652 /* CTLContactViewController.m */,
+				41B546DD16B39C2300302652 /* CTLContactDetailsViewController.h */,
+				41B546DE16B39C2300302652 /* CTLContactDetailsViewController.m */,
 				41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */,
 				41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */,
+				41B546DF16B39C2300302652 /* CTLContactImportViewController.h */,
+				41B546E016B39C2400302652 /* CTLContactImportViewController.m */,
 				41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */,
 				41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */,
 				416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */,
@@ -1428,7 +1428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41E9BA2716B4580D00FEF1FE /* CTLFieldCell.m in Sources */,
-				41E9BA2816B4580D00FEF1FE /* CTLContactViewController.m in Sources */,
+				41E9BA2816B4580D00FEF1FE /* CTLContactDetailsViewController.m in Sources */,
 				41E9BA2916B4580D00FEF1FE /* CTLContactImportViewController.m in Sources */,
 				41E9BA2A16B4580D00FEF1FE /* CTLContactFormEditorViewController.m in Sources */,
 				41E9BA2C16B4580D00FEF1FE /* CTLAppointmentFormViewController.m in Sources */,
@@ -1560,7 +1560,7 @@
 				41B546D116B39A9F00302652 /* CTLContactCell.m in Sources */,
 				41B546D916B39BC500302652 /* CTLContactHeaderView.m in Sources */,
 				41B546DA16B39BC500302652 /* CTLContactToolbarView.m in Sources */,
-				41B546E716B39C2600302652 /* CTLContactViewController.m in Sources */,
+				41B546E716B39C2600302652 /* CTLContactDetailsViewController.m in Sources */,
 				41B546E816B39C2600302652 /* CTLContactImportViewController.m in Sources */,
 				41B546E916B39C2600302652 /* CTLContactFormEditorViewController.m in Sources */,
 				41B546EB16B39C2600302652 /* CTLAppointmentFormViewController.m in Sources */,

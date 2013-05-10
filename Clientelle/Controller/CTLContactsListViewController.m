@@ -7,13 +7,12 @@
 #import "CTLSlideMenuController.h"
 
 #import "CTLContactsListViewController.h"
-#import "CTLContactViewController.h"
+#import "CTLContactDetailsViewController.h"
 #import "CTLContactImportViewController.h"
 #import "CTLAppointmentFormViewController.h"
 
 #import "CTLContactCell.h"
-#import "CTLContactHeaderView.h"
-#import "CTLContactToolbarView.h"
+
 
 #import "CTLABPerson.h"
 #import "CTLCDContact.h"
@@ -422,7 +421,7 @@ int const CTLAddContactActionSheetTag = 424;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:CTLContactFormSegueIdentifier]) {
-        CTLContactViewController *contactFormViewController = [segue destinationViewController];
+        CTLContactDetailsViewController *contactFormViewController = [segue destinationViewController];
         if(_selectedPerson){
             [contactFormViewController setContact:_selectedPerson];
         }
@@ -448,14 +447,9 @@ int const CTLAddContactActionSheetTag = 424;
     
     CGRect headerFrame = CGRectMake(0, -CTLContactViewHeaderHeight - shadowOffset, viewSize.width, CTLContactViewHeaderHeight);
     self.contactHeader = [[CTLContactHeaderView alloc] initWithFrame:headerFrame];
-    [self.contactHeader.editButton addTarget:self action:@selector(editContact:) forControlEvents:UIControlEventTouchUpInside];
     
     CGRect toolbarFrame = CGRectMake(0, viewSize.height + CTLContactModeToolbarViewHeight + shadowOffset, viewSize.width, CTLContactModeToolbarViewHeight);
     self.contactToolbar = [[CTLContactToolbarView alloc] initWithFrame:toolbarFrame];
-    [self.contactToolbar.appointmentButton addTarget:self action:@selector(showAppointmentScheduler:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contactToolbar.emailButton addTarget:self action:@selector(showEmailForPerson:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contactToolbar.callButton addTarget:self action:@selector(showDialPerson:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contactToolbar.smsButton addTarget:self action:@selector(showSMSForPerson:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.contactHeader];
     [self.view addSubview:self.contactToolbar];
@@ -516,10 +510,12 @@ int const CTLAddContactActionSheetTag = 424;
     return emptyView;
 }
 
-- (void)enterContactMode
+- (void)enterContactMode:(CTLCDContact *)contact
 {
+    _selectedPerson = contact;
     [self rightTitlebarWithEditContactButton];
-    [self.contactHeader populateViewData:_selectedPerson];
+    [self populateViewData:self.contactHeader withContact:contact];
+    [self configureForContact:self.contactToolbar withContact:contact];
     
     if(_inContactMode){
         return;
@@ -537,6 +533,29 @@ int const CTLAddContactActionSheetTag = 424;
         self.contactHeader.frame = headerFrame;
         self.contactToolbar.frame = toolbarFrame;
     }];
+}
+
+- (void)populateViewData:(CTLContactHeaderView *)headerView withContact:(CTLCDContact *)contact
+{
+    headerView.delegate = self;
+    [headerView reset];
+    headerView.nameLabel.text = contact.compositeName;
+    headerView.phoneLabel.text = [contact displayContactStr];
+    
+    if(contact.picture){
+        headerView.pictureView.image = [[UIImage alloc] initWithData:contact.picture];
+    }else{
+        headerView.pictureView.image = [UIImage imageNamed:@"default-pic"];
+    }
+    
+    [UILabel autoWidth:headerView.nameLabel];
+    [UILabel autoWidth:headerView.phoneLabel];
+    
+}
+
+- (void)configureForContact:(CTLContactToolbarView *)toolbar withContact:(CTLCDContact *)contact
+{
+    toolbar.delegate = self;
 }
 
 - (void)exitContactMode:(NSNotification *)notification
@@ -628,7 +647,7 @@ int const CTLAddContactActionSheetTag = 424;
     }
      
     cell.nameLabel.text = [self generatePersonName:person];
-    cell.detailsLabel.text = [self generateContactString:person];
+    cell.detailsLabel.text = [person displayContactStr];
         
     if(person.lastAccessed){
         cell.timestampLabel.text = [self generateDateStamp:person.lastAccessed];
@@ -701,27 +720,13 @@ int const CTLAddContactActionSheetTag = 424;
     }
 
     _selectedIndexPath = indexPath;
-    [self enterContactMode];
+    [self enterContactMode:_selectedPerson];
 }
 
 - (void)deleteContact:(CTLCDContact *)contact
 {
     [contact MR_deleteEntity];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-    //[self loadAllContacts];
-    
-}
-
-- (NSString *)generateContactString:(CTLCDContact *)person
-{
-    NSString *contactStr = @"";
-    
-    if([[person phone] length] > 0){
-        contactStr = person.phone;
-    }else if([[person email] length] > 0){
-        contactStr = person.email;
-    }
-    return contactStr;
 }
 
 - (NSString *)generatePersonName:(CTLCDContact *)person
@@ -782,12 +787,14 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)showSMSForPerson:(id)sender
 {
-    NSString *cleanNumber = [NSString cleanPhoneNumber:[_selectedPerson phone]];
-    NSString *phoneToCall = [NSString stringWithFormat:@"sms: %@", cleanNumber];
-    NSString *phoneToCallEncoded = [phoneToCall stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-    NSURL *smsURL = [[NSURL alloc] initWithString:phoneToCallEncoded];
-    [[UIApplication sharedApplication] openURL:smsURL];
-    [self updateContactTimestampInPlace];
+    if(_selectedPerson.mobile){
+        NSString *cleanNumber = [NSString cleanPhoneNumber:_selectedPerson.mobile];
+        NSString *phoneToCall = [NSString stringWithFormat:@"sms: %@", cleanNumber];
+        NSString *phoneToCallEncoded = [phoneToCall stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+        NSURL *smsURL = [[NSURL alloc] initWithString:phoneToCallEncoded];
+        [[UIApplication sharedApplication] openURL:smsURL];
+        [self updateContactTimestampInPlace];
+    }
 }
 
 #pragma mark - Updating Timestamp for Contact Row
@@ -925,7 +932,7 @@ int const CTLAddContactActionSheetTag = 424;
         _selectedPerson = notification.object;
         _shouldReorderListOnScroll = YES;
         [self loadAllContacts];
-        [self enterContactMode];
+        [self enterContactMode:notification.object];
     }
 }
 
@@ -935,7 +942,7 @@ int const CTLAddContactActionSheetTag = 424;
         _selectedPerson = notification.object;
         _shouldReorderListOnScroll = YES;
         [self loadAllContacts];
-        [self.contactHeader populateViewData:_selectedPerson];
+        [self populateViewData:self.contactHeader withContact:_selectedPerson];
     }
 }
 
@@ -955,8 +962,6 @@ int const CTLAddContactActionSheetTag = 424;
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-
 
 - (void)registerNotificationsObservers
 {

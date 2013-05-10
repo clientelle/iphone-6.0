@@ -23,7 +23,7 @@
     BOOL _hasCalendarAccess;
     BOOL _hasAddress;
     BOOL _isNewAppointment;
-    ABAddressBookRef _addressBookRef;
+    BOOL _titleIsDefault;
 }
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;

@@ -44,11 +44,10 @@ e†
 "GO_TO_SETTINGS_CALENDARS" = "Settings > Privacy > Calendars";
 
 /* TOOLTIPS */
-"PRIVATE_TOOLTIP" = "Private contacts do not appear in your address book.";
-"EDIT_FORM_TOOLTIP" = "Tap on a row to hide/show the field in the contact form.";
+"EDIT_FORM_TOOLTIP" = "Tap on a row to hide or show the field in the contact form.";
+"SORT_TOOTLIP" = "Sort contacts by tapping above";
 
 /* SORT CONTACTS */
-"SORT_TOOTLIP" = "Sort contacts by tapping above";
 "SORT_BY" = "Sort by";
 "ACTIVITY" = "Most Active";
 "FIRST_NAME" = "First name";
@@ -84,7 +83,7 @@ e†
 "CONTACT_LABEL_firstName" = "First Name";
 "CONTACT_LABEL_lastName" = "Last Name";
 "CONTACT_LABEL_nickName" = "Nick Name";
-"CONTACT_LABEL_mobilePhone" = "Mobile Phone";
+"CONTACT_LABEL_mobile" = "Mobile";
 "CONTACT_LABEL_phone" = "Phone";
 "CONTACT_LABEL_email" = "Email";
 "CONTACT_LABEL_jobTitle" = "Title";
@@ -96,7 +95,7 @@ e†
 "CONTACT_PLACEHOLDER_firstName" = "First Name";
 "CONTACT_PLACEHOLDER_lastName" = "Last Name";
 "CONTACT_PLACEHOLDER_nickName" = "Nick Name";
-"CONTACT_PLACEHOLDER_mobilePhone" = "Mobile Phone";
+"CONTACT_PLACEHOLDER_mobile" = "Mobile";
 "CONTACT_PLACEHOLDER_phone" = "Phone";
 "CONTACT_PLACEHOLDER_email" = "Email";
 "CONTACT_PLACEHOLDER_jobTitle" = "Title";
@@ -104,16 +103,6 @@ e†
 "CONTACT_PLACEHOLDER_note" = "Notes";
 "CONTACT_PLACEHOLDER_address" = "Street Address";
 "CONTACT_PLACEHOLDER_address2" = "City, State, Zip";
-
-
-"Street" = "Street";
-"City" = "City";
-"ZIP" = "ZIP Code";
-"State" = "State";
-
-/* DELETE CONTACT */
-"DELETE_CONTACT" = "Delete Contact";
-"REMOVE_FROM_GROUP" = "Remove from %@";
 
 
 /* Group Messaging */
@@ -169,7 +158,7 @@ e†
 "SET_APPOINTMENT" = "Set Appointment";
 "SCHEDULE_AN_APPOINTMENT" = "Schedule an Appointment";
 "EDIT_APPOINTMENT" = "Edit Appointment";
-"APPOINTMENT_DESCRIPTION" = "Appointment Description";
+"APPOINTMENT_TITLE" = "Appointment Title";
 
 "YOU_DO_NOT_HAVE_CONTACTS_YET" = "You do not have any contacts yet";
 

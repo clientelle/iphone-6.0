@@ -205,10 +205,10 @@
             </objects>
             <point key="canvasLocation" x="-1779" y="-684"/>
         </scene>
-        <!--Contact View Controller-->
+        <!--Contact Details View Controller-->
         <scene sceneID="rgf-da-57t">
             <objects>
-                <tableViewController id="UoD-9H-AyX" customClass="CTLContactViewController" sceneMemberID="viewController">
+                <tableViewController id="UoD-9H-AyX" customClass="CTLContactDetailsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="oK1-rL-5hz">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -323,7 +323,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="Dat-OO-kbW">
-                                <color key="backgroundColor" red="0.91764712329999998" green="0.91764712329999998" blue="0.91764712329999998" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="backgroundColor" red="0.80871941879999998" green="0.80420143320000004" blue="0.81323740430000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.80000007149999997" green="0.80000007149999997" blue="0.80000007149999997" alpha="1" colorSpace="deviceRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" showsReorderControl="YES" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fieldRow" textLabel="fvi-q2-uCb" style="IBUITableViewCellStyleDefault" id="HJu-O1-HnZ">
@@ -359,7 +359,7 @@
                                                 <action selector="enableReordering:" destination="uBe-ki-BBC" id="Dbv-OJ-pUN"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="AZD-Jd-UFv">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="AZD-Jd-UFv">
                                             <connections>
                                                 <action selector="save:" destination="uBe-ki-BBC" id="sUB-7y-FOk"/>
                                             </connections>
@@ -1986,6 +1986,18 @@
                 <relationship kind="outlet" name="timestampLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
+        <class className="CTLContactDetailsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactDetailsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dismissKeyboard:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="action" name="showAddFieldsModal:"/>
+                <relationship kind="action" name="submit:"/>
+                <relationship kind="action" name="textFieldDidChange:" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="editFormButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="saveContactButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
         <class className="CTLContactFormEditorViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactFormEditorViewController.h"/>
             <relationships>
@@ -2005,18 +2017,6 @@
                 <relationship kind="outlet" name="busyIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLContactViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissKeyboard:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="showAddFieldsModal:"/>
-                <relationship kind="action" name="submit:"/>
-                <relationship kind="action" name="textFieldDidChange:" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="editFormButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="saveContactButton" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
         <class className="CTLContactsListViewController" superclassName="UIViewController">

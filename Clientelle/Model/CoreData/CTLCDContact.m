@@ -20,8 +20,8 @@
         self.phone = person.phone;
     }
     
-    if(person.mobilePhone){
-        self.mobilePhone = person.mobilePhone;
+    if(person.mobile){
+        self.mobile = person.mobile;
     }
     
     if(person.email){
@@ -82,6 +82,25 @@
     }
     
     return compositeName;
+}
+
+- (NSString *)displayContactStr
+{
+    NSString *contactStr = @"";
+        
+    if([self.mobile length] > 0){
+        contactStr = self.mobile;
+    }else if([self.phone length] > 0){
+        contactStr = self.phone;
+    }else if([self.email length] > 0){
+        contactStr = self.email;
+    }else if([self.address length] >0){
+        contactStr = self.address;
+    }else if([self.organization length] >0){
+        contactStr = self.organization;
+    }
+    
+    return contactStr;
 }
 
 - (NSString *)cityStateZipFromAddressDict:(NSDictionary *)addressDict

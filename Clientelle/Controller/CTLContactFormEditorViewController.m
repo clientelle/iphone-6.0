@@ -19,14 +19,15 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.navBar.topItem.title = NSLocalizedString(@"EDIT_FORM", nil);
-    self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:206.0f green:206.0f blue:206.0f alpha:1.0f];
-    
+    [self.navBar.topItem setTitle:NSLocalizedString(@"EDIT_FORM", nil)];
     [self setupFetchedResultsController];
+    [self showTooltip];
     
-    _fields = [self.fetchedResultsController fetchedObjects];
-    
+    _hasChanges = NO;
+}
+
+- (void)showTooltip
+{
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_form_editor_tooltip_once"]){
         [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(displayTooltip:) userInfo:nil repeats:NO];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_form_editor_tooltip_once"];
@@ -48,6 +49,8 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 {
     self.fetchedResultsController = [CTLCDContactField fetchAllSortedBy:@"sortOrder" ascending:YES withPredicate:nil groupBy:nil delegate:self];
     [self.fetchedResultsController performFetch:nil];
+
+    _fields = [self.fetchedResultsController fetchedObjects];
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
@@ -159,6 +162,7 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    _hasChanges = YES;
     [self setFieldAtIndexPath:indexPath];
 }
 
@@ -235,9 +239,13 @@ NSString *const CTLFormFieldAddedNotification = @"fieldAdded";
 
 - (IBAction)save:(id)sender
 {
-    [[NSManagedObjectContext MR_contextForCurrentThread]  MR_saveToPersistentStoreAndWait];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_newMainQueueContext];
+    [context MR_saveToPersistentStoreAndWait];
     [[NSNotificationCenter defaultCenter] postNotificationName:CTLFormFieldAddedNotification object:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [context reset];
+    }];
 }
 
 - (IBAction)enableReordering:(UIBarButtonItem *)button

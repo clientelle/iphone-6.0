@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+#import "CTLContactHeaderView.h"
+#import "CTLContactToolbarView.h"
 
 extern NSString *const CTLContactsWereImportedNotification;
 extern NSString *const CTLTimestampForRowNotification;
@@ -18,11 +20,11 @@ extern NSString *const CTLContactFormSegueIdentifier;
 
 @class CTLCDContact;
 @class CTLContactToolbarView;
-@class CTLContactHeaderView;
+
 @class CTLPickerView;
 @class KBPopupBubbleView;
 
-@interface CTLContactsListViewController : UIViewController <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CTLSlideMenuDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>{
+@interface CTLContactsListViewController : UIViewController <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CTLSlideMenuDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, CTLContactHeaderDelegate, CTLContactToolbarDelegate>{
     
     NSIndexPath *_selectedIndexPath;
     CTLCDContact *_selectedPerson;

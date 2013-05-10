@@ -11,7 +11,7 @@ const struct CTLCDContactAttributes CTLCDContactAttributes = {
 	.jobTitle = @"jobTitle",
 	.lastAccessed = @"lastAccessed",
 	.lastName = @"lastName",
-	.mobilePhone = @"mobilePhone",
+	.mobile = @"mobile",
 	.nickName = @"nickName",
 	.note = @"note",
 	.organization = @"organization",
@@ -113,7 +113,7 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 
 
 
-@dynamic mobilePhone;
+@dynamic mobile;
 
 
 

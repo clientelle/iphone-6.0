@@ -10,6 +10,7 @@ extern NSString *const CTLFormFieldAddedNotification;
 
 @interface CTLContactFormEditorViewController : UIViewController<NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource>{
     NSArray *_fields;
+    BOOL _hasChanges;
 }
 
 @property (nonatomic, weak) IBOutlet UINavigationBar *navBar;

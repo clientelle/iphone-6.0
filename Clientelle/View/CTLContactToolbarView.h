@@ -8,7 +8,16 @@
 
 extern CGFloat const CTLContactModeToolbarViewHeight;
 
+@class CTLCDContact;
+@class CTLContactToolbarView;
+
+@protocol CTLContactToolbarDelegate
+- (void)configureForContact:(UIView *)toolbar withContact:(CTLCDContact *)contact;
+@end
+
 @interface CTLContactToolbarView : UIView
+
+@property (nonatomic, assign) id<CTLContactToolbarDelegate>delegate;
 
 @property(nonatomic, weak) UIButton *appointmentButton;
 @property(nonatomic, weak) UIButton *emailButton;

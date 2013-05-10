@@ -8,5 +8,6 @@
 - (void)createFromABPerson:(CTLABPerson *)person;
 
 - (NSString *)compositeName;
+- (NSString *)displayContactStr;
 
 @end

@@ -13,7 +13,6 @@ extern const struct CTLCDAppointmentAttributes {
 	__unsafe_unretained NSString *fee;
 	__unsafe_unretained NSString *notes;
 	__unsafe_unretained NSString *paid;
-	__unsafe_unretained NSString *private;
 	__unsafe_unretained NSString *startDate;
 	__unsafe_unretained NSString *title;
 } CTLCDAppointmentAttributes;
@@ -26,7 +25,6 @@ extern const struct CTLCDAppointmentFetchedProperties {
 } CTLCDAppointmentFetchedProperties;
 
 @class CTLCDContact;
-
 
 
 
@@ -123,18 +121,6 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* private;
-
-
-@property BOOL privateValue;
-- (BOOL)privateValue;
-- (void)setPrivateValue:(BOOL)value_;
-
-//- (BOOL)validatePrivate:(id*)value_ error:(NSError**)error_;
-
-
-
-
 @property (nonatomic, strong) NSDate* startDate;
 
 
@@ -219,15 +205,6 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 - (BOOL)primitivePaidValue;
 - (void)setPrimitivePaidValue:(BOOL)value_;
-
-
-
-
-- (NSNumber*)primitivePrivate;
-- (void)setPrimitivePrivate:(NSNumber*)value;
-
-- (BOOL)primitivePrivateValue;
-- (void)setPrimitivePrivateValue:(BOOL)value_;
 
 
 

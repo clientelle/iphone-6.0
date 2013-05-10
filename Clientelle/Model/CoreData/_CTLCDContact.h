@@ -12,7 +12,7 @@ extern const struct CTLCDContactAttributes {
 	__unsafe_unretained NSString *jobTitle;
 	__unsafe_unretained NSString *lastAccessed;
 	__unsafe_unretained NSString *lastName;
-	__unsafe_unretained NSString *mobilePhone;
+	__unsafe_unretained NSString *mobile;
 	__unsafe_unretained NSString *nickName;
 	__unsafe_unretained NSString *note;
 	__unsafe_unretained NSString *organization;
@@ -113,10 +113,10 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* mobilePhone;
+@property (nonatomic, strong) NSString* mobile;
 
 
-//- (BOOL)validateMobilePhone:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateMobile:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -238,8 +238,8 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
-- (NSString*)primitiveMobilePhone;
-- (void)setPrimitiveMobilePhone:(NSString*)value;
+- (NSString*)primitiveMobile;
+- (void)setPrimitiveMobile:(NSString*)value;
 
 
 

@@ -12,7 +12,6 @@ const struct CTLCDAppointmentAttributes CTLCDAppointmentAttributes = {
 	.fee = @"fee",
 	.notes = @"notes",
 	.paid = @"paid",
-	.private = @"private",
 	.startDate = @"startDate",
 	.title = @"title",
 };
@@ -56,10 +55,6 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 	}
 	if ([key isEqualToString:@"paidValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"paid"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"privateValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"private"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 
@@ -157,32 +152,6 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 
 - (void)setPrimitivePaidValue:(BOOL)value_ {
 	[self setPrimitivePaid:[NSNumber numberWithBool:value_]];
-}
-
-
-
-
-
-@dynamic private;
-
-
-
-- (BOOL)privateValue {
-	NSNumber *result = [self private];
-	return [result boolValue];
-}
-
-- (void)setPrivateValue:(BOOL)value_ {
-	[self setPrivate:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitivePrivateValue {
-	NSNumber *result = [self primitivePrivate];
-	return [result boolValue];
-}
-
-- (void)setPrimitivePrivateValue:(BOOL)value_ {
-	[self setPrimitivePrivate:[NSNumber numberWithBool:value_]];
 }
 
 

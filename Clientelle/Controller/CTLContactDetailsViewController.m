@@ -1,5 +1,5 @@
 //
-//  CTLContactFormViewController.m
+//  CTLContactDetailsViewController.m
 //  Clientelle
 //
 //  Created by Kevin Liu on 6/24/12.
@@ -14,7 +14,7 @@
 #import "CTLContactImportViewController.h"
 #import "CTLContactFormEditorViewController.h"
 
-#import "CTLContactViewController.h"
+#import "CTLContactDetailsViewController.h"
 #import "CTLFieldCell.h"
 #import "CTLABPerson.h"
 #import "CTLCDContact.h"
@@ -22,26 +22,26 @@
 
 NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
-@implementation CTLContactViewController
+@implementation CTLContactDetailsViewController
 
 #pragma mark
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    if(self.contact == nil){
-        _isNewContact = YES;
-        self.navigationItem.title = NSLocalizedString(@"ADD_CONTACT", nil);
-        self.contact = [CTLCDContact MR_createEntity];
-        [self buildContactForm];
-    }else{
-        _isNewContact = NO;
-        self.navigationItem.title = NSLocalizedString(@"EDIT_CONTACT", nil);
-        [self buildContactForm];
-        [self populateContactForm];
+    
+    if([CTLCDContactField countOfEntities] == 0){
+        [CTLCDContactField createFields];
     }
-
+    
+    [self buildContactForm];
+    
+    if(self.contact == nil){
+        self.navigationItem.title = NSLocalizedString(@"ADD_CONTACT", nil);
+    }else{
+        self.navigationItem.title = NSLocalizedString(@"EDIT_CONTACT", nil);
+    }
+ 
     [self registerNotificationObservers];
     
     // Configure tableView
@@ -49,71 +49,56 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)]];
 }
 
--(void)viewWillDisappear:(BOOL)animated {
-    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
-        /*
-         * When user taps "back" before creating new contact,
-         * destroy the temporary contact so it doesn't get created
-         */
-        if(!self.contact.lastAccessed){
-            [self.contact deleteEntity];
-        }
-    }
-
-    [super viewWillDisappear:animated];
-}
-
 - (void)buildContactForm
 {
-    _fields = [NSMutableArray array];
-    _textFieldsDict = [NSMutableDictionary dictionary];
-    
-    NSArray *fieldsArray = [CTLCDContactField fetchSortedFields];
-    
-    if([fieldsArray count] == 0){
-        fieldsArray = [CTLCDContactField generateFieldsFromSchema:[self.contact entity]];
-    }
-    
-    NSMutableIndexSet *enabledIndexes = [[NSMutableIndexSet alloc] init];
-    NSArray *fieldKeys = [[[fieldsArray[0] entity] attributesByName] allKeys];
+    _formValues = [NSMutableDictionary dictionary];
+    _enabledFields = [NSMutableArray array];
+    _fields = [CTLCDContactField fetchAllFields];
      
-    for(NSUInteger i=0; i < [fieldsArray count]; i++){
-        CTLCDContactField *row = fieldsArray[i];
-        NSMutableDictionary *inputField = [[row dictionaryWithValuesForKeys:fieldKeys] mutableCopy];
-        
-        NSString *placeholder = [NSString stringWithFormat:@"CONTACT_PLACEHOLDER_%@", row.field];
-        [inputField setValue:NSLocalizedString(placeholder, nil) forKey:kCTLFieldPlaceholder];
-        
-        [_fields addObject:inputField];
-        
-        if([[row valueForKey:kCTLFieldEnabled] isEqualToNumber:[NSNumber numberWithBool:YES]]){
-            [enabledIndexes addIndex:i];
-        }
-    }
-    
-    _enabledFields = [[_fields objectsAtIndexes:enabledIndexes] mutableCopy];
-
-}
-
-- (void)populateContactForm
-{
-    for(NSUInteger i=0; i < [_enabledFields count]; i++){
-        NSMutableDictionary *inputField = [_enabledFields[i] mutableCopy];
-        NSString *value = [[self.contact valueForKey:_enabledFields[i][kCTLFieldName]] description];
-
-        if([[inputField valueForKey:kCTLFieldEnabled] isEqualToNumber:[NSNumber numberWithBool:YES]]){
+    for(NSUInteger i=0; i < [_fields count]; i++){
+        CTLCDContactField *field = _fields[i];
+        NSMutableDictionary *fieldDict = [self createField:field];
+        [_formValues setValue:@"" forKey:field.field];
+        if(self.contact){
+            NSString *value = [[self.contact valueForKey:field.field] description];
             if(value){
-                [inputField setValue:value forKey:kCTLFieldValue];
-                _enabledFields[i] = inputField;
+                [_formValues setValue:value forKey:field.field];
+                [fieldDict setValue:value forKey:kCTLFieldValue];
             }
         }
+        
+        if(field.enabledValue){
+            [_enabledFields addObject:fieldDict];
+        }
     }
 }
 
-- (void)reloadFormViewAfterAddressBookChange
+- (void)reloadContactForm
 {
-    [self buildContactForm];
-    [self.tableView reloadData];
+    _enabledFields = [NSMutableArray array];
+    for(NSUInteger i=0; i < [_fields count]; i++){
+        CTLCDContactField *field = _fields[i];
+        NSMutableDictionary *fieldDict = [self createField:field];
+        [fieldDict setValue:_formValues[field.field] forKey:kCTLFieldValue];
+        if(field.enabledValue){
+            [_enabledFields addObject:fieldDict];
+        }
+    }
+}
+
+- (NSMutableDictionary *)createField:(CTLCDContactField *)field
+{
+    static NSArray *properties = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        properties = [[[field entity] attributesByName] allKeys];
+    });
+    
+    NSMutableDictionary *fieldDict = [[field dictionaryWithValuesForKeys:properties] mutableCopy];
+    NSString *placeholder = [NSString stringWithFormat:@"CONTACT_PLACEHOLDER_%@", field.field];
+    [fieldDict setValue:NSLocalizedString(placeholder, nil) forKey:kCTLFieldPlaceholder];
+    [fieldDict setValue:@"" forKey:kCTLFieldValue];
+    return fieldDict;
 }
 
 #pragma mark - TableViewController Delegate Methods
@@ -151,21 +136,6 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
     cell.textInput.keyboardType = (UIKeyboardType)[field[kCTLFieldKeyboardType] intValue];
     cell.textInput.autocapitalizationType = (UITextAutocapitalizationType)[field[kCTLFieldAutoCapitalizeType] intValue];
     cell.textInput.autocorrectionType = (UITextAutocorrectionType)[field[kCTLFieldAutoCorrectionType] intValue];
-        
-//    UIKeyboardType keyboardType = (UIKeyboardType)[field[kCTLFieldKeyboardType] intValue];
-//    
-//    if(keyboardType != UIKeyboardTypeEmailAddress){
-//        cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeWords;
-//        cell.textInput.autocorrectionType = UITextAutocorrectionTypeYes;
-//    }
-//
-//    if([field[kCTLFieldName] isEqualToString:CTLPersonNoteProperty]){
-//        cell.textInput.autocapitalizationType = UITextAutocapitalizationTypeSentences;
-//    }
-//
-//    
-//    [cell.textInput setKeyboardType:keyboardType];
-    [_textFieldsDict setValue:cell.textInput forKey:field[kCTLFieldName]];
     
     return cell;
 }
@@ -177,10 +147,21 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (IBAction)submit:(id)sender
 {
+    __block BOOL isNew = NO;
+    
+    if(!self.contact){
+        isNew = YES;
+        self.contact = [CTLCDContact MR_createEntity];
+    }
+    
+    for(NSString *field in _formValues){
+        [self.contact setValue:_formValues[field] forKey:field];
+    }
+    
     self.contact.lastAccessed = [NSDate date];
     
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL result, NSError *error){
-        if(_isNewContact){
+        if(isNew){
             [[NSNotificationCenter defaultCenter] postNotificationName:CTLNewContactWasAddedNotification object:self.contact];
         }else{
             [[NSNotificationCenter defaultCenter] postNotificationName:CTLContactRowDidChangeNotification object:self.contact]; 
@@ -192,12 +173,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
 
 - (void)formDidChange:(NSNotification *)notification
 {
-    [self buildContactForm];
-    
-    if(self.contact){
-        [self populateContactForm];
-    }
-    
+    [self reloadContactForm];
     [self.tableView reloadData];
 }
 
@@ -214,7 +190,7 @@ NSString *const CTLContactFormEditorSegueIdentifyer = @"toContactFormEditor";
         textField.text = [NSString formatPhoneNumber:textField.text];
     }
     
-    [self.contact setValue:textField.text forKey:_enabledFields[textField.tag][kCTLFieldName]];
+    [_formValues setValue:textField.text forKey:_enabledFields[textField.tag][kCTLFieldName]];
     [_enabledFields[textField.tag] setValue:textField.text forKey:kCTLFieldValue];
 }
 

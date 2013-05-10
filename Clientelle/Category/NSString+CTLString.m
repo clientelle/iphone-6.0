@@ -12,13 +12,10 @@
 @implementation NSString (CTLString)
 
 + (NSString *)cleanPhoneNumber:(NSString *)phoneNumber {
-    static NSString *cleanPhoneNumber;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSError *error = nil;
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[-\\s\\(\\)]" options:NSRegularExpressionCaseInsensitive error:&error];
-        cleanPhoneNumber = [regex stringByReplacingMatchesInString:phoneNumber options:0 range:NSMakeRange(0, [phoneNumber length]) withTemplate:@""];
-    });
+    NSString *cleanPhoneNumber;
+    NSError *error = nil;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[-\\s\\(\\)]" options:NSRegularExpressionCaseInsensitive error:&error];
+    cleanPhoneNumber = [regex stringByReplacingMatchesInString:phoneNumber options:0 range:NSMakeRange(0, [phoneNumber length]) withTemplate:@""];
     return cleanPhoneNumber;
 }
 

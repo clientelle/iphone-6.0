@@ -18,7 +18,7 @@ NSString *const CTLPersonOrganizationProperty = @"organization";
 NSString *const CTLPersonJobTitleProperty = @"jobTitle";
 NSString *const CTLPersonEmailProperty = @"email";
 NSString *const CTLPersonPhoneProperty = @"phone";
-NSString *const CTLPersonMobilePhoneProperty = @"mobilePhone";
+NSString *const CTLPersonMobileProperty = @"mobile";
 NSString *const CTLPersonNoteProperty = @"note";
 NSString *const CTLPersonAddressProperty = @"address";
 NSString *const CTLPersonAddress2Property = @"address2";
@@ -172,25 +172,20 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
         
         if(phoneDict){
             self.phone = [NSString formatPhoneNumber:[phoneDict objectForKey:CTLFieldKey]];
-            //self.phoneLabel = [phoneDict objectForKey:CTLLabelKey];
         }
         
         NSDictionary *mobileDict = copyValueFromMultiValueWithLabelKey(phone, kABPersonPhoneMobileLabel);
         
         if(mobileDict){
             NSString *mobileNumber = [mobileDict objectForKey:CTLFieldKey];
-            self.mobilePhone = [NSString formatPhoneNumber:mobileNumber];
-            //self.mobilePhoneLabel = [mobileDict objectForKey:CTLLabelKey];
+            self.mobile = [NSString formatPhoneNumber:mobileNumber];
         }else{
             mobileDict = copyValueFromMultiValueWithLabelKey(phone, kABPersonPhoneIPhoneLabel);
             if(mobileDict){
-                self.mobilePhone = [NSString formatPhoneNumber:[mobileDict objectForKey:CTLFieldKey]];
-                //self.mobilePhoneLabel = [mobileDict objectForKey:CTLLabelKey];
+                self.mobile = [NSString formatPhoneNumber:[mobileDict objectForKey:CTLFieldKey]];
             }
         }        
 
-        
-        
         CFRelease(phone);
     }
     

@@ -29,31 +29,29 @@ NSString *const kCTLFieldAutoCorrectionType = @"autocorrectionType";
     return NSLocalizedString(placeholder, nil);
 }
 
-+ (NSArray *)fetchSortedFields
++ (NSArray *)fetchAllFields
 {
     return [CTLCDContactField MR_findAllSortedBy:kCTLFieldSortOrder ascending:YES withPredicate:nil];
 }
 
-+ (NSArray *)generateFieldsFromSchema:(NSEntityDescription *)entity
++ (NSArray *)createFields
 {
     //Default schema from Plist
     NSDictionary *fieldDefaults = [[NSDictionary alloc]initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ContactFormDefaults" ofType:@"plist"]];
-    NSDictionary *attributes = [entity attributesByName];
+
     NSMutableArray *tempArray = [NSMutableArray array];
-    for (NSString *key in attributes) {
-        if(fieldDefaults[key]){
-            NSDictionary *defaults = fieldDefaults[key];
-            CTLCDContactField *contactField = [CTLCDContactField MR_createEntity];
-            //Set defaults based on ContactFormDefaults pList
-            contactField.field = key;
-            contactField.enabled = [defaults valueForKey:kCTLFieldEnabled];
-            contactField.keyboardType = [defaults valueForKey:kCTLFieldKeyboardType];
-            contactField.autocapitalizationType = [defaults valueForKey:kCTLFieldAutoCapitalizeType];
-            contactField.autocorrectionType = [defaults valueForKey:kCTLFieldAutoCorrectionType];
-            contactField.sortOrder = [defaults valueForKey:kCTLFieldSortOrder];
-            //queue it up so we dont have to refetch
-            [tempArray addObject:contactField];
-        }
+    for (NSString *key in fieldDefaults) {
+        NSDictionary *defaults = fieldDefaults[key];
+        CTLCDContactField *contactField = [CTLCDContactField MR_createEntity];
+        //Set defaults based on ContactFormDefaults pList
+        contactField.field = key;
+        contactField.enabled = [defaults valueForKey:kCTLFieldEnabled];
+        contactField.keyboardType = [defaults valueForKey:kCTLFieldKeyboardType];
+        contactField.autocapitalizationType = [defaults valueForKey:kCTLFieldAutoCapitalizeType];
+        contactField.autocorrectionType = [defaults valueForKey:kCTLFieldAutoCorrectionType];
+        contactField.sortOrder = [defaults valueForKey:kCTLFieldSortOrder];
+        //queue it up so we dont have to refetch
+        [tempArray addObject:contactField];
     }
     
     NSManagedObjectContext *context = [NSManagedObjectContext MR_newMainQueueContext];

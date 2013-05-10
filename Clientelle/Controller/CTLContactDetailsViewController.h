@@ -1,5 +1,5 @@
 //
-//  CTLContactFormViewController.h
+//  CTLContactDetailsViewController.h
 //  Clientelle
 //
 //  Created by Kevin on 7/24/12.
@@ -8,11 +8,10 @@
 
 @class CTLCDContact;
 
-@interface CTLContactViewController : UITableViewController<UIActionSheetDelegate, UIGestureRecognizerDelegate>{
-    NSMutableArray *_fields;
+@interface CTLContactDetailsViewController : UITableViewController<UIActionSheetDelegate, UIGestureRecognizerDelegate>{
+    NSArray *_fields;
+    NSMutableDictionary *_formValues;
     NSMutableArray *_enabledFields;
-    NSDictionary *_textFieldsDict;
-    BOOL _isNewContact;
 }
 
 @property(nonatomic, strong) CTLCDContact *contact;

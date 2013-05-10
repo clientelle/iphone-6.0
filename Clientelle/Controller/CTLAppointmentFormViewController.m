@@ -17,7 +17,7 @@
 
 #import "CTLContactImportViewController.h"
 #import "CTLContactsListViewController.h"
-#import "CTLContactViewController.h"
+#import "CTLContactDetailsViewController.h"
 
 #import "CTLCDAppointment.h"
 #import "CTLCellBackground.h"
@@ -31,6 +31,7 @@
 int CTLContactTextFieldTag = 1;
 int CTLStartTimeInputTag = 2;
 int CTLEndTimeInputTag = 3;
+int CTLTitleInputTag = 4;
 
 @implementation CTLAppointmentFormViewController
 
@@ -45,27 +46,29 @@ int CTLEndTimeInputTag = 3;
         self.navigationItem.leftBarButtonItem = cancelButton;
     }
     
+    _titleIsDefault = YES;
+    
     [self configureInputFields];
     [self checkCalendarPermission];
     [self loadContactsInPickerView];
-    [self checkForAddressBookUpdates];
-        
-    if(!self.cdAppointment){
-        _isNewAppointment = YES;
-        [self createPlaceholderAppointment];
-    }else{
+    
+    if(self.cdAppointment){
         _isNewAppointment = NO;
-        if(self.cdAppointment.privateValue == NO){
-            //It's not private. Pull updates from calendar
-            _appointment = [_eventStore eventWithIdentifier:[self.cdAppointment eventID]];
+        [self populateForm:self.cdAppointment];
+        
+        _appointment = [_eventStore eventWithIdentifier:[self.cdAppointment eventID]];
+        
+        if(_appointment){
             self.cdAppointment.title = _appointment.title;
             self.cdAppointment.startDate = _appointment.startDate;
             self.cdAppointment.endDate = _appointment.endDate;
+            [self populateForm:self.cdAppointment];
         }
-
-        [self populateForm:self.cdAppointment];
+    }else{
+        _isNewAppointment = YES;
+        [self createPlaceholderAppointment];
     }
-    
+        
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissInputViews:)]];
     
@@ -76,23 +79,9 @@ int CTLEndTimeInputTag = 3;
     //[apptFactory createAppointments:[NSDate date]];
     //[apptFactory createAppointments:[NSDate monthsFromNow:1]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAddressBookChanges:) name:kAddressBookDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactsWereImported:) name:CTLContactsWereImportedNotification object:nil];
 
-}
-
-- (void)checkForAddressBookUpdates
-{
-    if(!self.addressBookRef){
-        ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-        if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
-            ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
-                self.addressBookRef = addressBookRef;
-                [self updateAddessBookContacts];
-            });
-        }
-    }
 }
 
 - (void)createPlaceholderAppointment
@@ -108,7 +97,13 @@ int CTLEndTimeInputTag = 3;
 
     if(self.contact){
         [self.cdAppointment setContact:self.contact];
-        self.contactNameTextField.text = self.contact.compositeName;
+        self.contactNameTextField.text = [self.contact compositeName];
+        self.addressTextField.text = self.contact.address;
+        self.address2TextField.text = self.contact.address2;
+        
+        NSString *meetingWith = [NSString stringWithFormat:NSLocalizedString(@"MEETING_WITH", nil), self.contact.compositeName];
+        
+        self.titleTextField.text = meetingWith;
     }
     
     _appointment.startDate = self.cdAppointment.startDate;
@@ -154,56 +149,6 @@ int CTLEndTimeInputTag = 3;
     [requirePermission show];
 }
 
-- (void)handleAddressBookChanges:(NSNotification *)notification
-{
-    if(notification){
-        self.addressBookRef = (__bridge ABAddressBookRef)notification.object;
-        [self updateAddessBookContacts];
-    }
-    
-    if(!self.addressBookRef){
-        ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-        if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
-            ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
-                // First time access has been granted
-                if(granted){
-                    self.addressBookRef = addressBookRef;
-                    [self updateAddessBookContacts];
-                }else{
-                    [self displayAddressBookPermissionPrompt];
-                }
-            });
-        } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
-            // The user has previously given access.
-            self.addressBookRef = addressBookRef;
-            [self updateAddessBookContacts];
-        } else {
-            // The user has previously denied access
-            [self displayAddressBookPermissionPrompt];
-        }
-    }
-}
-
-- (void)updateAddessBookContacts
-{
-    [CTLABPerson peopleFromAddressBook:self.addressBookRef withBlock:^(NSDictionary *results){
-        NSMutableDictionary *peopleDict = [results mutableCopy];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID != nil"];
-        NSArray *contactsArr = [CTLCDContact MR_findAllWithPredicate:predicate];
-        
-        for(NSInteger i=0;i<[contactsArr count];i++){
-            CTLCDContact *contact = contactsArr[i];
-            CTLABPerson *person = [peopleDict objectForKey:contact.recordID];
-            [contact createFromABPerson:person];
-        }
-        
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-        [context MR_saveToPersistentStoreWithCompletion:^(BOOL result, NSError *error){
-           [self loadContactsInPickerView];
-        }];
-    }];
-}
-
 - (IBAction)unformatCurrency:(UITextField *)textField
 {
     if ([self.cdAppointment.fee floatValue] > [[NSDecimalNumber zero] floatValue]) {
@@ -222,9 +167,7 @@ int CTLEndTimeInputTag = 3;
     [currencyFormat setNumberStyle:NSNumberFormatterCurrencyStyle];
     [currencyFormat setLocale:locale];
     
-    NSString *currencyStr = [currencyFormat stringFromNumber:amount];
-    // NSLog(@"locale %@ | %@", [locale localeIdentifier], currencyStr);//Eg: $50.00
-    return currencyStr;
+    return [currencyFormat stringFromNumber:amount];
 }
 
 - (void)checkCalendarPermission
@@ -267,7 +210,7 @@ int CTLEndTimeInputTag = 3;
 
 - (void)configureInputFields
 {
-    self.titleTextField.placeholder = NSLocalizedString(@"APPOINTMENT_DESCRIPTION", nil);
+    self.titleTextField.placeholder = NSLocalizedString(@"APPOINTMENT_TITLE", nil);
     self.contactNameTextField.placeholder = NSLocalizedString(@"CHOOSE_A_CONTACT", nil);
     self.startTimeTextField.placeholder = NSLocalizedString(@"START_TIME", nil);
     self.endTimeTextField.placeholder = NSLocalizedString(@"END_TIME", nil);
@@ -300,6 +243,10 @@ int CTLEndTimeInputTag = 3;
     if(textField.tag == CTLContactTextFieldTag && [_contacts count] == 0){
         [self promptToImport:textField];
         return NO;
+    }
+    
+    if(textField.tag == CTLTitleInputTag){
+        _titleIsDefault = NO;
     }
     
     return YES;
@@ -355,6 +302,14 @@ int CTLEndTimeInputTag = 3;
     CTLCDContact *person = [_contacts objectAtIndex:row];
     [self.cdAppointment setContact:person];
     self.contactNameTextField.text = person.compositeName;
+    self.addressTextField.text = person.address;
+    self.address2TextField.text = person.address2;
+    
+    if(_titleIsDefault){
+        NSString *meetingWith = [NSString stringWithFormat:NSLocalizedString(@"MEETING_WITH", nil), person.compositeName];
+        
+        self.titleTextField.text = meetingWith;
+    }
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -402,7 +357,7 @@ int CTLEndTimeInputTag = 3;
 {
     CGFloat width = self.tableView.bounds.size.width - 20.0f;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10.0f, width, 30.0f)];
-    headerView.backgroundColor = [UIColor clearColor];
+    headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
     
     UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 10.0f, width, 20.0f)];
     headerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15.0f];
@@ -551,7 +506,6 @@ int CTLEndTimeInputTag = 3;
     _appointment.title = self.titleTextField.text;
     _appointment.location = [NSString stringWithFormat:@"%@ %@", self.addressTextField.text, self.address2TextField.text];
     
-    //self.cdAppointment.contact = [_contacts]
     self.cdAppointment.address = self.addressTextField.text;
     self.cdAppointment.address2 = self.address2TextField.text;
     self.cdAppointment.title = _appointment.title;
@@ -581,7 +535,7 @@ int CTLEndTimeInputTag = 3;
         [[NSNotificationCenter defaultCenter] postNotificationName:CTLTimestampForRowNotification object:nil];
     }
     
-    [self dismiss:nil];
+    [self dismissViewAfterSave];
 }
 
 -(void)cancelAlarms:(EKEvent *)appointment
@@ -626,6 +580,18 @@ int CTLEndTimeInputTag = 3;
 #pragma mark - Outlet Controls
 
 - (void)dismiss:(id)sender
+{
+    [[NSManagedObjectContext MR_contextForCurrentThread] reset];
+    
+    [self resetForm];
+    if(self.presentedAsModal){
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (void)dismissViewAfterSave
 {
     [self resetForm];
     if(self.presentedAsModal){

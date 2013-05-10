@@ -15,7 +15,7 @@ extern NSString *const kCTLFieldAutoCorrectionType;
 - (NSString *)label;
 - (NSString *)placeholder;
 
-+ (NSArray *)fetchSortedFields;
-+ (NSArray *)generateFieldsFromSchema:(NSEntityDescription *)entity;
++ (NSArray *)fetchAllFields;
++ (NSArray *)createFields;
 
 @end

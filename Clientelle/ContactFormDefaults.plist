@@ -41,7 +41,7 @@
 		<key>autocorrectionType</key>
 		<integer>1</integer>
 	</dict>
-	<key>phone</key>
+	<key>mobile</key>
 	<dict>
 		<key>sortOrder</key>
 		<integer>3</integer>
@@ -54,12 +54,12 @@
 		<key>autocorrectionType</key>
 		<integer>1</integer>
 	</dict>
-	<key>mobilePhone</key>
+	<key>phone</key>
 	<dict>
 		<key>sortOrder</key>
 		<integer>4</integer>
 		<key>enabled</key>
-		<true/>
+		<false/>
 		<key>keyboardType</key>
 		<integer>5</integer>
 		<key>autocapitalizationType</key>
@@ -85,7 +85,7 @@
 		<key>sortOrder</key>
 		<integer>6</integer>
 		<key>enabled</key>
-		<true/>
+		<false/>
 		<key>keyboardType</key>
 		<integer>0</integer>
 		<key>autocapitalizationType</key>
@@ -98,7 +98,7 @@
 		<key>sortOrder</key>
 		<integer>7</integer>
 		<key>enabled</key>
-		<true/>
+		<false/>
 		<key>keyboardType</key>
 		<integer>0</integer>
 		<key>autocapitalizationType</key>
