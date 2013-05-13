@@ -12,7 +12,7 @@
 #import "CTLCDAppointment.h"
 
 const CGFloat CTLMainMenuWidth = 80.0f;
-NSString *const CTLDefaultNavigationControllerIdentifier = @"contactsNavigationController";
+NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigationController";
 
 @implementation CTLSlideMenuController
 
@@ -210,7 +210,7 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"contactsNavigationC
     if([userInfo[@"viewController"] isEqualToString:@"appointmentFormViewController"]){
         CTLAppointmentFormViewController *viewController = (CTLAppointmentFormViewController *)[self.storyboard instantiateViewControllerWithIdentifier:userInfo[@"viewController"]];
         CTLCDAppointment *appointment = [CTLCDAppointment MR_findFirstByAttribute:@"eventID" withValue:userInfo[@"eventID"]];
-        [viewController setCdAppointment:appointment];
+        [viewController setAppointment:appointment];
         self.mainViewController = viewController;
     }
 
@@ -235,7 +235,7 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"contactsNavigationC
         CTLAppointmentFormViewController *viewController = (CTLAppointmentFormViewController *)[self.storyboard instantiateViewControllerWithIdentifier:userInfo[@"viewController"]];
         
         CTLCDAppointment *appointment = [CTLCDAppointment MR_findFirstByAttribute:@"eventID" withValue:userInfo[@"eventID"]];
-        [viewController setCdAppointment:appointment];
+        [viewController setAppointment:appointment];
         [viewController setTransitionedFromLocalNotification:YES];
         
         

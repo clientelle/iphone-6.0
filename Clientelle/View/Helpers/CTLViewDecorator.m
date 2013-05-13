@@ -29,7 +29,7 @@
     return shapelayer;
 }
 
-- (CAShapeLayer *)createDottedVerticalLine:(CGRect)frame
+- (CAShapeLayer *)createDottedVerticalLine:(CGFloat)height
 {
     UIColor *fill = [UIColor ctlMediumGray];
     CAShapeLayer *shapelayer = [CAShapeLayer layer];
@@ -41,7 +41,7 @@
     
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(0, 10.0f)];
-    [path addLineToPoint:CGPointMake(0, frame.size.height - 10.0f)];
+    [path addLineToPoint:CGPointMake(0, height)];
     shapelayer.path = path.CGPath;
     
     return shapelayer;

@@ -2,6 +2,8 @@
 
 @interface CTLCDAppointment : _CTLCDAppointment {}
 
+- (NSString *)formattedFee;
+
 + (NSFetchedResultsController *)fetchedResultsController;
 
 @end

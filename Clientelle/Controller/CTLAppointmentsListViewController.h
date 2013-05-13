@@ -10,23 +10,24 @@
 #import <EventKit/EventKit.h>
 #import "CTLAppointmentCell.h"
 
-extern NSString *const CTLReloadAppointmentsNotification;
+extern NSString *const CTLAppointmentWasAddedNotification;
 
 @class CTLPickerView;
 
-/* view cannot be a TableViewController because of the top rolodex selector */
-@interface CTLAppointmentsListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, CTLSlideMenuDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate, CTLAppointmentCellDelegate>{
-    UIView *_emptyView;
+@interface CTLAppointmentsListViewController : UIViewController<NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, CTLSlideMenuDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate, CTLAppointmentCellDelegate>{
+    EKEventStore *_eventStore;
     CTLPickerView *_filterPickerView;
     NSArray *_filterArray;
-    NSArray *_appointments;
-    EKEventStore *_eventStore;
+    BOOL _showSplashView;
+    UIView *_splashView;
 }
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, strong) NSFetchedResultsController *resultsController;
 
 - (IBAction)addAppointment:(id)sender;
 - (IBAction)dismissPickerFromTap:(UITapGestureRecognizer *)recognizer;
+- (void)createFilterPickerButton;
 
 @end

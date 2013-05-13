@@ -3,6 +3,20 @@
 
 @implementation CTLCDAppointment
 
+- (NSString *)formattedFee
+{
+    if ([self.fee floatValue] == [[NSDecimalNumber zero] floatValue]) {
+        return @"";
+    }
+    
+    NSNumberFormatter *currencyFormat = [[NSNumberFormatter alloc] init];
+    NSLocale *locale = [NSLocale currentLocale];
+    [currencyFormat setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [currencyFormat setLocale:locale];
+    
+    return [currencyFormat stringFromNumber:self.fee];
+}
+
 + (NSFetchedResultsController *)fetchedResultsController
 {
     NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];

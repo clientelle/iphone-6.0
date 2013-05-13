@@ -36,14 +36,16 @@
         CTLSlideMenuController *rootViewController = (CTLSlideMenuController *)[self.window rootViewController];
         [rootViewController launchWithViewFromNotification:notification];
     }
-    
-    //Register for External Changes
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
-        ABAddressBookRegisterExternalChangeCallback(addressBookRef, addressBookChanged, NULL);
-    }
-    
+
     return YES;
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    // Recieved local notification while using app
+    CTLSlideMenuController *rootViewController = (CTLSlideMenuController *)[self.window rootViewController];
+    [rootViewController setMainViewFromNotification:notification applicationState:application.applicationState];
+    application.applicationIconBadgeNumber = notification.applicationIconBadgeNumber-1;
 }
                                
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -60,21 +62,6 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     application.applicationIconBadgeNumber = 0;
-}
-
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-    // Recieved local notification while using app
-    CTLSlideMenuController *rootViewController = (CTLSlideMenuController *)[self.window rootViewController];
-    [rootViewController setMainViewFromNotification:notification applicationState:application.applicationState];
-    application.applicationIconBadgeNumber = notification.applicationIconBadgeNumber-1;
-}
-
-void addressBookChanged(ABAddressBookRef reference, CFDictionaryRef dictionary, void *context) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        id ref = (__bridge id)(reference);
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAddressBookDidChange object:ref];
-    });
 }
 
 @end

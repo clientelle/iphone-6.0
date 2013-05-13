@@ -16,18 +16,17 @@
     UIDatePicker *_datePicker;
     UIPickerView *_contactPicker;
     NSInteger _activeInputTag;
-    EKEvent *_appointment;
+    EKEvent *_event;
+    CTLCDAppointment *_appointment;
+    NSDecimalNumber *_appointmentFee;
     EKEventStore *_eventStore;
     EKCalendar *_calendar;
     NSArray *_contacts;
     BOOL _hasCalendarAccess;
     BOOL _hasAddress;
-    BOOL _isNewAppointment;
-    BOOL _titleIsDefault;
 }
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
-@property (nonatomic, assign) ABAddressBookRef addressBookRef;
 @property (nonatomic, weak) IBOutlet UITextField *titleTextField;
 @property (nonatomic, weak) IBOutlet UITextField *contactNameTextField;
 @property (nonatomic, weak) IBOutlet UITextField *startTimeTextField;
@@ -39,7 +38,8 @@
 @property (nonatomic, assign) BOOL presentedAsModal;
 @property (nonatomic, assign) BOOL transitionedFromLocalNotification;
 
-@property (nonatomic, strong) CTLCDAppointment *cdAppointment;
+@property (nonatomic, strong) CTLCDAppointment *appointment;
+@property (nonatomic, strong) NSDecimalNumber *appointmentFee;
 @property (nonatomic, strong) CTLCDContact *contact;
 
 - (IBAction)contactDidChange:(UITextField *)textField;

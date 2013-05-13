@@ -41,14 +41,18 @@ int const CTLAddContactActionSheetTag = 424;
 {
     [super viewDidLoad];
     
-    _inContactMode = NO;
-    _shouldReorderListOnScroll = NO;
     _emptyView = [self noContactsView];
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
+    
+    
+    _inContactMode = NO;
+    _shouldReorderListOnScroll = NO;
+    
 
     [self rightTitlebarWithAddContactButton];
     [self buildSortPicker];
+    [self buildPickerButton];
     [self prepareContactViewMode];
     [self loadAllContacts];
     [self prepareSortTooltip];
@@ -112,17 +116,12 @@ int const CTLAddContactActionSheetTag = 424;
         
         [self buildSearchBar];
        
-        NSInteger row = [_sortPickerView selectedRowInComponent:0];
-        NSString *field = _sortArray[row][@"field"];
-        BOOL asc = [_sortArray[row][@"asc"] boolValue];
+        NSInteger sortFilterRow = [_sortPickerView selectedRowInComponent:0];
+        NSString *fieldName = _sortArray[sortFilterRow][@"field"];
+        BOOL ASC = [_sortArray[sortFilterRow][@"asc"] boolValue];
         
-        
-        //NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:field ascending:asc];
-        //NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-        
-        self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:field ascending:asc withPredicate:nil groupBy:nil delegate:self];
+        self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:fieldName ascending:ASC withPredicate:nil groupBy:nil delegate:self];
         [self.fetchedResultsController performFetch:nil];
-        //[[self.fetchedResultsController fetchedObjects] sortedArrayUsingDescriptors:sortDescriptors];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView setContentOffset:CGPointMake(0.0f, CGRectGetHeight(self.searchBar.bounds))];
@@ -217,7 +216,10 @@ int const CTLAddContactActionSheetTag = 424;
     
     _sortArray = @[activity, first_name, last_name];
     [_sortPickerView selectRow:selectedRow inComponent:0 animated:NO];
-    
+}
+
+- (void)buildPickerButton
+{
     CTLPickerButton *filterButton = [[CTLPickerButton alloc] initWithTitle:NSLocalizedString(@"CLIENTS", nil)];
     [filterButton addTarget:self action:@selector(toggleSortPicker:) forControlEvents:UIControlEventTouchUpInside];
     

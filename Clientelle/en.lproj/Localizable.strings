@@ -27,7 +27,8 @@ e†
 "CLOSE" = "Close";
 "VIEW" = "View";
 "DONE" = "Done";
-
+"ACTIVE" = "Active";
+"COMPLETED" = "Completed";
 
 /* GENERIC TERMS */
 "CLIENTS" = "Clients";
@@ -46,6 +47,18 @@ e†
 /* TOOLTIPS */
 "EDIT_FORM_TOOLTIP" = "Tap on a row to hide or show the field in the contact form.";
 "SORT_TOOTLIP" = "Sort contacts by tapping above";
+
+/* WELCOME SCREEN */
+
+"WELCOME" = "Welcome";
+"TITLE_SPIEL" = "With Clientelle, you can:";
+
+"BULLET_STORE_PRIVATE_CONTACTS" = "Store Private Contacts";
+"BULLET_SCHEDULE_APPOINTMENTS" = "Schedule Appointments";
+"BULLET_PRIVATE_MESSAGING" = "Send Private Messenges";
+
+"BUY_PRO" = "Purchase PRO for %";
+
 
 /* SORT CONTACTS */
 "SORT_BY" = "Sort by";
@@ -143,26 +156,24 @@ e†
 
 /* Appointments */
 "CALENDAR" = "Clientelle Calendar";
-"TODAY" = "Today";
-"THIS_WEEK" = "This Week";
-"THIS_MONTH" = "This Month";
+
 "NO_APPOINTMENTS" = "No Appointments";
 "NO_APPOINTMENTS_FOUND" = "No appointments found";
 "ADD_APPOINTMENT" = "Add Appointment";
 "DELETE_APPOINTMENT" = "Delete Appointment";
 "CONFIRM_DELETE_APPOINTMENT" = "Are you sure want to delete this appointment?";
-
+"NO_COMPLETED_ITEMS" = "No appointments found";
 
 /* Set Appointment */
 "APPOINTMENT" = "Appointment";
 "SET_APPOINTMENT" = "Set Appointment";
 "SCHEDULE_AN_APPOINTMENT" = "Schedule an Appointment";
 "EDIT_APPOINTMENT" = "Edit Appointment";
-"APPOINTMENT_TITLE" = "Appointment Title";
+"APPOINTMENT_DESCRIPTION" = "Appointment Description";
 
 "YOU_DO_NOT_HAVE_CONTACTS_YET" = "You do not have any contacts yet";
 
-"MEETING_WITH" = "Meeting with %@";
+"APPOINTMENT_WITH" = "Appointment with %@";
 "CHOOSE_A_CONTACT" = "Choose a contact";
 "START_TIME" = "Start Time";
 "END_TIME" = "End Time";

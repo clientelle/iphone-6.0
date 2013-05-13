@@ -27,9 +27,12 @@
 
 @property (nonatomic, assign) id<CTLAppointmentCellDelegate>delegate;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *descLabel;
 @property (nonatomic, weak) IBOutlet UILabel *dateLabel;
 @property (nonatomic, weak) IBOutlet UILabel *timeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *feeLabel;
 @property (nonatomic, weak) IBOutlet UIButton *mapButton;
+
 @property (nonatomic, weak) IBOutlet UIButton *doneButton;
 
 @end
