@@ -139,6 +139,7 @@
 		41AB94B2173E11E6003741BB /* 237-key@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41AB94B0173E11E6003741BB /* 237-key@2x.png */; };
 		41AB94B5173E221A003741BB /* 44-shoebox-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 41AB94B3173E221A003741BB /* 44-shoebox-grey.png */; };
 		41AB94B6173E221A003741BB /* 44-shoebox-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41AB94B4173E221A003741BB /* 44-shoebox-grey@2x.png */; };
+		41AB94B91741ABE7003741BB /* CTLSetPinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */; };
 		41AEBD9E16EC689300BC397F /* groovepaper.png in Resources */ = {isa = PBXBuildFile; fileRef = 41AEBD9C16EC689300BC397F /* groovepaper.png */; };
 		41AEBD9F16EC689300BC397F /* groovepaper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41AEBD9D16EC689300BC397F /* groovepaper@2x.png */; };
 		41AEBDA216EC76E500BC397F /* 20-chat.png in Resources */ = {isa = PBXBuildFile; fileRef = 41AEBDA016EC76E500BC397F /* 20-chat.png */; };
@@ -474,6 +475,8 @@
 		41AB94B0173E11E6003741BB /* 237-key@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "237-key@2x.png"; sourceTree = "<group>"; };
 		41AB94B3173E221A003741BB /* 44-shoebox-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "44-shoebox-grey.png"; sourceTree = "<group>"; };
 		41AB94B4173E221A003741BB /* 44-shoebox-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "44-shoebox-grey@2x.png"; sourceTree = "<group>"; };
+		41AB94B71741ABE6003741BB /* CTLSetPinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSetPinViewController.h; sourceTree = "<group>"; };
+		41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLSetPinViewController.m; sourceTree = "<group>"; };
 		41AEBD9C16EC689300BC397F /* groovepaper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = groovepaper.png; sourceTree = "<group>"; };
 		41AEBD9D16EC689300BC397F /* groovepaper@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groovepaper@2x.png"; sourceTree = "<group>"; };
 		41AEBDA016EC76E500BC397F /* 20-chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "20-chat.png"; sourceTree = "<group>"; };
@@ -983,6 +986,8 @@
 				41E56D0C1724D2CB004B3CEB /* CTLLeadsViewController.m */,
 				417F2827173090A1003CC9A3 /* CTLMessagesListViewController.h */,
 				417F2828173090A1003CC9A3 /* CTLMessagesListViewController.m */,
+				41AB94B71741ABE6003741BB /* CTLSetPinViewController.h */,
+				41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1523,6 +1528,7 @@
 				41D791651738AE4700FCA232 /* Clientelle.xcdatamodeld in Sources */,
 				41D7916A1738C97400FCA232 /* _CTLCDContactField.m in Sources */,
 				41D7916B1738C97400FCA232 /* CTLCDContactField.m in Sources */,
+				41AB94B91741ABE7003741BB /* CTLSetPinViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -21,6 +21,10 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 {
     [super viewDidLoad];
     
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"SETTINGS", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
+    
+    [self.navigationItem setBackBarButtonItem: backButton];
+    
     [self.menuController setRightSwipeEnabled:NO];
     
     _account = [CTLCDAccount MR_findFirst];
@@ -71,11 +75,16 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     UITableViewCell *notificationCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     [self styleLabel:notificationCell.textLabel withText:NSLocalizedString(@"NOTIFICATIONS", nil)];
     
+    UITableViewCell *pinCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    
+    [self styleLabel:pinCell.textLabel withText:NSLocalizedString(@"SET_A_PIN", nil)];
+    
+
     UITableViewCell *supportCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
-    [self styleLabel:supportCell.textLabel withText:NSLocalizedString(@"HELP_SUPPORT", nil)];
+    [self styleLabel:supportCell.textLabel withText:NSLocalizedString(@"REPORT_A_PROBLEM", nil)];
     
     UITableViewCell *featureCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
-    [self styleLabel:featureCell.textLabel withText:NSLocalizedString(@"FEATURE_REQUEST", nil)];
+    [self styleLabel:featureCell.textLabel withText:NSLocalizedString(@"REQUEST_A_FEATURE", nil)];
     
     UITableViewCell *shareCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
     [self styleLabel:shareCell.textLabel withText:NSLocalizedString(@"TELL_A_FRIEND", nil)];

@@ -1331,12 +1331,32 @@
                                             <constraint firstAttribute="trailing" secondItem="EGZ-Cr-My7" secondAttribute="trailing" constant="20" type="default" id="eTb-xX-RTm"/>
                                         </constraints>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="ibp-mD-j32" style="IBUITableViewCellStyleDefault" id="Lnu-Tl-mC1">
+                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ibp-mD-j32">
+                                                    <rect key="frame" x="10" y="0.0" width="260" height="43"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <segue destination="hUi-Np-ibx" kind="push" identifier="toSetPIN" id="k3l-jT-4dd"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="2NV-CL-qWm">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="SG8-CK-8tW" style="IBUITableViewCellStyleDefault" id="k03-zs-3gb">
-                                        <rect key="frame" x="0.0" y="119" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="163" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -1352,7 +1372,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="qhj-Qz-48T" style="IBUITableViewCellStyleDefault" id="xpC-wo-O2k">
-                                        <rect key="frame" x="0.0" y="164" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="208" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -1368,7 +1388,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="84c-LQ-Bdp" style="IBUITableViewCellStyleDefault" id="hvx-yT-Wfk">
-                                        <rect key="frame" x="0.0" y="208" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="252" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -1403,6 +1423,62 @@
                 <tapGestureRecognizer id="ccw-dN-w8J"/>
             </objects>
             <point key="canvasLocation" x="-1201" y="-684"/>
+        </scene>
+        <!--Set Pin View Controller - Set  a PIN-->
+        <scene sceneID="Qjq-Ie-Fag">
+            <objects>
+                <viewController id="hUi-Np-ibx" customClass="CTLSetPinViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gFM-rN-msC">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Set a PIN code to enable locking" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kGS-IS-Iha">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Bfc-te-PlV">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="7Op-Id-5qN"/>
+                                    <constraint firstAttribute="width" constant="151" id="Oqo-dA-3ji"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="(Enter a four digit passcode you can remember.)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lhj-Rv-lXf">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="FbB-Bi-qFD"/>
+                                    <constraint firstAttribute="width" constant="287" id="HXn-Fd-5vc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Bfc-te-PlV" firstAttribute="centerX" secondItem="kGS-IS-Iha" secondAttribute="centerX" type="default" id="0E7-wo-VzD"/>
+                            <constraint firstAttribute="trailing" secondItem="kGS-IS-Iha" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="7rv-7l-VYt"/>
+                            <constraint firstItem="kGS-IS-Iha" firstAttribute="top" secondItem="gFM-rN-msC" secondAttribute="top" constant="35" id="8WK-7u-2jm"/>
+                            <constraint firstItem="Lhj-Rv-lXf" firstAttribute="top" secondItem="gFM-rN-msC" secondAttribute="top" constant="123" id="PpE-tk-32e"/>
+                            <constraint firstItem="Bfc-te-PlV" firstAttribute="top" secondItem="gFM-rN-msC" secondAttribute="top" constant="83" id="pX8-br-G8V"/>
+                            <constraint firstItem="kGS-IS-Iha" firstAttribute="leading" secondItem="gFM-rN-msC" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="pd4-xi-Tze"/>
+                            <constraint firstItem="Lhj-Rv-lXf" firstAttribute="leading" secondItem="gFM-rN-msC" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="y1F-Tl-d3H"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Set  a PIN" id="9NT-3u-Ypc">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="8cY-aO-Fji"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="instructionsLabel" destination="Lhj-Rv-lXf" id="XJI-IJ-gZK"/>
+                        <outlet property="pinTextField" destination="Bfc-te-PlV" id="69q-yZ-gJU"/>
+                        <outlet property="titleLabel" destination="kGS-IS-Iha" id="USj-5t-8eL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xB2-Wy-KdP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-722" y="-692"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wv8-ra-VoP">
@@ -1945,6 +2021,186 @@
         <image name="whiteButton.png" width="36" height="36"/>
         <image name="whiteButtonHighlight.png" width="36" height="36"/>
     </resources>
+    <classes>
+        <class className="CTLAccountInterstitialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAccountInterstitialViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="actionMessageLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="upgradeButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="CTLAppointmentCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentCell.h"/>
+            <relationships>
+                <relationship kind="action" name="markAsComplete:"/>
+                <relationship kind="action" name="segueToMapView:"/>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="feeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mapButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CTLAppointmentFormViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentFormViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="contactDidChange:" candidateClass="UITextField"/>
+                <relationship kind="action" name="formatFeeString:" candidateClass="UITextField"/>
+                <relationship kind="action" name="saveAppointment:"/>
+                <relationship kind="action" name="showDatePicker:"/>
+                <relationship kind="action" name="unformatCurrency:" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="address2TextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="addressTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="contactNameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="endTimeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="feeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="startTimeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="titleTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="CTLAppointmentsListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentsListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addAppointment:"/>
+                <relationship kind="action" name="dismissPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CTLContactCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="detailsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timestampLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CTLContactDetailsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactDetailsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dismissKeyboard:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="action" name="showAddFieldsModal:"/>
+                <relationship kind="action" name="submit:"/>
+                <relationship kind="action" name="textFieldDidChange:" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="editFormButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="saveContactButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="CTLContactFormEditorViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactFormEditorViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="enableReordering:"/>
+                <relationship kind="action" name="save:"/>
+                <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CTLContactImportViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactImportViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelImport:"/>
+                <relationship kind="action" name="importContacts:"/>
+                <relationship kind="outlet" name="busyIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CTLContactsListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactsListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dismissSortPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CTLEnterFormCodeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLEnterFormCodeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="submitFormCode:"/>
+                <relationship kind="outlet" name="formCodeTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="CTLFieldCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLFieldCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="textInput" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="CTLInboxInterstitialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLInboxInterstitialViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="continueToEnterFormCode:"/>
+                <relationship kind="outlet" name="continueButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="CTLInboxViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLInboxViewController.h"/>
+        </class>
+        <class className="CTLLeadsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLLeadsViewController.h"/>
+        </class>
+        <class className="CTLLoginViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLLoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="forgotPassword:"/>
+                <relationship kind="action" name="loginAndSyncAccount:"/>
+                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="CTLMainMenuViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMainMenuViewController.h"/>
+        </class>
+        <class className="CTLMenuItemCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMenuItemCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="icon" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="CTLMessagesListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMessagesListViewController.h"/>
+        </class>
+        <class className="CTLRegisterViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLRegisterViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="segueToLogin:"/>
+                <relationship kind="action" name="submit:"/>
+                <relationship kind="outlet" name="companyTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="industryTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="CTLSetPinViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSetPinViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="instructionsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="pinTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CTLSettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleNotificationSetting:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="accountTypeCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="notificationSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="CTLSlideMenuController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSlideMenuController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleMenu:"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

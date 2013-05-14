@@ -144,14 +144,17 @@ e†
 "DEVICE_NOT_CONFIGURED_TO_SEND_SMS" = "Device is not configured to send text messages";
 
 /* Preferences */
+
+"SETTINGS" = "Settings";
 "ACCOUNT_TYPE" = "Account Type";
 "FREE" = "Free";
 "PAID" = "Paid";
+"SET_A_PIN" = "Set a PIN";
 "NOTIFICATIONS" = "Notifications";
-"HELP_SUPPORT" = "Help & Support";
-"FEATURE_REQUEST" = "Request Features";
+"REPORT_A_PROBLEM" = "Report a Problem";
+"REQUEST_A_FEATURE" = "Request a Feature";
 "RATE_APP" = "Rate in App Store";
-"TELL_A_FRIEND" = "Tell a Friend about Clientelle";
+"TELL_A_FRIEND" = "Tell a Friend";
 "IPHONE_FEEDBACK_SUBJECT" = "iPhone Feedback"; 
 
 /* Appointments */
@@ -184,3 +187,9 @@ e†
 "LOCATION" = "Location (example: \"My Office\")";
 "NO_CALENDAR_FOUND" = "Could not add event because local Calendar is not configured.";
 "VIEW_APPOINTMENT" = "View Appointment";
+
+
+/* PIN */
+"ENABLE_APP_LOCK" = "Enable App Lock";
+"SET_A_PIN" = "Set a PIN code to enable locking";
+"ENTER_FOUR_DIGIT_CODE" = "Enter a four digit passcode you can remember.";
