@@ -20,10 +20,12 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"SETTINGS", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
     
     [self.navigationItem setBackBarButtonItem: backButton];
+    
+    self.navigationItem.title = NSLocalizedString(@"SETTINGS", nil);
     
     [self.menuController setRightSwipeEnabled:NO];
     
@@ -33,26 +35,16 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     [self.notificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsNotification]];
     
     if([_account objectID]){
-        
-        //view & edit account info
-        self.actionButton = [[UIBarButtonItem alloc] initWithTitle:@"Acount" style:UIBarButtonItemStylePlain target:self action:@selector(toAccountFormView:)];
-        self.navigationItem.rightBarButtonItem = self.actionButton;
-        
-        //When account has bene purchased, there should be a checkbox and label that says "Paid"
-        //[self.changeAccountTypeButton setTitle:@"Paid" forState:UIControlStateNormal];
-        self.accountTypeCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(toAccountFormView:)];
     }else{
         
-        self.actionButton = [[UIBarButtonItem alloc] initWithTitle:@"Re" style:UIBarButtonItemStylePlain target:self action:@selector(toAccountFormView:)];
-        self.navigationItem.rightBarButtonItem = self.actionButton;
-        
-        //[self.changeAccountTypeButton setTitle:@"Free" forState:UIControlStateNormal];
-        self.accountTypeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"UPGRADE", nil) style:UIBarButtonItemStylePlain target:self action:@selector(toAccountFormView:)];
     }
     
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:206.0f green:206.0f blue:206.0f alpha:1.0f];
     [self.tableView setSeparatorColor:[UIColor colorFromUnNormalizedRGB:247.0f green:247.0f blue:247.0f alpha:1.0f]];
+    
+    [self configureCells];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -62,23 +54,29 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     return cell;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)configureCells
 {
     /* Using static table cells so I style them here instead of cellForRowAtIndexPath */
     
     UITableViewCell *accountTypeCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     [self styleLabel:accountTypeCell.textLabel withText:NSLocalizedString(@"ACCOUNT_TYPE", nil)];
-    [accountTypeCell.detailTextLabel setFont:[UIFont fontWithName:@"Helvetica" size:13]];
-    accountTypeCell.detailTextLabel.text = NSLocalizedString(@"PAID", nil);
     accountTypeCell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    
+    if([_account objectID]){
+        self.accountTypeCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"PRO", nil);
+    }else{
+        self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"FREE", nil);
+    }
     
     UITableViewCell *notificationCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     [self styleLabel:notificationCell.textLabel withText:NSLocalizedString(@"NOTIFICATIONS", nil)];
     
     UITableViewCell *pinCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    [self styleLabel:pinCell.textLabel withText:NSLocalizedString(@"CONFIGURE_PIN_ACCESS", nil)];
     
-    [self styleLabel:pinCell.textLabel withText:NSLocalizedString(@"SET_A_PIN", nil)];
-    
+    pinCell.detailTextLabel.text = NSLocalizedString(@"REQUIRES_A_PASSCODE", nil);
+    pinCell.detailTextLabel.backgroundColor = [UIColor clearColor];
 
     UITableViewCell *supportCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     [self styleLabel:supportCell.textLabel withText:NSLocalizedString(@"REPORT_A_PROBLEM", nil)];
@@ -93,6 +91,18 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.section == 0){
+        if(indexPath.row == 2){
+            if(![_account objectID]){
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"FEATURE_REQUIRES_PRO", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                
+                [alertView show];
+            }else{
+                [self performSegueWithIdentifier:@"toSetPin" sender:nil];
+            }
+        }
+    }
+    
     if(indexPath.section == 1){
         if (indexPath.row == 0) {
             [self didTouchFeedbackCell];
@@ -105,7 +115,7 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 
 - (void)styleLabel:(UILabel *)label withText:(NSString *)text
 {
-    [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:15]];
+    [label setFont:[UIFont fontWithName:@"Heiti TC" size:15]];
     label.backgroundColor = [UIColor clearColor];
     label.text = text;
 }
@@ -116,26 +126,8 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     [self performSegueWithIdentifier:CTLAccountSegueIdentifyer sender:self];
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+- (IBAction)toggleNotificationSetting:(UISwitch *)notificationSwitch
 {
-    return YES;
-}
-
-- (IBAction)dismissKeyboard:(UITapGestureRecognizer *)recognizer
-{
-    [self.view endEditing:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)toggleNotificationSetting:(id)sender
-{
-    UISwitch *notificationSwitch = sender;
-    NSLog(@"TURNING %i", notificationSwitch.isOn);
     [[NSUserDefaults standardUserDefaults] setBool:notificationSwitch.isOn forKey:kCTLSettingsNotification];
 }
 

@@ -14,7 +14,7 @@
 #import "CTLABPerson.h"
 #import "CTLAppointmentFormViewController.h"
 #import "CTLAppointmentsListViewController.h"
-
+#import "CTLPinInterstialViewController.h"
 #import "CTLContactImportViewController.h"
 #import "CTLContactsListViewController.h"
 #import "CTLContactDetailsViewController.h"
@@ -38,7 +38,7 @@ int CTLTitleInputTag = 4;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.navigationItem.title = NSLocalizedString(@"APPOINTMENT", nil);
     
     if(self.presentedAsModal){
@@ -81,6 +81,14 @@ int CTLTitleInputTag = 4;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactsWereImported:) name:CTLContactsWereImportedNotification object:nil];
 
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if(self.presentedAsModal != YES && [[NSUserDefaults standardUserDefaults] boolForKey:@"IS_LOCKED"]){
+        CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"pinInterstitial"];
+        [self presentViewController:viewController animated:NO completion:nil];
+    }
 }
 
 - (void)createPlaceholderAppointment

@@ -8,12 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTLSetPinViewController : UIViewController
+@interface CTLSetPinViewController : UITableViewController<UITextFieldDelegate>{
+    NSUserDefaults *_userDefaults;
+    BOOL _inConfirmMode;
+}
 
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
-@property (nonatomic, weak) IBOutlet UILabel *instructionsLabel;
+@property (nonatomic, weak) IBOutlet UILabel *enter4digitLabel;
 @property (nonatomic, weak) IBOutlet UITextField *pinTextField;
+@property (nonatomic, weak) IBOutlet UITextField *confirmPinTextField;
+@property (nonatomic, weak) IBOutlet UISwitch *pinSwitch;
+@property (nonatomic, weak) IBOutlet UILabel *switchLabel;
+@property (nonatomic, weak) IBOutlet UILabel *switchNoteLabel;
 
-- (IBAction)textFieldDidChange:(UITextField *)textField;
+- (IBAction)switchDidChange:(UISwitch *)switchButton;
 
 @end

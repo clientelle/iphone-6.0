@@ -21,6 +21,7 @@
 #import "CTLAppointmentFormViewController.h"
 #import "CTLAppointmentCell.h"
 
+#import "CTLPinInterstialViewController.h"
 
 NSString *const CTLAppointmentWasAddedNotification = @"com.clientelle.notifications.appointmentWasAdded";
 NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
@@ -36,18 +37,18 @@ int const CTLSelectedFilterIndexCompleted = 1;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+       
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
-    
+
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BACK", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
-    
+
     [self.navigationItem setBackBarButtonItem: backButton];
 
-    
+
     _eventStore = [[EKEventStore alloc] init];
-    
+
     [self configureFilterPicker];
-    
+
     if([[NSUserDefaults standardUserDefaults] integerForKey:@"showSplash"] == 0){
         self.navigationItem.title = NSLocalizedString(@"WELCOME", nil);
         
@@ -58,12 +59,11 @@ int const CTLSelectedFilterIndexCompleted = 1;
         _showSplashView = NO;
         [self createFilterPickerButton];
     }
-    
+
     [self loadAllAppointments];
 
     //tap to dissmiss the filter picker
     //[self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPickerFromTap:)]];
-    
 }
 
 - (void)configureFilterPicker
@@ -122,6 +122,11 @@ int const CTLSelectedFilterIndexCompleted = 1;
     iconFrame.origin.y += lineHeight;
     chatIcon.frame = iconFrame;
     [emptyView addSubview:chatIcon];
+    
+    UIImageView *lockIcon = [self createIcon:@"54-lock"];
+    iconFrame.origin.y += lineHeight;
+    lockIcon.frame = iconFrame;
+    [emptyView addSubview:lockIcon];
         
     CGFloat leftMarginOffset = (iconFrame.origin.x + iconFrame.size.width) + 15.0f;
     CGRect labelFrame = CGRectMake(leftMarginOffset, cielingY, viewFrame.size.width-110, iconFrame.size.height);
@@ -139,6 +144,11 @@ int const CTLSelectedFilterIndexCompleted = 1;
     labelFrame.origin.y += lineHeight;
     UILabel *messageLabel = [self createLabel:labelFrame withText:NSLocalizedString(@"BULLET_PRIVATE_MESSAGING", nil)];
     [emptyView addSubview:messageLabel];
+    
+    
+    labelFrame.origin.y += lineHeight;
+    UILabel *lockLabel = [self createLabel:labelFrame withText:NSLocalizedString(@"BULLET_LOCK_APP", nil)];
+    [emptyView addSubview:lockLabel];
     
     CGFloat buttonWidth = 200.0f;
     CGFloat buttonCenter = viewFrame.size.width/2 - (buttonWidth/2);

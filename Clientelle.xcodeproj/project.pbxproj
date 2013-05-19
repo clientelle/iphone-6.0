@@ -127,6 +127,12 @@
 		41848E0C16B1CC0F004BFE30 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41848E0516B1CC0F004BFE30 /* plus@2x.png */; };
 		41848E0D16B1CC0F004BFE30 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41848E0516B1CC0F004BFE30 /* plus@2x.png */; };
 		41848E0F16B1D211004BFE30 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41848E0E16B1D211004BFE30 /* MessageUI.framework */; };
+		418500C31743BD1700F5FFA2 /* CTLPinInterstialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 418500C21743BD1700F5FFA2 /* CTLPinInterstialViewController.m */; };
+		418500C6174453A800F5FFA2 /* 54-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 418500C4174453A800F5FFA2 /* 54-lock.png */; };
+		418500C7174453A800F5FFA2 /* 54-lock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418500C5174453A800F5FFA2 /* 54-lock@2x.png */; };
+		418500CA1746E76F00F5FFA2 /* CTLFeatureSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 418500C91746E76F00F5FFA2 /* CTLFeatureSplashViewController.m */; };
+		418500D11746EC5F00F5FFA2 /* 253-person.png in Resources */ = {isa = PBXBuildFile; fileRef = 418500CF1746EC5E00F5FFA2 /* 253-person.png */; };
+		418500D21746EC5F00F5FFA2 /* 253-person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418500D01746EC5E00F5FFA2 /* 253-person@2x.png */; };
 		4193B1A916F2E34D00C5CC10 /* whiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4193B1A516F2E34D00C5CC10 /* whiteButton.png */; };
 		4193B1AA16F2E34D00C5CC10 /* whiteButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4193B1A616F2E34D00C5CC10 /* whiteButton@2x.png */; };
 		4193B1AB16F2E34D00C5CC10 /* whiteButtonHighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4193B1A716F2E34D00C5CC10 /* whiteButtonHighlight.png */; };
@@ -463,6 +469,14 @@
 		41848E0416B1CC0F004BFE30 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		41848E0516B1CC0F004BFE30 /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
 		41848E0E16B1D211004BFE30 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		418500C11743BD1700F5FFA2 /* CTLPinInterstialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLPinInterstialViewController.h; sourceTree = "<group>"; };
+		418500C21743BD1700F5FFA2 /* CTLPinInterstialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPinInterstialViewController.m; sourceTree = "<group>"; };
+		418500C4174453A800F5FFA2 /* 54-lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "54-lock.png"; sourceTree = "<group>"; };
+		418500C5174453A800F5FFA2 /* 54-lock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "54-lock@2x.png"; sourceTree = "<group>"; };
+		418500C81746E76F00F5FFA2 /* CTLFeatureSplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLFeatureSplashViewController.h; sourceTree = "<group>"; };
+		418500C91746E76F00F5FFA2 /* CTLFeatureSplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLFeatureSplashViewController.m; sourceTree = "<group>"; };
+		418500CF1746EC5E00F5FFA2 /* 253-person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "253-person.png"; sourceTree = "<group>"; };
+		418500D01746EC5E00F5FFA2 /* 253-person@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "253-person@2x.png"; sourceTree = "<group>"; };
 		4193B1A516F2E34D00C5CC10 /* whiteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteButton.png; sourceTree = "<group>"; };
 		4193B1A616F2E34D00C5CC10 /* whiteButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteButton@2x.png"; sourceTree = "<group>"; };
 		4193B1A716F2E34D00C5CC10 /* whiteButtonHighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteButtonHighlight.png; sourceTree = "<group>"; };
@@ -988,6 +1002,8 @@
 				417F2828173090A1003CC9A3 /* CTLMessagesListViewController.m */,
 				41AB94B71741ABE6003741BB /* CTLSetPinViewController.h */,
 				41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */,
+				418500C11743BD1700F5FFA2 /* CTLPinInterstialViewController.h */,
+				418500C21743BD1700F5FFA2 /* CTLPinInterstialViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1026,6 +1042,8 @@
 				4130CF8916F014CD00D398EF /* CTLPickerView.m */,
 				413DB8FE16F022950018B38C /* CTLPickerButton.h */,
 				413DB8FF16F022950018B38C /* CTLPickerButton.m */,
+				418500C81746E76F00F5FFA2 /* CTLFeatureSplashViewController.h */,
+				418500C91746E76F00F5FFA2 /* CTLFeatureSplashViewController.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1033,6 +1051,10 @@
 		417DC2A716AE16220073199D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				418500CF1746EC5E00F5FFA2 /* 253-person.png */,
+				418500D01746EC5E00F5FFA2 /* 253-person@2x.png */,
+				418500C4174453A800F5FFA2 /* 54-lock.png */,
+				418500C5174453A800F5FFA2 /* 54-lock@2x.png */,
 				41AB94B3173E221A003741BB /* 44-shoebox-grey.png */,
 				41AB94B4173E221A003741BB /* 44-shoebox-grey@2x.png */,
 				41AB94AF173E11E6003741BB /* 237-key.png */,
@@ -1403,6 +1425,10 @@
 				41AB94B2173E11E6003741BB /* 237-key@2x.png in Resources */,
 				41AB94B5173E221A003741BB /* 44-shoebox-grey.png in Resources */,
 				41AB94B6173E221A003741BB /* 44-shoebox-grey@2x.png in Resources */,
+				418500C6174453A800F5FFA2 /* 54-lock.png in Resources */,
+				418500C7174453A800F5FFA2 /* 54-lock@2x.png in Resources */,
+				418500D11746EC5F00F5FFA2 /* 253-person.png in Resources */,
+				418500D21746EC5F00F5FFA2 /* 253-person@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1529,6 +1555,8 @@
 				41D7916A1738C97400FCA232 /* _CTLCDContactField.m in Sources */,
 				41D7916B1738C97400FCA232 /* CTLCDContactField.m in Sources */,
 				41AB94B91741ABE7003741BB /* CTLSetPinViewController.m in Sources */,
+				418500C31743BD1700F5FFA2 /* CTLPinInterstialViewController.m in Sources */,
+				418500CA1746E76F00F5FFA2 /* CTLFeatureSplashViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

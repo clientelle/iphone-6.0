@@ -23,7 +23,7 @@
 }
 
 + (UIColor *)ctlGreen{
-   return [self colorFromUnNormalizedRGB:232.0f green:237.0f blue:228.0f alpha:1.0f];
+    return [self colorFromUnNormalizedRGB:61.0f green:103.0f blue:0 alpha:1.0f];
 }
 
 + (UIColor *)ctlLightGreen{

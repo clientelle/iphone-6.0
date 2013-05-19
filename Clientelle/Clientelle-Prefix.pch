@@ -17,7 +17,7 @@
     #import "CTLSlideMenuDelegate.h"
 #endif
 
-
+#define kCTLSettingsNotification @"com.clientelle.defaults.notification"
 #define kAddressBookDidChange @"com.clientelle.addressBook.change"
 
 // appirater (app ratings)

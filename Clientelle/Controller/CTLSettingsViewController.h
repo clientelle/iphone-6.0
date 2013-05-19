@@ -19,7 +19,6 @@
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
 @property (nonatomic, strong) IBOutlet UISwitch *notificationSwitch;
 @property (nonatomic, strong) IBOutlet UITableViewCell *accountTypeCell;
-@property (nonatomic, strong) UIBarButtonItem *actionButton;
 
 - (IBAction)toggleNotificationSetting:(UITapGestureRecognizer *)recognizer;
 

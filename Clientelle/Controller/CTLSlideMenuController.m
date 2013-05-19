@@ -7,9 +7,9 @@
 
 #import "CTLSlideMenuController.h"
 #import "CTLMainMenuViewController.h"
-
 #import "CTLAppointmentFormViewController.h"
 #import "CTLCDAppointment.h"
+#import "CTLPinInterstialViewController.h"
 
 const CGFloat CTLMainMenuWidth = 80.0f;
 NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigationController";
@@ -154,6 +154,11 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigat
 
 - (void)setRightPanel:(UINavigationController *)rightNavigationController withFrame:(CGRect)frame
 {
+    if(self.mainNavigationController){
+        [self.mainNavigationController removeFromParentViewController];
+        [self.mainNavigationController.view removeFromSuperview];
+    }
+    
     self.mainNavigationController = rightNavigationController;
     self.mainViewController = (UIViewController<CTLSlideMenuDelegate> *)rightNavigationController.topViewController;
         
@@ -225,6 +230,18 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigat
     [self addChildViewController:self.mainNavigationController];
     [self.view addSubview:self.mainNavigationController.view];
     [self setShadow:self.mainNavigationController];
+    
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"IS_LOCKED"]){
+        [self performSelector:@selector(showPinView:) withObject:nil afterDelay:0.1];
+    } 
+    
+}
+
+- (void)showPinView:(id)sender
+{
+    CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"pinInterstitial"];
+    [self.mainNavigationController presentViewController:viewController animated:YES completion:nil];
 }
 
 - (void)setMainViewFromNotification:(UILocalNotification *)notification applicationState:(UIApplicationState)applicationState
@@ -255,5 +272,16 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigat
         }
     }
 }
+
+- (void)requirePin
+{
+    self.mainViewControllerIdentifier = @"pinInterstitial";
+    CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    
+    [self setRightPanel:navigationController withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+}
+
 
 @end

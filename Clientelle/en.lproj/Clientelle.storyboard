@@ -444,6 +444,95 @@
             </objects>
             <point key="canvasLocation" x="-4111" y="-4307"/>
         </scene>
+        <!--Pin Interstial View Controller-->
+        <scene sceneID="Ole-w6-P0V">
+            <objects>
+                <viewController storyboardIdentifier="pinInterstitial" id="e6Q-XO-oBf" customClass="CTLPinInterstialViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="x83-hG-3lR">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Forgot your PIN? Visit:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2a2-yr-vuq">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="8xj-3J-09L"/>
+                                    <constraint firstAttribute="width" constant="173" id="ACK-Ch-CTg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enter your PIN to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WMU-El-ZHK">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="261" id="Ldr-eB-0HF"/>
+                                    <constraint firstAttribute="height" constant="21" id="nDn-Sn-YQq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DIB-0W-Wet">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="38o-6r-W9O"/>
+                                    <constraint firstAttribute="width" constant="284" id="bb8-7x-TV3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="clientelle.com/account/pin">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rlS-Z3-6nW">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="U58-I7-zvM"/>
+                                    <constraint firstAttribute="width" constant="170" id="Zl7-Tz-yog"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="15"/>
+                                <state key="normal" title="Enter PIN">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="promptForPin:" destination="e6Q-XO-oBf" eventType="touchUpInside" id="9Z9-Zv-R7E"/>
+                                </connections>
+                            </button>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BIT-wr-opu">
+                                <items>
+                                    <navigationItem id="GVG-Vq-H37"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="WMU-El-ZHK" firstAttribute="centerX" secondItem="BIT-wr-opu" secondAttribute="centerX" type="default" id="29p-dY-wPg"/>
+                            <constraint firstItem="WMU-El-ZHK" firstAttribute="centerX" secondItem="rlS-Z3-6nW" secondAttribute="centerX" type="default" id="8Wq-hL-TRE"/>
+                            <constraint firstItem="BIT-wr-opu" firstAttribute="trailing" secondItem="x83-hG-3lR" secondAttribute="trailing" type="default" id="GEb-kY-UOY"/>
+                            <constraint firstItem="2a2-yr-vuq" firstAttribute="centerX" secondItem="rlS-Z3-6nW" secondAttribute="centerX" type="default" id="KsN-gF-b0o"/>
+                            <constraint firstItem="DIB-0W-Wet" firstAttribute="top" secondItem="x83-hG-3lR" secondAttribute="top" constant="260" id="O2V-Mi-iRF"/>
+                            <constraint firstItem="BIT-wr-opu" firstAttribute="leading" secondItem="x83-hG-3lR" secondAttribute="leading" type="default" id="TIn-G8-ySb"/>
+                            <constraint firstItem="WMU-El-ZHK" firstAttribute="top" secondItem="x83-hG-3lR" secondAttribute="top" constant="108" id="eUe-tB-Edq"/>
+                            <constraint firstItem="BIT-wr-opu" firstAttribute="top" secondItem="x83-hG-3lR" secondAttribute="top" type="default" id="iE1-fd-Ov6"/>
+                            <constraint firstItem="2a2-yr-vuq" firstAttribute="top" secondItem="x83-hG-3lR" secondAttribute="top" constant="232" id="jBz-d9-Xfp"/>
+                            <constraint firstItem="rlS-Z3-6nW" firstAttribute="top" secondItem="x83-hG-3lR" secondAttribute="top" constant="163" id="uRj-Dp-qfS"/>
+                            <constraint firstItem="DIB-0W-Wet" firstAttribute="centerX" secondItem="2a2-yr-vuq" secondAttribute="centerX" type="default" id="yym-El-6UX"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="enterPinButton" destination="rlS-Z3-6nW" id="d4Y-cl-hDE"/>
+                        <outlet property="forgotPinLabel" destination="2a2-yr-vuq" id="g7s-yC-z68"/>
+                        <outlet property="retrievePinLinkButton" destination="DIB-0W-Wet" id="XaW-1K-djA"/>
+                        <outlet property="titleLabel" destination="WMU-El-ZHK" id="NM6-RL-mHa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UXw-mb-EKI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5067" y="-4307"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="swq-ng-E5N">
             <objects>
@@ -1290,20 +1379,20 @@
                         <sections>
                             <tableViewSection id="v2h-Xo-wwH">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="YgT-cy-gJ8" detailTextLabel="gog-Y2-FK7" style="IBUITableViewCellStyleValue1" id="HVD-kX-1ce">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="YgT-cy-gJ8" detailTextLabel="gog-Y2-FK7" style="IBUITableViewCellStyleValue1" id="HVD-kX-1ce">
                                         <rect key="frame" x="0.0" y="10" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgT-cy-gJ8">
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gog-Y2-FK7">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="13"/>
                                                     <color key="textColor" red="0.2196078431372549" green="0.32941176470588235" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
@@ -1331,39 +1420,45 @@
                                             <constraint firstAttribute="trailing" secondItem="EGZ-Cr-My7" secondAttribute="trailing" constant="20" type="default" id="eTb-xX-RTm"/>
                                         </constraints>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="ibp-mD-j32" style="IBUITableViewCellStyleDefault" id="Lnu-Tl-mC1">
-                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="ibp-mD-j32" detailTextLabel="SBa-SA-WdL" imageView="vOw-dX-dZx" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="Lnu-Tl-mC1">
+                                        <rect key="frame" x="0.0" y="99" width="320" height="59"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="280" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ibp-mD-j32">
-                                                    <rect key="frame" x="10" y="0.0" width="260" height="43"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <rect key="frame" x="40" y="13" width="28" height="17"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="54-lock.png" id="vOw-dX-dZx">
+                                                    <rect key="frame" x="10" y="17" width="20" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBa-SA-WdL">
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="13"/>
+                                                    <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="hUi-Np-ibx" kind="push" identifier="toSetPIN" id="k3l-jT-4dd"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="2NV-CL-qWm">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="SG8-CK-8tW" style="IBUITableViewCellStyleDefault" id="k03-zs-3gb">
-                                        <rect key="frame" x="0.0" y="163" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="178" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SG8-CK-8tW">
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
@@ -1372,14 +1467,14 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="qhj-Qz-48T" style="IBUITableViewCellStyleDefault" id="xpC-wo-O2k">
-                                        <rect key="frame" x="0.0" y="208" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="223" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhj-Qz-48T">
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
@@ -1388,7 +1483,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="84c-LQ-Bdp" style="IBUITableViewCellStyleDefault" id="hvx-yT-Wfk">
-                                        <rect key="frame" x="0.0" y="252" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="267" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -1396,7 +1491,7 @@
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="84c-LQ-Bdp">
                                                     <rect key="frame" x="10" y="0.0" width="260" height="43"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
@@ -1417,6 +1512,7 @@
                         <outlet property="accountTypeCell" destination="HVD-kX-1ce" id="TKj-xD-ucv"/>
                         <outlet property="notificationSwitch" destination="EGZ-Cr-My7" id="qyZ-UU-o9A"/>
                         <outlet property="view" destination="2ld-di-sfQ" id="eff-fP-p8x"/>
+                        <segue destination="lNS-Ua-D5H" kind="push" identifier="toSetPin" id="KND-gy-S7m"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zQ-8C-ERu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1424,61 +1520,140 @@
             </objects>
             <point key="canvasLocation" x="-1201" y="-684"/>
         </scene>
-        <!--Set Pin View Controller - Set  a PIN-->
-        <scene sceneID="Qjq-Ie-Fag">
+        <!--Set Pin View Controller-->
+        <scene sceneID="pj3-rp-5x8">
             <objects>
-                <viewController id="hUi-Np-ibx" customClass="CTLSetPinViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gFM-rN-msC">
+                <tableViewController id="lNS-Ua-D5H" customClass="CTLSetPinViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="rJg-1j-oFx">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Set a PIN code to enable locking" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kGS-IS-Iha">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Bfc-te-PlV">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="7Op-Id-5qN"/>
-                                    <constraint firstAttribute="width" constant="151" id="Oqo-dA-3ji"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
-                            </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="(Enter a four digit passcode you can remember.)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lhj-Rv-lXf">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="FbB-Bi-qFD"/>
-                                    <constraint firstAttribute="width" constant="287" id="HXn-Fd-5vc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Bfc-te-PlV" firstAttribute="centerX" secondItem="kGS-IS-Iha" secondAttribute="centerX" type="default" id="0E7-wo-VzD"/>
-                            <constraint firstAttribute="trailing" secondItem="kGS-IS-Iha" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="7rv-7l-VYt"/>
-                            <constraint firstItem="kGS-IS-Iha" firstAttribute="top" secondItem="gFM-rN-msC" secondAttribute="top" constant="35" id="8WK-7u-2jm"/>
-                            <constraint firstItem="Lhj-Rv-lXf" firstAttribute="top" secondItem="gFM-rN-msC" secondAttribute="top" constant="123" id="PpE-tk-32e"/>
-                            <constraint firstItem="Bfc-te-PlV" firstAttribute="top" secondItem="gFM-rN-msC" secondAttribute="top" constant="83" id="pX8-br-G8V"/>
-                            <constraint firstItem="kGS-IS-Iha" firstAttribute="leading" secondItem="gFM-rN-msC" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="pd4-xi-Tze"/>
-                            <constraint firstItem="Lhj-Rv-lXf" firstAttribute="leading" secondItem="gFM-rN-msC" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="y1F-Tl-d3H"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Set  a PIN" id="9NT-3u-Ypc">
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="8cY-aO-Fji"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.88627457620000005" green="0.88627457620000005" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
+                        <sections>
+                            <tableViewSection id="EWL-VJ-ecJ">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pinCell" rowHeight="172" id="95I-He-20I">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="173"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="171"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter PIN " minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jlM-xc-Dtr">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="207" id="hdD-ZQ-IXQ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="lNS-Ua-D5H" id="uQ7-ZQ-8bs"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm PIN" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Q7r-5u-gkI">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="lNS-Ua-D5H" id="7PQ-3s-Jy5"/>
+                                                    </connections>
+                                                </textField>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enable PIN Locking" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3x-3D-dSb">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="Q4B-E9-c8f"/>
+                                                        <constraint firstAttribute="width" constant="260" id="vNc-OE-xCH"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enter a 4 digit PIN code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sCh-i5-v1C">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="dRO-K7-ZK4"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="sCh-i5-v1C" firstAttribute="top" secondItem="95I-He-20I" secondAttribute="top" constant="47" id="A3D-xD-9l0"/>
+                                            <constraint firstItem="Q7r-5u-gkI" firstAttribute="centerX" secondItem="95I-He-20I" secondAttribute="centerX" type="default" id="Ici-pt-saM"/>
+                                            <constraint firstItem="Q7r-5u-gkI" firstAttribute="trailing" secondItem="jlM-xc-Dtr" secondAttribute="trailing" type="default" id="PeI-ux-RcL"/>
+                                            <constraint firstItem="sCh-i5-v1C" firstAttribute="centerX" secondItem="jlM-xc-Dtr" secondAttribute="centerX" type="default" id="Voo-RL-7EM"/>
+                                            <constraint firstItem="M3x-3D-dSb" firstAttribute="leading" secondItem="sCh-i5-v1C" secondAttribute="leading" type="default" id="ZsN-CK-PlT"/>
+                                            <constraint firstItem="sCh-i5-v1C" firstAttribute="trailing" secondItem="M3x-3D-dSb" secondAttribute="trailing" type="default" id="geW-co-AYT"/>
+                                            <constraint firstItem="jlM-xc-Dtr" firstAttribute="top" secondItem="95I-He-20I" secondAttribute="top" constant="84" id="h4E-a3-Qp1"/>
+                                            <constraint firstItem="Q7r-5u-gkI" firstAttribute="leading" secondItem="jlM-xc-Dtr" secondAttribute="leading" type="default" id="kcD-4e-tgw"/>
+                                            <constraint firstAttribute="bottom" secondItem="Q7r-5u-gkI" secondAttribute="bottom" constant="14" id="v9A-D3-0oU"/>
+                                            <constraint firstItem="M3x-3D-dSb" firstAttribute="top" secondItem="95I-He-20I" secondAttribute="top" constant="23" id="yzK-GS-TC4"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pinSwithCell" rowHeight="103" id="pcN-Y3-ZCt">
+                                        <rect key="frame" x="0.0" y="183" width="320" height="104"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="102"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2bG-ip-1PN">
+                                                    <connections>
+                                                        <action selector="switchDidChange:" destination="lNS-Ua-D5H" eventType="valueChanged" id="aKG-Y8-TlH"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Turn off to disable" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FdT-Ig-qK6">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="162" id="MXD-tZ-A1C"/>
+                                                        <constraint firstAttribute="height" constant="21" id="eDv-aO-lcx"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Will lock after 5 minutes of inactivity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lA8-Pq-C1t">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="260" id="OWf-JS-bks"/>
+                                                        <constraint firstAttribute="height" constant="21" id="jvS-O2-Y0d"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="lA8-Pq-C1t" firstAttribute="centerX" secondItem="pcN-Y3-ZCt" secondAttribute="centerX" type="default" id="4q6-UK-PAd"/>
+                                            <constraint firstItem="lA8-Pq-C1t" firstAttribute="trailing" secondItem="2bG-ip-1PN" secondAttribute="trailing" type="default" id="Chd-9J-n9o"/>
+                                            <constraint firstAttribute="bottom" secondItem="lA8-Pq-C1t" secondAttribute="bottom" constant="29" id="HDK-Gn-Z7e"/>
+                                            <constraint firstItem="lA8-Pq-C1t" firstAttribute="leading" secondItem="FdT-Ig-qK6" secondAttribute="leading" type="default" id="bXj-Uc-rgL"/>
+                                            <constraint firstItem="FdT-Ig-qK6" firstAttribute="centerY" secondItem="2bG-ip-1PN" secondAttribute="centerY" type="default" id="pAu-3v-0fH"/>
+                                            <constraint firstItem="2bG-ip-1PN" firstAttribute="top" secondItem="pcN-Y3-ZCt" secondAttribute="top" constant="20" type="default" id="vUh-Q5-3x5"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="lNS-Ua-D5H" id="KQr-gV-b2k"/>
+                            <outlet property="delegate" destination="lNS-Ua-D5H" id="lQD-TJ-Zco"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="SP0-ZG-UTa">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Nw3-1r-tnH"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="instructionsLabel" destination="Lhj-Rv-lXf" id="XJI-IJ-gZK"/>
-                        <outlet property="pinTextField" destination="Bfc-te-PlV" id="69q-yZ-gJU"/>
-                        <outlet property="titleLabel" destination="kGS-IS-Iha" id="USj-5t-8eL"/>
+                        <outlet property="confirmPinTextField" destination="Q7r-5u-gkI" id="ZKV-PB-qX8"/>
+                        <outlet property="enter4digitLabel" destination="sCh-i5-v1C" id="dLA-IB-fpc"/>
+                        <outlet property="pinSwitch" destination="2bG-ip-1PN" id="rGH-Ze-Al9"/>
+                        <outlet property="pinTextField" destination="jlM-xc-Dtr" id="ClY-pi-TNh"/>
+                        <outlet property="switchLabel" destination="FdT-Ig-qK6" id="kVV-gQ-a8N"/>
+                        <outlet property="switchNoteLabel" destination="lA8-Pq-C1t" id="FfQ-a0-TPC"/>
+                        <outlet property="titleLabel" destination="M3x-3D-dSb" id="UDZ-6Z-25B"/>
                     </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xB2-Wy-KdP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qP6-Sb-pra" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-722" y="-692"/>
+            <point key="canvasLocation" x="-613" y="-684"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wv8-ra-VoP">
@@ -2011,6 +2186,7 @@
         <image name="19-gear.png" width="26" height="26"/>
         <image name="26-checkmark-gray.png" width="16" height="16"/>
         <image name="44-shoebox.png" width="24" height="22"/>
+        <image name="54-lock.png" width="20" height="24"/>
         <image name="clock-grn.png" width="18" height="18"/>
         <image name="clock-red.png" width="18" height="18"/>
         <image name="menu.png" width="18" height="18"/>
@@ -2164,6 +2340,16 @@
         <class className="CTLMessagesListViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMessagesListViewController.h"/>
         </class>
+        <class className="CTLPinInterstialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLPinInterstialViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="promptForPin:"/>
+                <relationship kind="outlet" name="enterPinButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="forgotPinLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="retrievePinLinkButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="CTLRegisterViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLRegisterViewController.h"/>
             <relationships>
@@ -2175,11 +2361,16 @@
                 <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
-        <class className="CTLSetPinViewController" superclassName="UIViewController">
+        <class className="CTLSetPinViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSetPinViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="instructionsLabel" candidateClass="UILabel"/>
+                <relationship kind="action" name="switchDidChange:" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="confirmPinTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="enter4digitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="pinSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="pinTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="switchLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="switchNoteLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
