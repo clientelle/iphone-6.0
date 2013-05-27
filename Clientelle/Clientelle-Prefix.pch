@@ -19,6 +19,8 @@
 
 #define kCTLSettingsNotification @"com.clientelle.defaults.notification"
 #define kAddressBookDidChange @"com.clientelle.addressBook.change"
+#define kCTLAppFont @"STHeitiTC"
+#define kCTLAppFontMedium @"STHeitiTC-Medium"
 
 // appirater (app ratings)
 #define kAppiraterAppId @"CHANGE_THIS_TO_YOUR_APP_ID"

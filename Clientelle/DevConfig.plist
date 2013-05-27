@@ -3,8 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>mobileRoot</key>
-	<string>http://localhost:8002</string>
+	<string>http://localhost:5000</string>
 	<key>server</key>
-	<string>http://localhost:8001</string>
+	<string>http://localhost:5000</string>
 </dict>
 </plist>

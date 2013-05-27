@@ -32,8 +32,8 @@ e†
 "RESET" = "Reset";
 "TRY_AGAIN" = "Try Again";
 "UPGRADE" = "Upgrade";
-"PRO" = "Pro";
-"FREE" = "Free";
+"PRO" = "PRO";
+"FREE" = "FREE";
 
 /* GENERIC TERMS */
 "CLIENTS" = "Clients";
@@ -153,7 +153,7 @@ e†
 "CALENDAR" = "Clientelle Calendar";
 
 "NO_APPOINTMENTS" = "No Appointments";
-"NO_APPOINTMENTS_FOUND" = "No appointments found";
+"START_BY_ADDING_APPOINTMENTS" = "Start by adding appointments";
 "ADD_APPOINTMENT" = "Add Appointment";
 "DELETE_APPOINTMENT" = "Delete Appointment";
 "CONFIRM_DELETE_APPOINTMENT" = "Are you sure want to delete this appointment?";
@@ -204,10 +204,33 @@ e†
 "CORRECT_PIN" = "Correct!";
 "MUST_BE_FOUR_DIGITS" = "PIN must be 4 digits";
 
-"LOCK_ENABLED" = "Lock is enabled";
-"LOCK_DISABLED" = "Lock is disabled";
+"LOCK_IS_ON" = "Lock is on";
+"LOCK_IS_OFF" = "Lock is off";
 
 "NEW_PIN" = "New PIN";
 "PIN_DOES_NOT_MATCH" = "PIN does not match!";
 "PIN_CONFIRMED" = "New PIN Confirmed!";
 
+
+/* INDUSTRIES */
+"ACCOUNTING_SERVICES" = "Accounting Services";
+"CREATIVE_DESIGN" = "Creative/Design Services";
+"LEGAL_SERVICES" = "Legal Services";
+"ESCORT_SERVICES" = "Escort Services";
+"EVENT_PLANNER" = "Event Planner";
+"BEAUTY" = "Beauty";
+"HEALTH_FITNESS" = "Health & Fitness";
+"FINANCIAL_SERVICES" = "Financial Services";
+"PHYSICAL_THERAPY" = "Physical Therapy";
+"SOFTWARE_CONSULTANT" = "Software Consultant";
+"REAL_ESTATE" = "Real Estate";
+"WHOLESALE_DISTRIBUTION" = "Wholesale/Distribution";
+"OTHER" = "Other";
+
+/* REGISTRATION */
+"EMAIL_ADDRESS" = "Email Addresss";
+"PASSWORD" = "Password";
+"CONFIRM_PASSWORD" = "Confirm Password";
+"COMPANY_NAME" = "Company Name";
+"INDUSTRY" = "Industry";
+"ALREADY_HAVE_ACCOUNT" = "Already have an account?";

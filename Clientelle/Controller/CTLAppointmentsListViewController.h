@@ -18,8 +18,7 @@ extern NSString *const CTLAppointmentWasAddedNotification;
     EKEventStore *_eventStore;
     CTLPickerView *_filterPickerView;
     NSArray *_filterArray;
-    BOOL _showSplashView;
-    UIView *_splashView;
+    UIView *_emptyView;
 }
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;

@@ -432,14 +432,14 @@ int const CTLAddContactActionSheetTag = 424;
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 90.0f, viewFrame.size.width, 25.0f)];
     [titleLabel setBackgroundColor:[UIColor clearColor]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20.0f]];
+    [titleLabel setFont:[UIFont fontWithName:kCTLAppFontMedium size:20.0f]];
     [titleLabel setTextColor:textColor];
     [titleLabel setText:NSLocalizedString(@"NO_CLIENTS", nil)];
     
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 120.0f, viewFrame.size.width, 25.0f)];
     [messageLabel setBackgroundColor:[UIColor clearColor]];
     [messageLabel setTextAlignment:NSTextAlignmentCenter];
-    [messageLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0f]];
+    [messageLabel setFont:[UIFont fontWithName:kCTLAppFont size:14.0f]];
     [messageLabel setTextColor:textColor];
     [messageLabel setText:NSLocalizedString(@"EMPTY_CONTACTS_MSG", nil)];
         
@@ -455,7 +455,7 @@ int const CTLAddContactActionSheetTag = 424;
     [addButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
     [addButton setTitleColor:[UIColor colorFromUnNormalizedRGB:61.0f green:71.0f blue:110.0f alpha:1.0f] forState:UIControlStateHighlighted];
     
-    UIFont *buttonFont = [UIFont fontWithName:@"Helvetica-Bold" size:14.0f];
+    UIFont *buttonFont = [UIFont fontWithName:kCTLAppFontMedium size:14.0f];
     NSString *buttonString = NSLocalizedString(@"ADD_CONTACTS", nil);
     CGSize buttonSize = [buttonString sizeWithFont:buttonFont];
     CGFloat buttonWidth = buttonSize.width + 20.0f;

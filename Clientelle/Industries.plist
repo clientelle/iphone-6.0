@@ -5,128 +5,80 @@
 	<dict>
 		<key>industry_id</key>
 		<integer>1</integer>
-		<key>industry_name</key>
-		<string>Accounting Services</string>
+		<key>i18n_key</key>
+		<string>ACCOUNTING_SERVICES</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>2</integer>
-		<key>industry_name</key>
-		<string>Advertising/Marketing/PR</string>
+		<key>i18n_key</key>
+		<string>BEAUTY</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>3</integer>
-		<key>industry_name</key>
-		<string>Architecture/Engineering</string>
+		<key>i18n_key</key>
+		<string>CREATIVE_DESIGN</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>4</integer>
-		<key>industry_name</key>
-		<string>Business Services</string>
+		<key>i18n_key</key>
+		<string>ESCORT_SERVICES</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>5</integer>
-		<key>industry_name</key>
-		<string>Consultant</string>
+		<key>i18n_key</key>
+		<string>EVENT_PLANNER</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>6</integer>
-		<key>industry_name</key>
-		<string>E-commerce</string>
+		<key>i18n_key</key>
+		<string>HEALTH_FITNESS</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>7</integer>
-		<key>industry_name</key>
-		<string>Construction/Contracting</string>
+		<key>i18n_key</key>
+		<string>LEGAL_SERVICES</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>8</integer>
-		<key>industry_name</key>
-		<string>Education</string>
+		<key>i18n_key</key>
+		<string>FINANCIAL_SERVICES</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>9</integer>
-		<key>industry_name</key>
-		<string>Financial Services</string>
+		<key>i18n_key</key>
+		<string>PHYSICAL_THERAPY</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>10</integer>
-		<key>industry_name</key>
-		<string>Graphic Design</string>
+		<key>i18n_key</key>
+		<string>SOFTWARE_CONSULTANT</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>11</integer>
-		<key>industry_name</key>
-		<string>Government</string>
+		<key>i18n_key</key>
+		<string>REAL_ESTATE</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>12</integer>
-		<key>industry_name</key>
-		<string>Healthcare</string>
+		<key>i18n_key</key>
+		<string>WHOLESALE_DISTRIBUTION</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>industry_id</key>
 		<integer>13</integer>
-		<key>industry_name</key>
-		<string>Legal Services</string>
-	</dict>
-	<dict>
-		<key>industry_id</key>
-		<integer>14</integer>
-		<key>industry_name</key>
-		<string>Manufacturing</string>
-	</dict>
-	<dict>
-		<key>industry_id</key>
-		<integer>15</integer>
-		<key>industry_name</key>
-		<string>Nonprofit</string>
-	</dict>
-	<dict>
-		<key>industry_id</key>
-		<integer>16</integer>
-		<key>industry_name</key>
-		<string>Real Estate</string>
-	</dict>
-	<dict>
-		<key>industry_id</key>
-		<integer>17</integer>
-		<key>industry_name</key>
-		<string>Restaurant/Hospitality</string>
-	</dict>
-	<dict>
-		<key>industry_id</key>
-		<integer>18</integer>
-		<key>industry_name</key>
-		<string>Retail</string>
-	</dict>
-	<dict>
-		<key>industry_id</key>
-		<integer>19</integer>
-		<key>industry_name</key>
-		<string>Software/Technology</string>
-	</dict>
-	<dict>
-		<key>industry_id</key>
-		<integer>20</integer>
-		<key>industry_name</key>
-		<string>Wholesale/Distribution</string>
-	</dict>
-	<dict>
-		<key>industry_id</key>
-		<integer>21</integer>
-		<key>industry_name</key>
-		<string>Other</string>
+		<key>i18n_key</key>
+		<string>OTHER</string>
 	</dict>
 </array>
 </plist>

@@ -10,6 +10,7 @@
 #import "CTLAccountInterstitialViewController.h"
 #import "CTLRegisterViewController.h"
 #import "CTLSlideMenuController.h"
+#import "CTLCDAccount.h"
 
 @implementation CTLAccountInterstitialViewController
 
@@ -18,16 +19,18 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    if(!self.menuController.hasPro){
-        self.navigationItem.title = @"Purchase Inbox";
-        self.actionMessageLabel.text = @"Purchase this feature and stuff";
+    _account = [CTLCDAccount MR_findFirst];
+    
+    if(!_account){
         
-                
+        self.navigationItem.title = @"Upgrade";
+        self.actionMessageLabel.text = @"You must upgrade to get this feature";
+        
         [self.upgradeButton setTitle: @"Purchase" forState: UIControlStateNormal];
-        
         [self.upgradeButton addTarget:self action:@selector(upgradeToPro:) forControlEvents:UIControlEventTouchUpInside];
         
-    }else if(!self.menuController.hasAccount){
+    }else {
+        
         self.navigationItem.title = @"Register";
         [self.upgradeButton setTitle: @"Create Account" forState: UIControlStateNormal];
         self.actionMessageLabel.text = @"Thank you for purchasing.";
@@ -35,8 +38,6 @@
         [self.upgradeButton addTarget:self action:@selector(toSignup:) forControlEvents:UIControlEventTouchUpInside];
         
     }
-    
-    
 }
 
 - (void)upgradeToPro:(id)sender
@@ -46,16 +47,16 @@
     [alert show];
 }
 
-- (void)toSignup:(id)sender{
-    [self performSegueWithIdentifier:@"toSignup" sender:sender];
-}
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex == 1){
-        [self.menuController setHasPro:YES];
+        _account.is_pro = @(1);
         [self performSegueWithIdentifier:@"toSignup" sender:alertView];
     }
+}
+
+- (void)toSignup:(id)sender{
+    [self performSegueWithIdentifier:@"toSignup" sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

@@ -20,9 +20,7 @@ extern const CGFloat CTLMainMenuWidth;
 @property (nonatomic, strong) UIViewController<CTLSlideMenuDelegate> *mainViewController;
 @property (nonatomic, assign) ABAddressBookRef addressBookRef;
 
-@property (nonatomic, assign) BOOL hasPro;
-@property (nonatomic, assign) BOOL hasAccount;
-@property (nonatomic, assign) BOOL hasInbox;
+
 @property (nonatomic, assign) BOOL rightSwipeEnabled;
 
 

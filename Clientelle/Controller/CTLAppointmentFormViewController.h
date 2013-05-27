@@ -16,6 +16,7 @@
     UIDatePicker *_datePicker;
     UIPickerView *_contactPicker;
     NSInteger _activeInputTag;
+    UITextField *_activeField;
     EKEvent *_event;
     CTLCDAppointment *_appointment;
     NSDecimalNumber *_appointmentFee;
@@ -27,6 +28,7 @@
 }
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, weak) IBOutlet UILabel *headerLabel;
 @property (nonatomic, weak) IBOutlet UITextField *titleTextField;
 @property (nonatomic, weak) IBOutlet UITextField *contactNameTextField;
 @property (nonatomic, weak) IBOutlet UITextField *startTimeTextField;

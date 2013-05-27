@@ -13,9 +13,6 @@
 #import "CTLContactHeaderView.h"
 #import "CTLCDContact.h"
 
-NSString *const CTLFontName = @"HelveticaNeue";
-NSString *const CTLFontNameBold = @"HelveticaNeue-Bold";
-
 NSString *const CTLShareContactNotification = @"com.clientelle.com.notifications.shareContact";
 CGFloat const CTLContactViewHeaderHeight = 68.0f;
 int CTLNameLabelTag = 664;
@@ -48,13 +45,13 @@ int CTLPhoneLabelTag = 602;
         CGFloat labelWidth = viewSize.width - (pictureView.frame.size.width + 50);
         
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, padding, labelWidth, 20.0f)];
-        [nameLabel setFont:[UIFont fontWithName:CTLFontNameBold size:16]];
+        [nameLabel setFont:[UIFont fontWithName:kCTLAppFontMedium size:16]];
         [nameLabel setTextColor:[UIColor darkGrayColor]];
         [nameLabel setUserInteractionEnabled:YES];
         nameLabel.tag = CTLNameLabelTag;
         
         UILabel *phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, nameLabel.frame.size.height + 10, labelWidth, 20.0f)];
-        [phoneLabel setFont:[UIFont fontWithName:CTLFontName size:15]];
+        [phoneLabel setFont:[UIFont fontWithName:kCTLAppFont size:15]];
         [phoneLabel setTextColor:[UIColor darkGrayColor]];
         [phoneLabel setUserInteractionEnabled:YES];
         phoneLabel.tag = CTLPhoneLabelTag;

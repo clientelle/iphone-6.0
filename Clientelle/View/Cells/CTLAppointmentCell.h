@@ -22,8 +22,8 @@
 
 - (IBAction)markAsComplete:(id)sender;
 - (IBAction)segueToMapView:(id)sender;
-- (void)decorateInCompletedCell:(BOOL)isOverDue;
-- (void)decorateCompletedCell;
+- (void)decorateInCompletedCell:(NSDate *)date;
+- (void)decorateCompletedCell:(NSDate *)date;
 
 @property (nonatomic, assign) id<CTLAppointmentCellDelegate>delegate;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;

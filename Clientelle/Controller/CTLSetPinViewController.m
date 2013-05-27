@@ -47,11 +47,11 @@
     }
     
     if(pinSwitchEnabled){
-        self.switchLabel.textColor = [UIColor ctlGreen];
-        self.switchLabel.text = NSLocalizedString(@"LOCK_ENABLED", nil);
+        //self.switchLabel.textColor = [UIColor ctlGreen];
+        self.switchLabel.text = NSLocalizedString(@"LOCK_IS_ON", nil);
     }else{
-        self.switchLabel.textColor = [UIColor ctlRed];
-        self.switchLabel.text = NSLocalizedString(@"LOCK_DISABLED", nil);
+        //self.switchLabel.textColor = [UIColor ctlRed];
+        self.switchLabel.text = NSLocalizedString(@"LOCK_IS_OFF", nil);
     }
 }
 
@@ -167,6 +167,7 @@
         self.switchLabel.text = NSLocalizedString(@"LOCK_DISABLED", nil);
     }
     
+    [_userDefaults setBool:NO forKey:@"IS_LOCKED"];
     [_userDefaults setBool:switchButton.on forKey:@"PIN_ENABLED"];
     [_userDefaults synchronize];
 }

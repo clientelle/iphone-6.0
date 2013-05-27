@@ -5,16 +5,19 @@
 
 
 extern const struct CTLCDAccountAttributes {
-	__unsafe_unretained NSString *access_token;
+	__unsafe_unretained NSString *auth_token;
 	__unsafe_unretained NSString *company;
 	__unsafe_unretained NSString *company_id;
-	__unsafe_unretained NSString *dateCreated;
+	__unsafe_unretained NSString *created_at;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *first_name;
+	__unsafe_unretained NSString *has_inbox;
 	__unsafe_unretained NSString *industry;
 	__unsafe_unretained NSString *industry_id;
+	__unsafe_unretained NSString *is_pro;
 	__unsafe_unretained NSString *last_name;
 	__unsafe_unretained NSString *password;
+	__unsafe_unretained NSString *updated_at;
 	__unsafe_unretained NSString *user_id;
 } CTLCDAccountAttributes;
 
@@ -23,6 +26,9 @@ extern const struct CTLCDAccountRelationships {
 
 extern const struct CTLCDAccountFetchedProperties {
 } CTLCDAccountFetchedProperties;
+
+
+
 
 
 
@@ -49,10 +55,10 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* access_token;
+@property (nonatomic, strong) NSString* auth_token;
 
 
-//- (BOOL)validateAccess_token:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateAuth_token:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -77,10 +83,10 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSDate* dateCreated;
+@property (nonatomic, strong) NSDate* created_at;
 
 
-//- (BOOL)validateDateCreated:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateCreated_at:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -97,6 +103,18 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 //- (BOOL)validateFirst_name:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* has_inbox;
+
+
+@property BOOL has_inboxValue;
+- (BOOL)has_inboxValue;
+- (void)setHas_inboxValue:(BOOL)value_;
+
+//- (BOOL)validateHas_inbox:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -121,6 +139,18 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* is_pro;
+
+
+@property BOOL is_proValue;
+- (BOOL)is_proValue;
+- (void)setIs_proValue:(BOOL)value_;
+
+//- (BOOL)validateIs_pro:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSString* last_name;
 
 
@@ -133,6 +163,14 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 //- (BOOL)validatePassword:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSDate* updated_at;
+
+
+//- (BOOL)validateUpdated_at:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -160,8 +198,8 @@ extern const struct CTLCDAccountFetchedProperties {
 @interface _CTLCDAccount (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSString*)primitiveAccess_token;
-- (void)setPrimitiveAccess_token:(NSString*)value;
+- (NSString*)primitiveAuth_token;
+- (void)setPrimitiveAuth_token:(NSString*)value;
 
 
 
@@ -181,8 +219,8 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
-- (NSDate*)primitiveDateCreated;
-- (void)setPrimitiveDateCreated:(NSDate*)value;
+- (NSDate*)primitiveCreated_at;
+- (void)setPrimitiveCreated_at:(NSDate*)value;
 
 
 
@@ -195,6 +233,15 @@ extern const struct CTLCDAccountFetchedProperties {
 
 - (NSString*)primitiveFirst_name;
 - (void)setPrimitiveFirst_name:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveHas_inbox;
+- (void)setPrimitiveHas_inbox:(NSNumber*)value;
+
+- (BOOL)primitiveHas_inboxValue;
+- (void)setPrimitiveHas_inboxValue:(BOOL)value_;
 
 
 
@@ -214,6 +261,15 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+- (NSNumber*)primitiveIs_pro;
+- (void)setPrimitiveIs_pro:(NSNumber*)value;
+
+- (BOOL)primitiveIs_proValue;
+- (void)setPrimitiveIs_proValue:(BOOL)value_;
+
+
+
+
 - (NSString*)primitiveLast_name;
 - (void)setPrimitiveLast_name:(NSString*)value;
 
@@ -222,6 +278,12 @@ extern const struct CTLCDAccountFetchedProperties {
 
 - (NSString*)primitivePassword;
 - (void)setPrimitivePassword:(NSString*)value;
+
+
+
+
+- (NSDate*)primitiveUpdated_at;
+- (void)setPrimitiveUpdated_at:(NSDate*)value;
 
 
 

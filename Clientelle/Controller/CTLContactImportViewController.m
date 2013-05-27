@@ -118,8 +118,9 @@
         person = [_contacts objectAtIndex:indexPath.row];
     }
 
-    [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
-    [cell.detailTextLabel setFont:[UIFont fontWithName:@"Helvetica" size:13.0f]];
+    [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
+    [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14]];
+    [cell.detailTextLabel setFont:[UIFont fontWithName:@"Helvetica" size:14]];
     
     cell.textLabel.text = person.compositeName;
     if([person.phone length] > 0){

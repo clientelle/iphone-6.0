@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Account" representedClassName="CTLCDAccount" syncable="YES">
-        <attribute name="access_token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="auth_token" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="company_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="created_at" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="has_inbox" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="industry" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="industry_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="is_pro" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated_at" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Appointment" representedClassName="CTLCDAppointment" syncable="YES">
@@ -53,12 +56,12 @@
     </entity>
     <entity name="Inbox" representedClassName="CTLCDInbox" syncable="YES">
         <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="form_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="install_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="formId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="installCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="schema" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-540" positionY="-81" width="128" height="210"/>
+        <element name="Account" positionX="-540" positionY="-81" width="128" height="255"/>
         <element name="Appointment" positionX="-173" positionY="-270" width="128" height="210"/>
         <element name="Contact" positionX="-380" positionY="-273" width="128" height="270"/>
         <element name="ContactField" positionX="-396" positionY="-441" width="128" height="133"/>

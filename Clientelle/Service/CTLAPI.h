@@ -20,7 +20,7 @@ extern NSString *const kResponseKey;
 extern NSString *const kCTLMessageKey;
 extern NSString *const kCTLStatusKey;
 extern NSString *const kCTLResponseKey;
-extern NSString *const kCTLAccessTokenKey;
+extern NSString *const kCTLAuthTokenKey;
 
 
 @interface CTLAPI : NSObject {

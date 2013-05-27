@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "NSDate+CTLDate.h"
+#import "NSDate+TimeAgo.h"
 #import "UIColor+CTLColor.h"
 #import "CTLViewDecorator.h"
 
@@ -44,22 +45,11 @@ int const CTLSelectedFilterIndexCompleted = 1;
 
     [self.navigationItem setBackBarButtonItem: backButton];
 
-
+    _emptyView = [self buildEmptyView];
     _eventStore = [[EKEventStore alloc] init];
 
     [self configureFilterPicker];
-
-    if([[NSUserDefaults standardUserDefaults] integerForKey:@"showSplash"] == 0){
-        self.navigationItem.title = NSLocalizedString(@"WELCOME", nil);
-        
-        _showSplashView = YES;
-        _splashView = [self buildEmptyView];
-        
-    }else{
-        _showSplashView = NO;
-        [self createFilterPickerButton];
-    }
-
+    [self createFilterPickerButton];
     [self loadAllAppointments];
 
     //tap to dissmiss the filter picker
@@ -88,72 +78,27 @@ int const CTLSelectedFilterIndexCompleted = 1;
 
 - (UIView *)buildEmptyView
 {
-    CGFloat cielingY = 40.0f;
     CGRect viewFrame = self.view.frame;
+    
     UIView *emptyView = [[UIView alloc] initWithFrame:viewFrame];
+    UIColor *textColor = [UIColor colorFromUnNormalizedRGB:76.0f green:91.0f blue:130.0f alpha:1.0f];
     
-    CGFloat titleLabelHeight = 25.0f;
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(37.0f, cielingY, viewFrame.size.width-70.0f, titleLabelHeight)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 90.0f, viewFrame.size.width, 25.0f)];
     [titleLabel setBackgroundColor:[UIColor clearColor]];
-    [titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18.0f]];
-    [titleLabel setTextColor:[UIColor darkGrayColor]];
-    [titleLabel setText:NSLocalizedString(@"TITLE_SPIEL", nil)];
-    [emptyView addSubview:titleLabel];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [titleLabel setFont:[UIFont fontWithName:kCTLAppFontMedium size:20.0f]];
+    [titleLabel setTextColor:textColor];
+    [titleLabel setText:NSLocalizedString(@"NO_APPOINTMENTS", nil)];
     
-    CGFloat lineHeight = 50.0f;
-    CGFloat leftMargin = 40.0f;
-    
-    UIImageView *keyIcon = [self createIcon:@"237-key"];
-    CGRect iconFrame = keyIcon.frame;
-    iconFrame.origin.x = leftMargin;
-    iconFrame.origin.y = cielingY;
-    
-    iconFrame.origin.y += lineHeight;
-    keyIcon.frame = iconFrame;
-    [emptyView addSubview:keyIcon];
-
-    UIImageView *clockIcon = [self createIcon:@"11-clock-grey"];
-    
-    iconFrame.origin.y += lineHeight;
-    clockIcon.frame = iconFrame;
-    [emptyView addSubview:clockIcon];
-    
-    UIImageView *chatIcon = [self createIcon:@"09-chat-grey"];
-    iconFrame.origin.y += lineHeight;
-    chatIcon.frame = iconFrame;
-    [emptyView addSubview:chatIcon];
-    
-    UIImageView *lockIcon = [self createIcon:@"54-lock"];
-    iconFrame.origin.y += lineHeight;
-    lockIcon.frame = iconFrame;
-    [emptyView addSubview:lockIcon];
-        
-    CGFloat leftMarginOffset = (iconFrame.origin.x + iconFrame.size.width) + 15.0f;
-    CGRect labelFrame = CGRectMake(leftMarginOffset, cielingY, viewFrame.size.width-110, iconFrame.size.height);
-    
-    lineHeight -= 1;
-    
-    labelFrame.origin.y += lineHeight;
-    UILabel *privateContactsLabel = [self createLabel:labelFrame withText:NSLocalizedString(@"BULLET_STORE_PRIVATE_CONTACTS", nil)];
-    [emptyView addSubview:privateContactsLabel];
-
-    labelFrame.origin.y += lineHeight;
-    UILabel *appointmentLabel = [self createLabel:labelFrame withText:NSLocalizedString(@"BULLET_SCHEDULE_APPOINTMENTS", nil)];
-    [emptyView addSubview:appointmentLabel];
-    
-    labelFrame.origin.y += lineHeight;
-    UILabel *messageLabel = [self createLabel:labelFrame withText:NSLocalizedString(@"BULLET_PRIVATE_MESSAGING", nil)];
-    [emptyView addSubview:messageLabel];
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 120.0f, viewFrame.size.width, 25.0f)];
+    [messageLabel setBackgroundColor:[UIColor clearColor]];
+    [messageLabel setTextAlignment:NSTextAlignmentCenter];
+    [messageLabel setFont:[UIFont fontWithName:kCTLAppFont size:14.0f]];
+    [messageLabel setTextColor:textColor];
+    [messageLabel setText:NSLocalizedString(@"START_BY_ADDING_APPOINTMENTS", nil)];
     
     
-    labelFrame.origin.y += lineHeight;
-    UILabel *lockLabel = [self createLabel:labelFrame withText:NSLocalizedString(@"BULLET_LOCK_APP", nil)];
-    [emptyView addSubview:lockLabel];
-    
-    CGFloat buttonWidth = 200.0f;
-    CGFloat buttonCenter = viewFrame.size.width/2 - (buttonWidth/2);
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
     UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
     UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
     
@@ -164,17 +109,25 @@ int const CTLSelectedFilterIndexCompleted = 1;
     [addButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
     [addButton setTitleColor:[UIColor colorFromUnNormalizedRGB:61.0f green:71.0f blue:110.0f alpha:1.0f] forState:UIControlStateHighlighted];
     
-    [addButton setFrame:CGRectMake(buttonCenter, labelFrame.origin.y + 60, buttonWidth, 38.0f)];
-    [addButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
+    UIFont *buttonFont = [UIFont fontWithName:kCTLAppFontMedium size:14.0f];
+    NSString *buttonString = NSLocalizedString(@"ADD_APPOINTMENT", nil);
+    CGSize buttonSize = [buttonString sizeWithFont:buttonFont];
+    CGFloat buttonWidth = buttonSize.width + 20.0f;
+    CGFloat buttonCenter = (viewFrame.size.width/2) - (buttonWidth/2);
+    
+    [addButton setFrame:CGRectMake(buttonCenter, 175.0f, buttonWidth, 38.0f)];
+    [addButton.titleLabel setFont:buttonFont];
     [addButton addTarget:self action:@selector(addAppointment:) forControlEvents:UIControlEventTouchUpInside];
-    [addButton setTitle:NSLocalizedString(@"BUY_PRO", nil) forState:UIControlStateNormal];
+    [addButton setTitle:buttonString forState:UIControlStateNormal];
     
     addButton.layer.shadowOpacity = 0.2f;
     addButton.layer.shadowRadius = 1.0f;
     addButton.layer.shadowOffset = CGSizeMake(0,0);
-      
-    [emptyView addSubview:addButton];
     
+    [emptyView addSubview:titleLabel];
+    [emptyView addSubview:messageLabel];
+    [emptyView addSubview:addButton];
+
     return emptyView;
 }
 
@@ -204,7 +157,7 @@ int const CTLSelectedFilterIndexCompleted = 1;
     UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
     [label setText:string];
     [label setBackgroundColor:[UIColor clearColor]];
-    [label setFont:[UIFont fontWithName:@"Helvetica" size:15.0f]];
+    [label setFont:[UIFont fontWithName:kCTLAppFont size:15.0f]];
     [label setTextColor:[UIColor darkGrayColor]];
     return label;
 }
@@ -218,12 +171,14 @@ int const CTLSelectedFilterIndexCompleted = 1;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(_showSplashView){
-        return self.view.bounds.size.height;
-    }
-    
-    if([[self.resultsController fetchedObjects] count] == 0){
-        return CTLAppointmentRowHeight;
+    if([_filterPickerView selectedRowInComponent:0] == 0){
+        if([[self.resultsController fetchedObjects] count] == 0){
+            return self.view.bounds.size.height;
+        }
+    }else{
+        if([[self.resultsController fetchedObjects] count] == 0){
+            return CTLAppointmentRowHeight;
+        }
     }
     
     return 0;
@@ -231,12 +186,12 @@ int const CTLSelectedFilterIndexCompleted = 1;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if(_showSplashView){
-        return _splashView;
-    }
-    
     if([[self.resultsController fetchedObjects] count] == 0){
-        return [self emptyRow];
+        if([_filterPickerView selectedRowInComponent:0] == 0){
+            return _emptyView;
+        }else{
+            return [self emptyRow];
+        }
     }
 
     return nil;
@@ -249,7 +204,7 @@ int const CTLSelectedFilterIndexCompleted = 1;
     UILabel *noCompletedItemsLabel = [[UILabel alloc] initWithFrame:completedEmptyStateFrame];
     noCompletedItemsLabel.backgroundColor = [UIColor clearColor];
     noCompletedItemsLabel.textAlignment = NSTextAlignmentCenter;
-    noCompletedItemsLabel.font = [UIFont fontWithName:@"Helvetica" size:15];
+    noCompletedItemsLabel.font = [UIFont fontWithName:kCTLAppFont size:15];
     noCompletedItemsLabel.textColor = [UIColor lightGrayColor];
     noCompletedItemsLabel.text = NSLocalizedString(@"NO_COMPLETED_ITEMS", nil);
     
@@ -349,6 +304,10 @@ int const CTLSelectedFilterIndexCompleted = 1;
             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView reloadData];
             
+            if([_filterPickerView selectedRowInComponent:0] == 1){
+                [_filterPickerView selectRow:0 inComponent:0 animated:NO];
+            }
+            
             break;
             
         case NSFetchedResultsChangeDelete:
@@ -356,8 +315,6 @@ int const CTLSelectedFilterIndexCompleted = 1;
             break;
             
         case NSFetchedResultsChangeUpdate:
-            
-            
             [self configure:cell withAppointment:appointment];
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
@@ -380,11 +337,10 @@ int const CTLSelectedFilterIndexCompleted = 1;
 
     if(appointment.completedValue){
         [appointment setCompleted:@(0)];
-        BOOL isOverDue = [appointment.startDate compare:[NSDate date]] == NSOrderedAscending;
-        [cell decorateInCompletedCell:isOverDue];
+        [cell decorateInCompletedCell:appointment.startDate];
         
     }else{
-        [cell decorateCompletedCell];
+        [cell decorateCompletedCell:appointment.startDate];
         [appointment setCompleted:@(1)];
     }
     
@@ -398,19 +354,15 @@ int const CTLSelectedFilterIndexCompleted = 1;
     [cell setSelectionStyle:UITableViewCellEditingStyleNone];
      CTLCDContact *contact = appointment.contact;
     cell.titleLabel.text = [contact compositeName];
-    NSString *timeString = [NSString stringWithFormat:@"@%@", [NSDate formatShortTimeOnly:appointment.startDate]];
-    cell.timeLabel.text = [timeString lowercaseString];
+    
     cell.dateLabel.text= [NSDate formatShortDateOnly:appointment.startDate];
     cell.descLabel.text = appointment.title;
     cell.feeLabel.text = [appointment formattedFee];
     
-    BOOL isOverDue = [appointment.startDate compare:[NSDate date]] == NSOrderedAscending;
-    
     if([appointment.completed isEqual:@YES]){
-        [cell decorateCompletedCell];
-        
+        [cell decorateCompletedCell:appointment.startDate];
     }else{
-        [cell decorateInCompletedCell:isOverDue];
+        [cell decorateInCompletedCell:appointment.startDate];
     }
 }
 
@@ -483,6 +435,13 @@ int const CTLSelectedFilterIndexCompleted = 1;
     return uiButton;
 }
 
+- (void)updatePickerButtonWithTitle:(NSString *)title
+{
+    CTLPickerButton *uiButton = (CTLPickerButton *)self.navigationItem.titleView;
+    [uiButton updateTitle:title];
+    self.navigationItem.titleView = uiButton;
+}
+
 - (CTLPickerView *)createFilterPickerView
 {
     CTLPickerView *filterPicker = [[CTLPickerView alloc] initWithWidth:self.view.bounds.size.width];
@@ -505,7 +464,7 @@ int const CTLSelectedFilterIndexCompleted = 1;
 {
     CGPoint touchPoint = [gestureRecognizer locationInView:self.view];
     UIView *touchedView = [self.view hitTest:touchPoint withEvent:nil];
-    return (touchedView == self.tableView || touchedView == _splashView);
+    return (touchedView == self.tableView || touchedView == _emptyView);
 }
 
 - (IBAction)dismissPickerFromTap:(UITapGestureRecognizer *)recognizer
@@ -524,6 +483,12 @@ int const CTLSelectedFilterIndexCompleted = 1;
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     [self loadAllAppointments];
+    
+    if(row == 1){
+        [self updatePickerButtonWithTitle:NSLocalizedString(@"COMPLETED", nil)];
+    }else{
+        [self updatePickerButtonWithTitle:NSLocalizedString(@"APPOINTMENTS", nil)];
+    }
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component

@@ -193,6 +193,7 @@
 		41B5472716B454DF00302652 /* sm-wrench-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B5470816B454DF00302652 /* sm-wrench-gray@2x.png */; };
 		41B5473016B4556500302652 /* CTLFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B5472F16B4556500302652 /* CTLFieldCell.m */; };
 		41B5473616B4562D00302652 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B5473516B4562D00302652 /* EventKit.framework */; };
+		41C94A1C174EF87F0034704C /* NSDate+TimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C94A1B174EF87F0034704C /* NSDate+TimeAgo.m */; };
 		41CBA85A17013DC5006C16CC /* UILabel+CTLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CBA85917013DC5006C16CC /* UILabel+CTLLabel.m */; };
 		41D0D4CA16FC062B00D343CA /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D0D4C916FC062B00D343CA /* AddressBookUI.framework */; };
 		41D0D4CD16FC0F8500D343CA /* wht-down-arw.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D0D4CB16FC0F8500D343CA /* wht-down-arw.png */; };
@@ -550,6 +551,8 @@
 		41B5472E16B4556500302652 /* CTLFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLFieldCell.h; sourceTree = "<group>"; };
 		41B5472F16B4556500302652 /* CTLFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLFieldCell.m; sourceTree = "<group>"; };
 		41B5473516B4562D00302652 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		41C94A1A174EF87F0034704C /* NSDate+TimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TimeAgo.h"; sourceTree = "<group>"; };
+		41C94A1B174EF87F0034704C /* NSDate+TimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TimeAgo.m"; sourceTree = "<group>"; };
 		41CBA85817013DC5006C16CC /* UILabel+CTLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+CTLLabel.h"; sourceTree = "<group>"; };
 		41CBA85917013DC5006C16CC /* UILabel+CTLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+CTLLabel.m"; sourceTree = "<group>"; };
 		41D0D4C916FC062B00D343CA /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -715,6 +718,8 @@
 		415A4F3816F6A886007A0BD4 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				41C94A1A174EF87F0034704C /* NSDate+TimeAgo.h */,
+				41C94A1B174EF87F0034704C /* NSDate+TimeAgo.m */,
 				415A4F3916F6A886007A0BD4 /* NSDate+CTLDate.h */,
 				415A4F3A16F6A886007A0BD4 /* NSDate+CTLDate.m */,
 				415A4F3B16F6A886007A0BD4 /* NSString+CTLString.h */,
@@ -968,42 +973,42 @@
 			isa = PBXGroup;
 			children = (
 				416DD83416AF9C2D00F2F8B3 /* SliderMenu */,
-				41E56D231725FE75004B3CEB /* CTLContactsListViewController.h */,
-				41D791611737EAF600FCA232 /* CTLContactsListViewController.m */,
+				41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */,
+				41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */,
+				416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */,
+				416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */,
+				41B546E516B39C2500302652 /* CTLAppointmentFormViewController.h */,
+				41B546E616B39C2500302652 /* CTLAppointmentFormViewController.m */,
+				41AEBDAB16EE8FD600BC397F /* CTLAppointmentsListViewController.h */,
+				41AEBDAC16EE8FD600BC397F /* CTLAppointmentsListViewController.m */,
 				41B546DD16B39C2300302652 /* CTLContactDetailsViewController.h */,
 				41B546DE16B39C2300302652 /* CTLContactDetailsViewController.m */,
 				41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */,
 				41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */,
 				41B546DF16B39C2300302652 /* CTLContactImportViewController.h */,
 				41B546E016B39C2400302652 /* CTLContactImportViewController.m */,
-				41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */,
-				41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */,
-				416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */,
-				416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */,
-				41AEBDAB16EE8FD600BC397F /* CTLAppointmentsListViewController.h */,
-				41AEBDAC16EE8FD600BC397F /* CTLAppointmentsListViewController.m */,
-				41B546E516B39C2500302652 /* CTLAppointmentFormViewController.h */,
-				41B546E616B39C2500302652 /* CTLAppointmentFormViewController.m */,
+				41E56D231725FE75004B3CEB /* CTLContactsListViewController.h */,
+				41D791611737EAF600FCA232 /* CTLContactsListViewController.m */,
 				41DA1DBA16CE781B0017F71F /* CTLEnterFormCodeViewController.h */,
 				41DA1DBB16CE781B0017F71F /* CTLEnterFormCodeViewController.m */,
 				41DA1DB716CC8B4D0017F71F /* CTLInboxInterstitialViewController.h */,
 				41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */,
 				416DD83516AF9D9B00F2F8B3 /* CTLInboxViewController.h */,
 				416DD83616AF9D9B00F2F8B3 /* CTLInboxViewController.m */,
-				4167F5BA16D6FDA6005B7B08 /* CTLLoginViewController.h */,
-				4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */,
-				4130653D16C14A950063AC10 /* CTLRegisterViewController.h */,
-				4130653E16C14A960063AC10 /* CTLRegisterViewController.m */,
-				416DD83816AF9E9000F2F8B3 /* CTLSettingsViewController.h */,
-				416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */,
 				41E56D0B1724D2CA004B3CEB /* CTLLeadsViewController.h */,
 				41E56D0C1724D2CB004B3CEB /* CTLLeadsViewController.m */,
+				4167F5BA16D6FDA6005B7B08 /* CTLLoginViewController.h */,
+				4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */,
 				417F2827173090A1003CC9A3 /* CTLMessagesListViewController.h */,
 				417F2828173090A1003CC9A3 /* CTLMessagesListViewController.m */,
-				41AB94B71741ABE6003741BB /* CTLSetPinViewController.h */,
-				41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */,
 				418500C11743BD1700F5FFA2 /* CTLPinInterstialViewController.h */,
 				418500C21743BD1700F5FFA2 /* CTLPinInterstialViewController.m */,
+				4130653D16C14A950063AC10 /* CTLRegisterViewController.h */,
+				4130653E16C14A960063AC10 /* CTLRegisterViewController.m */,
+				41AB94B71741ABE6003741BB /* CTLSetPinViewController.h */,
+				41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */,
+				416DD83816AF9E9000F2F8B3 /* CTLSettingsViewController.h */,
+				416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1609,6 +1614,7 @@
 				41B546EB16B39C2600302652 /* CTLAppointmentFormViewController.m in Sources */,
 				41B5473016B4556500302652 /* CTLFieldCell.m in Sources */,
 				4130654016C14A980063AC10 /* CTLRegisterViewController.m in Sources */,
+				41C94A1C174EF87F0034704C /* NSDate+TimeAgo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

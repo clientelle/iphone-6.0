@@ -49,11 +49,12 @@ int CTLTitleInputTag = 4;
     [self configureInputFields];
     [self checkCalendarPermission];
     
-    
     if(!self.appointment){
+        self.headerLabel.text = NSLocalizedString(@"SCHEDULE_AN_APPOINTMENT", nil);
         [self createPlaceholderAppointment];
         _appointmentFee = [NSDecimalNumber zero];
     }else{
+        self.headerLabel.text = NSLocalizedString(@"EDIT_APPOINTMENT", nil);
         self.contact = self.appointment.contact;
         _appointmentFee = self.appointment.fee;
         [self populateForm:self.appointment];
@@ -67,7 +68,7 @@ int CTLTitleInputTag = 4;
     }
     
     [self loadContactsInPickerView];
-        
+    
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissInputViews:)]];
     
@@ -80,6 +81,14 @@ int CTLTitleInputTag = 4;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactsWereImported:) name:CTLContactsWereImportedNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
 
 }
 
@@ -238,11 +247,29 @@ int CTLTitleInputTag = 4;
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     
-    if(textField.tag == CTLContactTextFieldTag && [_contacts count] == 0){
-        [self promptToImport:textField];
-        return NO;
+    if(textField.tag == CTLContactTextFieldTag){
+        if([_contacts count] == 0){
+            [self promptToImport:textField];
+            return NO;
+        }else{
+            if(!self.contact){
+                [_contactPicker selectRow:0 inComponent:0 animated:NO];
+                self.contact = _contacts[0];
+                [self chooseContact];
+            }            
+        }
     }
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    _activeField = textField;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    _activeField = nil;
 }
 
 
@@ -274,15 +301,7 @@ int CTLTitleInputTag = 4;
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     self.contact = [_contacts objectAtIndex:row];
-    
-    if(self.appointment){
-        [self.appointment setContact:self.contact];
-    }
-    
-    self.contactNameTextField.text = self.contact.compositeName;
-    self.titleTextField.text =  [NSString stringWithFormat:NSLocalizedString(@"APPOINTMENT_WITH", nil), self.contact.compositeName];
-    self.addressTextField.text = self.contact.address;
-    self.address2TextField.text = self.contact.address2;
+    [self chooseContact];
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -294,6 +313,18 @@ int CTLTitleInputTag = 4;
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
 	return [_contacts count];
+}
+
+- (void)chooseContact
+{
+    if(self.appointment){
+        [self.appointment setContact:self.contact];
+    }
+    
+    self.contactNameTextField.text = self.contact.compositeName;
+    self.titleTextField.text =  [NSString stringWithFormat:NSLocalizedString(@"APPOINTMENT_WITH", nil), self.contact.compositeName];
+    self.addressTextField.text = self.contact.address;
+    self.address2TextField.text = self.contact.address2;
 }
 
 - (void)displayCalendarPermissionPrompt
@@ -312,48 +343,6 @@ int CTLTitleInputTag = 4;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 48.0;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 40.0f;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    CGFloat width = self.tableView.bounds.size.width - 20.0f;
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10.0f, width, 30.0f)];
-    headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
-    
-    
-    CGRect headerFrame = CGRectMake(0, 10.0f, width, 40.0f);
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 10.0f, width, 20.0f)];
-    headerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15.0f];
-    headerLabel.backgroundColor = [UIColor clearColor];
-    headerLabel.textColor = [UIColor darkGrayColor];
-    
-    [headerView setFrame:headerFrame];
-    
-    CALayer *topBorder = [CALayer layer];
-    topBorder.backgroundColor = [UIColor colorFromUnNormalizedRGB:180.0f green:180.0f blue:180.0f alpha:1.0].CGColor;
-    topBorder.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 1.0f);
-    [headerView.layer addSublayer:topBorder];
-    
-    CALayer *headerTrimLayer = [CALayer layer];
-    headerTrimLayer.backgroundColor = [UIColor colorFromUnNormalizedRGB:200.0f green:200.0f blue:200.0f alpha:0.1].CGColor;
-    headerTrimLayer.borderColor = [UIColor darkGrayColor].CGColor;
-    headerTrimLayer.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 40.0f);
-    [headerView.layer addSublayer:headerTrimLayer];
-    
-    if(self.appointment){
-        headerLabel.text = NSLocalizedString(@"SCHEDULE_AN_APPOINTMENT", nil);
-    }else{
-        headerLabel.text = NSLocalizedString(@"EDIT_APPOINTMENT", nil);
-    }
-    
-    [headerView addSubview:headerLabel];
-
-    return headerView;
 }
 
 - (IBAction)showDatePicker:(UITextField *)textField
@@ -452,8 +441,7 @@ int CTLTitleInputTag = 4;
 
 - (EKCalendar *)createCalendar
 {
-    //TODO: no calendar no sync!
-    //get local calendar source (device calendar. not imap)
+    //TODO: get local calendar source (device calendar. not imap) when there is no calendar
     EKSource *localSource = nil;
     for (EKSource *source in _eventStore.sources) {
         if (source.sourceType == EKSourceTypeLocal) {
@@ -542,7 +530,7 @@ int CTLTitleInputTag = 4;
     for(NSInteger i=0;i<[alarms count];i++){
         [appointment removeAlarm:alarms[i]];
         NSLog(@"REMOVED ALARM %@", alarms[i]);
-    }
+    } 
     
     for (UILocalNotification *notification in [[[UIApplication sharedApplication] scheduledLocalNotifications] copy]){
         NSDictionary *userInfo = notification.userInfo;
@@ -582,6 +570,7 @@ int CTLTitleInputTag = 4;
     if(self.presentedAsModal){
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
+        [[NSManagedObjectContext MR_contextForCurrentThread] reset];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -628,6 +617,24 @@ int CTLTitleInputTag = 4;
 {
     [self.view endEditing:YES];
 }
+
+- (void)keyboardWasShown:(NSNotification*)notification
+{
+    NSDictionary* info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+}
+
 
 
 @end

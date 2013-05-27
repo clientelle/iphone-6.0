@@ -4,16 +4,19 @@
 #import "_CTLCDAccount.h"
 
 const struct CTLCDAccountAttributes CTLCDAccountAttributes = {
-	.access_token = @"access_token",
+	.auth_token = @"auth_token",
 	.company = @"company",
 	.company_id = @"company_id",
-	.dateCreated = @"dateCreated",
+	.created_at = @"created_at",
 	.email = @"email",
 	.first_name = @"first_name",
+	.has_inbox = @"has_inbox",
 	.industry = @"industry",
 	.industry_id = @"industry_id",
+	.is_pro = @"is_pro",
 	.last_name = @"last_name",
 	.password = @"password",
+	.updated_at = @"updated_at",
 	.user_id = @"user_id",
 };
 
@@ -53,8 +56,16 @@ const struct CTLCDAccountFetchedProperties CTLCDAccountFetchedProperties = {
 		NSSet *affectingKey = [NSSet setWithObject:@"company_id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
+	if ([key isEqualToString:@"has_inboxValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"has_inbox"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"industry_idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"industry_id"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"is_proValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"is_pro"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"user_idValue"]) {
@@ -68,7 +79,7 @@ const struct CTLCDAccountFetchedProperties CTLCDAccountFetchedProperties = {
 
 
 
-@dynamic access_token;
+@dynamic auth_token;
 
 
 
@@ -108,7 +119,7 @@ const struct CTLCDAccountFetchedProperties CTLCDAccountFetchedProperties = {
 
 
 
-@dynamic dateCreated;
+@dynamic created_at;
 
 
 
@@ -124,6 +135,32 @@ const struct CTLCDAccountFetchedProperties CTLCDAccountFetchedProperties = {
 
 @dynamic first_name;
 
+
+
+
+
+
+@dynamic has_inbox;
+
+
+
+- (BOOL)has_inboxValue {
+	NSNumber *result = [self has_inbox];
+	return [result boolValue];
+}
+
+- (void)setHas_inboxValue:(BOOL)value_ {
+	[self setHas_inbox:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveHas_inboxValue {
+	NSNumber *result = [self primitiveHas_inbox];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveHas_inboxValue:(BOOL)value_ {
+	[self setPrimitiveHas_inbox:[NSNumber numberWithBool:value_]];
+}
 
 
 
@@ -162,6 +199,32 @@ const struct CTLCDAccountFetchedProperties CTLCDAccountFetchedProperties = {
 
 
 
+@dynamic is_pro;
+
+
+
+- (BOOL)is_proValue {
+	NSNumber *result = [self is_pro];
+	return [result boolValue];
+}
+
+- (void)setIs_proValue:(BOOL)value_ {
+	[self setIs_pro:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIs_proValue {
+	NSNumber *result = [self primitiveIs_pro];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIs_proValue:(BOOL)value_ {
+	[self setPrimitiveIs_pro:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
 @dynamic last_name;
 
 
@@ -170,6 +233,13 @@ const struct CTLCDAccountFetchedProperties CTLCDAccountFetchedProperties = {
 
 
 @dynamic password;
+
+
+
+
+
+
+@dynamic updated_at;
 
 
 

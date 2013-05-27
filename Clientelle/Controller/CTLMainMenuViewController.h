@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class CTLCDAccount;
+
 @interface CTLMainMenuViewController : UITableViewController{
     NSIndexPath *_selectedIndexPath;
+    CTLCDAccount *_account;
 }
 
 - (void)styleActiveCell:(NSIndexPath *)indexPath;
 
 @property (nonatomic, strong) CTLSlideMenuController *menuController;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+
 
 @end

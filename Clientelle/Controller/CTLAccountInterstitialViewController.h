@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTLAccountInterstitialViewController : UIViewController<CTLSlideMenuDelegate>
+@class CTLCDAccount;
+
+@interface CTLAccountInterstitialViewController : UIViewController<CTLSlideMenuDelegate>{
+    CTLCDAccount *_account;
+}
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
-
-@property (nonatomic, weak) IBOutlet UILabel *actionMessageLabel;
 @property (nonatomic, weak) IBOutlet UIButton *upgradeButton;
+@property (nonatomic, weak) IBOutlet UILabel *actionMessageLabel;
+
 
 @end

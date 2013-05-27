@@ -34,10 +34,7 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     //Set the notification switch
     [self.notificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsNotification]];
     
-    if([_account objectID]){
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(toAccountFormView:)];
-    }else{
-        
+    if(!_account){
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"UPGRADE", nil) style:UIBarButtonItemStylePlain target:self action:@selector(toAccountFormView:)];
     }
     
@@ -45,6 +42,20 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     [self.tableView setSeparatorColor:[UIColor colorFromUnNormalizedRGB:247.0f green:247.0f blue:247.0f alpha:1.0f]];
     
     [self configureCells];
+}
+
+- (void)upgradeToPro:(id)sender
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Purchase Pro?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Purchase", nil];
+    
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1){
+        [self performSegueWithIdentifier:CTLAccountSegueIdentifyer sender:alertView];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -93,13 +104,14 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 {
     if(indexPath.section == 0){
         if(indexPath.row == 2){
-            if(![_account objectID]){
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"FEATURE_REQUIRES_PRO", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                
-                [alertView show];
-            }else{
-                [self performSegueWithIdentifier:@"toSetPin" sender:nil];
-            }
+            [self performSegueWithIdentifier:@"toSetPin" sender:nil];
+//            if(![_account objectID]){
+//                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"FEATURE_REQUIRES_PRO", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                
+//                [alertView show];
+//            }else{
+//                [self performSegueWithIdentifier:@"toSetPin" sender:nil];
+//            }
         }
     }
     
@@ -115,7 +127,7 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 
 - (void)styleLabel:(UILabel *)label withText:(NSString *)text
 {
-    [label setFont:[UIFont fontWithName:@"Heiti TC" size:15]];
+    [label setFont:[UIFont fontWithName:kCTLAppFont size:15]];
     label.backgroundColor = [UIColor clearColor];
     label.text = text;
 }
@@ -136,7 +148,7 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     if([[segue identifier] isEqualToString:CTLAccountSegueIdentifyer]){
         if([_account objectID]){
             CTLRegisterViewController *controller = [segue destinationViewController];
-            [controller setCdAccount:_account];
+            [controller setAccount:_account];
         }
         return;
     }

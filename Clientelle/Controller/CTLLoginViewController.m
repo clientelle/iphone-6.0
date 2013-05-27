@@ -33,8 +33,7 @@
         //create dictionary from coredata "account" entity
         NSDictionary *credentials = @{@"email":self.emailTextField.text, @"password":self.passwordTextField.text};
                                
-        //?XDEBUG_SESSION_START=ECLIPSE_DBGP
-        [_api makeRequest:@"/auth/login?" withParams:credentials withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
+        [_api makeRequest:@"/auth/login.json" withParams:credentials withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
             
             if(requestSucceeded){
                 
@@ -42,24 +41,23 @@
                 NSDictionary *company = response[@"company"];
                 
                 CTLCDAccount *account = [CTLCDAccount MR_createEntity];
-                account.access_token = response[kCTLAccessTokenKey];
+                account.auth_token = response[kCTLAuthTokenKey];
                 account.user_idValue = [user[@"user_id"] intValue];
                 account.email = user[@"email"];
                 account.password = user[@"password"];
                 account.first_name = user[@"first_name"];
                 account.last_name = user[@"last_name"];
-                account.dateCreated = [NSDate date];
+                account.created_at = [NSDate date];
                 account.company = company[@"name"];
                 account.company_idValue = [user[@"company_id"] intValue];
                 account.industry = company[@"industry_name"];
                 account.industry_idValue = [company[@"industry_id"] intValue];
-                
+                account.is_pro = @(1);
+                                
                 [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
                     
-                    [[NSUserDefaults standardUserDefaults] setValue:[response objectForKey:kCTLAccessTokenKey] forKey:kCTLAccountAccessToken];
+                    [[NSUserDefaults standardUserDefaults] setValue:[response objectForKey:kCTLAuthTokenKey] forKey:kCTLAccountAccessToken];
                     
-                    [self.menuController setHasPro:YES];
-                    [self.menuController setHasAccount:YES];
                     [self.menuController setRightSwipeEnabled:YES];
                     
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];

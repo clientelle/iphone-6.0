@@ -19,7 +19,7 @@ NSString *const kServerErrorGeneric = @"Sorry... internet trouble";
 NSString *const kCTLMessageKey = @"message";
 NSString *const kCTLStatusKey = @"status";
 NSString *const kCTLResponseKey = @"response";
-NSString *const kCTLAccessTokenKey = @"access_token";
+NSString *const kCTLAuthTokenKey = @"auth_token";
 
 // user info
 NSString *const kUserKey = @"user";
@@ -183,7 +183,7 @@ typedef enum{
         //TODO: save the access token as well
         [self setUserDictionary:[responseDict objectForKey:kUserKey]];
         block(YES, [responseDict objectForKey:kCTLMessageKey]);
-        //block(YES, [responseDict objectForKey:kCTLAccessTokenKey]);
+        //block(YES, [responseDict objectForKey:kCTLAuthTokenKey]);
     }];
     [_internetOperationQueue addOperation:operation];
 }

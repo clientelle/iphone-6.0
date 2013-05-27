@@ -12,6 +12,8 @@
 #import "CTLSlideMenuController.h"
 #import "CTLContactsListViewController.h"
 
+#import "CTLCDAccount.h"
+
 @implementation CTLMainMenuViewController
 
 @synthesize selectedIndexPath = _selectedIndexPath;
@@ -20,12 +22,8 @@
 {
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:40 green:40 blue:40 alpha:1.0f];
-
-//TODO: save this to nsuser defaults
-self.menuController.hasPro = NO;
-self.menuController.hasAccount = NO;
-self.menuController.hasInbox = NO;
     
+    _account = [CTLCDAccount MR_findFirst];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -66,13 +64,19 @@ self.menuController.hasInbox = NO;
 - (void)loadViewController:(NSString *)storyboardIdentifier
 {
     if([storyboardIdentifier isEqualToString:@"inboxNavigationController"]){
-        if(!self.menuController.hasPro || !self.menuController.hasAccount){
+
+        if(!_account){
+            //No account yet. Prompt to upgrade
             storyboardIdentifier = @"accountInterstitialNavigationController";
+        }else{
+            if([_account.has_inbox isEqual:@(1)]){
+                //got to inbox!
+                storyboardIdentifier = @"inboxNavigationController";
+            }else{
+                //Prompt to create inbox
+                storyboardIdentifier = @"inboxInterstitialNavigationController";
+            }
         }
-        if(!self.menuController.hasInbox){
-            storyboardIdentifier = @"inboxInterstitialNavigationController";
-        }
-        storyboardIdentifier = @"inboxNavigationController";
     }
      
     [self.menuController setMainView:storyboardIdentifier];

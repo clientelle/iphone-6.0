@@ -5,8 +5,8 @@
 
 const struct CTLCDInboxAttributes CTLCDInboxAttributes = {
 	.dateCreated = @"dateCreated",
-	.form_id = @"form_id",
-	.install_code = @"install_code",
+	.formId = @"formId",
+	.installCode = @"installCode",
 	.schema = @"schema",
 };
 
@@ -56,14 +56,14 @@ const struct CTLCDInboxFetchedProperties CTLCDInboxFetchedProperties = {
 
 
 
-@dynamic form_id;
+@dynamic formId;
 
 
 
 
 
 
-@dynamic install_code;
+@dynamic installCode;
 
 
 

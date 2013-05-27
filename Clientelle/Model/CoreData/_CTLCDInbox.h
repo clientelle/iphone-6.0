@@ -6,8 +6,8 @@
 
 extern const struct CTLCDInboxAttributes {
 	__unsafe_unretained NSString *dateCreated;
-	__unsafe_unretained NSString *form_id;
-	__unsafe_unretained NSString *install_code;
+	__unsafe_unretained NSString *formId;
+	__unsafe_unretained NSString *installCode;
 	__unsafe_unretained NSString *schema;
 } CTLCDInboxAttributes;
 
@@ -43,18 +43,18 @@ extern const struct CTLCDInboxFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* form_id;
+@property (nonatomic, strong) NSString* formId;
 
 
-//- (BOOL)validateForm_id:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateFormId:(id*)value_ error:(NSError**)error_;
 
 
 
 
-@property (nonatomic, strong) NSString* install_code;
+@property (nonatomic, strong) NSString* installCode;
 
 
-//- (BOOL)validateInstall_code:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateInstallCode:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -84,14 +84,14 @@ extern const struct CTLCDInboxFetchedProperties {
 
 
 
-- (NSString*)primitiveForm_id;
-- (void)setPrimitiveForm_id:(NSString*)value;
+- (NSString*)primitiveFormId;
+- (void)setPrimitiveFormId:(NSString*)value;
 
 
 
 
-- (NSString*)primitiveInstall_code;
-- (void)setPrimitiveInstall_code:(NSString*)value;
+- (NSString*)primitiveInstallCode;
+- (void)setPrimitiveInstallCode:(NSString*)value;
 
 
 

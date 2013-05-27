@@ -24,14 +24,13 @@
 {
     CTLCDInbox *newInbox = [CTLCDInbox MR_createEntity];
     newInbox.dateCreated = [NSDate date];
-    newInbox.form_id = @"abc";
-    newInbox.install_code = self.formCodeTextField.text;
+    newInbox.formId = @"abc";
+    newInbox.installCode = self.formCodeTextField.text;
     newInbox.schema = @"{fake json}";
     
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveOnlySelfAndWait];
     
-    [self.menuController setHasPro:YES];
-    [self.menuController setHasAccount:YES];
+    
     [self.menuController setRightSwipeEnabled:YES];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
