@@ -35,7 +35,9 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     [self.notificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsNotification]];
     
     if(!_account){
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"UPGRADE", nil) style:UIBarButtonItemStylePlain target:self action:@selector(toAccountFormView:)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"UPGRADE", nil) style:UIBarButtonItemStylePlain target:self action:@selector(upgradeToPro:)];
+    }else{
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ACCOUNT", nil) style:UIBarButtonItemStylePlain target:self action:@selector(toAccountFormView:)];
     }
     
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:206.0f green:206.0f blue:206.0f alpha:1.0f];
@@ -70,33 +72,36 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     /* Using static table cells so I style them here instead of cellForRowAtIndexPath */
     
     UITableViewCell *accountTypeCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    [self styleLabel:accountTypeCell.textLabel withText:NSLocalizedString(@"ACCOUNT_TYPE", nil)];
-    accountTypeCell.detailTextLabel.backgroundColor = [UIColor clearColor];
-    
+    accountTypeCell.textLabel.text = NSLocalizedString(@"ACCOUNT_TYPE", nil);
+        
     if([_account objectID]){
-        self.accountTypeCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
         self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"PRO", nil);
+        self.accountTypeCell.detailTextLabel.textColor = [UIColor ctlGreen];
     }else{
         self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"FREE", nil);
+        self.accountTypeCell.detailTextLabel.textColor = [UIColor darkGrayColor];
     }
     
     UITableViewCell *notificationCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-    [self styleLabel:notificationCell.textLabel withText:NSLocalizedString(@"NOTIFICATIONS", nil)];
+    notificationCell.textLabel.text = NSLocalizedString(@"NOTIFICATIONS", nil);
+    notificationCell.textLabel.backgroundColor = [UIColor clearColor];
+    notificationCell.textLabel.font = [UIFont fontWithName:@"STHeitiTC-Medium" size:14];
     
     UITableViewCell *pinCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-    [self styleLabel:pinCell.textLabel withText:NSLocalizedString(@"CONFIGURE_PIN_ACCESS", nil)];
+    pinCell.textLabel.text = NSLocalizedString(@"CONFIGURE_PIN_ACCESS", nil);
     
     pinCell.detailTextLabel.text = NSLocalizedString(@"REQUIRES_A_PASSCODE", nil);
     pinCell.detailTextLabel.backgroundColor = [UIColor clearColor];
 
     UITableViewCell *supportCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
-    [self styleLabel:supportCell.textLabel withText:NSLocalizedString(@"REPORT_A_PROBLEM", nil)];
+    supportCell.textLabel.text = NSLocalizedString(@"REPORT_A_PROBLEM", nil);
     
     UITableViewCell *featureCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
-    [self styleLabel:featureCell.textLabel withText:NSLocalizedString(@"REQUEST_A_FEATURE", nil)];
+    featureCell.textLabel.text = NSLocalizedString(@"REQUEST_A_FEATURE", nil);
     
     UITableViewCell *shareCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
-    [self styleLabel:shareCell.textLabel withText:NSLocalizedString(@"TELL_A_FRIEND", nil)];
+    shareCell.textLabel.text = NSLocalizedString(@"TELL_A_FRIEND", nil);
 
 }
 
@@ -125,12 +130,12 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     }
 }
 
-- (void)styleLabel:(UILabel *)label withText:(NSString *)text
-{
-    [label setFont:[UIFont fontWithName:kCTLAppFont size:15]];
-    label.backgroundColor = [UIColor clearColor];
-    label.text = text;
-}
+//- (void)styleLabel:(UILabel *)label withText:(NSString *)text
+//{
+////    [label setFont:[UIFont fontWithName:@"H" size:15]];
+//    label.backgroundColor = [UIColor clearColor];
+//    label.text = text;
+//}
 
 
 - (void)toAccountFormView:(id)sender

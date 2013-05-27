@@ -250,10 +250,16 @@ typedef enum{
 }
 
 + (NSString *)messageFromResponse:(NSDictionary *)response {
-    NSString *message = [response objectForKey:kCTLMessageKey];
-    
+    NSDictionary *message = [response objectForKey:kCTLMessageKey];
+    NSMutableArray *errors = [NSMutableArray array];
     if(message){
-        return message;
+        for(NSString *field in message){
+            NSArray *errs = [message objectForKey:field];
+            for(NSInteger i=0;i<[errs count];i++){
+                [errors addObject:[NSString stringWithFormat:@"%@ %@", field, errs[i]]];
+            }
+        }
+        return [errors componentsJoinedByString:@"\n"];
     }
     
     return kServerErrorGeneric;

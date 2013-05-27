@@ -214,12 +214,12 @@ e†
 
 /* INDUSTRIES */
 "ACCOUNTING_SERVICES" = "Accounting Services";
+"BEAUTY_SERVICES" = "Beauty Services";
 "CREATIVE_DESIGN" = "Creative/Design Services";
-"LEGAL_SERVICES" = "Legal Services";
 "ESCORT_SERVICES" = "Escort Services";
-"EVENT_PLANNER" = "Event Planner";
-"BEAUTY" = "Beauty";
-"HEALTH_FITNESS" = "Health & Fitness";
+"EVENT_ENTERTAINMENT" = "Event/Entertainment";
+"LEGAL_SERVICES" = "Legal Services";
+"HEALTH_FITNESS" = "Health/Fitness Training";
 "FINANCIAL_SERVICES" = "Financial Services";
 "PHYSICAL_THERAPY" = "Physical Therapy";
 "SOFTWARE_CONSULTANT" = "Software Consultant";
@@ -231,6 +231,13 @@ e†
 "EMAIL_ADDRESS" = "Email Addresss";
 "PASSWORD" = "Password";
 "CONFIRM_PASSWORD" = "Confirm Password";
-"COMPANY_NAME" = "Company Name";
+"COMPANY_NAME" = "Company Name (Optional)";
 "INDUSTRY" = "Industry";
 "ALREADY_HAVE_ACCOUNT" = "Already have an account?";
+
+"YOUR_ACCOUNT" = "Your Account";
+"CREATE_ACCOUNT" = "Create Account";
+
+"INVALID_EMAIL" = "Email is invalid";
+"PASSWORD_REQUIREMENT" = "Password must be at least 6 characters";
+"PASSWORDS_DO_NOT_MATCH" = "Passwords do not match";

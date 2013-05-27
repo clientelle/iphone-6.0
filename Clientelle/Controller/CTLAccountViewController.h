@@ -8,8 +8,27 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTLAccountViewController : UITableViewController<CTLSlideMenuDelegate>
+@class CTLAPI;
+@class CTLCDAccount;
 
+@interface CTLAccountViewController : UITableViewController<UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CTLSlideMenuDelegate>{
+    UIPickerView *_industryPicker;
+    NSArray *_industries;
+    CTLAPI *_api;
+    NSNumber *_industryID;
+    CTLCDAccount *_account;
+    
+}
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, strong) CTLCDAccount *account;
+
+@property (nonatomic, weak) IBOutlet UITextField *firstNameTextField;
+@property (nonatomic, weak) IBOutlet UITextField *lastNameTextField;
+@property (nonatomic, weak) IBOutlet UITextField *emailTextField;
+@property (nonatomic, weak) IBOutlet UITextField *companyTextField;
+@property (nonatomic, weak) IBOutlet UITextField *industryTextField;
+
+
+- (IBAction)submit:(id)sender;
 
 @end

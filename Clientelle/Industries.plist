@@ -12,7 +12,7 @@
 		<key>industry_id</key>
 		<integer>2</integer>
 		<key>i18n_key</key>
-		<string>BEAUTY</string>
+		<string>BEAUTY_SERVICES</string>
 	</dict>
     <dict>
 		<key>industry_id</key>
@@ -30,8 +30,8 @@
 		<key>industry_id</key>
 		<integer>5</integer>
 		<key>i18n_key</key>
-		<string>EVENT_PLANNER</string>
-	</dict>
+        <string>EVENT_ENTERTAINMENT</string>
+    </dict>
     <dict>
 		<key>industry_id</key>
 		<integer>6</integer>
