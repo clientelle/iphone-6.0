@@ -36,8 +36,6 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     
     if(!_account){
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"UPGRADE", nil) style:UIBarButtonItemStylePlain target:self action:@selector(upgradeToPro:)];
-    }else{
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ACCOUNT", nil) style:UIBarButtonItemStylePlain target:self action:@selector(toAccountFormView:)];
     }
     
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:206.0f green:206.0f blue:206.0f alpha:1.0f];
@@ -108,6 +106,9 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0){
+        if(indexPath.row == 0){
+            [self performSegueWithIdentifier:@"toAccountInfo" sender:nil];
+        }
         if(indexPath.row == 2){
             [self performSegueWithIdentifier:@"toSetPin" sender:nil];
 //            if(![_account objectID]){

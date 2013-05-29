@@ -24,9 +24,14 @@
 
 @property (nonatomic, weak) IBOutlet UITextField *firstNameTextField;
 @property (nonatomic, weak) IBOutlet UITextField *lastNameTextField;
-@property (nonatomic, weak) IBOutlet UITextField *emailTextField;
 @property (nonatomic, weak) IBOutlet UITextField *companyTextField;
 @property (nonatomic, weak) IBOutlet UITextField *industryTextField;
+
+@property (nonatomic, weak) IBOutlet UILabel *accountEmailLabel;
+@property (nonatomic, weak) IBOutlet UILabel *emailLabel;
+@property (nonatomic, weak) IBOutlet UILabel *accountAgeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *daysLabel;
+
 
 
 - (IBAction)submit:(id)sender;

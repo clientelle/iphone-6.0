@@ -28,6 +28,7 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     
     _api = [CTLAPI sharedAPI];
     
+    _industryID = @(0);
     _industryPicker = [self configureIndustryPicker];
     
     self.industryTextField.inputView = _industryPicker;
@@ -122,11 +123,9 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     
     if([_industryID isEqual: @(13)]){
         [self.industryTextField resignFirstResponder];
-        
         self.industryTextField.inputView = nil;
         self.industryTextField.clearButtonMode = UITextFieldViewModeAlways;
         [NSTimer scheduledTimerWithTimeInterval:.5 target:self selector:@selector(togglePickerKeyboard:) userInfo:nil repeats:NO];
-        
     }else{
         self.industryTextField.clearButtonMode = UITextFieldViewModeNever;
         self.industryTextField.inputView = _industryPicker;
@@ -214,13 +213,13 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     [post setValue:email forKey:@"user[email]"];
     [post setValue:password forKey:@"user[password]"];
     [post setValue:confirmPassword forKey:@"user[password_confirmation]"];
-    [post setValue:company forKey:@"company"];
-    [post setValue:industry forKey:@"industry"];
-    [post setValue:industry_id forKey:@"industry_id"];
+    [post setValue:company forKey:@"company[name]"];
+    [post setValue:industry forKey:@"industry[name]"];
+    [post setValue:industry_id forKey:@"industry[id]"];
     [post setValue:@"iphone" forKey:@"source"];
     [post setValue:[[NSLocale currentLocale] localeIdentifier] forKey:@"locale"];
         
-    [_api makeRequest:@"/register.json" withParams:post withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
+    [_api makeRequest:@"/register.json" withParams:post method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
         
         if(requestSucceeded){
 
@@ -230,7 +229,13 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
             account.email = email;
             account.company = company;
             account.industry = industry;
-            account.industry_id = _industryID;
+            
+            if(response[@"user"]){
+                if(response[@"user"][@"industry"]){
+                    _account.industry_id = response[@"user"][@"industry"][@"id"];
+                }
+            }
+            
             account.password = password;
             account.created_at = [NSDate date];
              
@@ -238,14 +243,10 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
             account.user_id = @([user[@"id"] intValue]);
             account.is_pro = @(1);
             
-            //account.company_idValue = [user[@"company_id"] intValue];
-            //account.industry_idValue = [user[@"industry_id"] intValue];
-            
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){ 
                             
                 [[NSUserDefaults standardUserDefaults] setValue:[response objectForKey:kCTLAuthTokenKey] forKey:kCTLAccountAccessToken];
-                
-                
+                                
                 [self.menuController setRightSwipeEnabled:YES];
                 
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
@@ -256,7 +257,7 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
                 [inboxInterstitial setMenuController:self.menuController];
                 [self.menuController setMainViewController:inboxInterstitial];
                 [self.menuController flipToView];
-                }];
+            }];
             
                 
         }else{

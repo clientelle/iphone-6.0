@@ -23,7 +23,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kKQ-WT-Znt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5163" y="-3522"/>
+            <point key="canvasLocation" x="-7547" y="-4242"/>
         </scene>
         <!--Main Menu View Controller-->
         <scene sceneID="NdT-tt-JVS">
@@ -143,7 +143,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SfR-Wb-WV8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5405" y="-2741"/>
+            <point key="canvasLocation" x="-7101" y="-4237"/>
         </scene>
         <!--Inbox View Controller - Inbox-->
         <scene sceneID="EoM-OE-ajq">
@@ -173,7 +173,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0uU-9N-5aY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6365" y="-916"/>
+            <point key="canvasLocation" x="-6421" y="-1524"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="E9s-Ab-DBl">
@@ -188,7 +188,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="62O-G1-jVm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6943" y="-916"/>
+            <point key="canvasLocation" x="-7119" y="-1524"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="H3V-GB-IMb">
@@ -203,7 +203,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oaN-0W-nrg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5279" y="96"/>
+            <point key="canvasLocation" x="-7141" y="2192"/>
         </scene>
         <!--Contact Details View Controller-->
         <scene sceneID="rgf-da-57t">
@@ -312,7 +312,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2999" y="-3466"/>
+            <point key="canvasLocation" x="-4943" y="-4078"/>
         </scene>
         <!--Contact Form Editor View Controller-->
         <scene sceneID="v7H-NB-3Oz">
@@ -389,25 +389,62 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pbe-Fm-nXO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2385" y="-3466"/>
+            <point key="canvasLocation" x="-4329" y="-4078"/>
         </scene>
         <!--Messages List View Controller - Messages-->
         <scene sceneID="IEc-nu-Znw">
             <objects>
                 <tableViewController id="o5t-vt-WWo" customClass="CTLMessagesListViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="418" sectionHeaderHeight="22" sectionFooterHeight="22" id="alX-2O-vo1">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="59" sectionHeaderHeight="22" sectionFooterHeight="22" id="alX-2O-vo1">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="messageCell" rowHeight="418" id="Th1-wC-wWt">
-                                <rect key="frame" x="0.0" y="22" width="320" height="418"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="messageCell" rowHeight="59" id="Th1-wC-wWt">
+                                <rect key="frame" x="0.0" y="22" width="320" height="59"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="417"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="58"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Johnny Walker" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ksE-lY-FLY">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="EhI-N4-Ylt"/>
+                                                <constraint firstAttribute="width" constant="203" id="NLF-3G-omZ"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Yea sure. when i have a minute" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aqu-Ci-6mX">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="Uzr-WK-8qV"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="8:41 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WgV-EX-R71">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="81" id="bCK-8Y-Rlg"/>
+                                                <constraint firstAttribute="height" constant="21" id="kP2-ad-nMC"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Aqu-Ci-6mX" secondAttribute="trailing" constant="20" type="default" id="0iW-Xa-O8j"/>
+                                    <constraint firstItem="Aqu-Ci-6mX" firstAttribute="top" secondItem="Th1-wC-wWt" secondAttribute="top" constant="27" id="IZq-hj-aYt"/>
+                                    <constraint firstItem="Aqu-Ci-6mX" firstAttribute="leading" secondItem="ksE-lY-FLY" secondAttribute="leading" type="default" id="Rlh-dI-Ki6"/>
+                                    <constraint firstItem="WgV-EX-R71" firstAttribute="top" secondItem="Th1-wC-wWt" secondAttribute="top" constant="4" id="Xf2-Id-2vr"/>
+                                    <constraint firstItem="WgV-EX-R71" firstAttribute="leading" secondItem="ksE-lY-FLY" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="j1H-wb-mJF"/>
+                                    <constraint firstItem="ksE-lY-FLY" firstAttribute="top" secondItem="Th1-wC-wWt" secondAttribute="top" constant="7" id="ksg-zh-7K9"/>
+                                    <constraint firstAttribute="trailing" secondItem="WgV-EX-R71" secondAttribute="trailing" constant="20" type="default" id="vlS-Zo-6HN"/>
+                                </constraints>
                             </tableViewCell>
                         </prototypes>
                     </tableView>
@@ -415,7 +452,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hdm-yj-l1d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4111" y="-4307"/>
+            <point key="canvasLocation" x="-6411" y="-747"/>
         </scene>
         <!--Pin Interstial View Controller-->
         <scene sceneID="Ole-w6-P0V">
@@ -504,7 +541,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UXw-mb-EKI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5067" y="-4307"/>
+            <point key="canvasLocation" x="-6627" y="-4237"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="swq-ng-E5N">
@@ -519,7 +556,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UiR-sS-Qnj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4645" y="-4307"/>
+            <point key="canvasLocation" x="-7112" y="-747"/>
         </scene>
         <!--Contact Import View Controller-->
         <scene sceneID="Ipp-T5-eLi">
@@ -617,7 +654,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-2135" y="-2696"/>
+            <point key="canvasLocation" x="-5687" y="-4274"/>
         </scene>
         <!--Appointment Form View Controller-->
         <scene sceneID="JP8-07-Dus">
@@ -912,48 +949,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kUZ-wU-eJ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2230" y="-960"/>
-        </scene>
-        <!--Leads View Controller - Leads-->
-        <scene sceneID="UsY-tn-FHc">
-            <objects>
-                <tableViewController id="JWX-gg-vbV" customClass="CTLLeadsViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="DDL-RI-hkX">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="leadCell" id="5so-Vd-Ixa">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </tableViewCell>
-                        </prototypes>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Leads" id="YEW-fG-qlK"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vXm-6v-0Ey" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-4113" y="-3517"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="5qG-Me-F80">
-            <objects>
-                <navigationController storyboardIdentifier="leadsNavigationController" definesPresentationContext="YES" id="iqP-Hg-q7P" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uUJ-GV-aji">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="JWX-gg-vbV" kind="relationship" relationship="rootViewController" id="ECk-Q6-NVH"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="p23-Tz-iHx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-4645" y="-3517"/>
+            <point key="canvasLocation" x="-5326" y="-3262"/>
         </scene>
         <!--Contacts List View Controller-->
         <scene sceneID="WiY-vu-SF0">
@@ -1071,7 +1067,7 @@
                     </connections>
                 </searchBar>
             </objects>
-            <point key="canvasLocation" x="-3901" y="-2702"/>
+            <point key="canvasLocation" x="-6550" y="-3390"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ff2-z9-n9f">
@@ -1090,7 +1086,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="86C-I2-aor" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3035" y="-2166"/>
+            <point key="canvasLocation" x="-5653" y="-2446"/>
         </scene>
         <!--Register View Controller - Sign up-->
         <scene sceneID="EtW-us-YwR">
@@ -1281,7 +1277,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kSd-Lq-WVI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4085" y="-848"/>
+            <point key="canvasLocation" x="-5709" y="946"/>
         </scene>
         <!--Login View Controller - Clientelle-->
         <scene sceneID="LSC-hk-t78">
@@ -1377,7 +1373,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dWG-SK-vej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3402" y="-848"/>
+            <point key="canvasLocation" x="-5114" y="946"/>
         </scene>
         <!--Settings View Controller - Settings-->
         <scene sceneID="TVB-xc-edL">
@@ -1537,7 +1533,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zQ-8C-ERu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="ccw-dN-w8J"/>
             </objects>
-            <point key="canvasLocation" x="-4701" y="96"/>
+            <point key="canvasLocation" x="-6443" y="2192"/>
         </scene>
         <!--Set Pin View Controller-->
         <scene sceneID="pj3-rp-5x8">
@@ -1673,7 +1669,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qP6-Sb-pra" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3967" y="640"/>
+            <point key="canvasLocation" x="-5661" y="2554"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wv8-ra-VoP">
@@ -1688,7 +1684,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PsU-es-59s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5287" y="-846"/>
+            <point key="canvasLocation" x="-7141" y="946"/>
         </scene>
         <!--Account Interstitial View Controller-->
         <scene sceneID="gXH-xz-Y32">
@@ -1737,7 +1733,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eyt-eG-Czg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4726" y="-848"/>
+            <point key="canvasLocation" x="-6429" y="946"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PRB-Ol-PXD">
@@ -1752,7 +1748,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JZK-Ct-NEr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6943" y="-1734"/>
+            <point key="canvasLocation" x="-7119" y="90"/>
         </scene>
         <!--Inbox Interstitial View Controller-->
         <scene sceneID="DV8-gw-otP">
@@ -1803,7 +1799,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NRg-uy-DuX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6366" y="-1734"/>
+            <point key="canvasLocation" x="-6429" y="90"/>
         </scene>
         <!--Enter Form Code View Controller-->
         <scene sceneID="Dg2-h0-Fz4">
@@ -1850,7 +1846,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZjD-ld-Ogk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5725" y="-1734"/>
+            <point key="canvasLocation" x="-5709" y="90"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pNN-IT-Xvp">
@@ -1866,7 +1862,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xey-Mi-muj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4873" y="-1760"/>
+            <point key="canvasLocation" x="-7119" y="-2440"/>
         </scene>
         <!--Appointments List View Controller-->
         <scene sceneID="RUm-CH-fgP">
@@ -2177,7 +2173,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-4304" y="-1760"/>
+            <point key="canvasLocation" x="-6550" y="-2440"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mAz-Fo-TXb">
@@ -2195,7 +2191,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vVt-w9-zBd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4427" y="-2702"/>
+            <point key="canvasLocation" x="-7119" y="-3390"/>
         </scene>
         <!--Account View Controller - Account-->
         <scene sceneID="Xqg-0o-Oyq">
@@ -2217,11 +2213,12 @@
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="48M-XD-aoQ">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="275" id="2Ls-Ay-lJl"/>
                                                         <constraint firstAttribute="height" constant="30" id="O35-qs-m6J"/>
+                                                        <constraint firstAttribute="width" constant="270" id="y8f-Q8-aTV"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="vaV-2o-6kT" id="AIz-mW-Cjg"/>
                                                     </connections>
@@ -2231,8 +2228,8 @@
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="48M-XD-aoQ" firstAttribute="top" secondItem="EBB-hi-yAl" secondAttribute="top" constant="11" id="G16-5b-P9B"/>
-                                            <constraint firstAttribute="trailing" secondItem="48M-XD-aoQ" secondAttribute="trailing" constant="20" type="default" id="WNL-OL-Zh5"/>
+                                            <constraint firstItem="48M-XD-aoQ" firstAttribute="centerX" secondItem="EBB-hi-yAl" secondAttribute="centerX" type="default" id="WbN-Lb-ptM"/>
+                                            <constraint firstItem="48M-XD-aoQ" firstAttribute="top" secondItem="EBB-hi-yAl" secondAttribute="top" constant="8" id="gTc-lt-Qy9"/>
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="d83-zR-B17">
@@ -2244,11 +2241,11 @@
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="V4v-tA-hzI">
                                                     <constraints>
+                                                        <constraint firstAttribute="width" constant="270" id="faY-X3-cnu"/>
                                                         <constraint firstAttribute="height" constant="30" id="hxl-Ev-uQG"/>
-                                                        <constraint firstAttribute="width" constant="275" id="x0e-gl-1lD"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="vaV-2o-6kT" id="ZPk-aP-Moy"/>
                                                     </connections>
@@ -2258,39 +2255,12 @@
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="V4v-tA-hzI" secondAttribute="trailing" constant="20" type="default" id="Fg1-ij-P5S"/>
                                             <constraint firstItem="V4v-tA-hzI" firstAttribute="top" secondItem="d83-zR-B17" secondAttribute="top" constant="10" id="NQK-gc-RFN"/>
-                                        </constraints>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="qA3-t5-GAz">
-                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CCX-4U-szX">
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="275" id="k3U-Gb-n3U"/>
-                                                        <constraint firstAttribute="height" constant="30" id="p60-bH-LZY"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="vaV-2o-6kT" id="wpH-zT-IQI"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="CCX-4U-szX" firstAttribute="top" secondItem="qA3-t5-GAz" secondAttribute="top" constant="10" id="ul2-uR-XOF"/>
-                                            <constraint firstAttribute="trailing" secondItem="CCX-4U-szX" secondAttribute="trailing" constant="20" type="default" id="zrI-Xu-rOX"/>
+                                            <constraint firstItem="V4v-tA-hzI" firstAttribute="centerX" secondItem="d83-zR-B17" secondAttribute="centerX" type="default" id="qOo-br-QEm"/>
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="igA-rA-4Mn">
-                                        <rect key="frame" x="0.0" y="143" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -2298,10 +2268,10 @@
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Company Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hyi-o9-bPc">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="275" id="clv-62-5Qx"/>
+                                                        <constraint firstAttribute="width" constant="270" id="pDl-Kn-9TO"/>
                                                         <constraint firstAttribute="height" constant="30" id="z3p-8B-RnP"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="vaV-2o-6kT" id="zG4-7s-Kmq"/>
@@ -2312,12 +2282,12 @@
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="hyi-o9-bPc" firstAttribute="centerX" secondItem="igA-rA-4Mn" secondAttribute="centerX" type="default" id="TqW-uP-b0C"/>
                                             <constraint firstItem="hyi-o9-bPc" firstAttribute="top" secondItem="igA-rA-4Mn" secondAttribute="top" constant="10" id="d2H-gv-9fe"/>
-                                            <constraint firstAttribute="trailing" secondItem="hyi-o9-bPc" secondAttribute="trailing" constant="20" type="default" id="vsB-l1-qLa"/>
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="YQc-lf-aIP">
-                                        <rect key="frame" x="0.0" y="187" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="143" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -2326,9 +2296,9 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Industry (E.g. Real Estate)" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="90R-ei-TK6">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="Gtz-Gl-hgh"/>
-                                                        <constraint firstAttribute="width" constant="275" id="nWQ-1F-8XJ"/>
+                                                        <constraint firstAttribute="width" constant="270" id="Jex-9X-fBW"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="vaV-2o-6kT" id="zXa-u0-Lu9"/>
@@ -2339,9 +2309,61 @@
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="90R-ei-TK6" secondAttribute="trailing" constant="20" type="default" id="H18-m0-LAo"/>
-                                            <constraint firstItem="90R-ei-TK6" firstAttribute="top" secondItem="YQc-lf-aIP" secondAttribute="top" constant="10" id="yjN-ow-HLh"/>
+                                            <constraint firstItem="90R-ei-TK6" firstAttribute="centerY" secondItem="YQc-lf-aIP" secondAttribute="centerY" type="default" id="HKm-lu-ejx"/>
+                                            <constraint firstItem="90R-ei-TK6" firstAttribute="centerX" secondItem="YQc-lf-aIP" secondAttribute="centerX" type="default" id="gqg-m6-HQP"/>
                                         </constraints>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="2NB-H4-8Rj">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="UI2-yX-3N5" detailTextLabel="9BS-i5-fNO" style="IBUITableViewCellStyleValue1" id="RWO-LP-cSc">
+                                        <rect key="frame" x="0.0" y="208" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Account Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UI2-yX-3N5">
+                                                    <rect key="frame" x="10" y="15" width="92" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="13"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="kvnliu@gmail.com" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9BS-i5-fNO">
+                                                    <rect key="frame" x="167" y="14" width="123" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" red="0.13073106749999999" green="0.3658759124" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="jJ1-Cv-IRt" detailTextLabel="F7Y-yf-VRX" style="IBUITableViewCellStyleValue1" id="XsX-TC-5er">
+                                        <rect key="frame" x="0.0" y="253" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Account Age" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jJ1-Cv-IRt">
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="13"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="283 days" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7Y-yf-VRX">
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -2359,8 +2381,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="accountAgeLabel" destination="jJ1-Cv-IRt" id="pb0-Sr-L0S"/>
+                        <outlet property="accountEmailLabel" destination="UI2-yX-3N5" id="yQd-Eu-Eut"/>
                         <outlet property="companyTextField" destination="hyi-o9-bPc" id="8xP-ux-hIg"/>
-                        <outlet property="emailTextField" destination="CCX-4U-szX" id="b9o-uc-uum"/>
+                        <outlet property="daysLabel" destination="F7Y-yf-VRX" id="Ljz-Qf-c3c"/>
+                        <outlet property="emailLabel" destination="9BS-i5-fNO" id="fAK-Kv-mUH"/>
                         <outlet property="firstNameTextField" destination="48M-XD-aoQ" id="INN-Ey-wrS"/>
                         <outlet property="industryTextField" destination="90R-ei-TK6" id="qTo-CE-2Cm"/>
                         <outlet property="lastNameTextField" destination="V4v-tA-hzI" id="9eJ-aR-8X9"/>
@@ -2368,7 +2393,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ymv-1B-vtK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3967" y="-48"/>
+            <point key="canvasLocation" x="-5661" y="1860"/>
         </scene>
     </scenes>
     <resources>
@@ -2402,8 +2427,11 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAccountViewController.h"/>
             <relationships>
                 <relationship kind="action" name="submit:"/>
+                <relationship kind="outlet" name="accountAgeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="accountEmailLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="companyTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="daysLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="firstNameTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="industryTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="lastNameTextField" candidateClass="UITextField"/>
@@ -2521,9 +2549,6 @@
         <class className="CTLInboxViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLInboxViewController.h"/>
         </class>
-        <class className="CTLLeadsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLLeadsViewController.h"/>
-        </class>
         <class className="CTLLoginViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLLoginViewController.h"/>
             <relationships>
@@ -2605,9 +2630,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="pjZ-Eo-9XM"/>
-        <segue reference="zXr-bQ-uct"/>
         <segue reference="0CA-D9-Fhh"/>
+        <segue reference="1JI-iC-iph"/>
+        <segue reference="iGD-nT-ogT"/>
         <segue reference="oIP-qw-4bu"/>
     </inferredMetricsTieBreakers>
 </document>

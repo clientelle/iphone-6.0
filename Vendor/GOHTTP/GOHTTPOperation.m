@@ -51,6 +51,12 @@
             [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
             [request setHTTPBody:[self dataFromParams:params]];
             break;
+        case GOHTTPMethodPUT:
+            [request setHTTPMethod:@"PUT"];
+            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+            [request setHTTPBody:[self dataFromParams:params]];
+            break;
+        
     }
     NSLog(@"Request: %@", [request HTTPBody]);
     [operation setRequest:request];

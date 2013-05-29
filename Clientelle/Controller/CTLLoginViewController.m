@@ -33,7 +33,7 @@
         //create dictionary from coredata "account" entity
         NSDictionary *credentials = @{@"email":self.emailTextField.text, @"password":self.passwordTextField.text};
                                
-        [_api makeRequest:@"/auth/login.json" withParams:credentials withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
+        [_api makeRequest:@"/auth/login.json" withParams:credentials method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
             
             if(requestSucceeded){
                 

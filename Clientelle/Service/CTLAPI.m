@@ -8,7 +8,6 @@
 //
 
 #import "CTLAPI.h"
-#import "GOHTTPOperation.h"
 
 BOOL const DEBUG_MODE = YES;
 
@@ -104,16 +103,23 @@ typedef enum{
     [_internetOperationQueue addOperation:operation];
 }
 
-- (void)makeRequest:(NSString *)path withParams:(NSDictionary *)params withBlock:(CTLResultBlock)block{
+- (void)makeRequest:(NSString *)path withParams:(NSDictionary *)params method:(GOHTTPMethod)method withBlock:(CTLResultBlock)block
+{
     
     NSString *urlString = [self urlStringForAPIMethod:path];
-    GOHTTPOperation *operation = [GOHTTPOperation operationWithURL:urlString method:GOHTTPMethodPOST params:params];
+    GOHTTPOperation *operation = [GOHTTPOperation operationWithURL:urlString method:method params:params];
     [operation addCompletion:^(NSData *responseData) {
         NSError *error = nil;
         NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&error];
+                
         if(!responseDict){
-            //NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-            //NSLog(@"Response string: %@", responseString);
+            NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+            NSLog(@"Response string: %@", responseString);
+            block(NO, responseDict);
+            return;
+        }
+        
+        if(responseDict[@"error"]){
             block(NO, responseDict);
             return;
         }
@@ -123,8 +129,10 @@ typedef enum{
             block(NO, responseDict);
             return;
         }
+        
         block(YES, responseDict);
     }];
+
     [_internetOperationQueue addOperation:operation];
 }
 
@@ -252,6 +260,7 @@ typedef enum{
 + (NSString *)messageFromResponse:(NSDictionary *)response {
     NSDictionary *message = [response objectForKey:kCTLMessageKey];
     NSMutableArray *errors = [NSMutableArray array];
+    
     if(message){
         for(NSString *field in message){
             NSArray *errs = [message objectForKey:field];
@@ -260,6 +269,10 @@ typedef enum{
             }
         }
         return [errors componentsJoinedByString:@"\n"];
+    }
+    
+    if([response objectForKey:@"error"]){
+        return [response objectForKey:@"error"];
     }
     
     return kServerErrorGeneric;

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GOHTTPOperation.h"
 
 typedef void (^CTLResultBlock)(BOOL requestSucceeded, NSDictionary *response);
 
@@ -32,8 +33,8 @@ extern NSString *const kCTLAuthTokenKey;
 - (BOOL)hasInternetConnection;
 
 - (void)makeRequest:(NSString *)path withBlock:(CTLResultBlock)block;
-- (void)makeRequest:(NSString *)path withParams:(NSDictionary *)params withBlock:(CTLResultBlock)block;
 - (void)makeRequest:(NSString *)path withParams:(NSDictionary *)params andWait:(CTLResultBlock)block;
+- (void)makeRequest:(NSString *)path withParams:(NSDictionary *)params method:(GOHTTPMethod)method withBlock:(CTLResultBlock)block;
 - (void)makeRequest:(NSString *)path andWait:(CTLResultBlock)block;
 
 - (void)loginWithEmail:(NSString *)email password:(NSString *)password andBlock:(CTLResultBlock)block;

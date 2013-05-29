@@ -9,7 +9,8 @@
 
 typedef enum{
     GOHTTPMethodGET,
-    GOHTTPMethodPOST
+    GOHTTPMethodPOST,
+    GOHTTPMethodPUT
 }GOHTTPMethod;
 
 typedef void (^GODataBlock)(NSData* data);

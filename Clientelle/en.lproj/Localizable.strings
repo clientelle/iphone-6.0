@@ -32,13 +32,14 @@ e†
 "RESET" = "Reset";
 "TRY_AGAIN" = "Try Again";
 "UPGRADE" = "Upgrade";
+"ACCOUNT" = "Account";
 "PRO" = "PRO";
 "FREE" = "FREE";
 
 /* GENERIC TERMS */
 "CLIENTS" = "Clients";
 "OPTIONAL" = "Optional";
-
+"GENERIC_ERROR" = "An unknown error occurred";
 
 /* PERMISSIONS */
 "REQUIRES_ACCESS_TO_CONTACTS" = "To continue, please allow access to Contacts:";
@@ -136,7 +137,6 @@ e†
 "DEVICE_NOT_CONFIGURED_TO_SEND_SMS" = "Device is not configured to send text messages";
 
 /* Preferences */
-
 "SETTINGS" = "Settings";
 "ACCOUNT_TYPE" = "Account Type";
 "FREE" = "Free";
@@ -237,6 +237,9 @@ e†
 
 "YOUR_ACCOUNT" = "Your Account";
 "CREATE_ACCOUNT" = "Create Account";
+
+"ACCOUNT_EMAIL" = "Account Email";
+"ACCOUNT_AGE" = "Account Age";
 
 "INVALID_EMAIL" = "Email is invalid";
 "PASSWORD_REQUIREMENT" = "Password must be at least 6 characters";

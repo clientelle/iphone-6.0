@@ -10,6 +10,7 @@
 #import "CTLCDAccount.h"
 #import "UIColor+CTLColor.h"
 #import "UITableViewCell+CellShadows.h"
+#import "NSDate+CTLDate.h"
 #import "CTLAccountViewController.h"
 #import "CTLSlideMenuController.h"
 
@@ -29,9 +30,11 @@
     
     self.firstNameTextField.placeholder = NSLocalizedString(@"FIRST_NAME", nil);
     self.lastNameTextField.placeholder = NSLocalizedString(@"LAST_NAME", nil);
-    self.emailTextField.placeholder = NSLocalizedString(@"EMAIL_ADDRESS", nil);
     self.companyTextField.placeholder = NSLocalizedString(@"COMPANY_NAME", nil);
     self.industryTextField.placeholder = NSLocalizedString(@"INDUSTRY", nil);
+
+    self.accountEmailLabel.text = NSLocalizedString(@"ACCOUNT_EMAIL", nil);
+    self.accountAgeLabel.text = NSLocalizedString(@"ACCOUNT_AGE", nil);
     
     if(_account){
         
@@ -43,16 +46,31 @@
         self.lastNameTextField.text = [self.account last_name];
         self.companyTextField.text = [self.account company];
         self.industryTextField.text = [self.account industry];
-        self.emailTextField.text = [self.account email];
         
-        
+        self.emailLabel.text = [self.account email];
+        self.daysLabel.text = [self dateAgo:self.account.created_at];
+                
     }else{
         self.navigationItem.title = NSLocalizedString(@"CREATE_ACCOUNT", nil);
     }
-    
-    
+     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissEditing:)];
     [self.view addGestureRecognizer:tapGesture];
+}
+
+- (NSString *)dateAgo:(NSDate *)cakeDay
+{
+    NSDate *todaysDate = [NSDate date];
+    NSTimeInterval lastDiff = [cakeDay timeIntervalSinceNow];
+    NSTimeInterval todaysDiff = [todaysDate timeIntervalSinceNow];
+    NSTimeInterval dateDiff = lastDiff - todaysDiff;
+    NSTimeInterval days = (dateDiff * -1)/86400;
+    
+    if(days < 1){
+        return @"1 d";
+    }
+    
+    return [NSString stringWithFormat:@"%f d", round(days)];
 }
 
 - (UIPickerView *)configureIndustryPicker
@@ -78,7 +96,6 @@
 - (void)dismissEditing:(id)sender{
     [self.view endEditing:YES];
 }
-
 
 #pragma mark -
 #pragma mark UITableViewDelegate
@@ -138,110 +155,73 @@
 	return 1;
 }
 
-
 - (void)toggleMenu:(id)sender{
     [self.menuController toggleMenu:sender];
 }
 
-//- (IBAction)submit:(id)sender{
-//    
-//    NSString *email = self.emailTextField.text;
-//    NSString *first_name = self.firstNameTextField.text;
-//    NSString *last_name = self.lastNameTextField.text;
-//    NSString *company = self.companyTextField.text;
-//    NSString *industry = self.industryTextField.text;
-//    NSString *industry_id = [NSString stringWithFormat:@"%d", _industryID.intValue];
-//    
-//    if([email length] == 0 || [password length] == 0 || [confirmPassword length] == 0){
-//        return;
-//    }
-//    
-//    if ([email rangeOfString:@"@"].location == NSNotFound) {
-//        [self.emailTextField becomeFirstResponder];
-//        [self alertErrorMessage:@"INVALID_EMAIL"];
-//        return;
-//    }
-//    
-//    if([password length] < 6 || [confirmPassword length] < 6){
-//        [self.passwordTextField becomeFirstResponder];
-//        [self alertErrorMessage:@"PASSWORD_REQUIREMENT"];
-//        return;
-//    }
-//    
-//    if([password isEqualToString:confirmPassword] == NO){
-//        [self.confirmPasswordTextField becomeFirstResponder];
-//        [self alertErrorMessage:@"PASSWORDS_DO_NOT_MATCH"];
-//        return;
-//    }
-//    
-//    
-//    NSMutableDictionary *post = [NSMutableDictionary dictionary];
-//    
-//    [post setValue:email forKey:@"user[email]"];
-//    [post setValue:password forKey:@"user[password]"];
-//    [post setValue:confirmPassword forKey:@"user[password_confirmation]"];
-//    [post setValue:company forKey:@"company"];
-//    [post setValue:industry forKey:@"industry"];
-//    [post setValue:industry_id forKey:@"industry_id"];
-//    [post setValue:@"iphone" forKey:@"source"];
-//    [post setValue:[[NSLocale currentLocale] localeIdentifier] forKey:@"locale"];
-//    
-//    [_api makeRequest:@"/register.json" withParams:post withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
-//        
-//        if(requestSucceeded){
-//            
-//            NSDictionary *user = response[@"user"];
-//            
-//            CTLCDAccount *account = [CTLCDAccount MR_createEntity];
-//            account.email = email;
-//            account.company = company;
-//            account.industry = industry;
-//            account.industry_id = _industryID;
-//            account.password = password;
-//            account.created_at = [NSDate date];
-//            
-//            account.auth_token = response[kCTLAuthTokenKey];
-//            account.user_id = @([user[@"id"] intValue]);
-//            account.is_pro = @(1);
-//            
-//            //account.company_idValue = [user[@"company_id"] intValue];
-//            //account.industry_idValue = [user[@"industry_id"] intValue];
-//            
-//            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-//                
-//                [[NSUserDefaults standardUserDefaults] setValue:[response objectForKey:kCTLAuthTokenKey] forKey:kCTLAccountAccessToken];
-//                
-//                
-//                [self.menuController setRightSwipeEnabled:YES];
-//                
-//                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
-//                UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"inboxInterstitialNavigationController"];
-//                
-//                CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *inboxInterstitial = (CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
-//                
-//                [inboxInterstitial setMenuController:self.menuController];
-//                [self.menuController setMainViewController:inboxInterstitial];
-//                [self.menuController flipToView];
-//            }];
-//            
-//            
-//        }else{
-//            
-//            NSString *message = [CTLAPI messageFromResponse:response];
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-//                                                            message:message
-//                                                           delegate:self
-//                                                  cancelButtonTitle:@"OK"
-//                                                  otherButtonTitles:nil, nil];
-//            [alert show];
-//        }
-//    }];
-//}
+- (IBAction)submit:(id)sender{
+    
+    //TODO: loading 
+    NSString *first_name = self.firstNameTextField.text;
+    NSString *last_name = self.lastNameTextField.text;
+    NSString *company = self.companyTextField.text;
+    NSString *industry = self.industryTextField.text;
+    NSString *industry_id = [NSString stringWithFormat:@"%d", _industryID.intValue];
+    
+    if([first_name length] == 0 ||
+       [last_name length] == 0 ||
+       [company length] == 0 ||
+       [industry length] == 0){
+        return;
+    }    
+    
+    NSMutableDictionary *post = [NSMutableDictionary dictionary];
+    [post setValue:_account.user_id forKey:@"id"];
+    [post setValue:first_name forKey:@"user[first_name]"];
+    [post setValue:last_name forKey:@"user[last_name]"];
+    [post setValue:company forKey:@"company[name]"];
+    [post setValue:industry forKey:@"industry[name]"];
+    [post setValue:industry_id forKey:@"industry[id]"];
+        
+    NSString *path = [NSString stringWithFormat:@"/account/%@/?auth_token=%@&format=json", _account.user_id, _account.auth_token];
+    [_api makeRequest:path withParams:post method:GOHTTPMethodPUT withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
+        
+        if(requestSucceeded){
 
-- (void)alertErrorMessage:(NSString *)message
+            _account.first_name = first_name;
+            _account.last_name = last_name;
+            _account.company = company;
+            _account.industry = industry;
+            
+            if(response[@"user"]){
+                if(response[@"user"][@"industry"]){
+                    _account.industry_id = response[@"user"][@"industry"][@"id"];
+                }
+            }        
+            
+            _account.updated_at = [NSDate date];
+            
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+                //TODO: dismiss loading screen
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+                        
+        }else{
+            NSString *message = [CTLAPI messageFromResponse:response];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:message
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+}
+
+- (void)alertErrorMessage:(NSString *)i18nKey
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:NSLocalizedString(message, nil)
+                                                    message:NSLocalizedString(i18nKey, nil)
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil, nil];
