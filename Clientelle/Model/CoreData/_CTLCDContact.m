@@ -6,6 +6,7 @@
 const struct CTLCDContactAttributes CTLCDContactAttributes = {
 	.address = @"address",
 	.address2 = @"address2",
+	.contactID = @"contactID",
 	.email = @"email",
 	.firstName = @"firstName",
 	.jobTitle = @"jobTitle",
@@ -53,6 +54,10 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"contactIDValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"contactID"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"recordIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"recordID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -73,6 +78,32 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 
 @dynamic address2;
 
+
+
+
+
+
+@dynamic contactID;
+
+
+
+- (int16_t)contactIDValue {
+	NSNumber *result = [self contactID];
+	return [result shortValue];
+}
+
+- (void)setContactIDValue:(int16_t)value_ {
+	[self setContactID:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveContactIDValue {
+	NSNumber *result = [self primitiveContactID];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveContactIDValue:(int16_t)value_ {
+	[self setPrimitiveContactID:[NSNumber numberWithShort:value_]];
+}
 
 
 

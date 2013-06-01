@@ -16,6 +16,7 @@
 #import "CTLLoginViewController.h"
 #import "CTLSlideMenuController.h"
 #import "CTLInboxInterstitialViewController.h"
+#import "CTLMessagesListViewController.h"
 
 NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.reloadInbox";
 
@@ -23,8 +24,6 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
-    self.overrideBackButtonWithMenuButton = YES;
     
     _api = [CTLAPI sharedAPI];
     
@@ -34,39 +33,16 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     self.industryTextField.inputView = _industryPicker;
     self.industryTextField.tag = 170;
     
-    _account = [CTLCDAccount findFirst];
+    self.account = [CTLCDAccount findFirst];
     
     [self translateInputPlaceholders];
-    
-    if(_account){
-        
-        self.navigationItem.title = NSLocalizedString(@"YOUR_ACCOUNT", nil);
-        
-        self.account = _account;
-        _industryID = self.account.industry_id;
-        self.companyTextField.text = [self.account company];
-        self.industryTextField.text = [self.account industry];
-        self.emailTextField.text = [self.account email];
-        self.passwordTextField.text = [self.account password];
-        self.confirmPasswordTextField.text = [self.account password];
-        
-    }else{
-        self.navigationItem.title = NSLocalizedString(@"CREATE_ACCOUNT", nil);
-    }
-    
+    self.navigationItem.title = NSLocalizedString(@"CREATE_ACCOUNT", nil);
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissEditing:)];
     [self.view addGestureRecognizer:tapGesture];
-    
-    if(self.overrideBackButtonWithMenuButton){
-    
-        [self.menuController renderMenuButton:self];
-        [self.navigationItem setHidesBackButton:YES animated:YES];
-    }
-    
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BACK", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
-    [self.navigationItem setBackBarButtonItem: backButton];
 
+    [self.menuController renderMenuButton:self];
+    [self.navigationItem setHidesBackButton:NO animated:YES];
 }
 
 - (void)translateInputPlaceholders
@@ -205,11 +181,9 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
         [self.confirmPasswordTextField becomeFirstResponder];
         [self alertErrorMessage:@"PASSWORDS_DO_NOT_MATCH"];
         return;
-    }    
-        
+    }
     
     NSMutableDictionary *post = [NSMutableDictionary dictionary];
-
     [post setValue:email forKey:@"user[email]"];
     [post setValue:password forKey:@"user[password]"];
     [post setValue:confirmPassword forKey:@"user[password_confirmation]"];
@@ -227,39 +201,35 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 
             CTLCDAccount *account = [CTLCDAccount MR_createEntity];
             account.email = email;
-            account.company = company;
-            account.industry = industry;
-            
-            if(response[@"user"]){
-                if(response[@"user"][@"industry"]){
-                    _account.industry_id = response[@"user"][@"industry"][@"id"];
-                }
-            }
-            
             account.password = password;
             account.created_at = [NSDate date];
-             
-            account.auth_token = response[kCTLAuthTokenKey];
             account.user_id = @([user[@"id"] intValue]);
             account.is_pro = @(1);
             
+            if(user[@"authentication_token"]){
+                account.auth_token = user[@"authentication_token"];
+                [[NSUserDefaults standardUserDefaults] setValue:user[@"authentication_token"] forKey:kCTLAccountAccessToken];
+            }
+            
+            if([company length] > 0 && user[@"company"]){
+                account.company = company;
+            }
+            
+            if([industry length] > 0 && user[@"industry"]){
+                account.industry = industry;
+                account.industry_id = user[@"industry"][@"id"];
+            }
+                        
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){ 
-                            
-                [[NSUserDefaults standardUserDefaults] setValue:[response objectForKey:kCTLAuthTokenKey] forKey:kCTLAccountAccessToken];
-                                
+                UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuController.nextNavString];
+                UIViewController<CTLSlideMenuDelegate> *viewController = (UIViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
+                viewController.menuController = self.menuController;
+                [self.menuController setAccount:account];
                 [self.menuController setRightSwipeEnabled:YES];
-                
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
-                UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"inboxInterstitialNavigationController"];
-                
-                CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *inboxInterstitial = (CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
-                
-                [inboxInterstitial setMenuController:self.menuController];
-                [self.menuController setMainViewController:inboxInterstitial];
+                [self.menuController setMainViewController:viewController];
                 [self.menuController flipToView];
             }];
             
-                
         }else{
 
             NSString *message = [CTLAPI messageFromResponse:response];

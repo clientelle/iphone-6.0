@@ -142,7 +142,8 @@ e†
 "FREE" = "Free";
 "PAID" = "Paid";
 "SET_A_PIN" = "Set a PIN Code";
-"NOTIFICATIONS" = "Notifications";
+"APPT_NOTIFICATIONS" = "Appointment Notifications";
+"MSG_NOTIFICATIONS" = "Message Notifications";
 "REPORT_A_PROBLEM" = "Report a Problem";
 "REQUEST_A_FEATURE" = "Request a Feature";
 "RATE_APP" = "Rate in App Store";

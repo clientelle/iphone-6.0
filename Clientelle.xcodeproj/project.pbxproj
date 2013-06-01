@@ -43,7 +43,7 @@
 		41335F99172C77B000699F2E /* 40-forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41335F97172C77B000699F2E /* 40-forward@2x.png */; };
 		413DB90016F022950018B38C /* CTLPickerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DB8FF16F022950018B38C /* CTLPickerButton.m */; };
 		4146971B16F7494F00B22EDD /* CTLFactoryAppointment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4146971A16F7494F00B22EDD /* CTLFactoryAppointment.m */; };
-		4154A76A1755945300C3E280 /* CTLMessageCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4154A7691755945300C3E280 /* CTLMessageCellView.m */; };
+		4154A76A1755945300C3E280 /* CTLMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4154A7691755945300C3E280 /* CTLMessageCell.m */; };
 		415A4F2B16F69DF6007A0BD4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415A4F2A16F69DF6007A0BD4 /* SystemConfiguration.framework */; };
 		415A4F2F16F6A00D007A0BD4 /* GOHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F2E16F6A00D007A0BD4 /* GOHTTPOperation.m */; };
 		415A4F3316F6A0AC007A0BD4 /* RMPhoneFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F3216F6A0AC007A0BD4 /* RMPhoneFormat.m */; };
@@ -223,7 +223,7 @@
 		41DA1DAF16CB15B60017F71F /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B5473516B4562D00302652 /* EventKit.framework */; };
 		41DA1DB216CB15CA0017F71F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC24116ADF1140073199D /* CoreGraphics.framework */; };
 		41DA1DB316CB15E40017F71F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41848E0E16B1D211004BFE30 /* MessageUI.framework */; };
-		41DA1DB616CC57ED0017F71F /* CTLAccountInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */; };
+		41DA1DB616CC57ED0017F71F /* CTLUpgradeInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DB516CC57ED0017F71F /* CTLUpgradeInterstitialViewController.m */; };
 		41DA1DB916CC8B4E0017F71F /* CTLInboxInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */; };
 		41DA1DBC16CE781C0017F71F /* CTLEnterFormCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DBB16CE781B0017F71F /* CTLEnterFormCodeViewController.m */; };
 		41DA1DCF16D003DC0017F71F /* _CTLCDInbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA1DCC16D003DC0017F71F /* _CTLCDInbox.m */; };
@@ -335,8 +335,8 @@
 		413DB8FF16F022950018B38C /* CTLPickerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPickerButton.m; sourceTree = "<group>"; };
 		4146971916F7494F00B22EDD /* CTLFactoryAppointment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLFactoryAppointment.h; path = Factory/CTLFactoryAppointment.h; sourceTree = "<group>"; };
 		4146971A16F7494F00B22EDD /* CTLFactoryAppointment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLFactoryAppointment.m; path = Factory/CTLFactoryAppointment.m; sourceTree = "<group>"; };
-		4154A7681755945300C3E280 /* CTLMessageCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMessageCellView.h; sourceTree = "<group>"; };
-		4154A7691755945300C3E280 /* CTLMessageCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMessageCellView.m; sourceTree = "<group>"; };
+		4154A7681755945300C3E280 /* CTLMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMessageCell.h; sourceTree = "<group>"; };
+		4154A7691755945300C3E280 /* CTLMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMessageCell.m; sourceTree = "<group>"; };
 		415A4F2A16F69DF6007A0BD4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		415A4F2D16F6A00D007A0BD4 /* GOHTTPOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOHTTPOperation.h; sourceTree = "<group>"; };
 		415A4F2E16F6A00D007A0BD4 /* GOHTTPOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOHTTPOperation.m; sourceTree = "<group>"; };
@@ -580,8 +580,8 @@
 		41D791681738C97400FCA232 /* CTLCDContactField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLCDContactField.h; path = CoreData/CTLCDContactField.h; sourceTree = "<group>"; };
 		41D791691738C97400FCA232 /* CTLCDContactField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLCDContactField.m; path = CoreData/CTLCDContactField.m; sourceTree = "<group>"; };
 		41D7916C1738D36900FCA232 /* ContactFormDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ContactFormDefaults.plist; sourceTree = "<group>"; };
-		41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAccountInterstitialViewController.h; sourceTree = "<group>"; };
-		41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAccountInterstitialViewController.m; sourceTree = "<group>"; };
+		41DA1DB416CC57ED0017F71F /* CTLUpgradeInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLUpgradeInterstitialViewController.h; sourceTree = "<group>"; };
+		41DA1DB516CC57ED0017F71F /* CTLUpgradeInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLUpgradeInterstitialViewController.m; sourceTree = "<group>"; };
 		41DA1DB716CC8B4D0017F71F /* CTLInboxInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInboxInterstitialViewController.h; sourceTree = "<group>"; };
 		41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInboxInterstitialViewController.m; sourceTree = "<group>"; };
 		41DA1DBA16CE781B0017F71F /* CTLEnterFormCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLEnterFormCodeViewController.h; sourceTree = "<group>"; };
@@ -752,11 +752,11 @@
 		416DD83416AF9C2D00F2F8B3 /* SliderMenu */ = {
 			isa = PBXGroup;
 			children = (
-				416DD82A16AF966400F2F8B3 /* CTLSlideMenuDelegate.h */,
-				416DD82816AF966300F2F8B3 /* CTLSlideMenuController.h */,
-				416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */,
 				417DC29616ADF60E0073199D /* CTLMainMenuViewController.h */,
 				417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */,
+				416DD82816AF966300F2F8B3 /* CTLSlideMenuController.h */,
+				416DD82916AF966300F2F8B3 /* CTLSlideMenuController.m */,
+				416DD82A16AF966400F2F8B3 /* CTLSlideMenuDelegate.h */,
 			);
 			name = SliderMenu;
 			sourceTree = "<group>";
@@ -973,8 +973,6 @@
 			isa = PBXGroup;
 			children = (
 				416DD83416AF9C2D00F2F8B3 /* SliderMenu */,
-				41DA1DB416CC57ED0017F71F /* CTLAccountInterstitialViewController.h */,
-				41DA1DB516CC57ED0017F71F /* CTLAccountInterstitialViewController.m */,
 				416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */,
 				416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */,
 				41B546E516B39C2500302652 /* CTLAppointmentFormViewController.h */,
@@ -1007,6 +1005,8 @@
 				41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */,
 				416DD83816AF9E9000F2F8B3 /* CTLSettingsViewController.h */,
 				416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */,
+				41DA1DB416CC57ED0017F71F /* CTLUpgradeInterstitialViewController.h */,
+				41DA1DB516CC57ED0017F71F /* CTLUpgradeInterstitialViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1206,8 +1206,8 @@
 				41AEBDB516EEEE6F00BC397F /* CTLAppointmentCell.m */,
 				41D7914F1733EA8500FCA232 /* CTLContactSelectorCell.h */,
 				41D791501733EA8500FCA232 /* CTLContactSelectorCell.m */,
-				4154A7681755945300C3E280 /* CTLMessageCellView.h */,
-				4154A7691755945300C3E280 /* CTLMessageCellView.m */,
+				4154A7681755945300C3E280 /* CTLMessageCell.h */,
+				4154A7691755945300C3E280 /* CTLMessageCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1520,7 +1520,7 @@
 				4130653716C149D90063AC10 /* _CTLCDAccount.m in Sources */,
 				4130653816C149D90063AC10 /* CTLCDAccount.m in Sources */,
 				4130653F16C14A980063AC10 /* CTLRegisterViewController.m in Sources */,
-				41DA1DB616CC57ED0017F71F /* CTLAccountInterstitialViewController.m in Sources */,
+				41DA1DB616CC57ED0017F71F /* CTLUpgradeInterstitialViewController.m in Sources */,
 				41DA1DB916CC8B4E0017F71F /* CTLInboxInterstitialViewController.m in Sources */,
 				41DA1DBC16CE781C0017F71F /* CTLEnterFormCodeViewController.m in Sources */,
 				41DA1DCF16D003DC0017F71F /* _CTLCDInbox.m in Sources */,
@@ -1561,7 +1561,7 @@
 				41AB94B91741ABE7003741BB /* CTLSetPinViewController.m in Sources */,
 				418500C31743BD1700F5FFA2 /* CTLPinInterstialViewController.m in Sources */,
 				418500CA1746E76F00F5FFA2 /* CTLFeatureSplashViewController.m in Sources */,
-				4154A76A1755945300C3E280 /* CTLMessageCellView.m in Sources */,
+				4154A76A1755945300C3E280 /* CTLMessageCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

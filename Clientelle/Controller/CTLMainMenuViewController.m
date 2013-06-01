@@ -11,6 +11,8 @@
 #import "CTLMenuItemCell.h"
 #import "CTLSlideMenuController.h"
 #import "CTLContactsListViewController.h"
+#import "CTLMessagesListViewController.h"
+#import "CTLInboxViewController.h"
 
 #import "CTLCDAccount.h"
 
@@ -23,7 +25,7 @@
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:40 green:40 blue:40 alpha:1.0f];
     
-    _account = [CTLCDAccount MR_findFirst];
+    self.account = [CTLCDAccount MR_findFirst];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -64,12 +66,12 @@
 - (void)loadViewController:(NSString *)storyboardIdentifier
 {
     if([storyboardIdentifier isEqualToString:@"inboxNavigationController"]){
-
-        if(!_account){
+        self.menuController.nextNavString = @"inboxInterstitialNavigationController";
+        if(!self.account){
             //No account yet. Prompt to upgrade
-            storyboardIdentifier = @"accountInterstitialNavigationController";
+            storyboardIdentifier = @"upgradeInterstitialNavigationController";
         }else{
-            if([_account.has_inbox isEqual:@(1)]){
+            if([self.account.has_inbox isEqual:@(1)]){
                 //got to inbox!
                 storyboardIdentifier = @"inboxNavigationController";
             }else{
@@ -78,7 +80,17 @@
             }
         }
     }
-     
+    
+    if([storyboardIdentifier isEqualToString:@"messagesNavigationController"]){
+        self.menuController.nextNavString = @"messagesNavigationController";
+        if(!self.account){
+            //No account yet. Prompt to upgrade
+            storyboardIdentifier = @"upgradeInterstitialNavigationController";
+        }else{
+            storyboardIdentifier = @"messagesNavigationController";
+        }
+    }
+
     [self.menuController setMainView:storyboardIdentifier];
 }
 

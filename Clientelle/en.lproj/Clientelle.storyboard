@@ -400,7 +400,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="messageCell" rowHeight="59" id="Th1-wC-wWt">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="messageCell" rowHeight="59" id="Th1-wC-wWt" customClass="CTLMessageCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="59"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -445,6 +445,11 @@
                                     <constraint firstItem="ksE-lY-FLY" firstAttribute="top" secondItem="Th1-wC-wWt" secondAttribute="top" constant="7" id="ksg-zh-7K9"/>
                                     <constraint firstAttribute="trailing" secondItem="WgV-EX-R71" secondAttribute="trailing" constant="20" type="default" id="vlS-Zo-6HN"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="messageLabel" destination="Aqu-Ci-6mX" id="eFX-um-uLw"/>
+                                    <outlet property="senderLabel" destination="ksE-lY-FLY" id="BzG-Cl-Dzv"/>
+                                    <outlet property="timeLabel" destination="WgV-EX-R71" id="f8Y-k5-TvH"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                     </tableView>
@@ -452,7 +457,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hdm-yj-l1d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6411" y="-747"/>
+            <point key="canvasLocation" x="-6418" y="125"/>
         </scene>
         <!--Pin Interstial View Controller-->
         <scene sceneID="Ole-w6-P0V">
@@ -556,7 +561,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UiR-sS-Qnj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7112" y="-747"/>
+            <point key="canvasLocation" x="-7119" y="125"/>
         </scene>
         <!--Contact Import View Controller-->
         <scene sceneID="Ipp-T5-eLi">
@@ -1386,11 +1391,11 @@
                         <sections>
                             <tableViewSection id="v2h-Xo-wwH">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="YgT-cy-gJ8" detailTextLabel="gog-Y2-FK7" style="IBUITableViewCellStyleValue1" id="HVD-kX-1ce">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="YgT-cy-gJ8" detailTextLabel="gog-Y2-FK7" style="IBUITableViewCellStyleValue1" id="HVD-kX-1ce">
                                         <rect key="frame" x="0.0" y="10" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Account Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgT-cy-gJ8">
@@ -1415,7 +1420,7 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EGZ-Cr-My7">
+                                                <switch opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EGZ-Cr-My7">
                                                     <color key="onTintColor" red="1" green="0.79231352590000004" blue="0.37115173620000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
                                                         <action selector="toggleNotificationSetting:" destination="rhV-Ya-gj3" eventType="valueChanged" id="fL9-eE-Y8q"/>
@@ -1429,30 +1434,45 @@
                                             <constraint firstAttribute="trailing" secondItem="EGZ-Cr-My7" secondAttribute="trailing" constant="20" type="default" id="eTb-xX-RTm"/>
                                         </constraints>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="ibp-mD-j32" detailTextLabel="SBa-SA-WdL" imageView="vOw-dX-dZx" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="Lnu-Tl-mC1">
-                                        <rect key="frame" x="0.0" y="99" width="320" height="60"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xHh-gF-zrl">
+                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="280" height="58"/>
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q9E-cc-gfr">
+                                                    <color key="onTintColor" red="1" green="0.79231352590000004" blue="0.37115173620000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="toggleNotificationSetting:" destination="rhV-Ya-gj3" eventType="valueChanged" id="avq-0O-pjD"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="q9E-cc-gfr" firstAttribute="top" secondItem="xHh-gF-zrl" secondAttribute="top" constant="8" id="IlY-Aw-sSD"/>
+                                            <constraint firstAttribute="trailing" secondItem="q9E-cc-gfr" secondAttribute="trailing" constant="20" type="default" id="bmp-t5-HBH"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="ibp-mD-j32" imageView="vOw-dX-dZx" style="IBUITableViewCellStyleDefault" id="Lnu-Tl-mC1">
+                                        <rect key="frame" x="0.0" y="143" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Configure PIN Lock" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ibp-mD-j32">
-                                                    <rect key="frame" x="40" y="14" width="129" height="16"/>
+                                                    <rect key="frame" x="39" y="0.0" width="231" height="43"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="54-lock.png" id="vOw-dX-dZx">
-                                                    <rect key="frame" x="10" y="17" width="20" height="24"/>
+                                                    <rect key="frame" x="9" y="9" width="20" height="24"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Require a passcode to enter app" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBa-SA-WdL">
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="13"/>
-                                                    <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -1462,7 +1482,7 @@
                             <tableViewSection id="2NV-CL-qWm">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="SG8-CK-8tW" style="IBUITableViewCellStyleDefault" id="k03-zs-3gb">
-                                        <rect key="frame" x="0.0" y="178" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="207" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -1479,7 +1499,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="qhj-Qz-48T" style="IBUITableViewCellStyleDefault" id="xpC-wo-O2k">
-                                        <rect key="frame" x="0.0" y="223" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="252" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -1496,7 +1516,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="84c-LQ-Bdp" style="IBUITableViewCellStyleDefault" id="hvx-yT-Wfk">
-                                        <rect key="frame" x="0.0" y="267" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="296" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -1524,10 +1544,18 @@
                     <navigationItem key="navigationItem" title="Settings" id="hFZ-Gu-0g9"/>
                     <connections>
                         <outlet property="accountTypeCell" destination="HVD-kX-1ce" id="TKj-xD-ucv"/>
-                        <outlet property="notificationSwitch" destination="EGZ-Cr-My7" id="qyZ-UU-o9A"/>
+                        <outlet property="appointmentNotificationCell" destination="1Sv-5i-Se8" id="kQN-fK-YaO"/>
+                        <outlet property="appointmentNotificationSwitch" destination="EGZ-Cr-My7" id="IZE-2w-M9t"/>
+                        <outlet property="featureCell" destination="xpC-wo-O2k" id="cxD-mG-KUv"/>
+                        <outlet property="messageNotificationCell" destination="xHh-gF-zrl" id="005-r5-suf"/>
+                        <outlet property="messageNotificationSwitch" destination="q9E-cc-gfr" id="b8Q-3Q-9eM"/>
+                        <outlet property="pinCell" destination="Lnu-Tl-mC1" id="S6L-zg-J0t"/>
+                        <outlet property="shareCell" destination="hvx-yT-Wfk" id="XQY-sl-M7f"/>
+                        <outlet property="supportCell" destination="k03-zs-3gb" id="LRu-4T-cWd"/>
                         <outlet property="view" destination="2ld-di-sfQ" id="eff-fP-p8x"/>
                         <segue destination="lNS-Ua-D5H" kind="push" identifier="toSetPin" id="KND-gy-S7m"/>
                         <segue destination="vaV-2o-6kT" kind="push" identifier="toAccountInfo" id="McU-cu-YMG"/>
+                        <segue destination="CbC-t5-OQt" kind="push" identifier="toSignup" id="hcl-ja-9qa"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zQ-8C-ERu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1674,7 +1702,7 @@
         <!--Navigation Controller-->
         <scene sceneID="wv8-ra-VoP">
             <objects>
-                <navigationController storyboardIdentifier="accountInterstitialNavigationController" definesPresentationContext="YES" id="ekB-4t-kUZ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="upgradeInterstitialNavigationController" definesPresentationContext="YES" id="ekB-4t-kUZ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NNm-Qr-l6n">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1684,12 +1712,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PsU-es-59s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7141" y="946"/>
+            <point key="canvasLocation" x="-7119" y="946"/>
         </scene>
-        <!--Account Interstitial View Controller-->
+        <!--Upgrade Interstitial View Controller-->
         <scene sceneID="gXH-xz-Y32">
             <objects>
-                <viewController id="ZYb-U7-fA5" customClass="CTLAccountInterstitialViewController" sceneMemberID="viewController">
+                <viewController id="ZYb-U7-fA5" customClass="CTLUpgradeInterstitialViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jsF-D5-svD">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1733,7 +1761,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eyt-eG-Czg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6429" y="946"/>
+            <point key="canvasLocation" x="-6421" y="946"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PRB-Ol-PXD">
@@ -1748,7 +1776,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JZK-Ct-NEr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7119" y="90"/>
+            <point key="canvasLocation" x="-7119" y="-722"/>
         </scene>
         <!--Inbox Interstitial View Controller-->
         <scene sceneID="DV8-gw-otP">
@@ -1799,7 +1827,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NRg-uy-DuX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6429" y="90"/>
+            <point key="canvasLocation" x="-6429" y="-722"/>
         </scene>
         <!--Enter Form Code View Controller-->
         <scene sceneID="Dg2-h0-Fz4">
@@ -1846,7 +1874,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZjD-ld-Ogk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5709" y="90"/>
+            <point key="canvasLocation" x="-5709" y="-722"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pNN-IT-Xvp">
@@ -2321,7 +2349,7 @@
                                         <rect key="frame" x="0.0" y="208" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Account Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UI2-yX-3N5">
@@ -2331,8 +2359,8 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="kvnliu@gmail.com" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9BS-i5-fNO">
-                                                    <rect key="frame" x="167" y="14" width="123" height="16"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9BS-i5-fNO">
+                                                    <rect key="frame" x="250" y="14" width="40" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
                                                     <color key="textColor" red="0.13073106749999999" green="0.3658759124" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -2355,7 +2383,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="283 days" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7Y-yf-VRX">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="0 d" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7Y-yf-VRX">
                                                     <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2415,215 +2443,6 @@
         <image name="whiteButton.png" width="36" height="36"/>
         <image name="whiteButtonHighlight.png" width="36" height="36"/>
     </resources>
-    <classes>
-        <class className="CTLAccountInterstitialViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAccountInterstitialViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="actionMessageLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="upgradeButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="CTLAccountViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAccountViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="submit:"/>
-                <relationship kind="outlet" name="accountAgeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="accountEmailLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="companyTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="daysLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="firstNameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="industryTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lastNameTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLAppointmentCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentCell.h"/>
-            <relationships>
-                <relationship kind="action" name="markAsComplete:"/>
-                <relationship kind="action" name="segueToMapView:"/>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="feeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mapButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CTLAppointmentFormViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentFormViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="contactDidChange:" candidateClass="UITextField"/>
-                <relationship kind="action" name="formatFeeString:" candidateClass="UITextField"/>
-                <relationship kind="action" name="saveAppointment:"/>
-                <relationship kind="action" name="showDatePicker:"/>
-                <relationship kind="action" name="unformatCurrency:" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="address2TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="addressTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="contactNameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="endTimeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="feeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="headerLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="startTimeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="titleTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLAppointmentsListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentsListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addAppointment:"/>
-                <relationship kind="action" name="dismissPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLContactCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="detailsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timestampLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CTLContactDetailsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissKeyboard:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="showAddFieldsModal:"/>
-                <relationship kind="action" name="submit:"/>
-                <relationship kind="action" name="textFieldDidChange:" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="editFormButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="saveContactButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="CTLContactFormEditorViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactFormEditorViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="enableReordering:"/>
-                <relationship kind="action" name="save:"/>
-                <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLContactImportViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactImportViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelImport:"/>
-                <relationship kind="action" name="importContacts:"/>
-                <relationship kind="outlet" name="busyIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLContactsListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactsListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissSortPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLEnterFormCodeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLEnterFormCodeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="submitFormCode:"/>
-                <relationship kind="outlet" name="formCodeTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLFieldCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLFieldCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="textInput" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLInboxInterstitialViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLInboxInterstitialViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="continueToEnterFormCode:"/>
-                <relationship kind="outlet" name="continueButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="CTLInboxViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLInboxViewController.h"/>
-        </class>
-        <class className="CTLLoginViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLLoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="forgotPassword:"/>
-                <relationship kind="action" name="loginAndSyncAccount:"/>
-                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLMainMenuViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMainMenuViewController.h"/>
-        </class>
-        <class className="CTLMenuItemCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMenuItemCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="icon" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="CTLMessagesListViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMessagesListViewController.h"/>
-        </class>
-        <class className="CTLPinInterstialViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLPinInterstialViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="promptForPin:"/>
-                <relationship kind="outlet" name="enterPinButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="forgotPinLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="retrievePinLinkButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CTLRegisterViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLRegisterViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="segueToLogin:"/>
-                <relationship kind="action" name="submit:"/>
-                <relationship kind="outlet" name="companyTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="confirmPasswordTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="industryTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="signInButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="CTLSetPinViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSetPinViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="switchDidChange:" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="confirmPinTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="enter4digitLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="pinSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="pinTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="switchLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="switchNoteLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CTLSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="toggleNotificationSetting:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="accountTypeCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="notificationSwitch" candidateClass="UISwitch"/>
-            </relationships>
-        </class>
-        <class className="CTLSlideMenuController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSlideMenuController.h"/>
-            <relationships>
-                <relationship kind="action" name="toggleMenu:"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
@@ -2634,5 +2453,6 @@
         <segue reference="1JI-iC-iph"/>
         <segue reference="iGD-nT-ogT"/>
         <segue reference="oIP-qw-4bu"/>
+        <segue reference="hcl-ja-9qa"/>
     </inferredMetricsTieBreakers>
 </document>

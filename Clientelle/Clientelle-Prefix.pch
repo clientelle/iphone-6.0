@@ -17,7 +17,8 @@
     #import "CTLSlideMenuDelegate.h"
 #endif
 
-#define kCTLSettingsNotification @"com.clientelle.defaults.notification"
+#define kCTLSettingsMessageNotification @"com.clientelle.defaults.notifications.messages"
+#define kCTLSettingsAppointmentNotification @"com.clientelle.defaults.notifications.appointments"
 #define kAddressBookDidChange @"com.clientelle.addressBook.change"
 #define kCTLAppFont @"STHeitiTC"
 #define kCTLAppFontMedium @"STHeitiTC-Medium"

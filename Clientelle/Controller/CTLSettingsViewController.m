@@ -14,6 +14,7 @@
 #import <MessageUI/MessageUI.h>
 
 NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
+NSString *const CTLSignupSegueIdentifyer = @"toSignup";
 
 @implementation CTLSettingsViewController
 
@@ -32,7 +33,8 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     _account = [CTLCDAccount MR_findFirst];
     
     //Set the notification switch
-    [self.notificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsNotification]];
+    [self.appointmentNotificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsAppointmentNotification]];
+    [self.messageNotificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsAppointmentNotification]];
     
     if(!_account){
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"UPGRADE", nil) style:UIBarButtonItemStylePlain target:self action:@selector(upgradeToPro:)];
@@ -54,7 +56,7 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex == 1){
-        [self performSegueWithIdentifier:CTLAccountSegueIdentifyer sender:alertView];
+        [self performSegueWithIdentifier:CTLSignupSegueIdentifyer sender:alertView];
     }
 }
 
@@ -67,57 +69,44 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 
 - (void)configureCells
 {
-    /* Using static table cells so I style them here instead of cellForRowAtIndexPath */
-    
-    UITableViewCell *accountTypeCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    accountTypeCell.textLabel.text = NSLocalizedString(@"ACCOUNT_TYPE", nil);
-        
+    self.accountTypeCell.textLabel.text = NSLocalizedString(@"ACCOUNT_TYPE", nil);
+
     if([_account objectID]){
-        
         self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"PRO", nil);
         self.accountTypeCell.detailTextLabel.textColor = [UIColor ctlGreen];
+        self.accountTypeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else{
         self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"FREE", nil);
         self.accountTypeCell.detailTextLabel.textColor = [UIColor darkGrayColor];
+        self.accountTypeCell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    UITableViewCell *notificationCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-    notificationCell.textLabel.text = NSLocalizedString(@"NOTIFICATIONS", nil);
-    notificationCell.textLabel.backgroundColor = [UIColor clearColor];
-    notificationCell.textLabel.font = [UIFont fontWithName:@"STHeitiTC-Medium" size:14];
+    self.appointmentNotificationCell.textLabel.text = NSLocalizedString(@"APPT_NOTIFICATIONS", nil);
+    self.appointmentNotificationCell.textLabel.font = [UIFont fontWithName:kCTLAppFontMedium size:14];
+    self.appointmentNotificationCell.textLabel.backgroundColor = [UIColor clearColor];
     
-    UITableViewCell *pinCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-    pinCell.textLabel.text = NSLocalizedString(@"CONFIGURE_PIN_ACCESS", nil);
-    
-    pinCell.detailTextLabel.text = NSLocalizedString(@"REQUIRES_A_PASSCODE", nil);
-    pinCell.detailTextLabel.backgroundColor = [UIColor clearColor];
-
-    UITableViewCell *supportCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
-    supportCell.textLabel.text = NSLocalizedString(@"REPORT_A_PROBLEM", nil);
-    
-    UITableViewCell *featureCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
-    featureCell.textLabel.text = NSLocalizedString(@"REQUEST_A_FEATURE", nil);
-    
-    UITableViewCell *shareCell = [super tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
-    shareCell.textLabel.text = NSLocalizedString(@"TELL_A_FRIEND", nil);
-
+    self.messageNotificationCell.textLabel.text = NSLocalizedString(@"MSG_NOTIFICATIONS", nil);
+    self.messageNotificationCell.textLabel.font = [UIFont fontWithName:kCTLAppFontMedium size:14];
+    self.messageNotificationCell.textLabel.backgroundColor = [UIColor clearColor];
+        
+    self.pinCell.textLabel.text = NSLocalizedString(@"CONFIGURE_PIN_ACCESS", nil);
+    self.supportCell.textLabel.text = NSLocalizedString(@"REPORT_A_PROBLEM", nil);
+    self.featureCell.textLabel.text = NSLocalizedString(@"REQUEST_A_FEATURE", nil);
+    self.shareCell.textLabel.text = NSLocalizedString(@"TELL_A_FRIEND", nil);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0){
-        if(indexPath.row == 0){
-            [self performSegueWithIdentifier:@"toAccountInfo" sender:nil];
+        if(indexPath.row == 0 && [_account objectID]){
+            [self performSegueWithIdentifier:CTLAccountSegueIdentifyer sender:nil];
         }
-        if(indexPath.row == 2){
-            [self performSegueWithIdentifier:@"toSetPin" sender:nil];
-//            if(![_account objectID]){
-//                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"FEATURE_REQUIRES_PRO", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                
-//                [alertView show];
-//            }else{
-//                [self performSegueWithIdentifier:@"toSetPin" sender:nil];
-//            }
+        if(indexPath.row == 3){
+            if(![_account objectID]){
+                [self upgradeToPro:nil];
+            }else{
+                [self performSegueWithIdentifier:@"toSetPin" sender:nil];
+            }
         }
     }
     
@@ -131,14 +120,6 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
     }
 }
 
-//- (void)styleLabel:(UILabel *)label withText:(NSString *)text
-//{
-////    [label setFont:[UIFont fontWithName:@"H" size:15]];
-//    label.backgroundColor = [UIColor clearColor];
-//    label.text = text;
-//}
-
-
 - (void)toAccountFormView:(id)sender
 {
     [self performSegueWithIdentifier:CTLAccountSegueIdentifyer sender:self];
@@ -146,9 +127,12 @@ NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 
 - (IBAction)toggleNotificationSetting:(UISwitch *)notificationSwitch
 {
-    [[NSUserDefaults standardUserDefaults] setBool:notificationSwitch.isOn forKey:kCTLSettingsNotification];
+    if(notificationSwitch.tag == 1){
+        [[NSUserDefaults standardUserDefaults] setBool:notificationSwitch.isOn forKey:kCTLSettingsAppointmentNotification];
+    }else if(notificationSwitch.tag == 2){
+        [[NSUserDefaults standardUserDefaults] setBool:notificationSwitch.isOn forKey:kCTLSettingsMessageNotification]; 
+    }
 }
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([[segue identifier] isEqualToString:CTLAccountSegueIdentifyer]){

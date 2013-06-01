@@ -17,8 +17,16 @@
 }
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
-@property (nonatomic, strong) IBOutlet UISwitch *notificationSwitch;
+@property (nonatomic, strong) IBOutlet UISwitch *appointmentNotificationSwitch;
+@property (nonatomic, strong) IBOutlet UISwitch *messageNotificationSwitch;
+
 @property (nonatomic, strong) IBOutlet UITableViewCell *accountTypeCell;
+@property (nonatomic, strong) IBOutlet UITableViewCell *appointmentNotificationCell;
+@property (nonatomic, strong) IBOutlet UITableViewCell *messageNotificationCell;
+@property (nonatomic, strong) IBOutlet UITableViewCell *pinCell;
+@property (nonatomic, strong) IBOutlet UITableViewCell *supportCell;
+@property (nonatomic, strong) IBOutlet UITableViewCell *featureCell;
+@property (nonatomic, strong) IBOutlet UITableViewCell *shareCell;
 
 - (IBAction)toggleNotificationSetting:(UITapGestureRecognizer *)recognizer;
 

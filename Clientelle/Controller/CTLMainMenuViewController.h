@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) CTLSlideMenuController *menuController;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+@property (nonatomic, strong) CTLCDAccount *account;
 
 
 @end

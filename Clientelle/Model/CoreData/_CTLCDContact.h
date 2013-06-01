@@ -7,6 +7,7 @@
 extern const struct CTLCDContactAttributes {
 	__unsafe_unretained NSString *address;
 	__unsafe_unretained NSString *address2;
+	__unsafe_unretained NSString *contactID;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *firstName;
 	__unsafe_unretained NSString *jobTitle;
@@ -29,6 +30,7 @@ extern const struct CTLCDContactFetchedProperties {
 } CTLCDContactFetchedProperties;
 
 @class CTLCDAppointment;
+
 
 
 
@@ -69,6 +71,18 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 //- (BOOL)validateAddress2:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* contactID;
+
+
+@property int16_t contactIDValue;
+- (int16_t)contactIDValue;
+- (void)setContactIDValue:(int16_t)value_;
+
+//- (BOOL)validateContactID:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -204,6 +218,15 @@ extern const struct CTLCDContactFetchedProperties {
 
 - (NSString*)primitiveAddress2;
 - (void)setPrimitiveAddress2:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveContactID;
+- (void)setPrimitiveContactID:(NSNumber*)value;
+
+- (int16_t)primitiveContactIDValue;
+- (void)setPrimitiveContactIDValue:(int16_t)value_;
 
 
 

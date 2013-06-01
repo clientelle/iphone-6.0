@@ -165,7 +165,7 @@
 + (BOOL)hasConnection{
     BOOL receivedFlags;
     SCNetworkReachabilityFlags flags;
-    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(CFAllocatorGetDefault(), [@"dipinkrishna.com" UTF8String]);
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(CFAllocatorGetDefault(), [@"google.com" UTF8String]);
     receivedFlags = SCNetworkReachabilityGetFlags(reachability, &flags);
     CFRelease(reachability);
     return (receivedFlags && flags == 0);

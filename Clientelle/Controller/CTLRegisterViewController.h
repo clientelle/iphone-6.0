@@ -19,14 +19,11 @@ extern NSString *const CTLReloadInboxNotifiyer;
     NSArray *_industries;
     CTLAPI *_api;
     NSNumber *_industryID;
-    BOOL _overrideBackButtonWithMenuButton;
     CTLCDAccount *_account;
     
 }
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
-
-@property (nonatomic, assign) BOOL overrideBackButtonWithMenuButton;
 @property (nonatomic, strong) CTLCDAccount *account;
 
 @property (nonatomic, weak) IBOutlet UITextField *emailTextField;

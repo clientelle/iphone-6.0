@@ -7,17 +7,21 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
-#import "CTLAccountInterstitialViewController.h"
+#import "CTLUpgradeInterstitialViewController.h"
 #import "CTLRegisterViewController.h"
 #import "CTLSlideMenuController.h"
 #import "CTLCDAccount.h"
 
-@implementation CTLAccountInterstitialViewController
+@implementation CTLUpgradeInterstitialViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BACK", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
+    
+    [self.navigationItem setBackBarButtonItem: backButton];
     
     _account = [CTLCDAccount MR_findFirst];
     
@@ -36,7 +40,7 @@
         self.actionMessageLabel.text = @"Thank you for purchasing.";
         
         [self.upgradeButton addTarget:self action:@selector(toSignup:) forControlEvents:UIControlEventTouchUpInside];
-        
+
     }
 }
 
@@ -63,7 +67,6 @@
 {
     if([[segue identifier] isEqualToString:@"toSignup"]){
         CTLRegisterViewController *registerViewController = [segue destinationViewController];
-        [registerViewController setOverrideBackButtonWithMenuButton:NO];
         [registerViewController setMenuController:self.menuController];
         return;
     }

@@ -1,14 +1,14 @@
 //
-//  CTLMessageCellView.m
+//  CTLMessageCell.m
 //  Clientelle
 //
 //  Created by Kevin Liu on 5/28/13.
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
-#import "CTLMessageCellView.h"
+#import "CTLMessageCell.h"
 
-@implementation CTLMessageCellView
+@implementation CTLMessageCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

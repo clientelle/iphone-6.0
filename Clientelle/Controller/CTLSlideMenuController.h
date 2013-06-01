@@ -8,10 +8,12 @@
 
 extern const CGFloat CTLMainMenuWidth;
 
+@class CTLCDAccount;
 @class CTLMainMenuViewController;
 
 @interface CTLSlideMenuController : UIViewController;
 
+@property (nonatomic, strong) CTLCDAccount *account;
 @property (nonatomic, weak) UINavigationController *mainNavigationController;
 
 @property (nonatomic, strong) NSString *mainViewControllerIdentifier;
@@ -20,7 +22,7 @@ extern const CGFloat CTLMainMenuWidth;
 @property (nonatomic, strong) UIViewController<CTLSlideMenuDelegate> *mainViewController;
 @property (nonatomic, assign) ABAddressBookRef addressBookRef;
 
-
+@property (nonatomic, strong) NSString *nextNavString;
 @property (nonatomic, assign) BOOL rightSwipeEnabled;
 
 
@@ -35,7 +37,6 @@ extern const CGFloat CTLMainMenuWidth;
 
 - (void)launchWithViewFromNotification:(UILocalNotification *)notification;
 - (void)setMainViewFromNotification:(UILocalNotification *)notification applicationState:(UIApplicationState)applicationState;
-
 - (void)requirePin;
 
 @end

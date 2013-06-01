@@ -10,7 +10,7 @@
 
 @class CTLCDAccount;
 
-@interface CTLAccountInterstitialViewController : UIViewController<CTLSlideMenuDelegate>{
+@interface CTLUpgradeInterstitialViewController : UIViewController<CTLSlideMenuDelegate>{
     CTLCDAccount *_account;
 }
 

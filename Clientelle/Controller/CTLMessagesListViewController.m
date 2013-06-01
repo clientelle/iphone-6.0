@@ -7,6 +7,7 @@
 //
 
 #import "CTLMessagesListViewController.h"
+#import "CTLSlideMenuController.h"
 
 @interface CTLMessagesListViewController ()
 
@@ -27,11 +28,9 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.menuController setRightSwipeEnabled:YES];
+    [self.menuController renderMenuButton:self];
+    [self.navigationItem setHidesBackButton:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,12 +50,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+    return 23;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"messageCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
