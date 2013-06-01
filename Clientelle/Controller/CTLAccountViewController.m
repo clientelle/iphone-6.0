@@ -168,10 +168,10 @@
     NSString *industry = self.industryTextField.text;
     NSString *industry_id = [NSString stringWithFormat:@"%d", _industryID.intValue];
     
-    if([first_name length] == 0 ||
-       [last_name length] == 0 ||
-       [company length] == 0 ||
-       [industry length] == 0){
+    if ([first_name length] == 0 &&
+       [last_name length]   == 0 &&
+       [company length]     == 0 &&
+       [industry length]    == 0) {
         return;
     }    
     

@@ -36,7 +36,7 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
     [self.appointmentNotificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsAppointmentNotification]];
     [self.messageNotificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsAppointmentNotification]];
     
-    if(!_account){
+    if(!self.menuController.isPro){
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"UPGRADE", nil) style:UIBarButtonItemStylePlain target:self action:@selector(upgradeToPro:)];
     }
     
@@ -76,10 +76,16 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
         self.accountTypeCell.detailTextLabel.textColor = [UIColor ctlGreen];
         self.accountTypeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else{
-        self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"FREE", nil);
-        self.accountTypeCell.detailTextLabel.textColor = [UIColor darkGrayColor];
-        self.accountTypeCell.accessoryType = UITableViewCellAccessoryNone;
-    }
+        if(self.menuController.isPro){
+            self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"INCOMPLETE", nil);
+            self.accountTypeCell.detailTextLabel.textColor = [UIColor redColor];
+            self.accountTypeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }else{
+            self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"FREE", nil);
+            self.accountTypeCell.detailTextLabel.textColor = [UIColor darkGrayColor];
+            self.accountTypeCell.accessoryType = UITableViewCellAccessoryNone;
+        }
+    }    
     
     self.appointmentNotificationCell.textLabel.text = NSLocalizedString(@"APPT_NOTIFICATIONS", nil);
     self.appointmentNotificationCell.textLabel.font = [UIFont fontWithName:kCTLAppFontMedium size:14];
@@ -98,8 +104,12 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0){
-        if(indexPath.row == 0 && [_account objectID]){
-            [self performSegueWithIdentifier:CTLAccountSegueIdentifyer sender:nil];
+        if(indexPath.row == 0){
+            if([_account objectID]){
+                [self performSegueWithIdentifier:CTLAccountSegueIdentifyer sender:nil];
+            }else{
+                [self performSegueWithIdentifier:CTLSignupSegueIdentifyer sender:nil];
+            }
         }
         if(indexPath.row == 3){
             if(![_account objectID]){
@@ -120,11 +130,6 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
     }
 }
 
-- (void)toAccountFormView:(id)sender
-{
-    [self performSegueWithIdentifier:CTLAccountSegueIdentifyer sender:self];
-}
-
 - (IBAction)toggleNotificationSetting:(UISwitch *)notificationSwitch
 {
     if(notificationSwitch.tag == 1){
@@ -135,11 +140,9 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if([[segue identifier] isEqualToString:CTLAccountSegueIdentifyer]){
-        if([_account objectID]){
-            CTLRegisterViewController *controller = [segue destinationViewController];
-            [controller setAccount:_account];
-        }
+    if([[segue identifier] isEqualToString:CTLSignupSegueIdentifyer]){
+        CTLRegisterViewController *controller = [segue destinationViewController];
+        [controller setShowMenuButton:NO];
         return;
     }
 }

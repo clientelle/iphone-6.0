@@ -33,16 +33,16 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     self.industryTextField.inputView = _industryPicker;
     self.industryTextField.tag = 170;
     
-    self.account = [CTLCDAccount findFirst];
-    
     [self translateInputPlaceholders];
     self.navigationItem.title = NSLocalizedString(@"CREATE_ACCOUNT", nil);
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissEditing:)];
     [self.view addGestureRecognizer:tapGesture];
 
-    [self.menuController renderMenuButton:self];
-    [self.navigationItem setHidesBackButton:NO animated:YES];
+    if(self.showMenuButton){
+        [self.navigationItem setHidesBackButton:YES animated:NO];
+        [self.menuController renderMenuButton:self];
+    }
 }
 
 - (void)translateInputPlaceholders
@@ -220,14 +220,20 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
                 account.industry_id = user[@"industry"][@"id"];
             }
                         
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){ 
-                UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuController.nextNavString];
-                UIViewController<CTLSlideMenuDelegate> *viewController = (UIViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
-                viewController.menuController = self.menuController;
-                [self.menuController setAccount:account];
-                [self.menuController setRightSwipeEnabled:YES];
-                [self.menuController setMainViewController:viewController];
-                [self.menuController flipToView];
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+                
+                if(self.menuController.nextNavString){
+                    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuController.nextNavString];
+                    UIViewController<CTLSlideMenuDelegate> *viewController = (UIViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
+                    viewController.menuController = self.menuController;
+                    [self.menuController setMainViewController:viewController];
+                    [self.menuController setIsPro:YES];
+                    [self.menuController setAccount:account];
+                    [self.menuController setRightSwipeEnabled:YES];
+                    [self.menuController flipToView];
+                }else{
+                    [self.navigationController popViewControllerAnimated:YES];
+                }                
             }];
             
         }else{

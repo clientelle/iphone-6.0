@@ -13,6 +13,7 @@ extern const CGFloat CTLMainMenuWidth;
 
 @interface CTLSlideMenuController : UIViewController;
 
+@property (nonatomic, assign) BOOL isPro;
 @property (nonatomic, strong) CTLCDAccount *account;
 @property (nonatomic, weak) UINavigationController *mainNavigationController;
 

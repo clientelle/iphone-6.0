@@ -19,12 +19,9 @@ extern NSString *const CTLReloadInboxNotifiyer;
     NSArray *_industries;
     CTLAPI *_api;
     NSNumber *_industryID;
-    CTLCDAccount *_account;
-    
 }
 
 @property (nonatomic, weak) CTLSlideMenuController *menuController;
-@property (nonatomic, strong) CTLCDAccount *account;
 
 @property (nonatomic, weak) IBOutlet UITextField *emailTextField;
 @property (nonatomic, weak) IBOutlet UITextField *passwordTextField;
@@ -33,6 +30,7 @@ extern NSString *const CTLReloadInboxNotifiyer;
 @property (nonatomic, weak) IBOutlet UITextField *industryTextField;
 @property (nonatomic, weak) IBOutlet UIButton *signInButton;
 
+@property (nonatomic, assign) BOOL showMenuButton;
 
 - (IBAction)submit:(id)sender;
 

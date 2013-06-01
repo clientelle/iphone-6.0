@@ -23,6 +23,8 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigat
     [super viewDidLoad];
     [self setupMenuView:self.view.bounds];
 
+    self.isPro = [[NSUserDefaults standardUserDefaults] boolForKey:@"IS_PRO"];
+
     if(!self.mainViewControllerIdentifier){
         self.mainViewControllerIdentifier = CTLDefaultNavigationControllerIdentifier;
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];

@@ -17,30 +17,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BACK", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
     
     [self.navigationItem setBackBarButtonItem: backButton];
-    
+
     _account = [CTLCDAccount MR_findFirst];
     
-    if(!_account){
-        
+    if(self.menuController.isPro && !_account){
+        self.navigationItem.title = @"Register";
+        [self.upgradeButton setTitle: @"Create Account" forState: UIControlStateNormal];
+        self.actionMessageLabel.text = @"Thank you for purchasing.";
+        [self.upgradeButton addTarget:self action:@selector(toSignup:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    if(!self.menuController.isPro){
         self.navigationItem.title = @"Upgrade";
         self.actionMessageLabel.text = @"You must upgrade to get this feature";
         
         [self.upgradeButton setTitle: @"Purchase" forState: UIControlStateNormal];
         [self.upgradeButton addTarget:self action:@selector(upgradeToPro:) forControlEvents:UIControlEventTouchUpInside];
-        
-    }else {
-        
-        self.navigationItem.title = @"Register";
-        [self.upgradeButton setTitle: @"Create Account" forState: UIControlStateNormal];
-        self.actionMessageLabel.text = @"Thank you for purchasing.";
-        
-        [self.upgradeButton addTarget:self action:@selector(toSignup:) forControlEvents:UIControlEventTouchUpInside];
-
     }
 }
 
@@ -55,11 +51,16 @@
 {
     if(buttonIndex == 1){
         _account.is_pro = @(1);
-        [self performSegueWithIdentifier:@"toSignup" sender:alertView];
+        self.menuController.isPro = YES;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:YES forKey:@"IS_PRO"];
+        [defaults synchronize];
+        [self toSignup:alertView];
     }
 }
 
-- (void)toSignup:(id)sender{
+- (void)toSignup:(id)sender
+{
     [self performSegueWithIdentifier:@"toSignup" sender:sender];
 }
 

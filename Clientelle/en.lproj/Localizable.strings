@@ -35,6 +35,7 @@ e†
 "ACCOUNT" = "Account";
 "PRO" = "PRO";
 "FREE" = "FREE";
+"INCOMPLETE" = "Incomplete";
 
 /* GENERIC TERMS */
 "CLIENTS" = "Clients";
@@ -211,7 +212,6 @@ e†
 "NEW_PIN" = "New PIN";
 "PIN_DOES_NOT_MATCH" = "PIN does not match!";
 "PIN_CONFIRMED" = "New PIN Confirmed!";
-
 
 /* INDUSTRIES */
 "ACCOUNTING_SERVICES" = "Accounting Services";
