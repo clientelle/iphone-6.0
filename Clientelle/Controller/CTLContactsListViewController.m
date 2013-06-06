@@ -736,7 +736,7 @@ int const CTLAddContactActionSheetTag = 424;
 {
     NSString *cleanPhoneNumber = [NSString cleanPhoneNumber:[_selectedPerson phone]];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", cleanPhoneNumber]]];
-    [self updateContactTimestampInPlace];
+    [self saveTimestampForContact];
 }
 
 - (void)showEmailForPerson:(id)sender
@@ -755,12 +755,10 @@ int const CTLAddContactActionSheetTag = 424;
 - (void)showSMSForPerson:(id)sender
 {
     if(_selectedPerson.mobile){
-        NSString *cleanNumber = [NSString cleanPhoneNumber:_selectedPerson.mobile];
-        NSString *phoneToCall = [NSString stringWithFormat:@"sms: %@", cleanNumber];
-        NSString *phoneToCallEncoded = [phoneToCall stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-        NSURL *smsURL = [[NSURL alloc] initWithString:phoneToCallEncoded];
-        [[UIApplication sharedApplication] openURL:smsURL];
-        [self updateContactTimestampInPlace];
+        NSString *sms = [NSString stringWithFormat:@"sms: %@", [NSString cleanPhoneNumber:_selectedPerson.mobile]];
+        NSString *smsEncoded = [sms stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+        [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:smsEncoded]];
+        [self saveTimestampForContact];
     }
 }
 
@@ -778,28 +776,20 @@ int const CTLAddContactActionSheetTag = 424;
     return timestampDate;
 }
 
-- (void)updateContactTimestampInPlace
-{
-    [self saveTimestampForContact];
-    [self updateTimestampForActiveCell];
-}
-
-- (void)updateTimestampForActiveCell
-{
-    CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-    cell.timestampLabel.text = [NSDate formatShortTimeOnly:[NSDate date]];
-    _shouldReorderListOnScroll = YES;
-}
-
 - (void)saveTimestampForContact
 {
     _selectedPerson.lastAccessed = [NSDate date];
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+        CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
+        cell.timestampLabel.text = [NSDate formatShortTimeOnly:[NSDate date]];
+        _shouldReorderListOnScroll = YES;
+    }];
 }
 
 - (void)timestampForRowDidChange:(NSNotification *)notification
 {
-    [self updateContactTimestampInPlace];
+    [self saveTimestampForContact];
 }
 
 #pragma mark - UISearchDisplayController Delegate Methods
@@ -918,14 +908,14 @@ int const CTLAddContactActionSheetTag = 424;
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
     if(result == MFMailComposeResultSent){
-        [self updateContactTimestampInPlace];
+        [self saveTimestampForContact];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
     if(result == MessageComposeResultSent){
-        [self updateContactTimestampInPlace];
+        [self saveTimestampForContact];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
