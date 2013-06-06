@@ -56,16 +56,6 @@ int CTLPhoneLabelTag = 602;
         [phoneLabel setUserInteractionEnabled:YES];
         phoneLabel.tag = CTLPhoneLabelTag;
         
-        CALayer *border1 = [CALayer layer];
-        border1.borderColor = [UIColor ctlGray].CGColor;
-        border1.borderWidth = 1;
-        border1.frame = CGRectMake(0, 0, 1.0f, viewSize.height);
-        
-        CALayer *border2 = [CALayer layer];
-        border2.borderColor = [UIColor whiteColor].CGColor;
-        border2.borderWidth = 1;
-        border2.frame = CGRectMake(1.0f, 0, 1.0f, viewSize.height);
-        
         [self addSubview:pictureView];
         [self addSubview:nameLabel];
         [self addSubview:phoneLabel];

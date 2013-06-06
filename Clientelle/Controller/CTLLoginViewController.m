@@ -26,62 +26,69 @@
 }
 
 
-- (IBAction)loginAndSyncAccount:(id)sender{
-    
-    if([self.emailTextField.text length] > 0 && [self.passwordTextField.text length] > 0){
-
-        //create dictionary from coredata "account" entity
-        NSDictionary *credentials = @{@"email":self.emailTextField.text, @"password":self.passwordTextField.text};
-                               
-        [_api makeRequest:@"/auth/login.json" withParams:credentials method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
-            
-            if(requestSucceeded){
-                
-                NSDictionary *user = response[@"user"];
-                NSDictionary *company = response[@"company"];
-                
-                CTLCDAccount *account = [CTLCDAccount MR_createEntity];
-                account.auth_token = response[kCTLAuthTokenKey];
-                account.user_idValue = [user[@"user_id"] intValue];
-                account.email = user[@"email"];
-                account.password = user[@"password"];
-                account.first_name = user[@"first_name"];
-                account.last_name = user[@"last_name"];
-                account.created_at = [NSDate date];
-                account.company = company[@"name"];
-                account.company_idValue = [user[@"company_id"] intValue];
-                account.industry = company[@"industry_name"];
-                account.industry_idValue = [company[@"industry_id"] intValue];
-                account.is_pro = @(1);
-                                
-                [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-                    
-                    [[NSUserDefaults standardUserDefaults] setValue:[response objectForKey:kCTLAuthTokenKey] forKey:kCTLAccountAccessToken];
-                    
-                    [self.menuController setRightSwipeEnabled:YES];
-                    
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
-                    UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"inboxInterstitialNavigationController"];
-                    
-                    CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *inboxInterstitial = (CTLInboxInterstitialViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
-                    
-                    [inboxInterstitial setMenuController:self.menuController];
-                    [self.menuController setMainViewController:inboxInterstitial];
-                    [self.menuController flipToView];
-                }];
-                
-            }else{
-                    
-                NSString *message = [CTLAPI messageFromResponse:response];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                message:message
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil, nil];
-                [alert show];
-            }
-        }];
+- (IBAction)loginAndSyncAccount:(id)sender
+{
+    if([self.emailTextField.text length] == 0 || [self.passwordTextField.text length] == 0){
+        return;
     }
+    
+    if([self.emailTextField.text rangeOfString:@"@"].location == NSNotFound){
+        [self alertMessage:@"INVALID_EMAIL"];
+        return;
+    }
+    
+    if([self.passwordTextField.text length] < 6){
+        [self alertMessage:@"PASSWORD_REQUIREMENT"];
+        return;
+    }
+    
+    NSMutableDictionary *post = [NSMutableDictionary dictionary];
+    [post setValue:self.emailTextField.text forKey:@"user[email]"];
+    [post setValue:self.passwordTextField.text forKey:@"user[password]"];
+                           
+    [_api makeRequest:@"/login.json" withParams:post method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
+        
+        if(requestSucceeded){
+            
+            CTLCDAccount *account = [CTLCDAccount createFromDictionary:response];
+            
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+                
+                if(self.menuController.nextNavString){
+                    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuController.nextNavString];
+                    UIViewController<CTLSlideMenuDelegate> *viewController = (UIViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
+                    viewController.menuController = self.menuController;
+                    [self.menuController setMainViewController:viewController];
+                    [self.menuController setIsPro:YES];
+                    [self.menuController setAccount:account];
+                    [self.menuController setRightSwipeEnabled:YES];
+                    [self.menuController flipToView];
+                }else{
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            }];
+            
+        }else{
+            
+            NSString *message = [CTLAPI messageFromResponse:response];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:message
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+}
+
+- (void)alertMessage:(NSString *)i18nKey
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                    message:NSLocalizedString(i18nKey, nil)
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 

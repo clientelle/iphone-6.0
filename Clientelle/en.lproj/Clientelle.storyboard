@@ -1317,7 +1317,7 @@
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1qr-zd-bcK">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1qr-zd-bcK">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="44k-dx-XLe"/>
                                                         <constraint firstAttribute="width" constant="260" id="M5h-4I-qMQ"/>
@@ -1340,7 +1340,7 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4TC-gj-eQV">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4TC-gj-eQV">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="Vt4-wO-lmn"/>
                                                         <constraint firstAttribute="width" constant="260" id="sj8-MH-5gx"/>
@@ -2443,6 +2443,230 @@
         <image name="whiteButton.png" width="36" height="36"/>
         <image name="whiteButtonHighlight.png" width="36" height="36"/>
     </resources>
+    <classes>
+        <class className="CTLAccountViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAccountViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="submit:"/>
+                <relationship kind="outlet" name="accountAgeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="accountEmailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="companyTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="daysLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="firstNameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="industryTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="lastNameTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="CTLAppointmentCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentCell.h"/>
+            <relationships>
+                <relationship kind="action" name="markAsComplete:"/>
+                <relationship kind="action" name="segueToMapView:"/>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="feeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mapButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CTLAppointmentFormViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentFormViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="contactDidChange:" candidateClass="UITextField"/>
+                <relationship kind="action" name="formatFeeString:" candidateClass="UITextField"/>
+                <relationship kind="action" name="saveAppointment:"/>
+                <relationship kind="action" name="showDatePicker:"/>
+                <relationship kind="action" name="unformatCurrency:" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="address2TextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="addressTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="contactNameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="endTimeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="feeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="headerLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="startTimeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="titleTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="CTLAppointmentsListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentsListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addAppointment:"/>
+                <relationship kind="action" name="dismissPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CTLContactCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="detailsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timestampLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CTLContactDetailsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactDetailsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dismissKeyboard:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="action" name="showAddFieldsModal:"/>
+                <relationship kind="action" name="submit:"/>
+                <relationship kind="action" name="textFieldDidChange:" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="editFormButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="saveContactButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="CTLContactFormEditorViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactFormEditorViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="enableReordering:"/>
+                <relationship kind="action" name="save:"/>
+                <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CTLContactImportViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactImportViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelImport:"/>
+                <relationship kind="action" name="importContacts:"/>
+                <relationship kind="outlet" name="busyIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CTLContactsListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactsListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dismissSortPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CTLEnterFormCodeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLEnterFormCodeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="submitFormCode:"/>
+                <relationship kind="outlet" name="formCodeTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="CTLFieldCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLFieldCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="textInput" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="CTLInboxInterstitialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLInboxInterstitialViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="continueToEnterFormCode:"/>
+                <relationship kind="outlet" name="continueButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="CTLInboxViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLInboxViewController.h"/>
+        </class>
+        <class className="CTLLoginViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLLoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="forgotPassword:"/>
+                <relationship kind="action" name="loginAndSyncAccount:"/>
+                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="CTLMainMenuViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMainMenuViewController.h"/>
+        </class>
+        <class className="CTLMenuItemCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMenuItemCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="icon" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="CTLMessageCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMessageCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="messageLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="senderLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CTLMessagesListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMessagesListViewController.h"/>
+        </class>
+        <class className="CTLPinInterstialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLPinInterstialViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="promptForPin:"/>
+                <relationship kind="outlet" name="enterPinButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="forgotPinLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="retrievePinLinkButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CTLRegisterViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLRegisterViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="segueToLogin:"/>
+                <relationship kind="action" name="submit:"/>
+                <relationship kind="outlet" name="companyTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="confirmPasswordTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="industryTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="signInButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="CTLSetPinViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSetPinViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="switchDidChange:" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="confirmPinTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="enter4digitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="pinSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="pinTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="switchLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="switchNoteLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CTLSettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleNotificationSetting:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="accountTypeCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="appointmentNotificationCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="appointmentNotificationSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="featureCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="messageNotificationCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="messageNotificationSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="pinCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="shareCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="supportCell" candidateClass="UITableViewCell"/>
+            </relationships>
+        </class>
+        <class className="CTLSlideMenuController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSlideMenuController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleMenu:"/>
+            </relationships>
+        </class>
+        <class className="CTLUpgradeInterstitialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLUpgradeInterstitialViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="actionMessageLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="upgradeButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

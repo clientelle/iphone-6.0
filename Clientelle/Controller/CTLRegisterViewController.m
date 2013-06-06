@@ -43,6 +43,8 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
         [self.navigationItem setHidesBackButton:YES animated:NO];
         [self.menuController renderMenuButton:self];
     }
+    
+    [self.emailTextField becomeFirstResponder];
 }
 
 - (void)translateInputPlaceholders
@@ -196,32 +198,10 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     [_api makeRequest:@"/register.json" withParams:post method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
         
         if(requestSucceeded){
-
-            NSDictionary *user = response[@"user"];
-
-            CTLCDAccount *account = [CTLCDAccount MR_createEntity];
-            account.email = email;
-            account.password = password;
-            account.created_at = [NSDate date];
-            account.user_id = @([user[@"id"] intValue]);
-            account.is_pro = @(1);
             
-            if(user[@"authentication_token"]){
-                account.auth_token = user[@"authentication_token"];
-                [[NSUserDefaults standardUserDefaults] setValue:user[@"authentication_token"] forKey:kCTLAccountAccessToken];
-            }
-            
-            if([company length] > 0 && user[@"company"]){
-                account.company = company;
-            }
-            
-            if([industry length] > 0 && user[@"industry"]){
-                account.industry = industry;
-                account.industry_id = user[@"industry"][@"id"];
-            }
-                        
+            CTLCDAccount *account = [CTLCDAccount createFromDictionary:response];
+                             
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-                
                 if(self.menuController.nextNavString){
                     UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuController.nextNavString];
                     UIViewController<CTLSlideMenuDelegate> *viewController = (UIViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
@@ -265,6 +245,7 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 {
     if([[segue identifier] isEqualToString:@"toLogin"]){
         CTLLoginViewController *viewController = [segue destinationViewController];
+        [viewController setMenuController:self.menuController];
         [viewController setEmailAddress:self.emailTextField.text];
         return;
     }
