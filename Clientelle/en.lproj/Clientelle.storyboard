@@ -785,10 +785,10 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
+                                            <constraint firstItem="4Rl-zR-4cC" firstAttribute="centerY" secondItem="BsC-7S-Hma" secondAttribute="centerY" type="default" id="6mf-XE-l4p"/>
                                             <constraint firstItem="4Rl-zR-4cC" firstAttribute="centerY" secondItem="mOk-92-rON" secondAttribute="centerY" type="default" id="B2e-sB-lcO"/>
                                             <constraint firstItem="4Rl-zR-4cC" firstAttribute="leading" secondItem="BsC-7S-Hma" secondAttribute="leading" constant="20" type="default" id="ZrS-zD-pME"/>
                                             <constraint firstAttribute="trailing" secondItem="mOk-92-rON" secondAttribute="trailing" constant="20" type="default" id="eKH-lz-WTb"/>
-                                            <constraint firstItem="mOk-92-rON" firstAttribute="centerY" secondItem="BsC-7S-Hma" secondAttribute="centerY" type="default" id="fAH-Yx-6HD"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="textInput" destination="mOk-92-rON" id="2tV-QG-aOA"/>
@@ -1045,6 +1045,7 @@
                         <segue destination="AaL-yu-Gmw" kind="modal" identifier="toImporter" id="t9u-78-s9z"/>
                         <segue destination="lvE-fZ-8fX" kind="modal" identifier="toSetAppointment" id="iGD-nT-ogT"/>
                         <segue destination="UoD-9H-AyX" kind="push" identifier="toContactForm" id="ajR-Vp-hIS"/>
+                        <segue destination="NAI-Hb-2eg" kind="modal" identifier="toMessagePreference" id="Ubk-Oh-sdc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sp-tg-Pia" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1092,6 +1093,187 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="86C-I2-aor" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-5653" y="-2446"/>
+        </scene>
+        <!--Message Preference View Controller-->
+        <scene sceneID="83h-Kc-l7G">
+            <objects>
+                <tableViewController id="NAI-Hb-2eg" customClass="CTLMessagePreferenceViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="5Ll-0N-oVi">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.85882359743118286" green="0.85882359743118286" blue="0.85882359743118286" alpha="1" colorSpace="deviceRGB"/>
+                        <sections>
+                            <tableViewSection id="dfW-Jn-hxu">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="81" id="qFO-aB-m82">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="82"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Select a default message composer." translatesAutoresizingMaskIntoConstraints="NO" id="gpk-kf-70P">
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="ZyH-g4-z9J"/>
+                                                        <constraint firstAttribute="width" constant="213" id="dZb-gF-tdd"/>
+                                                    </constraints>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="20-gear-2@2x.png" translatesAutoresizingMaskIntoConstraints="NO" id="0aU-oE-Nac"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="( You can change this in settings )" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFL-8d-fL7">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="JwL-cp-iNO"/>
+                                                        <constraint firstAttribute="width" constant="213" id="x51-Rb-pyJ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="13"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="gpk-kf-70P" firstAttribute="leading" secondItem="qFO-aB-m82" secondAttribute="leading" constant="72" id="2w1-w7-pzV"/>
+                                            <constraint firstItem="0aU-oE-Nac" firstAttribute="leading" secondItem="qFO-aB-m82" secondAttribute="leading" constant="22" id="SKa-Ys-dZf"/>
+                                            <constraint firstItem="0aU-oE-Nac" firstAttribute="top" secondItem="qFO-aB-m82" secondAttribute="top" constant="14" id="Upo-jW-nq5"/>
+                                            <constraint firstAttribute="bottom" secondItem="gFL-8d-fL7" secondAttribute="bottom" constant="10" id="fPr-ol-t5F"/>
+                                            <constraint firstItem="gFL-8d-fL7" firstAttribute="leading" secondItem="qFO-aB-m82" secondAttribute="leading" constant="85" id="maj-ob-wcS"/>
+                                            <constraint firstItem="gpk-kf-70P" firstAttribute="top" secondItem="qFO-aB-m82" secondAttribute="top" constant="6" id="onf-N4-qQU"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="mBJ-uz-h1I" detailTextLabel="aaP-Dz-29c" imageView="0EE-IR-jwe" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="pLd-Xi-e7C">
+                                        <rect key="frame" x="0.0" y="92" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Email Composer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mBJ-uz-h1I">
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Send email messages" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aaP-Dz-29c">
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                                                    <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="18-envelope-grey.png" id="0EE-IR-jwe">
+                                                    <rect key="frame" x="10" y="21" width="24" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="dSf-Go-aNb" detailTextLabel="jfd-DU-y3U" imageView="EwI-jw-7NB" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="bsY-xE-GoH">
+                                        <rect key="frame" x="0.0" y="152" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="SMS Composer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dSf-Go-aNb">
+                                                    <rect key="frame" x="44" y="14" width="109" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Send SMS messages" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jfd-DU-y3U">
+                                                    <rect key="frame" x="44" y="31" width="126" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="286-speechbubble-grey.png" id="EwI-jw-7NB">
+                                                    <rect key="frame" x="10" y="17" width="24" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="K7t-t9-IeB" detailTextLabel="9GV-9S-bbc" imageView="V4K-HR-Xez" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="adW-J6-DAG">
+                                        <rect key="frame" x="0.0" y="212" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clientelle Messenger" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K7t-t9-IeB">
+                                                    <rect key="frame" x="44" y="14" width="150" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Send realtime private messages " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9GV-9S-bbc">
+                                                    <rect key="frame" x="44" y="31" width="203" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="09-chat-grey.png" id="V4K-HR-Xez">
+                                                    <rect key="frame" x="10" y="18" width="24" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="FpY-gc-tgl" detailTextLabel="Gtv-la-Qry" imageView="TrF-yo-aUm" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="rhT-1t-opf">
+                                        <rect key="frame" x="0.0" y="272" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="58"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Ask Me Each Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FpY-gc-tgl">
+                                                    <rect key="frame" x="44" y="14" width="130" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Displays a prompt to let you select" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gtv-la-Qry">
+                                                    <rect key="frame" x="44" y="31" width="198" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="12"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="08-chat-grey.png" id="TrF-yo-aUm">
+                                                    <rect key="frame" x="10" y="18" width="24" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="NAI-Hb-2eg" id="lnJ-6C-8Qw"/>
+                            <outlet property="delegate" destination="NAI-Hb-2eg" id="iT5-kN-Y6P"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="EhK-lB-4uc"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bsX-Qq-aSb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5900" y="51"/>
         </scene>
         <!--Register View Controller - Sign up-->
         <scene sceneID="EtW-us-YwR">
@@ -1282,7 +1464,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kSd-Lq-WVI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5709" y="946"/>
+            <point key="canvasLocation" x="-5537" y="566"/>
         </scene>
         <!--Login View Controller - Clientelle-->
         <scene sceneID="LSC-hk-t78">
@@ -1378,7 +1560,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dWG-SK-vej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5114" y="946"/>
+            <point key="canvasLocation" x="-4798" y="566"/>
         </scene>
         <!--Settings View Controller - Settings-->
         <scene sceneID="TVB-xc-edL">
@@ -1556,6 +1738,7 @@
                         <segue destination="lNS-Ua-D5H" kind="push" identifier="toSetPin" id="KND-gy-S7m"/>
                         <segue destination="vaV-2o-6kT" kind="push" identifier="toAccountInfo" id="McU-cu-YMG"/>
                         <segue destination="CbC-t5-OQt" kind="push" identifier="toSignup" id="hcl-ja-9qa"/>
+                        <segue destination="NAI-Hb-2eg" kind="push" identifier="toMessagePreference" id="FI3-8C-ZDq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zQ-8C-ERu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2426,11 +2609,16 @@
     </scenes>
     <resources>
         <image name="06-map-pin.png" width="11" height="19"/>
+        <image name="08-chat-grey.png" width="24" height="22"/>
         <image name="09-chat-2.png" width="24" height="22"/>
+        <image name="09-chat-grey.png" width="24" height="22"/>
         <image name="11-clock.png" width="25" height="25"/>
         <image name="111-user.png" width="24" height="21"/>
+        <image name="18-envelope-grey.png" width="24" height="16"/>
         <image name="19-gear.png" width="26" height="26"/>
+        <image name="20-gear-2@2x.png" width="52" height="56"/>
         <image name="26-checkmark-gray.png" width="16" height="16"/>
+        <image name="286-speechbubble-grey.png" width="24" height="24"/>
         <image name="44-shoebox.png" width="24" height="22"/>
         <image name="54-lock.png" width="20" height="24"/>
         <image name="clock-grn.png" width="18" height="18"/>
@@ -2596,6 +2784,9 @@
                 <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
+        <class className="CTLMessagePreferenceViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMessagePreferenceViewController.h"/>
+        </class>
         <class className="CTLMessagesListViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMessagesListViewController.h"/>
         </class>
@@ -2673,10 +2864,11 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="0CA-D9-Fhh"/>
-        <segue reference="1JI-iC-iph"/>
+        <segue reference="t9u-78-s9z"/>
         <segue reference="iGD-nT-ogT"/>
-        <segue reference="oIP-qw-4bu"/>
+        <segue reference="ajR-Vp-hIS"/>
         <segue reference="hcl-ja-9qa"/>
+        <segue reference="FI3-8C-ZDq"/>
+        <segue reference="zXr-bQ-uct"/>
     </inferredMetricsTieBreakers>
 </document>

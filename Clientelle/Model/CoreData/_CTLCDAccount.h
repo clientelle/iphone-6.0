@@ -55,7 +55,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* auth_token;
+
 
 
 //- (BOOL)validateAuth_token:(id*)value_ error:(NSError**)error_;
@@ -63,7 +65,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* company;
+
 
 
 //- (BOOL)validateCompany:(id*)value_ error:(NSError**)error_;
@@ -71,7 +75,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* company_id;
+
 
 
 @property int16_t company_idValue;
@@ -83,7 +89,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSDate* created_at;
+
 
 
 //- (BOOL)validateCreated_at:(id*)value_ error:(NSError**)error_;
@@ -91,7 +99,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* email;
+
 
 
 //- (BOOL)validateEmail:(id*)value_ error:(NSError**)error_;
@@ -99,7 +109,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* first_name;
+
 
 
 //- (BOOL)validateFirst_name:(id*)value_ error:(NSError**)error_;
@@ -107,7 +119,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* has_inbox;
+
 
 
 @property BOOL has_inboxValue;
@@ -119,7 +133,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* industry;
+
 
 
 //- (BOOL)validateIndustry:(id*)value_ error:(NSError**)error_;
@@ -127,7 +143,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* industry_id;
+
 
 
 @property int16_t industry_idValue;
@@ -139,7 +157,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* is_pro;
+
 
 
 @property BOOL is_proValue;
@@ -151,7 +171,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* last_name;
+
 
 
 //- (BOOL)validateLast_name:(id*)value_ error:(NSError**)error_;
@@ -159,7 +181,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* password;
+
 
 
 //- (BOOL)validatePassword:(id*)value_ error:(NSError**)error_;
@@ -167,7 +191,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSDate* updated_at;
+
 
 
 //- (BOOL)validateUpdated_at:(id*)value_ error:(NSError**)error_;
@@ -175,7 +201,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* user_id;
+
 
 
 @property int16_t user_idValue;

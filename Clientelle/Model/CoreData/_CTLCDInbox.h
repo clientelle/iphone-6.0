@@ -35,7 +35,9 @@ extern const struct CTLCDInboxFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSDate* dateCreated;
+
 
 
 //- (BOOL)validateDateCreated:(id*)value_ error:(NSError**)error_;
@@ -43,7 +45,9 @@ extern const struct CTLCDInboxFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* formId;
+
 
 
 //- (BOOL)validateFormId:(id*)value_ error:(NSError**)error_;
@@ -51,7 +55,9 @@ extern const struct CTLCDInboxFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* installCode;
+
 
 
 //- (BOOL)validateInstallCode:(id*)value_ error:(NSError**)error_;
@@ -59,7 +65,9 @@ extern const struct CTLCDInboxFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* schema;
+
 
 
 //- (BOOL)validateSchema:(id*)value_ error:(NSError**)error_;

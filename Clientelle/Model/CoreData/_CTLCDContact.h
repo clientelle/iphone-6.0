@@ -19,6 +19,7 @@ extern const struct CTLCDContactAttributes {
 	__unsafe_unretained NSString *organization;
 	__unsafe_unretained NSString *phone;
 	__unsafe_unretained NSString *picture;
+	__unsafe_unretained NSString *preferredConactType;
 	__unsafe_unretained NSString *recordID;
 } CTLCDContactAttributes;
 
@@ -30,6 +31,7 @@ extern const struct CTLCDContactFetchedProperties {
 } CTLCDContactFetchedProperties;
 
 @class CTLCDAppointment;
+
 
 
 
@@ -59,7 +61,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* address;
+
 
 
 //- (BOOL)validateAddress:(id*)value_ error:(NSError**)error_;
@@ -67,7 +71,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* address2;
+
 
 
 //- (BOOL)validateAddress2:(id*)value_ error:(NSError**)error_;
@@ -75,7 +81,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* contactID;
+
 
 
 @property int16_t contactIDValue;
@@ -87,7 +95,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* email;
+
 
 
 //- (BOOL)validateEmail:(id*)value_ error:(NSError**)error_;
@@ -95,7 +105,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* firstName;
+
 
 
 //- (BOOL)validateFirstName:(id*)value_ error:(NSError**)error_;
@@ -103,7 +115,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* jobTitle;
+
 
 
 //- (BOOL)validateJobTitle:(id*)value_ error:(NSError**)error_;
@@ -111,7 +125,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSDate* lastAccessed;
+
 
 
 //- (BOOL)validateLastAccessed:(id*)value_ error:(NSError**)error_;
@@ -119,7 +135,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* lastName;
+
 
 
 //- (BOOL)validateLastName:(id*)value_ error:(NSError**)error_;
@@ -127,7 +145,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* mobile;
+
 
 
 //- (BOOL)validateMobile:(id*)value_ error:(NSError**)error_;
@@ -135,7 +155,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* nickName;
+
 
 
 //- (BOOL)validateNickName:(id*)value_ error:(NSError**)error_;
@@ -143,7 +165,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* note;
+
 
 
 //- (BOOL)validateNote:(id*)value_ error:(NSError**)error_;
@@ -151,7 +175,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* organization;
+
 
 
 //- (BOOL)validateOrganization:(id*)value_ error:(NSError**)error_;
@@ -159,7 +185,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* phone;
+
 
 
 //- (BOOL)validatePhone:(id*)value_ error:(NSError**)error_;
@@ -167,7 +195,9 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSData* picture;
+
 
 
 //- (BOOL)validatePicture:(id*)value_ error:(NSError**)error_;
@@ -175,7 +205,23 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+
+@property (nonatomic, strong) NSNumber* preferredConactType;
+
+
+
+@property int16_t preferredConactTypeValue;
+- (int16_t)preferredConactTypeValue;
+- (void)setPreferredConactTypeValue:(int16_t)value_;
+
+//- (BOOL)validatePreferredConactType:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSNumber* recordID;
+
 
 
 @property int16_t recordIDValue;
@@ -188,7 +234,7 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet* appointment;
+@property (nonatomic, strong) NSSet *appointment;
 
 - (NSMutableSet*)appointmentSet;
 
@@ -293,6 +339,15 @@ extern const struct CTLCDContactFetchedProperties {
 
 - (NSData*)primitivePicture;
 - (void)setPrimitivePicture:(NSData*)value;
+
+
+
+
+- (NSNumber*)primitivePreferredConactType;
+- (void)setPrimitivePreferredConactType:(NSNumber*)value;
+
+- (int16_t)primitivePreferredConactTypeValue;
+- (void)setPrimitivePreferredConactTypeValue:(int16_t)value_;
 
 
 

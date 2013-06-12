@@ -41,28 +41,33 @@ const struct CTLCDContactFieldFetchedProperties CTLCDContactFieldFetchedProperti
 	return (CTLCDContactFieldID*)[super objectID];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
++ (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
 	if ([key isEqualToString:@"autocapitalizationTypeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"autocapitalizationType"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"autocorrectionTypeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"autocorrectionType"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"enabledValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"enabled"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"keyboardTypeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"keyboardType"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"sortOrderValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"sortOrder"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 
 	return keyPaths;

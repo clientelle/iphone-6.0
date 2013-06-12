@@ -49,28 +49,33 @@ const struct CTLCDAccountFetchedProperties CTLCDAccountFetchedProperties = {
 	return (CTLCDAccountID*)[super objectID];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
++ (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
 	if ([key isEqualToString:@"company_idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"company_id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"has_inboxValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"has_inbox"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"industry_idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"industry_id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"is_proValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"is_pro"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"user_idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"user_id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 
 	return keyPaths;

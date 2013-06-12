@@ -46,16 +46,18 @@ const struct CTLCDAppointmentFetchedProperties CTLCDAppointmentFetchedProperties
 	return (CTLCDAppointmentID*)[super objectID];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
++ (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
 	if ([key isEqualToString:@"completedValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"completed"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"paidValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"paid"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 
 	return keyPaths;

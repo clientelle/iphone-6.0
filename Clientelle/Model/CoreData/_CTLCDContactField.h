@@ -39,7 +39,9 @@ extern const struct CTLCDContactFieldFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* autocapitalizationType;
+
 
 
 @property int16_t autocapitalizationTypeValue;
@@ -51,7 +53,9 @@ extern const struct CTLCDContactFieldFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* autocorrectionType;
+
 
 
 @property int16_t autocorrectionTypeValue;
@@ -63,7 +67,9 @@ extern const struct CTLCDContactFieldFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* enabled;
+
 
 
 @property BOOL enabledValue;
@@ -75,7 +81,9 @@ extern const struct CTLCDContactFieldFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* field;
+
 
 
 //- (BOOL)validateField:(id*)value_ error:(NSError**)error_;
@@ -83,7 +91,9 @@ extern const struct CTLCDContactFieldFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* keyboardType;
+
 
 
 @property int16_t keyboardTypeValue;
@@ -95,7 +105,9 @@ extern const struct CTLCDContactFieldFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* sortOrder;
+
 
 
 @property int16_t sortOrderValue;

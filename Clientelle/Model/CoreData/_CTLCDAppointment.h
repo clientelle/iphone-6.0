@@ -49,7 +49,9 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* address;
+
 
 
 //- (BOOL)validateAddress:(id*)value_ error:(NSError**)error_;
@@ -57,7 +59,9 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* address2;
+
 
 
 //- (BOOL)validateAddress2:(id*)value_ error:(NSError**)error_;
@@ -65,7 +69,9 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* completed;
+
 
 
 @property BOOL completedValue;
@@ -77,7 +83,9 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSDate* endDate;
+
 
 
 //- (BOOL)validateEndDate:(id*)value_ error:(NSError**)error_;
@@ -85,7 +93,9 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* eventID;
+
 
 
 //- (BOOL)validateEventID:(id*)value_ error:(NSError**)error_;
@@ -93,7 +103,9 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSDecimalNumber* fee;
+
 
 
 //- (BOOL)validateFee:(id*)value_ error:(NSError**)error_;
@@ -101,7 +113,9 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* notes;
+
 
 
 //- (BOOL)validateNotes:(id*)value_ error:(NSError**)error_;
@@ -109,7 +123,9 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* paid;
+
 
 
 @property BOOL paidValue;
@@ -121,7 +137,9 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSDate* startDate;
+
 
 
 //- (BOOL)validateStartDate:(id*)value_ error:(NSError**)error_;
@@ -129,7 +147,9 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* title;
+
 
 
 //- (BOOL)validateTitle:(id*)value_ error:(NSError**)error_;
@@ -138,7 +158,7 @@ extern const struct CTLCDAppointmentFetchedProperties {
 
 
 
-@property (nonatomic, strong) CTLCDContact* contact;
+@property (nonatomic, strong) CTLCDContact *contact;
 
 //- (BOOL)validateContact:(id*)value_ error:(NSError**)error_;
 

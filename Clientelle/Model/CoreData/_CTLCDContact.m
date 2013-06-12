@@ -18,6 +18,7 @@ const struct CTLCDContactAttributes CTLCDContactAttributes = {
 	.organization = @"organization",
 	.phone = @"phone",
 	.picture = @"picture",
+	.preferredConactType = @"preferredConactType",
 	.recordID = @"recordID",
 };
 
@@ -51,16 +52,23 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 	return (CTLCDContactID*)[super objectID];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
++ (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
 	if ([key isEqualToString:@"contactIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"contactID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"preferredConactTypeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"preferredConactType"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"recordIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"recordID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 
 	return keyPaths;
@@ -181,6 +189,32 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 
 @dynamic picture;
 
+
+
+
+
+
+@dynamic preferredConactType;
+
+
+
+- (int16_t)preferredConactTypeValue {
+	NSNumber *result = [self preferredConactType];
+	return [result shortValue];
+}
+
+- (void)setPreferredConactTypeValue:(int16_t)value_ {
+	[self setPreferredConactType:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitivePreferredConactTypeValue {
+	NSNumber *result = [self primitivePreferredConactType];
+	return [result shortValue];
+}
+
+- (void)setPrimitivePreferredConactTypeValue:(int16_t)value_ {
+	[self setPrimitivePreferredConactType:[NSNumber numberWithShort:value_]];
+}
 
 
 

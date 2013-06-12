@@ -36,6 +36,7 @@ e†
 "PRO" = "PRO";
 "FREE" = "FREE";
 "INCOMPLETE" = "Incomplete";
+"ACTION_REQUIRED" = "Action Required";
 
 /* GENERIC TERMS */
 "CLIENTS" = "Clients";

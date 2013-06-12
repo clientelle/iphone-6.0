@@ -44,6 +44,7 @@
         <attribute name="organization" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="preferredConactType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="recordID" optional="YES" attributeType="Integer 16" indexed="YES" syncable="YES"/>
         <relationship name="appointment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Appointment" inverseName="contact" inverseEntity="Appointment" syncable="YES"/>
     </entity>
@@ -64,7 +65,7 @@
     <elements>
         <element name="Account" positionX="-540" positionY="-81" width="128" height="255"/>
         <element name="Appointment" positionX="-173" positionY="-270" width="128" height="210"/>
-        <element name="Contact" positionX="-380" positionY="-273" width="128" height="285"/>
+        <element name="Contact" positionX="-380" positionY="-273" width="128" height="300"/>
         <element name="ContactField" positionX="-396" positionY="-441" width="128" height="133"/>
         <element name="Inbox" positionX="-378" positionY="30" width="128" height="105"/>
     </elements>
