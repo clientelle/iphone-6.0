@@ -81,7 +81,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="09-chat-2.png" translatesAutoresizingMaskIntoConstraints="NO" id="uFx-vq-YaO"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="message-button-type-3.png" translatesAutoresizingMaskIntoConstraints="NO" id="uFx-vq-YaO"/>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -1045,7 +1045,6 @@
                         <segue destination="AaL-yu-Gmw" kind="modal" identifier="toImporter" id="t9u-78-s9z"/>
                         <segue destination="lvE-fZ-8fX" kind="modal" identifier="toSetAppointment" id="iGD-nT-ogT"/>
                         <segue destination="UoD-9H-AyX" kind="push" identifier="toContactForm" id="ajR-Vp-hIS"/>
-                        <segue destination="NAI-Hb-2eg" kind="modal" identifier="toMessagePreference" id="Ubk-Oh-sdc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sp-tg-Pia" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1273,7 +1272,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bsX-Qq-aSb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5900" y="51"/>
+            <point key="canvasLocation" x="-5448" y="3307"/>
         </scene>
         <!--Register View Controller - Sign up-->
         <scene sceneID="EtW-us-YwR">
@@ -2610,7 +2609,6 @@
     <resources>
         <image name="06-map-pin.png" width="11" height="19"/>
         <image name="08-chat-grey.png" width="24" height="22"/>
-        <image name="09-chat-2.png" width="24" height="22"/>
         <image name="09-chat-grey.png" width="24" height="22"/>
         <image name="11-clock.png" width="25" height="25"/>
         <image name="111-user.png" width="24" height="21"/>
@@ -2624,6 +2622,7 @@
         <image name="clock-grn.png" width="18" height="18"/>
         <image name="clock-red.png" width="18" height="18"/>
         <image name="menu.png" width="18" height="18"/>
+        <image name="message-button-type-3.png" width="24" height="22"/>
         <image name="person-sm-grey.png" width="18" height="16"/>
         <image name="plus.png" width="19" height="19"/>
         <image name="sm-wrench-gray.png" width="18" height="18"/>
@@ -2864,11 +2863,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="t9u-78-s9z"/>
-        <segue reference="iGD-nT-ogT"/>
-        <segue reference="ajR-Vp-hIS"/>
-        <segue reference="hcl-ja-9qa"/>
-        <segue reference="FI3-8C-ZDq"/>
         <segue reference="zXr-bQ-uct"/>
+        <segue reference="ajR-Vp-hIS"/>
+        <segue reference="iGD-nT-ogT"/>
+        <segue reference="t9u-78-s9z"/>
+        <segue reference="hcl-ja-9qa"/>
     </inferredMetricsTieBreakers>
 </document>

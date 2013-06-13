@@ -246,3 +246,9 @@ e†
 "INVALID_EMAIL" = "Email is invalid";
 "PASSWORD_REQUIREMENT" = "Password must be at least 6 characters";
 "PASSWORDS_DO_NOT_MATCH" = "Passwords do not match";
+
+
+"CHOOSE_MESSAGE_TYPE" = "Choose a message type";
+"SEND_SMS" = "Send SMS";
+"SEND_EMAIL" = "Send Email";
+"SEND_PRIVATE" = "Private Message";

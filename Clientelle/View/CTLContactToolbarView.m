@@ -20,42 +20,18 @@ CGFloat const CTLContactModeToolbarViewHeight = 70;
     if (self) {
         
         [self setBackgroundColor:[UIColor clearColor]];
-        self.appointmentButton = [self createButton:@"11-clock" withIndex:0];
-        self.callButton = [self createButton:@"75-phone" withIndex:1];        
         
+        self.appointmentButton = [self createButton:@"11-clock" withIndex:0];
         [self.appointmentButton addTarget:self.delegate action:@selector(showAppointmentScheduler:) forControlEvents:UIControlEventTouchUpInside];
         
+        self.callButton = [self createButton:@"75-phone" withIndex:1];
         [self.callButton addTarget:self.delegate action:@selector(showDialPerson:) forControlEvents:UIControlEventTouchUpInside];
-        
+
+        self.messageButton = [self createButton:@"message-button-type-0.png" withIndex:2];
+        //[self.messageButton addTarget:self.delegate action:@selector(showMessagePreferencePrompt:) forControlEvents:UIControlEventTouchUpInside];
     }
 
     return self;
-}
-
-- (void)setPreferenceForMessageButton:(CTLMessagePreferenceType)preference
-{
-    switch(preference){
-        case CTLMessagePreferenceTypeUndetermined:
-            self.messageButton = [self createButton:@"08-chat" withIndex:2];
-            [self.messageButton addTarget:self.delegate action:@selector(showMessagePreferencePrompt:) forControlEvents:UIControlEventTouchUpInside];
-            break;
-        case CTLMessagePreferenceTypeAsk:
-            self.messageButton = [self createButton:@"08-chat" withIndex:2];
-            [self.messageButton addTarget:self.delegate action:@selector(showMessageActionSheet:) forControlEvents:UIControlEventTouchUpInside];
-            break;
-        case CTLMessagePreferenceTypeEmail:
-            self.messageButton = [self createButton:@"18-envelope" withIndex:2];
-            [self.messageButton addTarget:self.delegate action:@selector(showEmailForPerson:) forControlEvents:UIControlEventTouchUpInside];
-            break;
-        case CTLMessagePreferenceTypeSms:
-            self.messageButton = [self createButton:@"286-speechbubble" withIndex:2];
-            [self.messageButton addTarget:self.delegate action:@selector(showSMSForPerson:) forControlEvents:UIControlEventTouchUpInside];
-            break;
-        case CTLMessagePreferenceTypeCtl:
-            self.messageButton = [self createButton:@"09-chat-2" withIndex:2];
-            [self.messageButton addTarget:self.delegate action:@selector(showSMSForPerson:) forControlEvents:UIControlEventTouchUpInside];
-            break;
-    }
 }
 
 - (UIButton *)createButton:(NSString *)imageName withIndex:(int)index

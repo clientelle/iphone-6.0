@@ -35,6 +35,7 @@ NSString *const CTLAppointmentSegueIdentifier = @"toSetAppointment";
 
 int const CTLShareContactActionSheetTag = 234;
 int const CTLAddContactActionSheetTag = 424;
+int const CTLMessagePromptActionSheetTag = 653;
 
 @implementation CTLContactsListViewController
 
@@ -166,11 +167,11 @@ int const CTLAddContactActionSheetTag = 424;
 - (void)reloadContactListAfterImport:(NSNotification *)notification
 {
     [self loadAllContacts];
-    
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"display_sort_tooltip_once"]){
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if(![defaults boolForKey:@"display_sort_tooltip_once"]){
         [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(displaySortTooltip:) userInfo:nil repeats:NO];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_sort_tooltip_once"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [defaults setBool:YES forKey:@"display_sort_tooltip_once"];
+        [defaults synchronize];
     }
 }
 
@@ -338,6 +339,17 @@ int const CTLAddContactActionSheetTag = 424;
     [actionSheet showInView:self.view];
 }
 
+- (void)displayMessagePromptActionSheet:(id)sender
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"CHOOSE_MESSAGE_TYPE", nil)
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:NSLocalizedString(@"SEND_SMS", nil), NSLocalizedString(@"SEND_EMAIL", nil),NSLocalizedString(@"SEND_PRIVATE", nil), nil];
+    actionSheet.tag = CTLMessagePromptActionSheetTag;
+    [actionSheet showInView:self.view];
+}
+
 #pragma mark - Prompt Delegate Methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -347,26 +359,45 @@ int const CTLAddContactActionSheetTag = 424;
             switch(buttonIndex){
                 case 0:
                     _selectedPerson = nil;
-                    [self performSegueWithIdentifier:CTLContactFormSegueIdentifier sender:self];
+                    [self performSegueWithIdentifier:CTLContactFormSegueIdentifier sender:actionSheet];
                     break;
                 case 1:
-                    [self performSegueWithIdentifier:CTLImporterSegueIdentifier sender:self];
+                    [self performSegueWithIdentifier:CTLImporterSegueIdentifier sender:actionSheet];
                     break;
             }
             break;
         case CTLShareContactActionSheetTag:
             switch(buttonIndex){
                 case 0:
-                    [self shareContactViaSMS:self];
+                    [self shareContactViaSMS:actionSheet];
                     break;
                 case 1:
-                    [self shareContactViaEmail:self];
+                    [self shareContactViaEmail:actionSheet];
                     break;
                 case 2:
                     [self.contactHeader reset];
                     break;
             }
             break;
+         case CTLMessagePromptActionSheetTag:
+             switch(buttonIndex){
+                 case 0:
+                     _selectedPerson.messagePreferenceValue = CTLMessagePreferenceTypeSms;
+                     [self changeMessagePeference:CTLMessagePreferenceTypeSms];
+                     [self showSMSForPerson:actionSheet];
+                     break;
+                 case 1:
+                     _selectedPerson.messagePreferenceValue = CTLMessagePreferenceTypeEmail;
+                     [self changeMessagePeference:CTLMessagePreferenceTypeEmail];
+                     [self showEmailForPerson:actionSheet];
+                     break;
+                 case 2:
+                     _selectedPerson.messagePreferenceValue = CTLMessagePreferenceTypeCtl;
+                     [self changeMessagePeference:CTLMessagePreferenceTypeCtl];
+                     [self showCtlMessengerForPerson:actionSheet];
+                     break;
+             }
+             break;
     }
 }
 
@@ -374,13 +405,13 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)editContact:(id)sender
 {
-    [self performSegueWithIdentifier:CTLContactFormSegueIdentifier sender:self];
+    [self performSegueWithIdentifier:CTLContactFormSegueIdentifier sender:sender];
 }
 
 - (void)showImporter:(id)sender
 {
     [self hideSortPicker];
-    [self performSegueWithIdentifier:CTLImporterSegueIdentifier sender:self];
+    [self performSegueWithIdentifier:CTLImporterSegueIdentifier sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -422,11 +453,8 @@ int const CTLAddContactActionSheetTag = 424;
     CGRect toolbarFrame = CGRectMake(0, viewSize.height + CTLContactModeToolbarViewHeight + shadowOffset, viewSize.width, CTLContactModeToolbarViewHeight);
     
     self.contactToolbar = [[CTLContactToolbarView alloc] initWithFrame:toolbarFrame];
-    
-    CTLMessagePreferenceType messagePreference = [[NSUserDefaults standardUserDefaults] integerForKey:@"CTLMessagePreferenceType"];
-    
-    [self.contactToolbar setPreferenceForMessageButton:messagePreference];
-    
+    self.contactToolbar.delegate = self;
+
     [self.view addSubview:self.contactHeader];
     [self.view addSubview:self.contactToolbar];
 }
@@ -526,12 +554,63 @@ int const CTLAddContactActionSheetTag = 424;
     
     [UILabel autoWidth:headerView.nameLabel];
     [UILabel autoWidth:headerView.phoneLabel];
-    
 }
 
 - (void)configureForContact:(CTLContactToolbarView *)toolbar withContact:(CTLCDContact *)contact
+{    
+    BOOL hasEmail = [contact.email length] > 0;
+    BOOL hasMobile = [contact.mobile length] > 0;
+    
+    if(contact.messagePreferenceValue == CTLMessagePreferenceTypeUndetermined){
+        if(hasMobile && !hasEmail){
+            [self changeMessagePeference:CTLMessagePreferenceTypeSms];
+        }else if(!hasMobile && hasEmail){
+            [self changeMessagePeference:CTLMessagePreferenceTypeEmail];
+        }else if(hasEmail && hasMobile){
+            [self changeMessagePeference:CTLMessagePreferenceTypeAsk];
+        }
+    }else{
+        if((contact.messagePreferenceValue == CTLMessagePreferenceTypeSms) && hasMobile){
+            [self changeMessagePeference:CTLMessagePreferenceTypeSms];
+            return;
+        }
+        if((contact.messagePreferenceValue == CTLMessagePreferenceTypeEmail) && hasEmail){
+            [self changeMessagePeference:CTLMessagePreferenceTypeEmail];
+            return;
+        }
+        if((contact.messagePreferenceValue == CTLMessagePreferenceTypeCtl) && contact.hasPrivateMsg){
+            [self changeMessagePeference:CTLMessagePreferenceTypeCtl];
+            return;
+        }
+        [self changeMessagePeference:CTLMessagePreferenceTypeAsk];
+    }
+}
+
+- (void)changeMessagePeference:(CTLMessagePreferenceType)messagePreference
 {
-    toolbar.delegate = self;
+    NSString *icon = [NSString stringWithFormat:@"message-button-type-%u", messagePreference];
+        
+    [self.contactToolbar.messageButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+    
+    switch(messagePreference){
+        case CTLMessagePreferenceTypeUndetermined:
+            [self.contactToolbar.messageButton addTarget:self action:@selector(showMessagePreferencePrompt:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        case CTLMessagePreferenceTypeAsk:
+            [self.contactToolbar.messageButton addTarget:self action:@selector(showMessageActionSheet:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        case CTLMessagePreferenceTypeEmail:
+            [self.contactToolbar.messageButton addTarget:self action:@selector(showEmailForPerson:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        case CTLMessagePreferenceTypeSms:
+            [self.contactToolbar.messageButton addTarget:self action:@selector(showSMSForPerson:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        case CTLMessagePreferenceTypeCtl:
+            [self.contactToolbar.messageButton addTarget:self action:@selector(showCtlMessengerForPerson:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+    }
+
+    [self.contactToolbar.messageButton setImage:[UIImage imageNamed:icon] forState:UIControlStateNormal];
 }
 
 - (void)exitContactMode:(NSNotification *)notification
@@ -750,49 +829,41 @@ int const CTLAddContactActionSheetTag = 424;
 
 - (void)showEmailForPerson:(id)sender
 {
-    NSLog(@"showEmailForPerson");
-    return;
-    
-    if(![MFMailComposeViewController canSendMail]){
-        [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL", nil)];
-        return;
+    if(_selectedPerson.email){
+        if([MFMailComposeViewController canSendMail]){
+            MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
+            [mailController setMailComposeDelegate:self];
+            [mailController setToRecipients:@[_selectedPerson.email]];
+            [self presentViewController:mailController animated:YES completion:nil];
+        }else{
+            [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL", nil)];
+        }
     }
-    
-    MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
-    [mailController setMailComposeDelegate:self];
-    [mailController setToRecipients:@[[_selectedPerson email]]];
-    [self presentViewController:mailController animated:YES completion:nil];
 }
 
 - (void)showSMSForPerson:(id)sender
 {
-    NSLog(@"showSMSForPerson");
-    return;
-    
     if(_selectedPerson.mobile){
-        NSString *sms = [NSString stringWithFormat:@"sms: %@", [NSString cleanPhoneNumber:_selectedPerson.mobile]];
-        NSString *smsEncoded = [sms stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-        [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:smsEncoded]];
-        [self saveTimestampForContact];
+        if([MFMessageComposeViewController canSendText]){
+            NSString *sms = [NSString stringWithFormat:@"sms: %@", [NSString cleanPhoneNumber:_selectedPerson.mobile]];
+            NSString *smsEncoded = [sms stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+            [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:smsEncoded]];
+            [self saveTimestampForContact];
+        }else{
+            [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_SMS", nil)];
+        }
     }
 }
 
-- (void)showMessagePreferencePrompt:(id)sender
+- (void)showCtlMessengerForPerson:(id)sender
 {
-    NSLog(@"showMessagePreferencePrompt");
-    
-    [self performSegueWithIdentifier:@"toMessagePreference" sender:sender];
+    NSLog(@"showCtlMessengerForPerson");
+    return;
 }
 
 - (void)showMessageActionSheet:(id)sender
 {
-    NSLog(@"showMessageActionSheet");
-}
-
-- (void)showCtlMsgForPerson:(id)sender
-{
-    NSLog(@"showCtlMsgForPerson");
-    return;
+    [self displayMessagePromptActionSheet:sender];
 }
 
 #pragma mark - Updating Timestamp for Contact Row
@@ -955,76 +1026,29 @@ int const CTLAddContactActionSheetTag = 424;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)messsagePreferenceDidChange:(NSNotification *)notification
-{
-    CTLMessagePreferenceType messagePreference = [notification.object intValue];
-    _selectedPerson.preferredConactTypeValue = messagePreference;
-    
-    [self.contactToolbar.messageButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
-    
-    switch(messagePreference){
-        case CTLMessagePreferenceTypeUndetermined:
-            
-            [self.contactToolbar.messageButton setImage:[UIImage imageNamed:@"09-chat-2"] forState:UIControlStateNormal];
-            
-            [self.contactToolbar.messageButton addTarget:self action:@selector(showMessagePreferencePrompt:) forControlEvents:UIControlEventTouchUpInside];
-            
-            break;
-        case CTLMessagePreferenceTypeAsk:
-            
-            [self.contactToolbar.messageButton setImage:[UIImage imageNamed:@"09-chat-2"] forState:UIControlStateNormal];
-            
-            [self.contactToolbar.messageButton addTarget:self action:@selector(showMessageActionSheet:) forControlEvents:UIControlEventTouchUpInside];
-                        
-            break;
-        case CTLMessagePreferenceTypeEmail:
-            
-            [self.contactToolbar.messageButton setImage:[UIImage imageNamed:@"18-envelope"] forState:UIControlStateNormal];
-            
-            [self.contactToolbar.messageButton addTarget:self action:@selector(showEmailForPerson:) forControlEvents:UIControlEventTouchUpInside];
-            
-            break;
-        case CTLMessagePreferenceTypeSms:
-                        
-            [self.contactToolbar.messageButton setImage:[UIImage imageNamed:@"09-chat-2"] forState:UIControlStateNormal];
-            
-            [self.contactToolbar.messageButton addTarget:self action:@selector(showSMSForPerson:) forControlEvents:UIControlEventTouchUpInside];
-            
-            break;
-        case CTLMessagePreferenceTypeCtl:
-            
-            [self.contactToolbar.messageButton setImage:[UIImage imageNamed:@"09-chat-2"] forState:UIControlStateNormal];
-            
-            [self.contactToolbar.messageButton addTarget:self action:@selector(showCtlMsgForPerson:) forControlEvents:UIControlEventTouchUpInside];
-            
-            break;
-    }
-    
-    
-    [self.contactToolbar setPreferenceForMessageButton:messagePreference];
-}
-
 - (void)registerNotificationsObservers
 {
-    NSNotificationCenter *notification = [NSNotificationCenter defaultCenter];
+    NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
     
-    [notification addObserver:self selector:@selector(displayShareContactActionSheet:) name:CTLShareContactNotification object:nil];
-    [notification addObserver:self selector:@selector(reloadContactListAfterImport:) name:CTLContactsWereImportedNotification object:nil];
-    [notification addObserver:self selector:@selector(reloadContactList:) name:CTLContactListReloadNotification object:nil];
-    [notification addObserver:self selector:@selector(timestampForRowDidChange:) name:CTLTimestampForRowNotification object:nil];
-    [notification addObserver:self selector:@selector(newContactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
-    [notification addObserver:self selector:@selector(contactRowDidChange:) name:CTLContactRowDidChangeNotification object:nil];
-    [notification addObserver:self selector:@selector(messsagePreferenceDidChange:) name:@"com.clientelle.notification.messagePreference" object:nil];
+    [notifCenter addObserver:self selector:@selector(displayShareContactActionSheet:) name:CTLShareContactNotification object:nil];
+    [notifCenter addObserver:self selector:@selector(reloadContactListAfterImport:) name:CTLContactsWereImportedNotification object:nil];
+    [notifCenter addObserver:self selector:@selector(reloadContactList:) name:CTLContactListReloadNotification object:nil];
+    [notifCenter addObserver:self selector:@selector(timestampForRowDidChange:) name:CTLTimestampForRowNotification object:nil];
+    [notifCenter addObserver:self selector:@selector(newContactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
+    [notifCenter addObserver:self selector:@selector(contactRowDidChange:) name:CTLContactRowDidChangeNotification object:nil];
+    //[notifCenter addObserver:self selector:@selector(messsagePreferenceDidChange:) name:@"com.clientelle.notification.messagePreference" object:nil];
 }
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLShareContactNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLContactsWereImportedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLContactListReloadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLTimestampForRowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLNewContactWasAddedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CTLContactRowDidChangeNotification object:nil];
+    NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+    
+    [notifCenter removeObserver:self name:CTLShareContactNotification object:nil];
+    [notifCenter removeObserver:self name:CTLContactsWereImportedNotification object:nil];
+    [notifCenter removeObserver:self name:CTLContactListReloadNotification object:nil];
+    [notifCenter removeObserver:self name:CTLTimestampForRowNotification object:nil];
+    [notifCenter removeObserver:self name:CTLNewContactWasAddedNotification object:nil];
+    [notifCenter removeObserver:self name:CTLContactRowDidChangeNotification object:nil];
 }
 
 @end

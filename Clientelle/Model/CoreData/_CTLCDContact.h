@@ -10,16 +10,17 @@ extern const struct CTLCDContactAttributes {
 	__unsafe_unretained NSString *contactID;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *firstName;
+	__unsafe_unretained NSString *hasPrivateMsg;
 	__unsafe_unretained NSString *jobTitle;
 	__unsafe_unretained NSString *lastAccessed;
 	__unsafe_unretained NSString *lastName;
+	__unsafe_unretained NSString *messagePreference;
 	__unsafe_unretained NSString *mobile;
 	__unsafe_unretained NSString *nickName;
 	__unsafe_unretained NSString *note;
 	__unsafe_unretained NSString *organization;
 	__unsafe_unretained NSString *phone;
 	__unsafe_unretained NSString *picture;
-	__unsafe_unretained NSString *preferredConactType;
 	__unsafe_unretained NSString *recordID;
 } CTLCDContactAttributes;
 
@@ -31,6 +32,7 @@ extern const struct CTLCDContactFetchedProperties {
 } CTLCDContactFetchedProperties;
 
 @class CTLCDAppointment;
+
 
 
 
@@ -116,6 +118,20 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* hasPrivateMsg;
+
+
+
+@property BOOL hasPrivateMsgValue;
+- (BOOL)hasPrivateMsgValue;
+- (void)setHasPrivateMsgValue:(BOOL)value_;
+
+//- (BOOL)validateHasPrivateMsg:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSString* jobTitle;
 
 
@@ -141,6 +157,20 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 //- (BOOL)validateLastName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* messagePreference;
+
+
+
+@property int16_t messagePreferenceValue;
+- (int16_t)messagePreferenceValue;
+- (void)setMessagePreferenceValue:(int16_t)value_;
+
+//- (BOOL)validateMessagePreference:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -201,20 +231,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 //- (BOOL)validatePicture:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSNumber* preferredConactType;
-
-
-
-@property int16_t preferredConactTypeValue;
-- (int16_t)preferredConactTypeValue;
-- (void)setPreferredConactTypeValue:(int16_t)value_;
-
-//- (BOOL)validatePreferredConactType:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -289,6 +305,15 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+- (NSNumber*)primitiveHasPrivateMsg;
+- (void)setPrimitiveHasPrivateMsg:(NSNumber*)value;
+
+- (BOOL)primitiveHasPrivateMsgValue;
+- (void)setPrimitiveHasPrivateMsgValue:(BOOL)value_;
+
+
+
+
 - (NSString*)primitiveJobTitle;
 - (void)setPrimitiveJobTitle:(NSString*)value;
 
@@ -303,6 +328,15 @@ extern const struct CTLCDContactFetchedProperties {
 
 - (NSString*)primitiveLastName;
 - (void)setPrimitiveLastName:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveMessagePreference;
+- (void)setPrimitiveMessagePreference:(NSNumber*)value;
+
+- (int16_t)primitiveMessagePreferenceValue;
+- (void)setPrimitiveMessagePreferenceValue:(int16_t)value_;
 
 
 
@@ -339,15 +373,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 - (NSData*)primitivePicture;
 - (void)setPrimitivePicture:(NSData*)value;
-
-
-
-
-- (NSNumber*)primitivePreferredConactType;
-- (void)setPrimitivePreferredConactType:(NSNumber*)value;
-
-- (int16_t)primitivePreferredConactTypeValue;
-- (void)setPrimitivePreferredConactTypeValue:(int16_t)value_;
 
 
 

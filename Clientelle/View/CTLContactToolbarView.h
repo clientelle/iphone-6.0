@@ -24,8 +24,6 @@ extern CGFloat const CTLContactModeToolbarViewHeight;
 
 @interface CTLContactToolbarView : UIView
 
-- (void)setPreferenceForMessageButton:(CTLMessagePreferenceType)preference;
-
 @property (nonatomic, assign) id<CTLContactToolbarDelegate>delegate;
 @property (nonatomic, assign) CTLMessagePreferenceType messagePreference;
 @property (nonatomic, weak) UIButton *appointmentButton;
