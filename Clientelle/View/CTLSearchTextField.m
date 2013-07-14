@@ -1,14 +1,14 @@
 //
-//  CTLMessagePreferencePickerView.m
+//  CTLSearchTextField.m
 //  Clientelle
 //
-//  Created by Kevin Liu on 6/11/13.
+//  Created by Kevin Liu on 6/27/13.
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
-#import "CTLMessagePreferencePickerView.h"
+#import "CTLSearchTextField.h"
 
-@implementation CTLMessagePreferencePickerView
+@implementation CTLSearchTextField
 
 - (id)initWithFrame:(CGRect)frame
 {

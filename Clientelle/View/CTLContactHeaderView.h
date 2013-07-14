@@ -27,6 +27,6 @@ extern CGFloat const CTLContactViewHeaderHeight;
 @property (nonatomic, weak) UILabel *phoneLabel;
 @property (nonatomic, weak) UIImageView *pictureView;
 
-- (void)reset;
+- (void)removeHighlight;
 
 @end

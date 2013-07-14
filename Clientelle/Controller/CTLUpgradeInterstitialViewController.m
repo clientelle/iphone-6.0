@@ -9,7 +9,9 @@
 
 #import "CTLUpgradeInterstitialViewController.h"
 #import "CTLRegisterViewController.h"
-#import "CTLSlideMenuController.h"
+#import "CTLContainerViewController.h"
+
+#import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
 
 @implementation CTLUpgradeInterstitialViewController
@@ -21,23 +23,23 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BACK", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
     
     [self.navigationItem setBackBarButtonItem: backButton];
-
-    _account = [CTLCDAccount MR_findFirst];
+        
+    CTLCDAccount *account = [CTLCDAccount MR_findFirst];
+    BOOL hasPro = [CTLAccountManager userDidPurchasePro];
     
-    if(self.menuController.isPro && !_account){
-        self.navigationItem.title = @"Register";
-        [self.upgradeButton setTitle: @"Create Account" forState: UIControlStateNormal];
-        self.actionMessageLabel.text = @"Thank you for purchasing.";
-        [self.upgradeButton addTarget:self action:@selector(toSignup:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    
-    if(!self.menuController.isPro){
+    if(hasPro == NO && !account){
         self.navigationItem.title = @"Upgrade";
         self.actionMessageLabel.text = @"You must upgrade to get this feature";
-        
         [self.upgradeButton setTitle: @"Purchase" forState: UIControlStateNormal];
         [self.upgradeButton addTarget:self action:@selector(upgradeToPro:) forControlEvents:UIControlEventTouchUpInside];
-    }
+    }    
+    
+    if(hasPro && !account){
+        self.navigationItem.title = @"Register";
+        self.actionMessageLabel.text = @"Thank you for purchasing.";
+        [self.upgradeButton setTitle: @"Create Account" forState: UIControlStateNormal];
+        [self.upgradeButton addTarget:self action:@selector(toSignup:) forControlEvents:UIControlEventTouchUpInside];
+    }       
 }
 
 - (void)upgradeToPro:(id)sender
@@ -49,12 +51,8 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if(buttonIndex == 1){
-        _account.is_pro = @(1);
-        self.menuController.isPro = YES;
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setBool:YES forKey:@"IS_PRO"];
-        [defaults synchronize];
+    if(buttonIndex == 1){       
+        [CTLAccountManager recordPurchase];                
         [self toSignup:alertView];
     }
 }
@@ -68,7 +66,7 @@
 {
     if([[segue identifier] isEqualToString:@"toSignup"]){
         CTLRegisterViewController *registerViewController = [segue destinationViewController];
-        [registerViewController setMenuController:self.menuController];
+        [registerViewController setContainerView:self.containerView];
         return;
     }
 }

@@ -14,9 +14,13 @@
     #import <AddressBook/AddressBook.h>
     #define MR_SHORTHAND
     #import "CoreData+MagicalRecord.h"
-    #import "CTLSlideMenuDelegate.h"
+    #import "CTLContainerViewDelegate.h"
 #endif
 
+// Clientelle Global Keys
+#define kCTLLoggedInUserId @"currentUserIdKey"
+
+#define kCTLPushNotifToken @"com.clientelle.defaults.pushNotificationKey"
 #define kCTLSettingsMessageNotification @"com.clientelle.defaults.notifications.messages"
 #define kCTLSettingsAppointmentNotification @"com.clientelle.defaults.notifications.appointments"
 #define kAddressBookDidChange @"com.clientelle.addressBook.change"

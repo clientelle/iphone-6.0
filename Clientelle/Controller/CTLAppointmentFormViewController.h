@@ -12,22 +12,9 @@
 @class CTLCDContact;
 @class CTLCDAppointment;
 
-@interface CTLAppointmentFormViewController : UITableViewController<CTLSlideMenuDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>{
-    UIDatePicker *_datePicker;
-    UIPickerView *_contactPicker;
-    NSInteger _activeInputTag;
-    UITextField *_activeField;
-    EKEvent *_event;
-    CTLCDAppointment *_appointment;
-    NSDecimalNumber *_appointmentFee;
-    EKEventStore *_eventStore;
-    EKCalendar *_calendar;
-    NSArray *_contacts;
-    BOOL _hasCalendarAccess;
-    BOOL _hasAddress;
-}
+@interface CTLAppointmentFormViewController : UITableViewController<CTLContainerViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, weak) CTLContainerViewController *containerView;
 @property (nonatomic, weak) IBOutlet UILabel *headerLabel;
 @property (nonatomic, weak) IBOutlet UITextField *titleTextField;
 @property (nonatomic, weak) IBOutlet UITextField *contactNameTextField;

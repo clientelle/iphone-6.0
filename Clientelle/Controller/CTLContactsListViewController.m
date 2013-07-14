@@ -4,14 +4,12 @@
 #import "NSDate+CTLDate.h"
 #import "UILabel+CTLLabel.h"
 
-#import "CTLSlideMenuController.h"
+#import "CTLContainerViewController.h"
 
 #import "CTLContactsListViewController.h"
 #import "CTLContactDetailsViewController.h"
 #import "CTLContactImportViewController.h"
 #import "CTLAppointmentFormViewController.h"
-#import "CTLMessagePreferenceViewController.h"
-
 #import "CTLContactCell.h"
 
 
@@ -21,6 +19,9 @@
 #import "CTLPickerView.h"
 #import "CTLPickerButton.h"
 #import "KBPopupBubbleView.h"
+
+#import "CTLAccountManager.h"
+#import "CTLCDAccount.h"
 
 NSString *const CTLContactsWereImportedNotification = @"com.clientelle.notifications.contactsWereImported";
 NSString *const CTLContactListReloadNotification = @"com.clientelle.notifications.reloadContacts";
@@ -33,19 +34,36 @@ NSString *const CTLImporterSegueIdentifier = @"toImporter";
 NSString *const CTLContactFormSegueIdentifier = @"toContactForm";
 NSString *const CTLAppointmentSegueIdentifier = @"toSetAppointment";
 
-int const CTLShareContactActionSheetTag = 234;
-int const CTLAddContactActionSheetTag = 424;
-int const CTLMessagePromptActionSheetTag = 653;
+int const CTLShareContactActionSheetTag = 800;
+int const CTLAddContactActionSheetTag = 801;
+int const CTLMessageActionSheetTag = 802;
+int const CTLDialActionSheetTag = 803;
+
+@interface CTLContactsListViewController ()
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+@property (nonatomic, strong) CTLCDContact *selectedPerson;
+@property (nonatomic, strong) CTLPickerView *sortPickerView;
+@property (nonatomic, strong) NSArray *sortArray;
+@property (nonatomic, strong) NSMutableArray *filteredContacts;
+@property (nonatomic, strong) UIView *emptyView;
+@property (nonatomic, assign) BOOL inContactMode;
+@property (nonatomic, assign) BOOL shouldReorderListOnScroll;
+@property (nonatomic, strong) UISearchDisplayController *searchController;
+@property (nonatomic, strong) KBPopupBubbleView *sortTooltip;
+@property (nonatomic, strong) CTLCDAccount *currentUser;
+@end
 
 @implementation CTLContactsListViewController
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+    [super viewDidLoad];    
     
-    _emptyView = [self noContactsView];
-    _inContactMode = NO;
-    _shouldReorderListOnScroll = NO;
+    self.currentUser = self.containerView.currentUser;
+    
+    self.emptyView = [self noContactsView];
+    self.inContactMode = NO;
+    self.shouldReorderListOnScroll = NO;
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
     
@@ -53,71 +71,26 @@ int const CTLMessagePromptActionSheetTag = 653;
     [self buildSortPicker];
     [self buildPickerButton];
     [self prepareContactViewMode];
-    [self loadAllContacts];
-    [self prepareSortTooltip];
-    [self registerNotificationsObservers];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    if(_sortTooltip){
-        [_sortTooltip removeFromSuperview];
-    }
-}
-
-- (void)prepareSortTooltip
-{
-    if([[self.fetchedResultsController fetchedObjects] count] > 1 && ![[NSUserDefaults standardUserDefaults] boolForKey:@"display_sort_tooltip_once"]){
-        [self displaySortTooltip:nil];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"display_sort_tooltip_once"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-}
-
-- (void)displaySortTooltip:(id)userInfo
-{
-    CGFloat bubbleWidth = 248.0f;
-    CGFloat bubbleHeight = 100.0f;
     
-    _sortTooltip = [[KBPopupBubbleView alloc] initWithFrame:CGRectMake((320.0f/2.0f)-(bubbleWidth/2), 0, bubbleWidth, bubbleHeight) text:NSLocalizedString(@"SORT_TOOTLIP", nil)];
-    [_sortTooltip setPosition:0.5f animated:NO];
-    [_sortTooltip setSide:kKBPopupPointerSideTop];
-    [_sortTooltip showInView:self.view animated:YES];
-}
-
-- (void)removeSortTooltip
-{
-    if(_sortTooltip){
-        [_sortTooltip removeFromSuperview];
-    }
+    //load users contacts
+    [self loadAllContacts];
+    
+    [self registerNotificationsObservers];
 }
 
 #pragma mark - Loading Contact List
 
-- (int)savedSortOrderIndex
-{
-    return [[NSUserDefaults standardUserDefaults] integerForKey:CTLSortOrderSelectedIndex];
-}
-
-- (void)saveSortOrder:(NSInteger)filterIndex
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:filterIndex forKey:CTLSortOrderSelectedIndex];
-    [defaults synchronize];
-}
-
 - (void)loadAllContacts
 {
-    _filteredContacts = [NSMutableArray array];
+    self.filteredContacts = [NSMutableArray array];
     
-    
-    if([CTLCDContact countOfEntities] > 0){
+    if([self.currentUser.contacts count] > 0){
         
         [self buildSearchBar];
        
-        NSInteger sortFilterRow = [_sortPickerView selectedRowInComponent:0];
-        NSString *fieldName = _sortArray[sortFilterRow][@"field"];
-        BOOL ASC = [_sortArray[sortFilterRow][@"asc"] boolValue];
+        NSInteger sortFilterRow = [self.sortPickerView selectedRowInComponent:0];
+        NSString *fieldName = self.sortArray[sortFilterRow][@"field"];
+        BOOL ASC = [self.sortArray[sortFilterRow][@"asc"] boolValue];
         
         self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:fieldName ascending:ASC withPredicate:nil groupBy:nil delegate:self];
         [self.fetchedResultsController performFetch:nil];
@@ -202,10 +175,10 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)buildSortPicker
 {
-    _sortPickerView = [[CTLPickerView alloc] initWithWidth:self.view.bounds.size.width];
-    _sortPickerView.delegate = self;
-    _sortPickerView.dataSource = self;
-    [self.view addSubview:_sortPickerView];
+    self.sortPickerView = [[CTLPickerView alloc] initWithWidth:self.view.bounds.size.width];
+    self.sortPickerView.delegate = self;
+    self.sortPickerView.dataSource = self;
+    [self.view addSubview:self.sortPickerView];
     
     NSDictionary *activity   = @{@"title":NSLocalizedString(@"ACTIVITY", nil),   @"field":@"lastAccessed", @"asc": @(0)};
     NSDictionary *first_name = @{@"title":NSLocalizedString(@"FIRST_NAME", nil), @"field":@"firstName", @"asc": @(1)};
@@ -213,8 +186,20 @@ int const CTLMessagePromptActionSheetTag = 653;
     
     NSInteger selectedRow = [self savedSortOrderIndex];
     
-    _sortArray = @[activity, first_name, last_name];
-    [_sortPickerView selectRow:selectedRow inComponent:0 animated:NO];
+    self.sortArray = @[activity, first_name, last_name];
+    [self.sortPickerView selectRow:selectedRow inComponent:0 animated:NO];
+}
+
+- (int)savedSortOrderIndex
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:CTLSortOrderSelectedIndex];
+}
+
+- (void)saveSortOrder:(NSInteger)filterIndex
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:filterIndex forKey:CTLSortOrderSelectedIndex];
+    [defaults synchronize];
 }
 
 - (void)buildPickerButton
@@ -227,11 +212,11 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)toggleSortPicker:(id)sender
 {
-    if(_inContactMode){
+    if(self.inContactMode){
         [self exitContactMode];
     }
     
-    if(_sortPickerView.isVisible){
+    if(self.sortPickerView.isVisible){
         [self hideSortPicker];
     }else{
         [self showSortPicker];
@@ -240,29 +225,28 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)hideSortPicker
 {
-    [_sortPickerView hidePicker];
+    [self.sortPickerView hidePicker];
     [self rightTitlebarWithAddContactButton];
     [self updateSortPickerButtonWithTitle:NSLocalizedString(@"CLIENTS", nil)];
     
-    NSInteger selectedRow = [_sortPickerView selectedRowInComponent:0];
+    NSInteger selectedRow = [self.sortPickerView selectedRowInComponent:0];
     NSInteger savedSelectedRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLSortOrderSelectedIndex];
     
     if(selectedRow != savedSelectedRow){
-        [_sortPickerView selectRow:savedSelectedRow inComponent:0 animated:NO];
+        [self.sortPickerView selectRow:savedSelectedRow inComponent:0 animated:NO];
     }
 }
 
 - (void)showSortPicker
 {
-    [self removeSortTooltip];
-    [_sortPickerView showPicker];
+    [self.sortPickerView showPicker];
     [self rightTitlebarWithDoneButton];
     [self updateSortPickerButtonWithTitle:NSLocalizedString(@"SORT_BY", nil)];
 }
 
 - (void)rightTitlebarWithEditContactButton
 {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"40-forward"] style:UIBarButtonItemStyleDone target:self action:@selector(editContact:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"14-gear"] style:UIBarButtonItemStyleDone target:self action:@selector(editContact:)];
 }
 
 - (void)rightTitlebarWithAddContactButton
@@ -279,8 +263,8 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)selectSortFilter:(id)sender
 {
-    NSInteger selectedFilterRow = [_sortPickerView selectedRowInComponent:0];
-    [self updateSortPickerButtonWithTitle:_sortArray[selectedFilterRow][@"title"]];
+    NSInteger selectedFilterRow = [self.sortPickerView selectedRowInComponent:0];
+    [self updateSortPickerButtonWithTitle:self.sortArray[selectedFilterRow][@"title"]];
     [self loadAllContacts];
     [self saveSortOrder:selectedFilterRow];
     [self hideSortPicker];
@@ -305,11 +289,11 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return _sortArray[row][@"title"];
+    return self.sortArray[row][@"title"];
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-	return [_sortArray count];
+	return [self.sortArray count];
 }
 
 #pragma mark - Titlebar Helper
@@ -328,7 +312,7 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)displayShareContactActionSheet:(id)sender
 {
-    NSString *contactName = [NSString stringWithFormat:NSLocalizedString(@"FORWARD_CONTACT", nil), _selectedPerson.firstName];
+    NSString *contactName = [NSString stringWithFormat:NSLocalizedString(@"FORWARD_CONTACT", nil), self.selectedPerson.firstName];
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:contactName
                                                              delegate:self
                                                     cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
@@ -339,14 +323,35 @@ int const CTLMessagePromptActionSheetTag = 653;
     [actionSheet showInView:self.view];
 }
 
-- (void)displayMessagePromptActionSheet:(id)sender
+- (void)displayMessageActionSheet:(NSArray *)buttons
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"CHOOSE_MESSAGE_TYPE", nil)
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:nil
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:nil, nil];
+    for(NSInteger i=0;i<[buttons count];i++){
+        [actionSheet addButtonWithTitle:buttons[i]];
+    }
+    
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:[buttons count]];
+    
+    actionSheet.tag = CTLMessageActionSheetTag;
+    [actionSheet showInView:self.view];
+}
+
+- (void)displayDialActionSheet:(NSArray *)phoneNumbers
+{
+    NSString *callMobile = [NSString stringWithFormat:NSLocalizedString(@"CALL_MOBILE", nil), phoneNumbers[0]];
+    NSString *callPhone = [NSString stringWithFormat:NSLocalizedString(@"CALL_PHONE", nil), phoneNumbers[1]];
+  
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
                                                     cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"SEND_SMS", nil), NSLocalizedString(@"SEND_EMAIL", nil),NSLocalizedString(@"SEND_PRIVATE", nil), nil];
-    actionSheet.tag = CTLMessagePromptActionSheetTag;
+                                                    otherButtonTitles:callMobile, callPhone, nil];
+    actionSheet.tag = CTLDialActionSheetTag;
     [actionSheet showInView:self.view];
 }
 
@@ -358,7 +363,7 @@ int const CTLMessagePromptActionSheetTag = 653;
         case CTLAddContactActionSheetTag:
             switch(buttonIndex){
                 case 0:
-                    _selectedPerson = nil;
+                    self.selectedPerson = nil;
                     [self performSegueWithIdentifier:CTLContactFormSegueIdentifier sender:actionSheet];
                     break;
                 case 1:
@@ -375,26 +380,31 @@ int const CTLMessagePromptActionSheetTag = 653;
                     [self shareContactViaEmail:actionSheet];
                     break;
                 case 2:
-                    [self.contactHeader reset];
+                    [self.contactHeader removeHighlight];
                     break;
             }
             break;
-         case CTLMessagePromptActionSheetTag:
+         case CTLMessageActionSheetTag:
              switch(buttonIndex){
                  case 0:
-                     _selectedPerson.messagePreferenceValue = CTLMessagePreferenceTypeSms;
-                     [self changeMessagePeference:CTLMessagePreferenceTypeSms];
                      [self showSMSForPerson:actionSheet];
                      break;
                  case 1:
-                     _selectedPerson.messagePreferenceValue = CTLMessagePreferenceTypeEmail;
-                     [self changeMessagePeference:CTLMessagePreferenceTypeEmail];
                      [self showEmailForPerson:actionSheet];
                      break;
                  case 2:
-                     _selectedPerson.messagePreferenceValue = CTLMessagePreferenceTypeCtl;
-                     [self changeMessagePeference:CTLMessagePreferenceTypeCtl];
                      [self showCtlMessengerForPerson:actionSheet];
+                     break;
+             }
+             break;
+         case CTLDialActionSheetTag:
+             switch(buttonIndex){
+                 case 0:
+                     [self dialContact:self.selectedPerson.mobile];
+                     break;
+                 case 1:
+                     [self dialContact:self.selectedPerson.phone];
+                     break;
                      break;
              }
              break;
@@ -418,8 +428,8 @@ int const CTLMessagePromptActionSheetTag = 653;
 {
     if ([[segue identifier] isEqualToString:CTLContactFormSegueIdentifier]) {
         CTLContactDetailsViewController *contactFormViewController = [segue destinationViewController];
-        if(_selectedPerson){
-            [contactFormViewController setContact:_selectedPerson];
+        if(self.selectedPerson){
+            [contactFormViewController setContact:self.selectedPerson];
         }
         return;
     }
@@ -428,13 +438,7 @@ int const CTLMessagePromptActionSheetTag = 653;
         UINavigationController *navigationController = [segue destinationViewController];
         CTLAppointmentFormViewController *appointmentViewController = (CTLAppointmentFormViewController *)navigationController.topViewController;
         [appointmentViewController setPresentedAsModal:YES];
-        [appointmentViewController setContact:_selectedPerson];
-        return;
-    }
-    
-    if([[segue identifier] isEqualToString:@"toMessagePreference"]){
-        CTLMessagePreferenceViewController *viewController = [segue destinationViewController];
-        [viewController setIsModal:YES];
+        [appointmentViewController setContact:self.selectedPerson];
         return;
     }
 }
@@ -444,15 +448,13 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)prepareContactViewMode
 {
-    CGSize viewSize = self.view.bounds.size;
     CGFloat shadowOffset = 5.0f;
+    CGSize viewSize = self.view.bounds.size;
     
-    CGRect headerFrame = CGRectMake(0, -CTLContactViewHeaderHeight - shadowOffset, viewSize.width, CTLContactViewHeaderHeight);
-    self.contactHeader = [[CTLContactHeaderView alloc] initWithFrame:headerFrame];
+    self.contactHeader = [[CTLContactHeaderView alloc] initWithFrame:CGRectMake(0, -CTLContactViewHeaderHeight - shadowOffset, viewSize.width, CTLContactViewHeaderHeight)];
+    self.contactHeader.delegate = self;
     
-    CGRect toolbarFrame = CGRectMake(0, viewSize.height + CTLContactModeToolbarViewHeight + shadowOffset, viewSize.width, CTLContactModeToolbarViewHeight);
-    
-    self.contactToolbar = [[CTLContactToolbarView alloc] initWithFrame:toolbarFrame];
+    self.contactToolbar = [[CTLContactToolbarView alloc] initWithFrame:CGRectMake(0, viewSize.height + CTLContactModeToolbarViewHeight + shadowOffset, viewSize.width, CTLContactModeToolbarViewHeight)];
     self.contactToolbar.delegate = self;
 
     [self.view addSubview:self.contactHeader];
@@ -516,16 +518,16 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)enterContactMode:(CTLCDContact *)contact
 {
-    _selectedPerson = contact;
+    self.selectedPerson = contact;
     [self rightTitlebarWithEditContactButton];
     [self populateViewData:self.contactHeader withContact:contact];
-    [self configureForContact:self.contactToolbar withContact:contact];
+    [self configureContactToolbar:self.contactToolbar forContact:contact];
     
-    if(_inContactMode){
+    if(self.inContactMode){
         return;
     }
     
-    _inContactMode = true;
+    self.inContactMode = true;
     
     CGRect headerFrame = self.contactHeader.frame;
     CGRect toolbarFrame = self.contactToolbar.frame;
@@ -541,8 +543,7 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)populateViewData:(CTLContactHeaderView *)headerView withContact:(CTLCDContact *)contact
 {
-    headerView.delegate = self;
-    [headerView reset];
+    [headerView removeHighlight];
     headerView.nameLabel.text = contact.compositeName;
     headerView.phoneLabel.text = [contact displayContactStr];
     
@@ -556,37 +557,21 @@ int const CTLMessagePromptActionSheetTag = 653;
     [UILabel autoWidth:headerView.phoneLabel];
 }
 
-- (void)configureForContact:(CTLContactToolbarView *)toolbar withContact:(CTLCDContact *)contact
+- (void)configureContactToolbar:(CTLContactToolbarView *)toolbar forContact:(CTLCDContact *)contact
 {    
     BOOL hasEmail = [contact.email length] > 0;
     BOOL hasMobile = [contact.mobile length] > 0;
-    
-    if(contact.messagePreferenceValue == CTLMessagePreferenceTypeUndetermined){
-        if(hasMobile && !hasEmail){
-            [self changeMessagePeference:CTLMessagePreferenceTypeSms];
-        }else if(!hasMobile && hasEmail){
-            [self changeMessagePeference:CTLMessagePreferenceTypeEmail];
-        }else if(hasEmail && hasMobile){
-            [self changeMessagePeference:CTLMessagePreferenceTypeAsk];
-        }
-    }else{
-        if((contact.messagePreferenceValue == CTLMessagePreferenceTypeSms) && hasMobile){
-            [self changeMessagePeference:CTLMessagePreferenceTypeSms];
-            return;
-        }
-        if((contact.messagePreferenceValue == CTLMessagePreferenceTypeEmail) && hasEmail){
-            [self changeMessagePeference:CTLMessagePreferenceTypeEmail];
-            return;
-        }
-        if((contact.messagePreferenceValue == CTLMessagePreferenceTypeCtl) && contact.hasPrivateMsg){
-            [self changeMessagePeference:CTLMessagePreferenceTypeCtl];
-            return;
-        }
-        [self changeMessagePeference:CTLMessagePreferenceTypeAsk];
+
+    if(hasMobile && hasEmail){
+        [self updateMessageButton:CTLMessagePreferenceTypeAsk];
+    }else if(hasMobile){
+        [self updateMessageButton:CTLMessagePreferenceTypeSms];
+    }else if(hasEmail){
+        [self updateMessageButton:CTLMessagePreferenceTypeEmail];
     }
 }
 
-- (void)changeMessagePeference:(CTLMessagePreferenceType)messagePreference
+- (void)updateMessageButton:(CTLMessagePreferenceType)messagePreference
 {
     NSString *icon = [NSString stringWithFormat:@"message-button-type-%u", messagePreference];
         
@@ -600,9 +585,11 @@ int const CTLMessagePromptActionSheetTag = 653;
             [self.contactToolbar.messageButton addTarget:self action:@selector(showMessageActionSheet:) forControlEvents:UIControlEventTouchUpInside];
             break;
         case CTLMessagePreferenceTypeEmail:
+            self.contactToolbar.messageButton.enabled = [MFMailComposeViewController canSendMail];
             [self.contactToolbar.messageButton addTarget:self action:@selector(showEmailForPerson:) forControlEvents:UIControlEventTouchUpInside];
             break;
         case CTLMessagePreferenceTypeSms:
+            self.contactToolbar.messageButton.enabled = [MFMessageComposeViewController canSendText];
             [self.contactToolbar.messageButton addTarget:self action:@selector(showSMSForPerson:) forControlEvents:UIControlEventTouchUpInside];
             break;
         case CTLMessagePreferenceTypeCtl:
@@ -621,8 +608,8 @@ int const CTLMessagePromptActionSheetTag = 653;
 - (void)exitContactMode
 {
     [self rightTitlebarWithAddContactButton];
-    [self.tableView deselectRowAtIndexPath:_selectedIndexPath animated:YES];
-    CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
+    [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:YES];
+    CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:self.selectedIndexPath];
     [cell.indicatorLayer removeFromSuperlayer];
     
     CGRect headerFrame = self.contactHeader.frame;
@@ -636,24 +623,24 @@ int const CTLMessagePromptActionSheetTag = 653;
         self.contactToolbar.frame = footerFrame;
         [self.view setBackgroundColor:[UIColor whiteColor]];
     } completion:^(BOOL finished){
-        _inContactMode = NO;
-        _selectedPerson = nil;
-        _selectedIndexPath = nil;
-        if(_shouldReorderListOnScroll){
+        self.inContactMode = NO;
+        self.selectedPerson = nil;
+        self.selectedIndexPath = nil;
+        if(self.shouldReorderListOnScroll){
             [self loadAllContacts];
-            _shouldReorderListOnScroll = NO;
+            self.shouldReorderListOnScroll = NO;
         }
     }];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView
 {
-    if(_inContactMode){
+    if(self.inContactMode){
         [self rightTitlebarWithAddContactButton];
         [self exitContactMode];
     }
     
-    if(_sortPickerView.isVisible){
+    if(self.sortPickerView.isVisible){
         [self hideSortPicker];
     }
 }
@@ -662,9 +649,8 @@ int const CTLMessagePromptActionSheetTag = 653;
 {
     CGPoint touchPoint = [gestureRecognizer locationInView:self.view];
     UIView *touchedView = [self.view hitTest:touchPoint withEvent:nil];
-    return (touchedView == self.tableView || touchedView == _emptyView);
+    return (touchedView == self.tableView || touchedView == self.emptyView);
 }
-
 
 #pragma mark - TableViewController Delegate methods
 
@@ -676,7 +662,7 @@ int const CTLMessagePromptActionSheetTag = 653;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.searchDisplayController.searchResultsTableView){
-        return [_filteredContacts count];
+        return [self.filteredContacts count];
     }
     
     return [[self.fetchedResultsController fetchedObjects] count];
@@ -696,7 +682,7 @@ int const CTLMessagePromptActionSheetTag = 653;
     
     CTLCDContact *person = nil;
     if (tableView == self.searchDisplayController.searchResultsTableView){
-        person = [_filteredContacts objectAtIndex:indexPath.row];
+        person = [self.filteredContacts objectAtIndex:indexPath.row];
     }else{
         person = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
     }
@@ -744,7 +730,7 @@ int const CTLMessagePromptActionSheetTag = 653;
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if([[self.fetchedResultsController fetchedObjects] count] == 0){
-        return _emptyView;
+        return self.emptyView;
     }
     return nil;
 }
@@ -752,14 +738,14 @@ int const CTLMessagePromptActionSheetTag = 653;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //if groupPicker is open dismiss it and do nothing else.
-    if(_sortPickerView.isVisible){
+    if(self.sortPickerView.isVisible){
         [self hideSortPicker];
         return;
     }
     
     //if there is a previously selected cell, clear that indicator
-    if(_selectedIndexPath != nil){
-        CTLContactCell *selectedCell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
+    if(self.selectedIndexPath != nil){
+        CTLContactCell *selectedCell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:self.selectedIndexPath];
         [selectedCell.indicatorLayer removeFromSuperlayer];
     }
     
@@ -768,14 +754,14 @@ int const CTLMessagePromptActionSheetTag = 653;
     [cell setIndicator];
     
     if(tableView == self.searchDisplayController.searchResultsTableView){
-        _selectedPerson = [_filteredContacts objectAtIndex:indexPath.row];
+        self.selectedPerson = [self.filteredContacts objectAtIndex:indexPath.row];
         [self.searchDisplayController setActive:NO animated:YES];
     }else{
-        _selectedPerson = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+        self.selectedPerson = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
     }
 
-    _selectedIndexPath = indexPath;
-    [self enterContactMode:_selectedPerson];
+    self.selectedIndexPath = indexPath;
+    [self enterContactMode:self.selectedPerson];
 }
 
 - (void)deleteContact:(CTLCDContact *)contact
@@ -788,7 +774,7 @@ int const CTLMessagePromptActionSheetTag = 653;
 {
     NSMutableString *compositeName = [NSMutableString stringWithString:@""];
     
-    if([_sortPickerView selectedRowInComponent:0] == 2){
+    if([self.sortPickerView selectedRowInComponent:0] == 2){
         if([person.lastName length] > 0){
             [compositeName appendString:person.lastName];
         }
@@ -822,18 +808,36 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)showDialPerson:(id)sender
 {
-    NSString *cleanPhoneNumber = [NSString cleanPhoneNumber:[_selectedPerson phone]];
+    BOOL hasPhone = [self.selectedPerson.phone length] > 0;
+    BOOL hasMobile = [self.selectedPerson.mobile length] > 0;
+    
+    //contact has phone and mobile display actionsheet for them to choose
+    if(hasPhone && hasMobile){
+        NSArray *phoneNumbers = @[self.selectedPerson.mobile, self.selectedPerson.phone];
+        [self displayDialActionSheet:phoneNumbers];
+    }else{
+        if(hasPhone){
+            [self dialContact:self.selectedPerson.phone];
+        }else if(hasMobile){
+            [self dialContact:self.selectedPerson.mobile];
+        }
+    }
+}
+
+- (void)dialContact:(NSString *)phoneNumber
+{
+    NSString *cleanPhoneNumber = [NSString cleanPhoneNumber:phoneNumber];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", cleanPhoneNumber]]];
     [self saveTimestampForContact];
 }
 
 - (void)showEmailForPerson:(id)sender
 {
-    if(_selectedPerson.email){
+    if(self.selectedPerson.email){
         if([MFMailComposeViewController canSendMail]){
             MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
             [mailController setMailComposeDelegate:self];
-            [mailController setToRecipients:@[_selectedPerson.email]];
+            [mailController setToRecipients:@[self.selectedPerson.email]];
             [self presentViewController:mailController animated:YES completion:nil];
         }else{
             [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL", nil)];
@@ -843,9 +847,9 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)showSMSForPerson:(id)sender
 {
-    if(_selectedPerson.mobile){
+    if(self.selectedPerson.mobile){
         if([MFMessageComposeViewController canSendText]){
-            NSString *sms = [NSString stringWithFormat:@"sms: %@", [NSString cleanPhoneNumber:_selectedPerson.mobile]];
+            NSString *sms = [NSString stringWithFormat:@"sms: %@", [NSString cleanPhoneNumber:self.selectedPerson.mobile]];
             NSString *smsEncoded = [sms stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
             [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:smsEncoded]];
             [self saveTimestampForContact];
@@ -863,7 +867,21 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)showMessageActionSheet:(id)sender
 {
-    [self displayMessagePromptActionSheet:sender];
+    NSMutableArray *messageTypes = [NSMutableArray array];
+
+    if([self.selectedPerson.mobile length] > 0){
+        [messageTypes addObject:NSLocalizedString(@"SEND_SMS", nil)];
+    }
+    
+    if([self.selectedPerson.email length] > 0){
+        [messageTypes addObject:NSLocalizedString(@"SEND_EMAIL", nil)];
+    }
+    
+    if(self.selectedPerson.contactID){
+        [messageTypes addObject:NSLocalizedString(@"SEND_PRIVATE_MESSAGE", nil)];
+    }
+    
+    [self displayMessageActionSheet:messageTypes];
 }
 
 #pragma mark - Updating Timestamp for Contact Row
@@ -882,12 +900,12 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)saveTimestampForContact
 {
-    _selectedPerson.lastAccessed = [NSDate date];
+    self.selectedPerson.lastAccessed = [NSDate date];
     
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-        CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
+        CTLContactCell *cell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:self.selectedIndexPath];
         cell.timestampLabel.text = [NSDate formatShortTimeOnly:[NSDate date]];
-        _shouldReorderListOnScroll = YES;
+        self.shouldReorderListOnScroll = YES;
     }];
 }
 
@@ -900,7 +918,7 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (void)filterContactListForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-	[_filteredContacts removeAllObjects];
+	[self.filteredContacts removeAllObjects];
     
     NSArray *contacts = [self.fetchedResultsController fetchedObjects];
     
@@ -908,7 +926,7 @@ int const CTLMessagePromptActionSheetTag = 653;
         CTLCDContact *person = contacts[i];
         NSComparisonResult result = [person.compositeName compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
         if (result == NSOrderedSame){
-            [_filteredContacts addObject:person];
+            [self.filteredContacts addObject:person];
         }
 	}
 }
@@ -966,17 +984,17 @@ int const CTLMessagePromptActionSheetTag = 653;
 
 - (NSString *)generateShareContactMessageString
 {
-    NSString *body = [NSString stringWithFormat:NSLocalizedString(@"SHARE_CONTACT_MSG", nil), _selectedPerson.firstName];
+    NSString *body = [NSString stringWithFormat:NSLocalizedString(@"SHARE_CONTACT_MSG", nil), self.selectedPerson.firstName];
     
-    if([_selectedPerson.phone length] > 0){
-        body = [body stringByAppendingFormat:NSLocalizedString(@"PHONE_COLON", nil), _selectedPerson.phone];
-        if([_selectedPerson.email length] > 0){
+    if([self.selectedPerson.phone length] > 0){
+        body = [body stringByAppendingFormat:NSLocalizedString(@"PHONE_COLON", nil), self.selectedPerson.phone];
+        if([self.selectedPerson.email length] > 0){
             body = [body stringByAppendingString:@", "];
         }
     }
     
-    if([_selectedPerson.email length] > 0){
-        body = [body stringByAppendingFormat:NSLocalizedString(@"EMAIL_COLON", nil), _selectedPerson.email];
+    if([self.selectedPerson.email length] > 0){
+        body = [body stringByAppendingFormat:NSLocalizedString(@"EMAIL_COLON", nil), self.selectedPerson.email];
     }
     
     return body;
@@ -992,8 +1010,8 @@ int const CTLMessagePromptActionSheetTag = 653;
 - (void)newContactWasAdded:(NSNotification *)notification
 {
     if([notification.object isKindOfClass:[CTLCDContact class]]){
-        _selectedPerson = notification.object;
-        _shouldReorderListOnScroll = YES;
+        self.selectedPerson = notification.object;
+        self.shouldReorderListOnScroll = YES;
         [self loadAllContacts];
         [self enterContactMode:notification.object];
     }
@@ -1002,10 +1020,10 @@ int const CTLMessagePromptActionSheetTag = 653;
 - (void)contactRowDidChange:(NSNotification *)notification
 {
     if([notification.object isKindOfClass:[CTLCDContact class]]){
-        _selectedPerson = notification.object;
-        _shouldReorderListOnScroll = YES;
+        self.selectedPerson = notification.object;
+        self.shouldReorderListOnScroll = YES;
         [self loadAllContacts];
-        [self populateViewData:self.contactHeader withContact:_selectedPerson];
+        [self populateViewData:self.contactHeader withContact:self.selectedPerson];
     }
 }
 
@@ -1036,13 +1054,11 @@ int const CTLMessagePromptActionSheetTag = 653;
     [notifCenter addObserver:self selector:@selector(timestampForRowDidChange:) name:CTLTimestampForRowNotification object:nil];
     [notifCenter addObserver:self selector:@selector(newContactWasAdded:) name:CTLNewContactWasAddedNotification object:nil];
     [notifCenter addObserver:self selector:@selector(contactRowDidChange:) name:CTLContactRowDidChangeNotification object:nil];
-    //[notifCenter addObserver:self selector:@selector(messsagePreferenceDidChange:) name:@"com.clientelle.notification.messagePreference" object:nil];
 }
 
 - (void)dealloc
 {
     NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
-    
     [notifCenter removeObserver:self name:CTLShareContactNotification object:nil];
     [notifCenter removeObserver:self name:CTLContactsWereImportedNotification object:nil];
     [notifCenter removeObserver:self name:CTLContactListReloadNotification object:nil];

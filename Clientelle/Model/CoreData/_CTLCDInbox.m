@@ -4,13 +4,14 @@
 #import "_CTLCDInbox.h"
 
 const struct CTLCDInboxAttributes CTLCDInboxAttributes = {
-	.dateCreated = @"dateCreated",
-	.formId = @"formId",
-	.installCode = @"installCode",
+	.created_at = @"created_at",
+	.form_id = @"form_id",
+	.install_code = @"install_code",
 	.schema = @"schema",
 };
 
 const struct CTLCDInboxRelationships CTLCDInboxRelationships = {
+	.account = @"account",
 };
 
 const struct CTLCDInboxFetchedProperties CTLCDInboxFetchedProperties = {
@@ -49,21 +50,21 @@ const struct CTLCDInboxFetchedProperties CTLCDInboxFetchedProperties = {
 
 
 
-@dynamic dateCreated;
+@dynamic created_at;
 
 
 
 
 
 
-@dynamic formId;
+@dynamic form_id;
 
 
 
 
 
 
-@dynamic installCode;
+@dynamic install_code;
 
 
 
@@ -76,6 +77,10 @@ const struct CTLCDInboxFetchedProperties CTLCDInboxFetchedProperties = {
 
 
 
+
+@dynamic account;
+
+	
 
 
 

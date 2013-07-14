@@ -22,11 +22,17 @@ extern const struct CTLCDAccountAttributes {
 } CTLCDAccountAttributes;
 
 extern const struct CTLCDAccountRelationships {
+	__unsafe_unretained NSString *contacts;
+	__unsafe_unretained NSString *conversation;
+	__unsafe_unretained NSString *inbox;
 } CTLCDAccountRelationships;
 
 extern const struct CTLCDAccountFetchedProperties {
 } CTLCDAccountFetchedProperties;
 
+@class CTLCDContact;
+@class CTLCDConversation;
+@class CTLCDInbox;
 
 
 
@@ -216,10 +222,46 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSSet *contacts;
+
+- (NSMutableSet*)contactsSet;
+
+
+
+
+@property (nonatomic, strong) NSSet *conversation;
+
+- (NSMutableSet*)conversationSet;
+
+
+
+
+@property (nonatomic, strong) NSSet *inbox;
+
+- (NSMutableSet*)inboxSet;
+
+
+
+
 
 @end
 
 @interface _CTLCDAccount (CoreDataGeneratedAccessors)
+
+- (void)addContacts:(NSSet*)value_;
+- (void)removeContacts:(NSSet*)value_;
+- (void)addContactsObject:(CTLCDContact*)value_;
+- (void)removeContactsObject:(CTLCDContact*)value_;
+
+- (void)addConversation:(NSSet*)value_;
+- (void)removeConversation:(NSSet*)value_;
+- (void)addConversationObject:(CTLCDConversation*)value_;
+- (void)removeConversationObject:(CTLCDConversation*)value_;
+
+- (void)addInbox:(NSSet*)value_;
+- (void)removeInbox:(NSSet*)value_;
+- (void)addInboxObject:(CTLCDInbox*)value_;
+- (void)removeInboxObject:(CTLCDInbox*)value_;
 
 @end
 
@@ -323,6 +365,21 @@ extern const struct CTLCDAccountFetchedProperties {
 - (void)setPrimitiveUser_idValue:(int16_t)value_;
 
 
+
+
+
+- (NSMutableSet*)primitiveContacts;
+- (void)setPrimitiveContacts:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveConversation;
+- (void)setPrimitiveConversation:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveInbox;
+- (void)setPrimitiveInbox:(NSMutableSet*)value;
 
 
 @end

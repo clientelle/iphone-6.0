@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BpQ-a2-AwB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BpQ-a2-AwB">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--Slide Menu Controller-->
+        <!--Container View Controller-->
         <scene sceneID="e2e-aU-bQc">
             <objects>
-                <viewController id="BpQ-a2-AwB" customClass="CTLSlideMenuController" sceneMemberID="viewController">
+                <viewController id="BpQ-a2-AwB" customClass="CTLContainerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gPD-3a-64Y">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -36,7 +36,7 @@
                         <sections>
                             <tableViewSection id="0wf-zC-pTr">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="contactsNavigationController" rowHeight="60" id="q30-u2-7DV" customClass="CTLMenuItemCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="contacts" rowHeight="60" id="q30-u2-7DV" customClass="CTLMenuItemCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -55,7 +55,7 @@
                                             <outlet property="icon" destination="MJq-1u-hd9" id="6fV-MK-tSO"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="appointmentsNavigationController" rowHeight="60" id="6Hj-91-hCs" customClass="CTLMenuItemCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="appointments" rowHeight="60" id="6Hj-91-hCs" customClass="CTLMenuItemCell">
                                         <rect key="frame" x="0.0" y="60" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -74,7 +74,7 @@
                                             <outlet property="icon" destination="jog-Oj-1kN" id="j9a-RM-xrw"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="messagesNavigationController" rowHeight="60" id="saN-L4-BmG" customClass="CTLMenuItemCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="messages" rowHeight="60" id="saN-L4-BmG" customClass="CTLMenuItemCell">
                                         <rect key="frame" x="0.0" y="120" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -93,7 +93,7 @@
                                             <outlet property="icon" destination="uFx-vq-YaO" id="0QS-nH-fqz"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="inboxNavigationController" rowHeight="60" id="xNU-iR-wEV" customClass="CTLMenuItemCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="inboxes" rowHeight="60" id="xNU-iR-wEV" customClass="CTLMenuItemCell">
                                         <rect key="frame" x="0.0" y="180" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -112,7 +112,7 @@
                                             <outlet property="icon" destination="CNX-NK-cwX" id="qkE-iG-tKS"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="settingsNavigationController" rowHeight="60" id="bPc-gq-bO8" customClass="CTLMenuItemCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="settings" rowHeight="60" id="bPc-gq-bO8" customClass="CTLMenuItemCell">
                                         <rect key="frame" x="0.0" y="240" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -173,12 +173,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0uU-9N-5aY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6421" y="-1524"/>
+            <point key="canvasLocation" x="-6453" y="156"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="E9s-Ab-DBl">
             <objects>
-                <navigationController storyboardIdentifier="inboxNavigationController" definesPresentationContext="YES" id="XSn-OC-lFt" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="inboxes" definesPresentationContext="YES" id="XSn-OC-lFt" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="udO-86-irK">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -188,12 +188,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="62O-G1-jVm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7119" y="-1524"/>
+            <point key="canvasLocation" x="-7151" y="156"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="H3V-GB-IMb">
             <objects>
-                <navigationController storyboardIdentifier="settingsNavigationController" definesPresentationContext="YES" id="2bU-Yt-1Vi" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="settings" definesPresentationContext="YES" id="2bU-Yt-1Vi" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="shO-TU-SDf">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -203,23 +203,18 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oaN-0W-nrg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7141" y="2192"/>
+            <point key="canvasLocation" x="-7125" y="3840"/>
         </scene>
         <!--Contact Details View Controller-->
         <scene sceneID="rgf-da-57t">
             <objects>
                 <tableViewController id="UoD-9H-AyX" customClass="CTLContactDetailsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="oK1-rL-5hz">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="vLr-i4-aNe">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="15"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Zmb-Rx-c0Z">
-                            <rect key="frame" x="0.0" y="81" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qB3-o4-KyU">
@@ -255,7 +250,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleAspectFit" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="inputRow" id="nBf-Ba-D1I" customClass="CTLFieldCell">
-                                <rect key="frame" x="0.0" y="37" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -391,20 +386,20 @@
             </objects>
             <point key="canvasLocation" x="-4329" y="-4078"/>
         </scene>
-        <!--Messages List View Controller - Messages-->
+        <!--Conversation List View Controller - Messages-->
         <scene sceneID="IEc-nu-Znw">
             <objects>
-                <tableViewController id="o5t-vt-WWo" customClass="CTLMessagesListViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="59" sectionHeaderHeight="22" sectionFooterHeight="22" id="alX-2O-vo1">
+                <tableViewController id="o5t-vt-WWo" customClass="CTLConversationListViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="59" sectionHeaderHeight="22" sectionFooterHeight="22" id="alX-2O-vo1">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="messageCell" rowHeight="59" id="Th1-wC-wWt" customClass="CTLMessageCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="conversationCell" rowHeight="59" id="Th1-wC-wWt" customClass="CTLConversationCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="59"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="58"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Johnny Walker" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ksE-lY-FLY">
@@ -413,24 +408,24 @@
                                                 <constraint firstAttribute="width" constant="203" id="NLF-3G-omZ"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Yea sure. when i have a minute" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aqu-Ci-6mX">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="Uzr-WK-8qV"/>
+                                                <constraint firstAttribute="width" constant="292" id="ZOt-Vj-zNL"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="8:41 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WgV-EX-R71">
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="81" id="bCK-8Y-Rlg"/>
                                                 <constraint firstAttribute="height" constant="21" id="kP2-ad-nMC"/>
+                                                <constraint firstAttribute="width" constant="184" id="kZe-N1-VNN"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="12"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="11"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                     </subviews>
@@ -441,23 +436,36 @@
                                     <constraint firstItem="Aqu-Ci-6mX" firstAttribute="top" secondItem="Th1-wC-wWt" secondAttribute="top" constant="27" id="IZq-hj-aYt"/>
                                     <constraint firstItem="Aqu-Ci-6mX" firstAttribute="leading" secondItem="ksE-lY-FLY" secondAttribute="leading" type="default" id="Rlh-dI-Ki6"/>
                                     <constraint firstItem="WgV-EX-R71" firstAttribute="top" secondItem="Th1-wC-wWt" secondAttribute="top" constant="4" id="Xf2-Id-2vr"/>
-                                    <constraint firstItem="WgV-EX-R71" firstAttribute="leading" secondItem="ksE-lY-FLY" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="j1H-wb-mJF"/>
+                                    <constraint firstItem="WgV-EX-R71" firstAttribute="leading" secondItem="Th1-wC-wWt" secondAttribute="leading" constant="127" id="jsZ-NH-B7a"/>
                                     <constraint firstItem="ksE-lY-FLY" firstAttribute="top" secondItem="Th1-wC-wWt" secondAttribute="top" constant="7" id="ksg-zh-7K9"/>
-                                    <constraint firstAttribute="trailing" secondItem="WgV-EX-R71" secondAttribute="trailing" constant="20" type="default" id="vlS-Zo-6HN"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="messageLabel" destination="Aqu-Ci-6mX" id="eFX-um-uLw"/>
                                     <outlet property="senderLabel" destination="ksE-lY-FLY" id="BzG-Cl-Dzv"/>
                                     <outlet property="timeLabel" destination="WgV-EX-R71" id="f8Y-k5-TvH"/>
+                                    <segue destination="B49-T9-c3N" kind="push" identifier="toThreadView" id="4IQ-2X-A5v"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="o5t-vt-WWo" id="ltc-S5-BpH"/>
+                            <outlet property="delegate" destination="o5t-vt-WWo" id="Mfo-cF-g5p"/>
+                        </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Messages" id="JNc-vA-NZl"/>
+                    <navigationItem key="navigationItem" title="Messages" id="JNc-vA-NZl">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="6Ql-tT-qb8">
+                            <connections>
+                                <action selector="composeMessage:" destination="o5t-vt-WWo" id="q4J-DU-tOM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="TnW-up-U8M" kind="modal" identifier="toMessageComposerView" id="cry-08-sSS"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hdm-yj-l1d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6418" y="125"/>
+            <point key="canvasLocation" x="-6410" y="-1147"/>
         </scene>
         <!--Pin Interstial View Controller-->
         <scene sceneID="Ole-w6-P0V">
@@ -551,7 +559,7 @@
         <!--Navigation Controller-->
         <scene sceneID="swq-ng-E5N">
             <objects>
-                <navigationController storyboardIdentifier="messagesNavigationController" definesPresentationContext="YES" id="X0P-gS-2l9" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="messages" definesPresentationContext="YES" id="X0P-gS-2l9" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="SSR-d6-rbg">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -561,7 +569,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UiR-sS-Qnj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7119" y="125"/>
+            <point key="canvasLocation" x="-7111" y="-1147"/>
         </scene>
         <!--Contact Import View Controller-->
         <scene sceneID="Ipp-T5-eLi">
@@ -573,7 +581,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsMultipleSelection="YES" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xug-Fu-cx0">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="372" id="Jdh-Jn-2ay"/>
+                                    <constraint firstAttribute="height" constant="461" id="2Xw-Zt-rae"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactRow" textLabel="iq8-VL-fmz" detailTextLabel="54z-04-S9f" rowHeight="55" style="IBUITableViewCellStyleSubtitle" id="VOO-ge-8IT">
@@ -633,10 +641,10 @@
                         <constraints>
                             <constraint firstItem="xug-Fu-cx0" firstAttribute="top" secondItem="TPD-2A-Lb4" secondAttribute="bottom" type="default" id="43A-1Z-PCq"/>
                             <constraint firstItem="xug-Fu-cx0" firstAttribute="leading" secondItem="6MH-jG-RZX" secondAttribute="leading" type="default" id="APo-Eq-hKe"/>
-                            <constraint firstItem="TPD-2A-Lb4" firstAttribute="top" secondItem="6MH-jG-RZX" secondAttribute="top" constant="43" id="ClQ-hx-MNh"/>
                             <constraint firstItem="Gb8-i3-BDv" firstAttribute="trailing" secondItem="6MH-jG-RZX" secondAttribute="trailing" type="default" id="Hpf-KE-7yK"/>
                             <constraint firstItem="TPD-2A-Lb4" firstAttribute="trailing" secondItem="6MH-jG-RZX" secondAttribute="trailing" type="default" id="kc9-iZ-Vsh"/>
                             <constraint firstItem="TPD-2A-Lb4" firstAttribute="leading" secondItem="6MH-jG-RZX" secondAttribute="leading" type="default" id="nYR-sQ-Zbx"/>
+                            <constraint firstItem="xug-Fu-cx0" firstAttribute="bottom" secondItem="6MH-jG-RZX" secondAttribute="bottom" type="default" id="qeN-K6-655"/>
                             <constraint firstItem="Gb8-i3-BDv" firstAttribute="top" secondItem="6MH-jG-RZX" secondAttribute="top" type="default" id="sBt-om-CNc"/>
                             <constraint firstItem="xug-Fu-cx0" firstAttribute="trailing" secondItem="6MH-jG-RZX" secondAttribute="trailing" type="default" id="smT-7t-aWA"/>
                             <constraint firstItem="Gb8-i3-BDv" firstAttribute="leading" secondItem="6MH-jG-RZX" secondAttribute="leading" type="default" id="u05-Cp-SOa"/>
@@ -659,7 +667,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-5687" y="-4274"/>
+            <point key="canvasLocation" x="-5704" y="-4275"/>
         </scene>
         <!--Appointment Form View Controller-->
         <scene sceneID="JP8-07-Dus">
@@ -1272,7 +1280,144 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bsX-Qq-aSb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5448" y="3307"/>
+            <point key="canvasLocation" x="-5432" y="4955"/>
+        </scene>
+        <!--Message Composer View Controller-->
+        <scene sceneID="gPD-Ya-5Su">
+            <objects>
+                <viewController id="TnW-up-U8M" customClass="CTLMessageComposerViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="P5v-SC-4lY">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IO0-eH-9wI">
+                                <items>
+                                    <navigationItem title="Compose Message" id="o5v-ff-XCH">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="rsQ-5d-nEG">
+                                            <connections>
+                                                <action selector="dismiss:" destination="TnW-up-U8M" id="qPb-6J-VkH"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" image="31-paper-airplane.png" style="done" id="YsL-zW-SG3">
+                                            <connections>
+                                                <action selector="sendMessage:" destination="TnW-up-U8M" id="U7p-Js-F1o"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Choose a Contact" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vHj-35-boW">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="DBu-wD-r4f"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="recipientTextFieldDidChange:" destination="TnW-up-U8M" eventType="editingChanged" id="RCN-fH-zHT"/>
+                                    <outlet property="delegate" destination="TnW-up-U8M" id="63j-jK-Ctj"/>
+                                </connections>
+                            </textField>
+                            <textView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l6P-nS-gMG" customClass="MBTextView">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="433" id="hyp-dU-wH0"/>
+                                    <constraint firstAttribute="width" constant="259" id="hyv-nX-Phm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="P5v-SC-4lY" id="cHq-pk-6CV"/>
+                                </connections>
+                            </textView>
+                            <tableView hidden="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Mdf-ZF-UAP">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="221" id="JYI-N6-TkE"/>
+                                    <constraint firstAttribute="height" constant="175" id="R76-gQ-5xD"/>
+                                </constraints>
+                                <color key="separatorColor" red="0.91372555489999996" green="0.91372555489999996" blue="0.91372555489999996" alpha="1" colorSpace="deviceRGB"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactRow" textLabel="lry-lE-cTf" rowHeight="35" style="IBUITableViewCellStyleDefault" id="raf-QI-5ro">
+                                        <rect key="frame" x="0.0" y="22" width="221" height="35"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="221" height="34"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Anna Harro" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lry-lE-cTf">
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="TnW-up-U8M" id="uOF-EV-EWm"/>
+                                    <outlet property="delegate" destination="TnW-up-U8M" id="LCc-aj-A9k"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="TO:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G5Q-bX-AfD">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="JwW-uD-mAR"/>
+                                    <constraint firstAttribute="width" constant="27" id="oQw-H0-cMF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6NJ-ze-mka">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="4v7-Lc-5Fv"/>
+                                    <constraint firstAttribute="width" constant="229" id="Ghz-55-4kV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="promptToAddContacts:" destination="TnW-up-U8M" eventType="touchUpInside" id="xSi-HP-Gay"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IO0-eH-9wI" firstAttribute="trailing" secondItem="P5v-SC-4lY" secondAttribute="trailing" type="default" id="Azg-Zq-UWn"/>
+                            <constraint firstItem="6NJ-ze-mka" firstAttribute="top" secondItem="P5v-SC-4lY" secondAttribute="top" constant="62" id="Fp7-qp-GGI"/>
+                            <constraint firstItem="IO0-eH-9wI" firstAttribute="top" secondItem="P5v-SC-4lY" secondAttribute="top" type="default" id="GsV-BR-oyx"/>
+                            <constraint firstAttribute="trailing" secondItem="l6P-nS-gMG" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Hx4-mP-1Xu"/>
+                            <constraint firstItem="G5Q-bX-AfD" firstAttribute="top" secondItem="P5v-SC-4lY" secondAttribute="top" constant="67" id="Jxj-gz-OAO"/>
+                            <constraint firstItem="Mdf-ZF-UAP" firstAttribute="centerX" secondItem="IO0-eH-9wI" secondAttribute="centerX" type="default" id="KjX-b3-vUg"/>
+                            <constraint firstItem="vHj-35-boW" firstAttribute="leading" secondItem="G5Q-bX-AfD" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Noa-c7-d8d"/>
+                            <constraint firstItem="6NJ-ze-mka" firstAttribute="leading" secondItem="G5Q-bX-AfD" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="QLr-z0-6sk"/>
+                            <constraint firstItem="l6P-nS-gMG" firstAttribute="top" secondItem="Mdf-ZF-UAP" secondAttribute="top" type="default" id="UEf-wv-oU5"/>
+                            <constraint firstItem="IO0-eH-9wI" firstAttribute="leading" secondItem="P5v-SC-4lY" secondAttribute="leading" type="default" id="XHv-XC-bWM"/>
+                            <constraint firstItem="vHj-35-boW" firstAttribute="bottom" secondItem="6NJ-ze-mka" secondAttribute="bottom" type="default" id="cW1-Dh-lK6"/>
+                            <constraint firstAttribute="bottom" secondItem="l6P-nS-gMG" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="niY-IZ-otL"/>
+                            <constraint firstItem="Mdf-ZF-UAP" firstAttribute="leading" secondItem="vHj-35-boW" secondAttribute="leading" type="default" id="tgZ-cB-dun"/>
+                            <constraint firstAttribute="trailing" secondItem="vHj-35-boW" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="ybY-Ws-zIV"/>
+                            <constraint firstItem="G5Q-bX-AfD" firstAttribute="baseline" secondItem="vHj-35-boW" secondAttribute="baseline" type="default" id="zOf-dW-cB3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addContactButton" destination="6NJ-ze-mka" id="fvj-0a-X4c"/>
+                        <outlet property="messageTextView" destination="l6P-nS-gMG" id="Yvu-L7-0oN"/>
+                        <outlet property="recipientTextField" destination="vHj-35-boW" id="eFd-0f-BV5"/>
+                        <outlet property="tableView" destination="Mdf-ZF-UAP" id="HDd-ud-bOi"/>
+                        <segue destination="AaL-yu-Gmw" kind="modal" identifier="toImporter" id="nF8-oR-Kzh"/>
+                        <segue destination="UoD-9H-AyX" kind="push" identifier="toContactForm" id="8fT-Sa-DVy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Pv-B7-HAs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5711" y="-1527"/>
         </scene>
         <!--Register View Controller - Sign up-->
         <scene sceneID="EtW-us-YwR">
@@ -1463,7 +1608,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kSd-Lq-WVI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5537" y="566"/>
+            <point key="canvasLocation" x="-5521" y="2214"/>
         </scene>
         <!--Login View Controller - Clientelle-->
         <scene sceneID="LSC-hk-t78">
@@ -1559,7 +1704,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dWG-SK-vej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4798" y="566"/>
+            <point key="canvasLocation" x="-4782" y="2214"/>
         </scene>
         <!--Settings View Controller - Settings-->
         <scene sceneID="TVB-xc-edL">
@@ -1637,7 +1782,7 @@
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="ibp-mD-j32" imageView="vOw-dX-dZx" style="IBUITableViewCellStyleDefault" id="Lnu-Tl-mC1">
-                                        <rect key="frame" x="0.0" y="143" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="143" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -1697,7 +1842,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="84c-LQ-Bdp" style="IBUITableViewCellStyleDefault" id="hvx-yT-Wfk">
-                                        <rect key="frame" x="0.0" y="296" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="296" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -1743,7 +1888,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zQ-8C-ERu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="ccw-dN-w8J"/>
             </objects>
-            <point key="canvasLocation" x="-6443" y="2192"/>
+            <point key="canvasLocation" x="-6427" y="3840"/>
         </scene>
         <!--Set Pin View Controller-->
         <scene sceneID="pj3-rp-5x8">
@@ -1879,12 +2024,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qP6-Sb-pra" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5661" y="2554"/>
+            <point key="canvasLocation" x="-5645" y="4202"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wv8-ra-VoP">
             <objects>
-                <navigationController storyboardIdentifier="upgradeInterstitialNavigationController" definesPresentationContext="YES" id="ekB-4t-kUZ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="upgrade" definesPresentationContext="YES" id="ekB-4t-kUZ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NNm-Qr-l6n">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1894,7 +2039,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PsU-es-59s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7119" y="946"/>
+            <point key="canvasLocation" x="-7103" y="2594"/>
         </scene>
         <!--Upgrade Interstitial View Controller-->
         <scene sceneID="gXH-xz-Y32">
@@ -1943,12 +2088,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eyt-eG-Czg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6421" y="946"/>
+            <point key="canvasLocation" x="-6405" y="2594"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PRB-Ol-PXD">
             <objects>
-                <navigationController storyboardIdentifier="inboxInterstitialNavigationController" definesPresentationContext="YES" id="Pus-eZ-TA1" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="inboxSetup" definesPresentationContext="YES" id="Pus-eZ-TA1" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Siv-ao-Z1G">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1958,7 +2103,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JZK-Ct-NEr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7119" y="-722"/>
+            <point key="canvasLocation" x="-7165" y="1174"/>
         </scene>
         <!--Inbox Interstitial View Controller-->
         <scene sceneID="DV8-gw-otP">
@@ -2009,7 +2154,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NRg-uy-DuX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6429" y="-722"/>
+            <point key="canvasLocation" x="-6475" y="1174"/>
         </scene>
         <!--Enter Form Code View Controller-->
         <scene sceneID="Dg2-h0-Fz4">
@@ -2056,12 +2201,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZjD-ld-Ogk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5709" y="-722"/>
+            <point key="canvasLocation" x="-5755" y="1174"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pNN-IT-Xvp">
             <objects>
-                <navigationController storyboardIdentifier="appointmentsNavigationController" definesPresentationContext="YES" id="hGa-bk-jhB" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="appointments" definesPresentationContext="YES" id="hGa-bk-jhB" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="red-tE-rGz"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zOY-x4-mXI">
                         <autoresizingMask key="autoresizingMask"/>
@@ -2388,7 +2533,7 @@
         <!--Navigation Controller-->
         <scene sceneID="mAz-Fo-TXb">
             <objects>
-                <navigationController storyboardIdentifier="contactsNavigationController" id="TFb-Al-RxN" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="contacts" id="TFb-Al-RxN" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nrT-dt-DUx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2603,7 +2748,267 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ymv-1B-vtK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5661" y="1860"/>
+            <point key="canvasLocation" x="-5645" y="3508"/>
+        </scene>
+        <!--Message Thread View Controller - Buzz Lightyear-->
+        <scene sceneID="A4n-dm-DT1">
+            <objects>
+                <tableViewController id="B49-T9-c3N" customClass="CTLMessageThreadViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="73" sectionHeaderHeight="22" sectionFooterHeight="22" id="CtD-xW-dgj">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="themCell" rowHeight="67" id="u0f-BI-DAQ" customClass="CTLMessageCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="67"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="8:41 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r4i-gY-DH9">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="310" id="6hg-Q5-Kcv"/>
+                                                <constraint firstAttribute="height" constant="20" id="loG-S1-sDd"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="11"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j18-OH-Sxf">
+                                            <color key="backgroundColor" red="0.094756015392641224" green="0.67362374427282545" blue="1" alpha="0.089999999999999997" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="275" id="WY8-kI-jo3"/>
+                                            </constraints>
+                                            <attributedString key="attributedText">
+                                                <fragment content="Meet me there at 3. I'm the guy with">
+                                                    <attributes>
+                                                        <font key="NSFont" size="13" name="STHeitiSC-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="j18-OH-Sxf" firstAttribute="leading" secondItem="u0f-BI-DAQ" secondAttribute="leading" type="default" id="M4b-Vf-dg6"/>
+                                    <constraint firstItem="r4i-gY-DH9" firstAttribute="top" secondItem="u0f-BI-DAQ" secondAttribute="top" type="default" id="Pkj-X4-0TJ"/>
+                                    <constraint firstItem="j18-OH-Sxf" firstAttribute="bottom" secondItem="u0f-BI-DAQ" secondAttribute="bottom" type="default" id="UwX-QV-9V5"/>
+                                    <constraint firstItem="j18-OH-Sxf" firstAttribute="top" secondItem="u0f-BI-DAQ" secondAttribute="top" constant="20" type="default" id="ncs-et-VCF"/>
+                                    <constraint firstItem="r4i-gY-DH9" firstAttribute="trailing" secondItem="u0f-BI-DAQ" secondAttribute="trailing" type="default" id="ppX-5K-LA5"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="messageTextView" destination="j18-OH-Sxf" id="knl-gs-YGx"/>
+                                    <outlet property="timeLabel" destination="r4i-gY-DH9" id="GxG-Fc-QRS"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="youCell" rowHeight="67" id="GcF-yx-gOp" customClass="CTLMessageCell">
+                                <rect key="frame" x="0.0" y="89" width="320" height="67"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="8:41 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VzI-d8-Knw">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="310" id="KiN-Kc-N4r"/>
+                                                <constraint firstAttribute="height" constant="20" id="Rg8-Tg-g2y"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="11"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="23N-Zq-hFm">
+                                            <color key="backgroundColor" red="0.0" green="0.99661192602040816" blue="0.10329612308152616" alpha="0.13" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="275" id="tcT-Nv-SaM"/>
+                                            </constraints>
+                                            <attributedString key="attributedText">
+                                                <fragment content="Meet me there at 3. I'm the guy with the red baseball cap.">
+                                                    <attributes>
+                                                        <font key="NSFont" size="13" name="STHeitiSC-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="23N-Zq-hFm" firstAttribute="bottom" secondItem="GcF-yx-gOp" secondAttribute="bottom" type="default" id="B1b-zV-nEJ"/>
+                                    <constraint firstItem="23N-Zq-hFm" firstAttribute="top" secondItem="GcF-yx-gOp" secondAttribute="top" constant="20" type="default" id="FnI-VK-iNC"/>
+                                    <constraint firstItem="VzI-d8-Knw" firstAttribute="leading" secondItem="GcF-yx-gOp" secondAttribute="leading" type="default" id="Tkj-af-MPA"/>
+                                    <constraint firstItem="23N-Zq-hFm" firstAttribute="trailing" secondItem="GcF-yx-gOp" secondAttribute="trailing" type="default" id="aZt-a8-byK"/>
+                                    <constraint firstItem="VzI-d8-Knw" firstAttribute="top" secondItem="GcF-yx-gOp" secondAttribute="top" type="default" id="m8Y-DM-o0p"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="messageTextView" destination="23N-Zq-hFm" id="syl-oT-bQe"/>
+                                    <outlet property="timeLabel" destination="VzI-d8-Knw" id="vpz-Fl-Dil"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="B49-T9-c3N" id="QQB-Qj-hcP"/>
+                            <outlet property="delegate" destination="B49-T9-c3N" id="2WG-dS-iwJ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Buzz Lightyear" id="ufi-MA-hvP">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="5ne-IH-n27">
+                            <connections>
+                                <action selector="composeMessage:" destination="B49-T9-c3N" id="dpx-il-TSc"/>
+                                <segue destination="wUa-n5-wcE" kind="modal" identifier="toReplyComposerView" id="rsf-6f-AXk"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bVI-TN-dj2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5831" y="-341"/>
+        </scene>
+        <!--Reply Composer View Controller-->
+        <scene sceneID="Aij-Sq-3UK">
+            <objects>
+                <viewController id="wUa-n5-wcE" customClass="CTLReplyComposerViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ySj-8g-wpA">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xF4-xS-6dp">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="502" id="vHT-0U-1St"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="replyingToCell" rowHeight="76" id="bb7-BY-Prh" customClass="CTLReplyToCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="76"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="In reply to..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Uv-fW-DVd">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="310" id="kNw-Mq-m7X"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="11"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="sent at 10:16pm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FlG-Rq-kwI">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="310" id="4QA-hp-uNc"/>
+                                                        <constraint firstAttribute="height" constant="30" id="IeI-La-aro"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="11"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MRh-0J-Q98">
+                                                    <color key="backgroundColor" red="0.094756015390000004" green="0.67362374430000005" blue="1" alpha="0.089999999999999997" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="47" id="6mv-2u-0tY"/>
+                                                    </constraints>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Meet me there at 3. I'm the guy with">
+                                                            <attributes>
+                                                                <font key="NSFont" size="13" name="STHeitiSC-Medium"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="FlG-Rq-kwI" firstAttribute="baseline" secondItem="5Uv-fW-DVd" secondAttribute="baseline" type="default" id="1Bn-rW-3vf"/>
+                                            <constraint firstItem="MRh-0J-Q98" firstAttribute="trailing" secondItem="bb7-BY-Prh" secondAttribute="trailing" type="default" id="57D-qv-8yl"/>
+                                            <constraint firstItem="MRh-0J-Q98" firstAttribute="top" secondItem="bb7-BY-Prh" secondAttribute="top" constant="28" id="8xv-91-HgO"/>
+                                            <constraint firstItem="FlG-Rq-kwI" firstAttribute="top" secondItem="bb7-BY-Prh" secondAttribute="top" type="default" id="Fvp-ZO-nmc"/>
+                                            <constraint firstItem="5Uv-fW-DVd" firstAttribute="top" secondItem="bb7-BY-Prh" secondAttribute="top" type="default" id="HKx-v5-otA"/>
+                                            <constraint firstItem="MRh-0J-Q98" firstAttribute="leading" secondItem="bb7-BY-Prh" secondAttribute="leading" type="default" id="Rrs-C1-NBw"/>
+                                            <constraint firstItem="FlG-Rq-kwI" firstAttribute="leading" secondItem="bb7-BY-Prh" secondAttribute="leading" type="default" id="ZQq-MQ-hAS"/>
+                                            <constraint firstItem="5Uv-fW-DVd" firstAttribute="trailing" secondItem="bb7-BY-Prh" secondAttribute="trailing" type="default" id="iCf-cW-Dt8"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="inReplyToLabel" destination="5Uv-fW-DVd" id="hJB-SE-o1W"/>
+                                            <outlet property="inReplyToTextView" destination="MRh-0J-Q98" id="oGC-pd-Fjd"/>
+                                            <outlet property="sentAtLabel" destination="FlG-Rq-kwI" id="G17-cq-JbX"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="replyCell" rowHeight="300" id="4me-bJ-iHf" customClass="CTLReplyComposerCell">
+                                        <rect key="frame" x="0.0" y="98" width="320" height="300"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="299"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aTL-Qh-Uny">
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="259" id="UAt-f4-TXS"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="aTL-Qh-Uny" firstAttribute="leading" secondItem="4me-bJ-iHf" secondAttribute="leading" constant="20" type="default" id="Fhn-Xd-dVL"/>
+                                            <constraint firstAttribute="trailing" secondItem="aTL-Qh-Uny" secondAttribute="trailing" constant="20" type="default" id="Kv4-HH-k5G"/>
+                                            <constraint firstItem="aTL-Qh-Uny" firstAttribute="top" secondItem="4me-bJ-iHf" secondAttribute="top" constant="20" type="default" id="O4j-9K-fvc"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="replyTextView" destination="aTL-Qh-Uny" id="tVs-No-1Wf"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                            </tableView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="otK-YV-2RF">
+                                <items>
+                                    <navigationItem title="Reply" id="IJx-rd-qny">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="n8f-9x-zIC">
+                                            <connections>
+                                                <action selector="dismiss:" destination="wUa-n5-wcE" id="nUO-1r-7je"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Send" id="d0n-4f-xRM">
+                                            <connections>
+                                                <action selector="sendReply:" destination="wUa-n5-wcE" id="ddz-Jr-lCq"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                                <connections>
+                                    <outlet property="delegate" destination="wUa-n5-wcE" id="ddp-Ug-Thc"/>
+                                </connections>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="otK-YV-2RF" firstAttribute="leading" secondItem="ySj-8g-wpA" secondAttribute="leading" type="default" id="1aD-6s-hUO"/>
+                            <constraint firstItem="xF4-xS-6dp" firstAttribute="trailing" secondItem="ySj-8g-wpA" secondAttribute="trailing" type="default" id="8Bb-lG-SVx"/>
+                            <constraint firstItem="xF4-xS-6dp" firstAttribute="leading" secondItem="ySj-8g-wpA" secondAttribute="leading" type="default" id="ahq-U1-M9W"/>
+                            <constraint firstItem="otK-YV-2RF" firstAttribute="trailing" secondItem="ySj-8g-wpA" secondAttribute="trailing" type="default" id="igo-Ng-kaq"/>
+                            <constraint firstItem="otK-YV-2RF" firstAttribute="top" secondItem="ySj-8g-wpA" secondAttribute="top" type="default" id="jav-8B-KVF"/>
+                            <constraint firstItem="xF4-xS-6dp" firstAttribute="bottom" secondItem="ySj-8g-wpA" secondAttribute="bottom" type="default" id="kDw-dP-Ele"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="xF4-xS-6dp" id="Wqb-Xq-mAr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oaq-Zi-0tN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5326" y="-341"/>
         </scene>
     </scenes>
     <resources>
@@ -2617,6 +3022,7 @@
         <image name="20-gear-2@2x.png" width="52" height="56"/>
         <image name="26-checkmark-gray.png" width="16" height="16"/>
         <image name="286-speechbubble-grey.png" width="24" height="24"/>
+        <image name="31-paper-airplane.png" width="18" height="16"/>
         <image name="44-shoebox.png" width="24" height="22"/>
         <image name="54-lock.png" width="20" height="24"/>
         <image name="clock-grn.png" width="18" height="18"/>
@@ -2630,243 +3036,16 @@
         <image name="whiteButton.png" width="36" height="36"/>
         <image name="whiteButtonHighlight.png" width="36" height="36"/>
     </resources>
-    <classes>
-        <class className="CTLAccountViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAccountViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="submit:"/>
-                <relationship kind="outlet" name="accountAgeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="accountEmailLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="companyTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="daysLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="firstNameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="industryTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lastNameTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLAppointmentCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentCell.h"/>
-            <relationships>
-                <relationship kind="action" name="markAsComplete:"/>
-                <relationship kind="action" name="segueToMapView:"/>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="feeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mapButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CTLAppointmentFormViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentFormViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="contactDidChange:" candidateClass="UITextField"/>
-                <relationship kind="action" name="formatFeeString:" candidateClass="UITextField"/>
-                <relationship kind="action" name="saveAppointment:"/>
-                <relationship kind="action" name="showDatePicker:"/>
-                <relationship kind="action" name="unformatCurrency:" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="address2TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="addressTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="contactNameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="endTimeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="feeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="headerLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="startTimeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="titleTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLAppointmentsListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAppointmentsListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addAppointment:"/>
-                <relationship kind="action" name="dismissPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLContactCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="detailsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timestampLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CTLContactDetailsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissKeyboard:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="showAddFieldsModal:"/>
-                <relationship kind="action" name="submit:"/>
-                <relationship kind="action" name="textFieldDidChange:" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="editFormButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="saveContactButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="CTLContactFormEditorViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactFormEditorViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="enableReordering:"/>
-                <relationship kind="action" name="save:"/>
-                <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLContactImportViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactImportViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelImport:"/>
-                <relationship kind="action" name="importContacts:"/>
-                <relationship kind="outlet" name="busyIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLContactsListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLContactsListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissSortPickerFromTap:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CTLEnterFormCodeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLEnterFormCodeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="submitFormCode:"/>
-                <relationship kind="outlet" name="formCodeTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLFieldCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLFieldCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="textInput" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLInboxInterstitialViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLInboxInterstitialViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="continueToEnterFormCode:"/>
-                <relationship kind="outlet" name="continueButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="CTLInboxViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLInboxViewController.h"/>
-        </class>
-        <class className="CTLLoginViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLLoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="forgotPassword:"/>
-                <relationship kind="action" name="loginAndSyncAccount:"/>
-                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="CTLMainMenuViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMainMenuViewController.h"/>
-        </class>
-        <class className="CTLMenuItemCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMenuItemCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="icon" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="CTLMessageCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMessageCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="messageLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="senderLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CTLMessagePreferenceViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMessagePreferenceViewController.h"/>
-        </class>
-        <class className="CTLMessagesListViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLMessagesListViewController.h"/>
-        </class>
-        <class className="CTLPinInterstialViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLPinInterstialViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="promptForPin:"/>
-                <relationship kind="outlet" name="enterPinButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="forgotPinLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="retrievePinLinkButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CTLRegisterViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLRegisterViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="segueToLogin:"/>
-                <relationship kind="action" name="submit:"/>
-                <relationship kind="outlet" name="companyTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="confirmPasswordTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="industryTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="signInButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="CTLSetPinViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSetPinViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="switchDidChange:" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="confirmPinTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="enter4digitLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="pinSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="pinTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="switchLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="switchNoteLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CTLSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="toggleNotificationSetting:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="accountTypeCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="appointmentNotificationCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="appointmentNotificationSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="featureCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="messageNotificationCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="messageNotificationSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="pinCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="shareCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="supportCell" candidateClass="UITableViewCell"/>
-            </relationships>
-        </class>
-        <class className="CTLSlideMenuController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSlideMenuController.h"/>
-            <relationships>
-                <relationship kind="action" name="toggleMenu:"/>
-            </relationships>
-        </class>
-        <class className="CTLUpgradeInterstitialViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLUpgradeInterstitialViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="actionMessageLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="upgradeButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="zXr-bQ-uct"/>
-        <segue reference="ajR-Vp-hIS"/>
+        <segue reference="nF8-oR-Kzh"/>
+        <segue reference="8fT-Sa-DVy"/>
+        <segue reference="TgC-Gg-uWh"/>
         <segue reference="iGD-nT-ogT"/>
-        <segue reference="t9u-78-s9z"/>
-        <segue reference="hcl-ja-9qa"/>
+        <segue reference="1JI-iC-iph"/>
     </inferredMetricsTieBreakers>
 </document>

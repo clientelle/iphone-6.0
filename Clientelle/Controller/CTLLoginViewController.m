@@ -7,9 +7,9 @@
 //
 
 #import "CTLAPI.h"
-#import "CTLCDAccount.h"
+#import "CTLAccountManager.h"
 #import "CTLLoginViewController.h"
-#import "CTLSlideMenuController.h"
+#import "CTLContainerViewController.h"
 #import "CTLInboxInterstitialViewController.h"
 
 @implementation CTLLoginViewController
@@ -45,24 +45,26 @@
     NSMutableDictionary *post = [NSMutableDictionary dictionary];
     [post setValue:self.emailTextField.text forKey:@"user[email]"];
     [post setValue:self.passwordTextField.text forKey:@"user[password]"];
+    [post setValue:[[NSUserDefaults standardUserDefaults] objectForKey:kCTLPushNotifToken] forKey:@"user[apn_token]"];
                            
     [_api makeRequest:@"/login.json" withParams:post method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
         
         if(requestSucceeded){
             
-            CTLCDAccount *account = [CTLCDAccount createFromDictionary:response];
+            [CTLAccountManager recordPurchase];
+            
+            CTLCDAccount *account = [CTLAccountManager createFromApiResponse:response];
             
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
                 
-                if(self.menuController.nextNavString){
-                    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuController.nextNavString];
-                    UIViewController<CTLSlideMenuDelegate> *viewController = (UIViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
-                    viewController.menuController = self.menuController;
-                    [self.menuController setMainViewController:viewController];
-                    [self.menuController setIsPro:YES];
-                    [self.menuController setAccount:account];
-                    [self.menuController setRightSwipeEnabled:YES];
-                    [self.menuController flipToView];
+                if(self.containerView.nextNavString){
+                    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.containerView.nextNavString];
+                    UIViewController<CTLContainerViewDelegate> *viewController = (UIViewController<CTLContainerViewDelegate> *)navigationController.topViewController;
+                    viewController.containerView = self.containerView;
+                    [self.containerView setMainViewController:viewController];
+                    [self.containerView setCurrentUser:account];
+                    [self.containerView setRightSwipeEnabled:YES];
+                    [self.containerView flipToView];
                 }else{
                     [self.navigationController popViewControllerAnimated:YES];
                 }

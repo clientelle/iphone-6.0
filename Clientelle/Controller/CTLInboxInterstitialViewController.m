@@ -8,7 +8,7 @@
 
 #import "CTLInboxInterstitialViewController.h"
 #import "CTLEnterFormCodeViewController.h"
-#import "CTLSlideMenuController.h"
+#import "CTLContainerViewController.h"
 
 @implementation CTLInboxInterstitialViewController
 
@@ -17,8 +17,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [self.menuController setRightSwipeEnabled:YES];
-    [self.menuController renderMenuButton:self];
+    [self.containerView setRightSwipeEnabled:YES];
+    [self.containerView renderMenuButton:self];
     [self.navigationItem setHidesBackButton:YES animated:YES];
     
 }
@@ -33,7 +33,7 @@
     if([[segue identifier] isEqualToString:@"enterFormCode"]){
         CTLEnterFormCodeViewController *viewController = [segue destinationViewController];
         
-        [viewController setMenuController:self.menuController];
+        [viewController setContainerView:self.containerView];
         return;
     }
 }

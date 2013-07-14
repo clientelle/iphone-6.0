@@ -74,11 +74,10 @@ int CTLPhoneLabelTag = 602;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self reset];
+    [self removeHighlight];
     
     if(_menuIsVisible == YES){
         [_menuController setMenuVisible:NO animated:YES];
-        [self reset];
         [self resignFirstResponder];
         _menuIsVisible = NO;
         return;
@@ -127,14 +126,16 @@ int CTLPhoneLabelTag = 602;
 	[[NSNotificationCenter defaultCenter] postNotificationName:CTLShareContactNotification object:nil];
 }
 
--(void)drawRect:(CGRect)rect {
+-(void)drawRect:(CGRect)rect
+{
     self.layer.shadowOpacity = 0.75f;
     self.layer.shadowRadius = 2.0f;
     self.layer.shadowOffset = CGSizeMake(0, 0);
     self.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.bounds].CGPath;
 }
 
-- (void)reset{
+- (void)removeHighlight
+{
     self.nameLabel.backgroundColor = [UIColor clearColor];
     self.phoneLabel.backgroundColor = [UIColor clearColor];
 }

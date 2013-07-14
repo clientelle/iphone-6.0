@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Account" representedClassName="CTLCDAccount" syncable="YES">
         <attribute name="auth_token" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,6 +15,9 @@
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updated_at" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="account" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="conversation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="account" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="inbox" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Inbox" inverseName="account" inverseEntity="Inbox" syncable="YES"/>
     </entity>
     <entity name="Appointment" representedClassName="CTLCDAppointment" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
@@ -32,14 +35,13 @@
     <entity name="Contact" representedClassName="CTLCDContact" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="compositeName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contactID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="hasPrivateMsg" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="jobTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastAccessed" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="messagePreference" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="mobile" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
@@ -47,7 +49,10 @@
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="recordID" optional="YES" attributeType="Integer 16" indexed="YES" syncable="YES"/>
+        <attribute name="user_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="contacts" inverseEntity="Account" syncable="YES"/>
         <relationship name="appointment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Appointment" inverseName="contact" inverseEntity="Appointment" syncable="YES"/>
+        <relationship name="conversation" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="contact" inverseEntity="Conversation" syncable="YES"/>
     </entity>
     <entity name="ContactField" representedClassName="CTLCDContactField" syncable="YES">
         <attribute name="autocapitalizationType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -57,17 +62,34 @@
         <attribute name="keyboardType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="sortOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="Conversation" representedClassName="CTLCDConversation" syncable="YES">
+        <attribute name="last_sender_uid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="preview_message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated_at" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="conversation" inverseEntity="Account" syncable="YES"/>
+        <relationship name="contact" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="conversation" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="messages" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Message" inverseName="conversation" inverseEntity="Message" syncable="YES"/>
+    </entity>
     <entity name="Inbox" representedClassName="CTLCDInbox" syncable="YES">
-        <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="formId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="installCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="created_at" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="form_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="install_code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="schema" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="inbox" inverseEntity="Account" syncable="YES"/>
+    </entity>
+    <entity name="Message" representedClassName="CTLCDMessage" syncable="YES">
+        <attribute name="created_at" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="message_text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sender_uid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-540" positionY="-81" width="128" height="255"/>
-        <element name="Appointment" positionX="-173" positionY="-270" width="128" height="210"/>
-        <element name="Contact" positionX="-380" positionY="-273" width="128" height="315"/>
-        <element name="ContactField" positionX="-396" positionY="-441" width="128" height="133"/>
-        <element name="Inbox" positionX="-378" positionY="30" width="128" height="105"/>
+        <element name="Account" positionX="-477" positionY="-288" width="128" height="298"/>
+        <element name="Appointment" positionX="-47" positionY="-153" width="128" height="210"/>
+        <element name="Contact" positionX="-279" positionY="8" width="128" height="343"/>
+        <element name="ContactField" positionX="-729" positionY="-270" width="128" height="133"/>
+        <element name="Conversation" positionX="-560" positionY="146" width="128" height="133"/>
+        <element name="Inbox" positionX="-765" positionY="-9" width="128" height="118"/>
+        <element name="Message" positionX="-729" positionY="225" width="128" height="103"/>
     </elements>
 </model>

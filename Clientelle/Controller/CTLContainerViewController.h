@@ -1,6 +1,6 @@
 //
-//  CTLSlideMenuController.h
-//  Created by Samuel Goodwin on 1/17/13.
+//  CTLContainerViewController.h
+//  Created by Kevin Liu on 1/17/13.
 //  Copyright (c) 2013 Roundwall Software. All rights reserved.
 //
 
@@ -11,16 +11,15 @@ extern const CGFloat CTLMainMenuWidth;
 @class CTLCDAccount;
 @class CTLMainMenuViewController;
 
-@interface CTLSlideMenuController : UIViewController;
+@interface CTLContainerViewController : UIViewController;
 
-@property (nonatomic, assign) BOOL isPro;
-@property (nonatomic, strong) CTLCDAccount *account;
+@property (nonatomic, strong) CTLCDAccount *currentUser;
 @property (nonatomic, weak) UINavigationController *mainNavigationController;
 
 @property (nonatomic, strong) NSString *mainViewControllerIdentifier;
 
-@property (nonatomic, strong) UIViewController<CTLSlideMenuDelegate> *nextViewController;
-@property (nonatomic, strong) UIViewController<CTLSlideMenuDelegate> *mainViewController;
+@property (nonatomic, strong) UIViewController<CTLContainerViewDelegate> *nextViewController;
+@property (nonatomic, strong) UIViewController<CTLContainerViewDelegate> *mainViewController;
 @property (nonatomic, assign) ABAddressBookRef addressBookRef;
 
 @property (nonatomic, strong) NSString *nextNavString;
@@ -30,9 +29,9 @@ extern const CGFloat CTLMainMenuWidth;
 - (void)setMainView:(NSString *)identifier;
 - (void)flipToView;
 
-- (void)transitionToView:(UIViewController<CTLSlideMenuDelegate> *)viewController withAnimationStyle:(UIViewAnimationTransition)animationStyle;
+- (void)transitionToView:(UIViewController<CTLContainerViewDelegate> *)viewController withAnimationStyle:(UIViewAnimationTransition)animationStyle;
 
-- (void)renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)mainViewController;
+- (void)renderMenuButton:(UIViewController<CTLContainerViewDelegate> *)mainViewController;
 
 - (IBAction)toggleMenu:(id)sender;
 

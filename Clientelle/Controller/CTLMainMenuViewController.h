@@ -10,16 +10,11 @@
 
 @class CTLCDAccount;
 
-@interface CTLMainMenuViewController : UITableViewController{
-    NSIndexPath *_selectedIndexPath;
-    CTLCDAccount *_account;
-}
+@interface CTLMainMenuViewController : UITableViewController
 
 - (void)styleActiveCell:(NSIndexPath *)indexPath;
 
-@property (nonatomic, strong) CTLSlideMenuController *menuController;
+@property (nonatomic, strong) CTLContainerViewController *containerView;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) CTLCDAccount *account;
-
 
 @end

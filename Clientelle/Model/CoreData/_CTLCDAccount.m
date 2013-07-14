@@ -21,6 +21,9 @@ const struct CTLCDAccountAttributes CTLCDAccountAttributes = {
 };
 
 const struct CTLCDAccountRelationships CTLCDAccountRelationships = {
+	.contacts = @"contacts",
+	.conversation = @"conversation",
+	.inbox = @"inbox",
 };
 
 const struct CTLCDAccountFetchedProperties CTLCDAccountFetchedProperties = {
@@ -276,6 +279,45 @@ const struct CTLCDAccountFetchedProperties CTLCDAccountFetchedProperties = {
 
 
 
+
+@dynamic contacts;
+
+	
+- (NSMutableSet*)contactsSet {
+	[self willAccessValueForKey:@"contacts"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"contacts"];
+  
+	[self didAccessValueForKey:@"contacts"];
+	return result;
+}
+	
+
+@dynamic conversation;
+
+	
+- (NSMutableSet*)conversationSet {
+	[self willAccessValueForKey:@"conversation"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"conversation"];
+  
+	[self didAccessValueForKey:@"conversation"];
+	return result;
+}
+	
+
+@dynamic inbox;
+
+	
+- (NSMutableSet*)inboxSet {
+	[self willAccessValueForKey:@"inbox"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"inbox"];
+  
+	[self didAccessValueForKey:@"inbox"];
+	return result;
+}
+	
 
 
 

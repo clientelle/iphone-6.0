@@ -7,14 +7,13 @@
 extern const struct CTLCDContactAttributes {
 	__unsafe_unretained NSString *address;
 	__unsafe_unretained NSString *address2;
+	__unsafe_unretained NSString *compositeName;
 	__unsafe_unretained NSString *contactID;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *firstName;
-	__unsafe_unretained NSString *hasPrivateMsg;
 	__unsafe_unretained NSString *jobTitle;
 	__unsafe_unretained NSString *lastAccessed;
 	__unsafe_unretained NSString *lastName;
-	__unsafe_unretained NSString *messagePreference;
 	__unsafe_unretained NSString *mobile;
 	__unsafe_unretained NSString *nickName;
 	__unsafe_unretained NSString *note;
@@ -22,16 +21,21 @@ extern const struct CTLCDContactAttributes {
 	__unsafe_unretained NSString *phone;
 	__unsafe_unretained NSString *picture;
 	__unsafe_unretained NSString *recordID;
+	__unsafe_unretained NSString *user_id;
 } CTLCDContactAttributes;
 
 extern const struct CTLCDContactRelationships {
+	__unsafe_unretained NSString *account;
 	__unsafe_unretained NSString *appointment;
+	__unsafe_unretained NSString *conversation;
 } CTLCDContactRelationships;
 
 extern const struct CTLCDContactFetchedProperties {
 } CTLCDContactFetchedProperties;
 
+@class CTLCDAccount;
 @class CTLCDAppointment;
+@class CTLCDConversation;
 
 
 
@@ -84,6 +88,16 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* compositeName;
+
+
+
+//- (BOOL)validateCompositeName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSNumber* contactID;
 
 
@@ -118,20 +132,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* hasPrivateMsg;
-
-
-
-@property BOOL hasPrivateMsgValue;
-- (BOOL)hasPrivateMsgValue;
-- (void)setHasPrivateMsgValue:(BOOL)value_;
-
-//- (BOOL)validateHasPrivateMsg:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSString* jobTitle;
 
 
@@ -157,20 +157,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 //- (BOOL)validateLastName:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSNumber* messagePreference;
-
-
-
-@property int16_t messagePreferenceValue;
-- (int16_t)messagePreferenceValue;
-- (void)setMessagePreferenceValue:(int16_t)value_;
-
-//- (BOOL)validateMessagePreference:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -250,9 +236,37 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* user_id;
+
+
+
+@property int32_t user_idValue;
+- (int32_t)user_idValue;
+- (void)setUser_idValue:(int32_t)value_;
+
+//- (BOOL)validateUser_id:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) CTLCDAccount *account;
+
+//- (BOOL)validateAccount:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSSet *appointment;
 
 - (NSMutableSet*)appointmentSet;
+
+
+
+
+@property (nonatomic, strong) CTLCDConversation *conversation;
+
+//- (BOOL)validateConversation:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -284,6 +298,12 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+- (NSString*)primitiveCompositeName;
+- (void)setPrimitiveCompositeName:(NSString*)value;
+
+
+
+
 - (NSNumber*)primitiveContactID;
 - (void)setPrimitiveContactID:(NSNumber*)value;
 
@@ -305,15 +325,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
-- (NSNumber*)primitiveHasPrivateMsg;
-- (void)setPrimitiveHasPrivateMsg:(NSNumber*)value;
-
-- (BOOL)primitiveHasPrivateMsgValue;
-- (void)setPrimitiveHasPrivateMsgValue:(BOOL)value_;
-
-
-
-
 - (NSString*)primitiveJobTitle;
 - (void)setPrimitiveJobTitle:(NSString*)value;
 
@@ -328,15 +339,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 - (NSString*)primitiveLastName;
 - (void)setPrimitiveLastName:(NSString*)value;
-
-
-
-
-- (NSNumber*)primitiveMessagePreference;
-- (void)setPrimitiveMessagePreference:(NSNumber*)value;
-
-- (int16_t)primitiveMessagePreferenceValue;
-- (void)setPrimitiveMessagePreferenceValue:(int16_t)value_;
 
 
 
@@ -386,9 +388,28 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
+- (NSNumber*)primitiveUser_id;
+- (void)setPrimitiveUser_id:(NSNumber*)value;
+
+- (int32_t)primitiveUser_idValue;
+- (void)setPrimitiveUser_idValue:(int32_t)value_;
+
+
+
+
+
+- (CTLCDAccount*)primitiveAccount;
+- (void)setPrimitiveAccount:(CTLCDAccount*)value;
+
+
 
 - (NSMutableSet*)primitiveAppointment;
 - (void)setPrimitiveAppointment:(NSMutableSet*)value;
+
+
+
+- (CTLCDConversation*)primitiveConversation;
+- (void)setPrimitiveConversation:(CTLCDConversation*)value;
 
 
 @end

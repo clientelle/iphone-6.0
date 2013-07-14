@@ -5,6 +5,10 @@
 
 - (void)createFromABPerson:(CTLABPerson *)person
 {
+    if(person.compositeName){
+        self.compositeName = person.compositeName;
+    }
+    
     if(person.firstName){
         self.firstName = person.firstName;
     }
@@ -63,25 +67,6 @@
     self.address = personDict[CTLPersonAddressProperty];
     self.address2 = personDict[CTLPersonAddress2Property];
     self.lastAccessed = [NSDate date];
-}
-
-- (NSString *)compositeName
-{
-    NSMutableString *compositeName = [NSMutableString stringWithString:@""];
-    
-    if([self.firstName length] > 0){
-        [compositeName appendString:self.firstName];
-    }
-    
-    if([self.lastName length] > 0){
-        if([compositeName length] == 0){
-            [compositeName appendString:self.lastName];
-        }else{
-            [compositeName appendFormat:@" %@", self.lastName];
-        }
-    }
-    
-    return compositeName;
 }
 
 - (NSString *)displayContactStr

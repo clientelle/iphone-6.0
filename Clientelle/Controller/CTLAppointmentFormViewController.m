@@ -11,7 +11,6 @@
 #import "UILabel+CTLLabel.h"
 
 #import "CTLCDContact.h"
-#import "CTLABPerson.h"
 #import "CTLAppointmentFormViewController.h"
 #import "CTLAppointmentsListViewController.h"
 #import "CTLPinInterstialViewController.h"
@@ -24,14 +23,25 @@
 #import "UITableViewCell+CellShadows.h"
 #import "CTLViewDecorator.h"
 
-#import "CTLPickerView.h"
-
 //#import "CTLFactoryAppointment.h"
 
 int CTLContactTextFieldTag = 1;
 int CTLStartTimeInputTag = 2;
 int CTLEndTimeInputTag = 3;
 int CTLTitleInputTag = 4;
+
+@interface CTLAppointmentFormViewController()
+@property (nonatomic, strong) UIDatePicker *datePicker;
+@property (nonatomic, strong) UIPickerView *contactPicker;
+@property (nonatomic, assign) NSInteger activeInputTag;
+@property (nonatomic, strong) UITextField *activeField;
+@property (nonatomic, strong) EKEvent *event;
+@property (nonatomic, strong) EKEventStore *eventStore;
+@property (nonatomic, strong) EKCalendar *calendar;
+@property (nonatomic, strong) NSArray *contacts;
+@property (nonatomic, assign) BOOL hasCalendarAccess;
+@property (nonatomic, assign) BOOL hasAddress;
+@end
 
 @implementation CTLAppointmentFormViewController
 
@@ -52,13 +62,13 @@ int CTLTitleInputTag = 4;
     if(!self.appointment){
         self.headerLabel.text = NSLocalizedString(@"SCHEDULE_AN_APPOINTMENT", nil);
         [self createPlaceholderAppointment];
-        _appointmentFee = [NSDecimalNumber zero];
+        self.appointmentFee = [NSDecimalNumber zero];
     }else{
         self.headerLabel.text = NSLocalizedString(@"EDIT_APPOINTMENT", nil);
         self.contact = self.appointment.contact;
-        _appointmentFee = self.appointment.fee;
+        self.appointmentFee = self.appointment.fee;
         [self populateForm:self.appointment];
-        _event = [_eventStore eventWithIdentifier:[self.appointment eventID]];
+        _event = [self.eventStore eventWithIdentifier:[self.appointment eventID]];
         if(_event){
             self.appointment.title = _event.title;
             self.appointment.startDate = _event.startDate;
@@ -103,8 +113,8 @@ int CTLTitleInputTag = 4;
 - (void)createPlaceholderAppointment
 {
     if(!_event){
-        _event = [EKEvent eventWithEventStore:_eventStore];
-        _event.calendar = [_eventStore defaultCalendarForNewEvents];
+        _event = [EKEvent eventWithEventStore:self.eventStore];
+        _event.calendar = [self.eventStore defaultCalendarForNewEvents];
     }
 
     _event.startDate = [NSDate hoursFrom:[NSDate date] numberOfHours:1];;
@@ -123,8 +133,8 @@ int CTLTitleInputTag = 4;
 {
     if([notification.object isKindOfClass:[CTLCDContact class]]){
         self.contact = notification.object;
-        _contacts = @[self.contact];
-        [_contactPicker reloadAllComponents];
+        self.self.contacts = @[self.contact];
+        [self.contactPicker reloadAllComponents];
         [self createPlaceholderAppointment];
     }
 }
@@ -132,9 +142,9 @@ int CTLTitleInputTag = 4;
 - (void)contactsWereImported:(NSNotification *)notification
 {
     if([notification.object isKindOfClass:[NSMutableArray class]]){
-        _contacts = [NSArray arrayWithArray:notification.object];
-        self.contact = _contacts[0];
-        [_contactPicker reloadAllComponents];
+        self.self.contacts = [NSArray arrayWithArray:notification.object];
+        self.contact = self.self.contacts[0];
+        [self.contactPicker reloadAllComponents];
         [self createPlaceholderAppointment];
         [self.contactNameTextField becomeFirstResponder];
     }
@@ -142,14 +152,14 @@ int CTLTitleInputTag = 4;
 
 - (void)loadContactsInPickerView
 {
-    _contacts = [CTLCDContact MR_findAllSortedBy:@"firstName" ascending:YES];
-    [_contactPicker reloadAllComponents];
+    self.self.contacts = [CTLCDContact MR_findAllSortedBy:@"firstName" ascending:YES];
+    [self.contactPicker reloadAllComponents];
 
     if(self.contact){
-        for(NSInteger i=0;i<[_contacts count];i++){
-            CTLCDContact *contact = _contacts[i];
+        for(NSInteger i=0;i<[self.self.contacts count];i++){
+            CTLCDContact *contact = self.self.contacts[i];
             if([contact isEqual:self.contact]){
-                [_contactPicker selectRow:i inComponent:0 animated:NO];
+                [self.contactPicker selectRow:i inComponent:0 animated:NO];
                 break;
             }
         }
@@ -159,7 +169,7 @@ int CTLTitleInputTag = 4;
 - (IBAction)unformatCurrency:(UITextField *)textField
 {
     self.navigationItem.rightBarButtonItem.enabled = YES;
-    textField.text = [NSString stringWithFormat:@"%@", _appointmentFee];
+    textField.text = [NSString stringWithFormat:@"%@", self.appointmentFee];
 }
 
 - (NSString *)formattedFee:(NSDecimalNumber *)fee
@@ -178,28 +188,28 @@ int CTLTitleInputTag = 4;
 
 - (void)checkCalendarPermission
 {
-    _hasCalendarAccess = NO;
-    _eventStore = [[EKEventStore alloc] init];
+    self.hasCalendarAccess = NO;
+    self.eventStore = [[EKEventStore alloc] init];
     
     EKAuthorizationStatus EKAuthStatus = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
     if(EKAuthStatus == EKAuthorizationStatusNotDetermined){
-        [_eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        [self.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
             if(granted){
-                _hasCalendarAccess = YES;
+                self.hasCalendarAccess = YES;
             } else {
                 [self displayCalendarPermissionPrompt];
             }
         }];
     } else if(EKAuthStatus == EKAuthorizationStatusAuthorized){
-        _hasCalendarAccess = YES;
+        self.hasCalendarAccess = YES;
     } else {
         [self displayCalendarPermissionPrompt];
     }
     
-    _calendar = [_eventStore defaultCalendarForNewEvents];
+    self.calendar = [self.eventStore defaultCalendarForNewEvents];
     
-    if(!_calendar){
-        _calendar = [self createCalendar];
+    if(!self.calendar){
+        self.calendar = [self createCalendar];
     }
 }
 
@@ -227,34 +237,34 @@ int CTLTitleInputTag = 4;
     self.startTimeTextField.tag = CTLStartTimeInputTag;
     self.endTimeTextField.tag = CTLEndTimeInputTag;
     
-    _datePicker = [[UIDatePicker alloc] init];
-    _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-    _datePicker.date = [NSDate hoursFrom:[NSDate date] numberOfHours:1]; //next hour
-    [_datePicker addTarget:self action:@selector(setDate:) forControlEvents:UIControlEventValueChanged];
+    self.datePicker = [[UIDatePicker alloc] init];
+    self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    self.datePicker.date = [NSDate hoursFrom:[NSDate date] numberOfHours:1]; //next hour
+    [self.datePicker addTarget:self action:@selector(setDate:) forControlEvents:UIControlEventValueChanged];
     
     CGSize ContactPickerFrameSize = self.view.frame.size;
-    _contactPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, ContactPickerFrameSize.height, ContactPickerFrameSize.width, 300.0f)];
-    _contactPicker.showsSelectionIndicator = YES;
-    _contactPicker.delegate = self;
-    _contactPicker.dataSource = self;
-    [_contactPicker addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissInputViews:)]];
+    self.contactPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, ContactPickerFrameSize.height, ContactPickerFrameSize.width, 300.0f)];
+    self.contactPicker.showsSelectionIndicator = YES;
+    self.contactPicker.delegate = self;
+    self.contactPicker.dataSource = self;
+    [self.contactPicker addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissInputViews:)]];
     
-    self.contactNameTextField.inputView = _contactPicker;
+    self.contactNameTextField.inputView = self.contactPicker;
         
-    self.startTimeTextField.inputView = _datePicker;
-    self.endTimeTextField.inputView = _datePicker;
+    self.startTimeTextField.inputView = self.datePicker;
+    self.endTimeTextField.inputView = self.datePicker;
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     
     if(textField.tag == CTLContactTextFieldTag){
-        if([_contacts count] == 0){
+        if([self.self.contacts count] == 0){
             [self promptToImport:textField];
             return NO;
         }else{
             if(!self.contact){
-                [_contactPicker selectRow:0 inComponent:0 animated:NO];
-                self.contact = _contacts[0];
+                [self.contactPicker selectRow:0 inComponent:0 animated:NO];
+                self.contact = self.self.contacts[0];
                 [self chooseContact];
             }            
         }
@@ -264,12 +274,12 @@ int CTLTitleInputTag = 4;
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    _activeField = textField;
+    self.activeField = textField;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    _activeField = nil;
+    self.activeField = nil;
 }
 
 
@@ -300,19 +310,19 @@ int CTLTitleInputTag = 4;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    self.contact = [_contacts objectAtIndex:row];
+    self.contact = [self.self.contacts objectAtIndex:row];
     [self chooseContact];
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    CTLCDContact *person = [_contacts objectAtIndex:row];
+    CTLCDContact *person = [self.self.contacts objectAtIndex:row];
     return person.compositeName;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-	return [_contacts count];
+	return [self.self.contacts count];
 }
 
 - (void)chooseContact
@@ -350,40 +360,40 @@ int CTLTitleInputTag = 4;
     self.navigationItem.rightBarButtonItem.enabled = YES;
     [textField setBackgroundColor:[UIColor ctlFadedGray]];
     
-    _activeInputTag = textField.tag;
+    self.activeInputTag = textField.tag;
     
-    if(_activeInputTag == CTLStartTimeInputTag){
+    if(self.activeInputTag == CTLStartTimeInputTag){
         if([self.endTimeTextField.text length] > 0 && [self.startTimeTextField.text length] == 0){
             _event.startDate = [NSDate hoursFrom:_event.endDate numberOfHours:-1];
         }
-        _datePicker.date = _event.startDate;
+        self.datePicker.date = _event.startDate;
     }
     
-    if(_activeInputTag == CTLEndTimeInputTag){
+    if(self.activeInputTag == CTLEndTimeInputTag){
         if([self.startTimeTextField.text length] > 0 && [self.endTimeTextField.text length] == 0){
             _event.endDate = [NSDate hoursFrom:_event.startDate numberOfHours:1];
         }
-        _datePicker.date = _event.endDate;
+        self.datePicker.date = _event.endDate;
     }
     
-    textField.text = [NSDate formatDateAndTime:_datePicker.date];
+    textField.text = [NSDate formatDateAndTime:self.datePicker.date];
 }
 
 - (void)setDate:(id)sender
 {
     self.navigationItem.rightBarButtonItem.enabled = YES;
     
-    if(_activeInputTag == CTLStartTimeInputTag || _activeInputTag == CTLEndTimeInputTag){
-        UITextField *textField = (UITextField *)[self.view viewWithTag:_activeInputTag];
-        textField.text = [NSDate formatDateAndTime:[_datePicker date]];
+    if(self.activeInputTag == CTLStartTimeInputTag || self.activeInputTag == CTLEndTimeInputTag){
+        UITextField *textField = (UITextField *)[self.view viewWithTag:self.activeInputTag];
+        textField.text = [NSDate formatDateAndTime:[self.datePicker date]];
         
-        if(_activeInputTag == CTLStartTimeInputTag){
-            _event.startDate = [_datePicker date];
+        if(self.activeInputTag == CTLStartTimeInputTag){
+            _event.startDate = [self.datePicker date];
             self.startTimeTextField.text = [NSDate formatDateAndTime:_event.startDate];
         }
         
-        if(_activeInputTag == CTLEndTimeInputTag){
-            _event.endDate = [_datePicker date];
+        if(self.activeInputTag == CTLEndTimeInputTag){
+            _event.endDate = [self.datePicker date];
             self.endTimeTextField.text = [NSDate formatDateAndTime:_event.endDate];
         }
     }
@@ -443,23 +453,23 @@ int CTLTitleInputTag = 4;
 {
     //TODO: get local calendar source (device calendar. not imap) when there is no calendar
     EKSource *localSource = nil;
-    for (EKSource *source in _eventStore.sources) {
+    for (EKSource *source in self.eventStore.sources) {
         if (source.sourceType == EKSourceTypeLocal) {
             localSource = source;
             break;
         }
     }
 
-    EKCalendar *localCalendar = [EKCalendar calendarForEntityType:EKEntityTypeEvent eventStore:_eventStore];
+    EKCalendar *localCalendar = [EKCalendar calendarForEntityType:EKEntityTypeEvent eventStore:self.eventStore];
     localCalendar.title = NSLocalizedString(@"CALENDAR", nil);
     localCalendar.source = localSource;
-    [_eventStore saveCalendar:localCalendar commit:YES error:nil];
+    [self.eventStore saveCalendar:localCalendar commit:YES error:nil];
     return localCalendar;
 }
 
 - (IBAction)saveAppointment:(id)sender
 {
-    if(!_hasCalendarAccess){
+    if(!self.hasCalendarAccess){
         [self displayCalendarPermissionPrompt];
         return;
     }
@@ -476,8 +486,8 @@ int CTLTitleInputTag = 4;
     _event.location = [NSString stringWithFormat:@"%@ %@", self.addressTextField.text, self.address2TextField.text];
     
     NSError *error = nil;
-    [_event setCalendar:[_eventStore defaultCalendarForNewEvents]];
-    [_eventStore saveEvent:_event span:EKSpanThisEvent commit:YES error:&error];
+    [_event setCalendar:[self.eventStore defaultCalendarForNewEvents]];
+    [self.eventStore saveEvent:_event span:EKSpanThisEvent commit:YES error:&error];
     
     if(!self.appointment){
         self.appointment = [CTLCDAppointment MR_createEntity];
@@ -495,7 +505,7 @@ int CTLTitleInputTag = 4;
     if([self.feeTextField.text length] == 0){
         self.appointment.fee = 0;
     }else{
-        self.appointment.fee = _appointmentFee;
+        self.appointment.fee = self.appointmentFee;
     }
  
     self.appointment.address = self.addressTextField.text;
@@ -557,7 +567,7 @@ int CTLTitleInputTag = 4;
     notification.alertBody = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"APPOINTMENT", nil), item.title];
     notification.alertAction = NSLocalizedString(@"VIEW_APPOINTMENT", nil);
     
-    notification.userInfo = @{@"navigationController":@"appointmentsNavigationController", @"viewController":@"appointmentFormViewController", @"eventID":item.eventIdentifier};
+    notification.userInfo = @{@"navigationController":@"appointments", @"viewController":@"appointmentFormViewController", @"eventID":item.eventIdentifier};
     
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
@@ -599,16 +609,16 @@ int CTLTitleInputTag = 4;
     if([textField.text length]){
         NSLocale *locale = [NSLocale currentLocale];
 
-        _appointmentFee = [NSDecimalNumber decimalNumberWithString:textField.text locale:locale];
+        self.appointmentFee = [NSDecimalNumber decimalNumberWithString:textField.text locale:locale];
         
-        if (_appointmentFee == nil || [_appointmentFee floatValue] == [[NSDecimalNumber zero] floatValue]) {
+        if (self.appointmentFee == nil || [self.appointmentFee floatValue] == [[NSDecimalNumber zero] floatValue]) {
             textField.text = @"";
         }else{
             NSNumberFormatter *currencyFormat = [[NSNumberFormatter alloc] init];
             NSLocale *locale = [NSLocale currentLocale];
             [currencyFormat setNumberStyle:NSNumberFormatterCurrencyStyle];
             [currencyFormat setLocale:locale];
-            textField.text = [currencyFormat stringFromNumber:_appointmentFee];
+            textField.text = [currencyFormat stringFromNumber:self.appointmentFee];
         }
     }
 }

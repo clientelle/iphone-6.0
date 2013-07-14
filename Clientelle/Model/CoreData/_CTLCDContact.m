@@ -6,14 +6,13 @@
 const struct CTLCDContactAttributes CTLCDContactAttributes = {
 	.address = @"address",
 	.address2 = @"address2",
+	.compositeName = @"compositeName",
 	.contactID = @"contactID",
 	.email = @"email",
 	.firstName = @"firstName",
-	.hasPrivateMsg = @"hasPrivateMsg",
 	.jobTitle = @"jobTitle",
 	.lastAccessed = @"lastAccessed",
 	.lastName = @"lastName",
-	.messagePreference = @"messagePreference",
 	.mobile = @"mobile",
 	.nickName = @"nickName",
 	.note = @"note",
@@ -21,10 +20,13 @@ const struct CTLCDContactAttributes CTLCDContactAttributes = {
 	.phone = @"phone",
 	.picture = @"picture",
 	.recordID = @"recordID",
+	.user_id = @"user_id",
 };
 
 const struct CTLCDContactRelationships CTLCDContactRelationships = {
+	.account = @"account",
 	.appointment = @"appointment",
+	.conversation = @"conversation",
 };
 
 const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
@@ -61,18 +63,13 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
-	if ([key isEqualToString:@"hasPrivateMsgValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"hasPrivateMsg"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
-	if ([key isEqualToString:@"messagePreferenceValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"messagePreference"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
 	if ([key isEqualToString:@"recordIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"recordID"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"user_idValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"user_id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -91,6 +88,13 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 
 
 @dynamic address2;
+
+
+
+
+
+
+@dynamic compositeName;
 
 
 
@@ -137,32 +141,6 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 
 
 
-@dynamic hasPrivateMsg;
-
-
-
-- (BOOL)hasPrivateMsgValue {
-	NSNumber *result = [self hasPrivateMsg];
-	return [result boolValue];
-}
-
-- (void)setHasPrivateMsgValue:(BOOL)value_ {
-	[self setHasPrivateMsg:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveHasPrivateMsgValue {
-	NSNumber *result = [self primitiveHasPrivateMsg];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveHasPrivateMsgValue:(BOOL)value_ {
-	[self setPrimitiveHasPrivateMsg:[NSNumber numberWithBool:value_]];
-}
-
-
-
-
-
 @dynamic jobTitle;
 
 
@@ -179,32 +157,6 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 
 @dynamic lastName;
 
-
-
-
-
-
-@dynamic messagePreference;
-
-
-
-- (int16_t)messagePreferenceValue {
-	NSNumber *result = [self messagePreference];
-	return [result shortValue];
-}
-
-- (void)setMessagePreferenceValue:(int16_t)value_ {
-	[self setMessagePreference:[NSNumber numberWithShort:value_]];
-}
-
-- (int16_t)primitiveMessagePreferenceValue {
-	NSNumber *result = [self primitiveMessagePreference];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveMessagePreferenceValue:(int16_t)value_ {
-	[self setPrimitiveMessagePreference:[NSNumber numberWithShort:value_]];
-}
 
 
 
@@ -278,6 +230,36 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 
 
 
+@dynamic user_id;
+
+
+
+- (int32_t)user_idValue {
+	NSNumber *result = [self user_id];
+	return [result intValue];
+}
+
+- (void)setUser_idValue:(int32_t)value_ {
+	[self setUser_id:[NSNumber numberWithInt:value_]];
+}
+
+- (int32_t)primitiveUser_idValue {
+	NSNumber *result = [self primitiveUser_id];
+	return [result intValue];
+}
+
+- (void)setPrimitiveUser_idValue:(int32_t)value_ {
+	[self setPrimitiveUser_id:[NSNumber numberWithInt:value_]];
+}
+
+
+
+
+
+@dynamic account;
+
+	
+
 @dynamic appointment;
 
 	
@@ -289,6 +271,10 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 	[self didAccessValueForKey:@"appointment"];
 	return result;
 }
+	
+
+@dynamic conversation;
+
 	
 
 

@@ -1,32 +1,36 @@
 //
-//  CTLSlideMenuController.m
+//  CTLContainerViewController.m
 //  Created by Kevin Liu on 1/17/13.
 //  Copyright (c) 2013 Clientelle. All rights reserved.
 //
 #import <QuartzCore/QuartzCore.h>
 #import "CTLCDAppointment.h"
+
+#import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
 
-#import "CTLSlideMenuController.h"
+#import "CTLContainerViewController.h"
 #import "CTLMainMenuViewController.h"
 #import "CTLAppointmentFormViewController.h"
 #import "CTLPinInterstialViewController.h"
 
 const CGFloat CTLMainMenuWidth = 80.0f;
-NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigationController";
+NSString *const CTLDefaultNavigationControllerIdentifier = @"appointments";
 
 
-@implementation CTLSlideMenuController
+@implementation CTLContainerViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setupMenuView:self.view.bounds];
 
-    self.isPro = [[NSUserDefaults standardUserDefaults] boolForKey:@"IS_PRO"];
+    self.currentUser = [CTLAccountManager currentUser];
+
+    [self setupMenuView:self.view.bounds];
 
     if(!self.mainViewControllerIdentifier){
         self.mainViewControllerIdentifier = CTLDefaultNavigationControllerIdentifier;
+        
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
         [self setRightPanel:navigationController withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
     }
@@ -35,7 +39,7 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigat
 -  (void)setupMenuView:(CGRect)frame
 {
     CTLMainMenuViewController *menuViewController = (CTLMainMenuViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"mainMenuViewController"];
-    [menuViewController setMenuController:self];
+    [menuViewController setContainerView:self];
     frame.size.width = CTLMainMenuWidth;
     menuViewController.view.frame = frame;
     [self addChildViewController:menuViewController];
@@ -131,7 +135,7 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigat
 
 - (void)flipToView
 {
-    [self.mainViewController setMenuController:self];
+    [self.mainViewController setContainerView:self];
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration: 1];
     [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
@@ -139,10 +143,10 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigat
     [UIView commitAnimations];
 }
 
-- (void)transitionToView:(UIViewController<CTLSlideMenuDelegate> *)viewController withAnimationStyle:(UIViewAnimationTransition)animationStyle
+- (void)transitionToView:(UIViewController<CTLContainerViewDelegate> *)viewController withAnimationStyle:(UIViewAnimationTransition)animationStyle
 {
     self.mainViewController = viewController;
-    [self.mainViewController setMenuController:self];
+    [self.mainViewController setContainerView:self];
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration: 1];
     [UIView setAnimationTransition:animationStyle forView:self.view cache:YES];
@@ -150,7 +154,7 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigat
     [UIView commitAnimations];
 }
 
-- (void)renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)viewController
+- (void)renderMenuButton:(UIViewController<CTLContainerViewDelegate> *)viewController
 {
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:UIBarButtonItemStyleBordered target:self action:@selector(toggleMenu:)];
     viewController.navigationItem.leftBarButtonItem = menuButton;
@@ -164,10 +168,10 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigat
     }
     
     self.mainNavigationController = rightNavigationController;
-    self.mainViewController = (UIViewController<CTLSlideMenuDelegate> *)rightNavigationController.topViewController;
+    self.mainViewController = (UIViewController<CTLContainerViewDelegate> *)rightNavigationController.topViewController;
         
     [self renderMenuButton:self.mainViewController];
-    [self.mainViewController setMenuController:self];
+    [self.mainViewController setContainerView:self];
     [self addChildViewController:self.mainNavigationController];
     self.mainNavigationController.view.frame = frame;
     [self.view addSubview:self.mainNavigationController.view];
@@ -226,9 +230,9 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointmentsNavigat
     self.mainNavigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
     self.mainNavigationController.view.frame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
     
-    self.mainViewController.menuController = self;
+    self.mainViewController.containerView = self;
     
-    [self renderMenuButton:(UIViewController<CTLSlideMenuDelegate> *)self.mainNavigationController.topViewController];
+    [self renderMenuButton:(UIViewController<CTLContainerViewDelegate> *)self.mainNavigationController.topViewController];
     [self.mainNavigationController pushViewController:self.mainViewController animated:NO];
     
     [self addChildViewController:self.mainNavigationController];

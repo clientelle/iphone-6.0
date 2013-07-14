@@ -8,8 +8,9 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "UIColor+CTLColor.h"
-#import "CTLContactCell.h"
 #import "CTLViewDecorator.h"
+
+#import "CTLContactCell.h"
 #import "CTLABPerson.h"
 
 @implementation CTLContactCell

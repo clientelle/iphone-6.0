@@ -9,23 +9,34 @@
 #import "UIColor+CTLColor.h"
 #import "CTLMainMenuViewController.h"
 #import "CTLMenuItemCell.h"
-#import "CTLSlideMenuController.h"
+#import "CTLContainerViewController.h"
 #import "CTLContactsListViewController.h"
-#import "CTLMessagesListViewController.h"
+#import "CTLConversationListViewController.h"
 #import "CTLInboxViewController.h"
 
+#import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
 
-@implementation CTLMainMenuViewController
+@interface CTLMainMenuViewController()
+@property (nonatomic, assign) BOOL hasPro;
+@property (nonatomic, strong) CTLCDAccount *currentUser;
+@end
 
-@synthesize selectedIndexPath = _selectedIndexPath;
+@implementation CTLMainMenuViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:40 green:40 blue:40 alpha:1.0f];
     
-    self.account = [CTLCDAccount MR_findFirst];
+    if(self.containerView.currentUser != nil){
+        self.currentUser = self.containerView.currentUser;
+        self.hasPro = YES;
+    }else{
+        self.currentUser = nil;
+        self.hasPro = NO;
+    }
+
+    self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:40 green:40 blue:40 alpha:1.0f];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -37,6 +48,7 @@
     [self styleActiveCell:self.selectedIndexPath];
 }
 
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -47,7 +59,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    if([cell.reuseIdentifier isEqualToString:self.menuController.mainViewControllerIdentifier]){
+    if([cell.reuseIdentifier isEqualToString:self.containerView.mainViewControllerIdentifier]){
         [self styleActiveCell:indexPath];
     }
     return cell;
@@ -59,39 +71,36 @@
     [self removeStyleFromPreviouslyActiveCell:indexPath];
     [self styleActiveCell:indexPath];
     
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [self loadViewController:cell.reuseIdentifier];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];    
+    [self switchActiveView:cell.reuseIdentifier];
 }
 
-- (void)loadViewController:(NSString *)storyboardIdentifier
+- (void)switchActiveView:(NSString *)identifier
 {
-    if([storyboardIdentifier isEqualToString:@"inboxNavigationController"]){
-        self.menuController.nextNavString = @"inboxInterstitialNavigationController";
-        if(!self.account){
-            //No account yet. Prompt to upgrade
-            storyboardIdentifier = @"upgradeInterstitialNavigationController";
-        }else{
-            if([self.account.has_inbox isEqual:@(1)]){
-                //got to inbox!
-                storyboardIdentifier = @"inboxNavigationController";
-            }else{
-                //Prompt to create inbox
-                storyboardIdentifier = @"inboxInterstitialNavigationController";
-            }
+    NSString *storyboardIdentifier = identifier;
+
+    if(self.hasPro){
+        if([self shouldShowInboxSetup:identifier]){
+            storyboardIdentifier = @"inboxSetup";
         }
+    }else{
+        if([self shouldShowUpgradeInterstitial:identifier]){
+            [self.containerView setNextNavString:identifier];
+            storyboardIdentifier = @"upgrade";
+        }        
     }
     
-    if([storyboardIdentifier isEqualToString:@"messagesNavigationController"]){
-        self.menuController.nextNavString = @"messagesNavigationController";
-        if(!self.account){
-            //No account yet. Prompt to upgrade
-            storyboardIdentifier = @"upgradeInterstitialNavigationController";
-        }else{
-            storyboardIdentifier = @"messagesNavigationController";
-        }
-    }
+    [self.containerView setMainView:storyboardIdentifier];
+}
 
-    [self.menuController setMainView:storyboardIdentifier];
+- (BOOL)shouldShowInboxSetup:(NSString *)identifier
+{
+    return [identifier isEqualToString:@"inboxes"] && self.currentUser.has_inboxValue == 0;
+}
+
+- (BOOL)shouldShowUpgradeInterstitial:(NSString *)identifier
+{
+    return [@[@"messages", @"inboxes"] containsObject:identifier];
 }
 
 - (void)styleActiveCell:(NSIndexPath *)indexPath

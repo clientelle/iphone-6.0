@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class CTLCDMessage;
 @interface CTLMessageCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UILabel *senderLabel;
 @property (nonatomic, weak) IBOutlet UILabel *timeLabel;
-@property (nonatomic, weak) IBOutlet UILabel *messageLabel;
+@property (nonatomic, weak) IBOutlet UITextView *messageTextView;
+
++ (CGFloat) heightForCellWithMessage:(CTLCDMessage *)message;
 
 @end

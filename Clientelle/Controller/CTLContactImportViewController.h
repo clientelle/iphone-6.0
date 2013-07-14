@@ -8,21 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTLContactImportViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>{
-    NSArray *_contacts;
-    NSMutableArray *_filteredContacts;
-    NSMutableDictionary *_selectedPeople;
-    ABAddressBookRef _addressBookRef;
-    UIColor *_textColor;
-    UIColor *_disabledTextColor;
-    UIColor *_selectedBackgroundColor;
-}
+@interface CTLContactImportViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property(nonatomic, strong) IBOutlet UITableView *tableView;
 @property(nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
 @property(nonatomic, strong) IBOutlet UIActivityIndicatorView *busyIndicator;
-
-@property(nonatomic, assign) ABAddressBookRef addressBookRef;
 
 - (IBAction)importContacts:(id)sender;
 - (IBAction)cancelImport:(id)sender;

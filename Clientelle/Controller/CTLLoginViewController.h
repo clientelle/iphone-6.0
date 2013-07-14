@@ -10,11 +10,11 @@
 
 @class CTLAPI;
 
-@interface CTLLoginViewController : UITableViewController<CTLSlideMenuDelegate>{
+@interface CTLLoginViewController : UITableViewController<CTLContainerViewDelegate>{
     CTLAPI *_api;
 }
 
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, weak) CTLContainerViewController *containerView;
 
 @property (nonatomic, strong) NSString *emailAddress;
 

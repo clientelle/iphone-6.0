@@ -8,19 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class CTLAPI;
 @class CTLCDAccount;
 
-@interface CTLAccountViewController : UITableViewController<UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CTLSlideMenuDelegate>{
-    UIPickerView *_industryPicker;
-    NSArray *_industries;
-    CTLAPI *_api;
-    NSNumber *_industryID;
-    CTLCDAccount *_account;
-    
-}
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
-@property (nonatomic, strong) CTLCDAccount *account;
+@interface CTLAccountViewController : UITableViewController<UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
+
+@property (nonatomic, strong) CTLContainerViewController *containerView;
+@property (nonatomic, strong) CTLCDAccount *currentUser;
 
 @property (nonatomic, weak) IBOutlet UITextField *firstNameTextField;
 @property (nonatomic, weak) IBOutlet UITextField *lastNameTextField;
@@ -31,8 +24,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *emailLabel;
 @property (nonatomic, weak) IBOutlet UILabel *accountAgeLabel;
 @property (nonatomic, weak) IBOutlet UILabel *daysLabel;
-
-
 
 - (IBAction)submit:(id)sender;
 

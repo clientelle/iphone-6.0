@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 
-@interface CTLEnterFormCodeViewController : UIViewController<CTLSlideMenuDelegate>
+@interface CTLEnterFormCodeViewController : UIViewController<CTLContainerViewDelegate>
 
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, weak) CTLContainerViewController *containerView;
 
 @property (nonatomic, weak) IBOutlet UITextField *formCodeTextField;
 

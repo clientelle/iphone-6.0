@@ -14,7 +14,7 @@ extern NSString *const CTLAppointmentWasAddedNotification;
 
 @class CTLPickerView;
 
-@interface CTLAppointmentsListViewController : UIViewController<NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, CTLSlideMenuDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate, CTLAppointmentCellDelegate>{
+@interface CTLAppointmentsListViewController : UIViewController<NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, CTLContainerViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate, CTLAppointmentCellDelegate>{
     EKEventStore *_eventStore;
     CTLPickerView *_filterPickerView;
     NSArray *_filterArray;
@@ -22,7 +22,7 @@ extern NSString *const CTLAppointmentWasAddedNotification;
 }
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, weak) CTLContainerViewController *containerView;
 @property (nonatomic, strong) NSFetchedResultsController *resultsController;
 
 - (IBAction)addAppointment:(id)sender;

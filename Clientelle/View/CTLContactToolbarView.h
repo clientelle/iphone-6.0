@@ -19,7 +19,7 @@ extern CGFloat const CTLContactModeToolbarViewHeight;
 @class CTLCDContact;
 
 @protocol CTLContactToolbarDelegate
-- (void)configureForContact:(UIView *)toolbar withContact:(CTLCDContact *)contact;
+- (void)configureContactToolbar:(UIView *)toolbar forContact:(CTLCDContact *)contact;
 @end
 
 @interface CTLContactToolbarView : UIView

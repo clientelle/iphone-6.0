@@ -11,8 +11,14 @@
 #import "CTLABPerson.h"
 #import "CTLCDContact.h"
 
-@interface CTLContactImportViewController ()
-- (void)loadAddressBookContacts;
+@interface CTLContactImportViewController()
+@property(nonatomic, strong) NSArray *contacts;
+@property(nonatomic, strong) NSMutableArray *filteredContacts;
+@property(nonatomic, strong) NSMutableDictionary *selectedPeople;
+@property(nonatomic, strong) UIColor *textColor;
+@property(nonatomic, strong) UIColor *disabledTextColor;
+@property(nonatomic, strong) UIColor *selectedBackgroundColor;
+@property(nonatomic, assign) ABAddressBookRef addressBookRef;
 @end
 
 @implementation CTLContactImportViewController
@@ -22,13 +28,13 @@
     self.busyIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.busyIndicator.hidden = YES;
     
-    _contacts = [NSArray array];
-    _selectedPeople = [[NSMutableDictionary alloc] init];
-    _filteredContacts = [NSMutableArray arrayWithCapacity:[_contacts count]];
+    self.contacts = [NSArray array];
+    self.selectedPeople = [[NSMutableDictionary alloc] init];
+    self.filteredContacts = [NSMutableArray arrayWithCapacity:[self.contacts count]];
         									
-    _textColor = [UIColor ctlDarkGray];
-    _selectedBackgroundColor = [UIColor ctlLightGray];
-    _disabledTextColor = [UIColor colorFromUnNormalizedRGB:78.0f green:78.0f blue:78.0f alpha:1.0f];
+    self.textColor = [UIColor ctlDarkGray];
+    self.selectedBackgroundColor = [UIColor ctlLightGray];
+    self.disabledTextColor = [UIColor colorFromUnNormalizedRGB:78.0f green:78.0f blue:78.0f alpha:1.0f];
 
     if(!self.addressBookRef){
         [self checkAddressbookPermission];
@@ -85,7 +91,7 @@
             [people removeObjectForKey:person.recordID];
         }
         
-        _contacts = [people allValues];
+        self.contacts = [people allValues];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
         });
@@ -98,9 +104,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.searchDisplayController.searchResultsTableView){
-        return [_filteredContacts count];
+        return [self.filteredContacts count];
     }
-    return [_contacts count];
+    return [self.contacts count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -113,9 +119,9 @@
     
     CTLABPerson *person = nil;
     if (tableView == self.searchDisplayController.searchResultsTableView){
-        person = [_filteredContacts objectAtIndex:indexPath.row];
+        person = [self.filteredContacts objectAtIndex:indexPath.row];
     }else{
-        person = [_contacts objectAtIndex:indexPath.row];
+        person = [self.contacts objectAtIndex:indexPath.row];
     }
 
     [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
@@ -130,7 +136,7 @@
     }
     
     //if person has been selected to be imported
-    if([_selectedPeople objectForKey:@(person.recordID)]){
+    if([self.selectedPeople objectForKey:@(person.recordID)]){
         [self styleEnabledField:cell];
     }else{
         [self styleDisabledField:cell];
@@ -143,13 +149,13 @@
     
     CTLABPerson *person = nil;
     if (tableView == self.searchDisplayController.searchResultsTableView){
-        person = [_filteredContacts objectAtIndex:indexPath.row];
+        person = [self.filteredContacts objectAtIndex:indexPath.row];
     }else{
-        person = [_contacts objectAtIndex:indexPath.row];
+        person = [self.contacts objectAtIndex:indexPath.row];
     }
     
     //if person has been selected to be imported
-    if([_selectedPeople objectForKey:@(person.recordID)]){
+    if([self.selectedPeople objectForKey:@(person.recordID)]){
         [self styleEnabledField:cell];
     }else{
         [self styleDisabledField:cell];
@@ -159,9 +165,9 @@
 - (void)styleEnabledField:(UITableViewCell *)cell {
     [cell setAccessoryView:nil];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    cell.textLabel.textColor = _textColor;
-    cell.detailTextLabel.textColor = _textColor;
-    cell.backgroundColor = _selectedBackgroundColor;
+    cell.textLabel.textColor = self.textColor;
+    cell.detailTextLabel.textColor = self.textColor;
+    cell.backgroundColor = self.selectedBackgroundColor;
 }
 
 - (void)styleDisabledField:(UITableViewCell *)cell {
@@ -169,8 +175,8 @@
     [accessory setUserInteractionEnabled:NO];
     [cell setAccessoryView:accessory];
     cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.detailTextLabel.textColor = _disabledTextColor;
-    cell.textLabel.textColor = _disabledTextColor;
+    cell.detailTextLabel.textColor = self.disabledTextColor;
+    cell.textLabel.textColor = self.disabledTextColor;
     cell.backgroundColor = [UIColor whiteColor];
 }
 
@@ -190,20 +196,20 @@
     
     CTLABPerson *person = nil;
 	if (tableView == self.searchDisplayController.searchResultsTableView){
-        person = [_filteredContacts objectAtIndex:indexPath.row];
+        person = [self.filteredContacts objectAtIndex:indexPath.row];
     }else{
-        person = [_contacts objectAtIndex:indexPath.row];
+        person = [self.contacts objectAtIndex:indexPath.row];
     }
     
     if(cell.accessoryType == UITableViewCellAccessoryNone){
         [self styleEnabledField:cell];
-        [_selectedPeople setObject:person forKey:@(person.recordID)];
+        [self.selectedPeople setObject:person forKey:@(person.recordID)];
         [self.doneButton setStyle:UIBarButtonItemStyleDone];
         [self.doneButton setEnabled:YES];
     }else{
         [self styleDisabledField:cell];
-        [_selectedPeople removeObjectForKey:@(person.recordID)];
-        if([_selectedPeople count] == 0){
+        [self.selectedPeople removeObjectForKey:@(person.recordID)];
+        if([self.selectedPeople count] == 0){
             [self.doneButton setStyle:UIBarButtonItemStyleBordered];
             [self.doneButton setEnabled:NO];
         }
@@ -215,11 +221,11 @@
 
 - (void)filterContactListForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-	[_filteredContacts removeAllObjects];
-	for (CTLABPerson *person in _contacts){
+	[self.filteredContacts removeAllObjects];
+	for (CTLABPerson *person in self.contacts){
         NSComparisonResult result = [person.compositeName compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
         if (result == NSOrderedSame){
-            [_filteredContacts addObject:person];
+            [self.filteredContacts addObject:person];
         }
 	}
 }
@@ -253,7 +259,7 @@
     
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
     __block NSMutableArray *cdPeople = [NSMutableArray array];
-    [_selectedPeople enumerateKeysAndObjectsUsingBlock:^(NSNumber *recordID, CTLABPerson *person, BOOL *stop){
+    [self.selectedPeople enumerateKeysAndObjectsUsingBlock:^(NSNumber *recordID, CTLABPerson *person, BOOL *stop){
         CTLCDContact *contact = [CTLCDContact MR_createEntity];
         contact.recordID = @(person.recordID);
         [contact createFromABPerson:person];

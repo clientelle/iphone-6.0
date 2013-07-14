@@ -8,7 +8,7 @@
 
 #import "CTLCDInbox.h"
 #import "CTLEnterFormCodeViewController.h"
-#import "CTLSlideMenuController.h"
+#import "CTLContainerViewController.h"
 #import "CTLInboxViewController.h"
 
 @implementation CTLEnterFormCodeViewController
@@ -23,25 +23,25 @@
 - (IBAction)submitFormCode:(id)sender
 {
     CTLCDInbox *newInbox = [CTLCDInbox MR_createEntity];
-    newInbox.dateCreated = [NSDate date];
-    newInbox.formId = @"abc";
-    newInbox.installCode = self.formCodeTextField.text;
+    newInbox.created_at = [NSDate date];
+    newInbox.form_id = @"abc";
+    newInbox.install_code = self.formCodeTextField.text;
     newInbox.schema = @"{fake json}";
     
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveOnlySelfAndWait];
     
     
-    [self.menuController setRightSwipeEnabled:YES];
+    [self.containerView setRightSwipeEnabled:YES];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
     
-    UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"inboxNavigationController"];
+    UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"inboxes"];
         
-    CTLInboxViewController<CTLSlideMenuDelegate> *inboxViewController = (CTLInboxViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
+    CTLInboxViewController<CTLContainerViewDelegate> *inboxViewController = (CTLInboxViewController<CTLContainerViewDelegate> *)navigationController.topViewController;
     [inboxViewController setInbox:newInbox];
-    [self.menuController setMainViewController:inboxViewController];
-    [self.menuController flipToView];
-    [self.menuController renderMenuButton:self];
+    [self.containerView setMainViewController:inboxViewController];
+    [self.containerView flipToView];
+    [self.containerView renderMenuButton:self];
     [self.navigationItem setHidesBackButton:YES animated:YES];
     
 }

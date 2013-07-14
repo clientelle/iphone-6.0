@@ -6,31 +6,35 @@
 //  Copyright (c) 2012 Clientelle Ltd.. All rights reserved.
 //
 
-#import "CTLAPI.h"
-#import "CTLCDAccount.h"
-
 #import "UITableViewCell+CellShadows.h"
 #import "UIColor+CTLColor.h"
 
 #import "CTLRegisterViewController.h"
+#import "CTLAccountManager.h"
 #import "CTLLoginViewController.h"
-#import "CTLSlideMenuController.h"
+#import "CTLContainerViewController.h"
 #import "CTLInboxInterstitialViewController.h"
-#import "CTLMessagesListViewController.h"
+#import "CTLConversationListViewController.h"
 
 NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.reloadInbox";
+
+@interface CTLRegisterViewController()
+@property (nonatomic, strong) UIPickerView *industryPicker;
+@property (nonatomic, strong) NSArray *industries;
+@property (nonatomic, strong) CTLAPI *api;
+@property (nonatomic, strong) NSNumber *industryID;
+@end
+
 
 @implementation CTLRegisterViewController
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+            
+    self.industryID = @(0);
+    self.industryPicker = [self configureIndustryPicker];
     
-    _api = [CTLAPI sharedAPI];
-    
-    _industryID = @(0);
-    _industryPicker = [self configureIndustryPicker];
-    
-    self.industryTextField.inputView = _industryPicker;
+    self.industryTextField.inputView = self.industryPicker;
     self.industryTextField.tag = 170;
     
     [self translateInputPlaceholders];
@@ -41,7 +45,7 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 
     if(self.showMenuButton){
         [self.navigationItem setHidesBackButton:YES animated:NO];
-        [self.menuController renderMenuButton:self];
+        [self.containerView renderMenuButton:self];
     }
     
     [self.emailTextField becomeFirstResponder];
@@ -64,14 +68,14 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     industryPicker.dataSource = self;
     industryPicker.showsSelectionIndicator = YES;
     
-    if(!_industries){
+    if(!self.industries){
         NSMutableArray *industries = [[[NSArray alloc]initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Industries" ofType:@"plist"]] mutableCopy];
         for(NSInteger i=0;i<[industries count];i++){
             NSMutableDictionary *industry = [industries[i] mutableCopy];
             [industry setValue:NSLocalizedString(industry[@"i18n_key"], nil) forKey:@"industry_name"];
             industries[i] = industry;
         }
-        _industries = industries;
+        self.industries = industries;
     }
     
     return industryPicker;
@@ -80,7 +84,6 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 - (void)dismissEditing:(id)sender{
     [self.view endEditing:YES];
 }
-
 
 #pragma mark -
 #pragma mark UITableViewDelegate
@@ -96,17 +99,17 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 #pragma mark UIPickerViewDataSource
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.industryTextField.text = [[_industries objectAtIndex:row] objectForKey:@"industry_name"];
-    _industryID = [[_industries objectAtIndex:row] objectForKey:@"industry_id"];
+    self.industryTextField.text = [[self.industries objectAtIndex:row] objectForKey:@"industry_name"];
+    self.industryID = [[self.industries objectAtIndex:row] objectForKey:@"industry_id"];
     
-    if([_industryID isEqual: @(13)]){
+    if([self.industryID isEqual: @(13)]){
         [self.industryTextField resignFirstResponder];
         self.industryTextField.inputView = nil;
         self.industryTextField.clearButtonMode = UITextFieldViewModeAlways;
         [NSTimer scheduledTimerWithTimeInterval:.5 target:self selector:@selector(togglePickerKeyboard:) userInfo:nil repeats:NO];
     }else{
         self.industryTextField.clearButtonMode = UITextFieldViewModeNever;
-        self.industryTextField.inputView = _industryPicker;
+        self.industryTextField.inputView = self.industryPicker;
         [NSTimer scheduledTimerWithTimeInterval:.5 target:self selector:@selector(togglePickerKeyboard:) userInfo:nil repeats:NO];
     }
 }
@@ -114,7 +117,7 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     if(textField.tag == 170){
-        textField.inputView = _industryPicker;
+        textField.inputView = self.industryPicker;        
         self.industryTextField.clearButtonMode = UITextFieldViewModeNever;
     }
     
@@ -127,20 +130,19 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [[_industries objectAtIndex:row] objectForKey:@"industry_name"];
+    return [[self.industries objectAtIndex:row] objectForKey:@"industry_name"];
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-	return [_industries count];
+	return [self.industries count];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
 	return 1;
 }
 
-
 - (void)toggleMenu:(id)sender{
-    [self.menuController toggleMenu:sender];
+    [self.containerView toggleMenu:sender];
 }
 
 - (void)alertErrorMessage:(NSString *)message
@@ -154,79 +156,86 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 
 }
 
-- (IBAction)submit:(id)sender{
+- (IBAction)submit:(id)sender
+{
+    NSDictionary *accountDict = [self validateFields];
+    
+    if(accountDict){
+        
+        [CTLAccountManager createAccount:accountDict completionBlock:^(BOOL success, CTLCDAccount *account, NSError *error) {
+            
+            if(success){
+                
+                [CTLAccountManager recordPurchase];
+                
+                if(self.containerView.nextNavString){
+                    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.containerView.nextNavString];
+                    UIViewController<CTLContainerViewDelegate> *viewController = (UIViewController<CTLContainerViewDelegate> *)navigationController.topViewController;
+                    viewController.containerView = self.containerView;
+                    [self.containerView setMainViewController:viewController];
+                    [self.containerView setCurrentUser:account];
+                    [self.containerView setRightSwipeEnabled:YES];
+                    [self.containerView flipToView];
+                }else{
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+                           
+            }else{
+                            
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                                message:[error localizedDescription]
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        }];
+    }
+}
+
+- (NSDictionary *)validateFields
+{
+    NSArray *fields = @[self.emailTextField, self.passwordTextField, self.confirmPasswordTextField];
+    
+    for(int i=0;i<[fields count]; i++){
+        UITextField *textField = fields[i];
+        if([textField.text length] == 0){
+            textField.backgroundColor = [UIColor ctlErrorPink];
+        }
+    }
     
     NSString *email = self.emailTextField.text;
     NSString *password = self.passwordTextField.text;
     NSString *confirmPassword = self.confirmPasswordTextField.text;
     NSString *company = self.companyTextField.text;
     NSString *industry = self.industryTextField.text;
-    NSString *industry_id = [NSString stringWithFormat:@"%d", _industryID.intValue];
-
+       
+    //required fields. thow shall now pass!
     if([email length] == 0 || [password length] == 0 || [confirmPassword length] == 0){
-        return;
+        return nil;
     }
-    
+
     if ([email rangeOfString:@"@"].location == NSNotFound) {
         [self.emailTextField becomeFirstResponder];
         [self alertErrorMessage:@"INVALID_EMAIL"];
-        return;
-    }    
+        return nil;
+    }
     
     if([password length] < 6 || [confirmPassword length] < 6){
         [self.passwordTextField becomeFirstResponder];
         [self alertErrorMessage:@"PASSWORD_REQUIREMENT"];
-        return;
+        return nil;
     }
     
     if([password isEqualToString:confirmPassword] == NO){
         [self.confirmPasswordTextField becomeFirstResponder];
         [self alertErrorMessage:@"PASSWORDS_DO_NOT_MATCH"];
-        return;
+        return nil;
     }
     
-    NSMutableDictionary *post = [NSMutableDictionary dictionary];
-    [post setValue:email forKey:@"user[email]"];
-    [post setValue:password forKey:@"user[password]"];
-    [post setValue:confirmPassword forKey:@"user[password_confirmation]"];
-    [post setValue:company forKey:@"company[name]"];
-    [post setValue:industry forKey:@"industry[name]"];
-    [post setValue:industry_id forKey:@"industry[id]"];
-    [post setValue:@"iphone" forKey:@"source"];
-    [post setValue:[[NSLocale currentLocale] localeIdentifier] forKey:@"locale"];
-        
-    [_api makeRequest:@"/register.json" withParams:post method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
-        
-        if(requestSucceeded){
-            
-            CTLCDAccount *account = [CTLCDAccount createFromDictionary:response];
-                             
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-                if(self.menuController.nextNavString){
-                    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuController.nextNavString];
-                    UIViewController<CTLSlideMenuDelegate> *viewController = (UIViewController<CTLSlideMenuDelegate> *)navigationController.topViewController;
-                    viewController.menuController = self.menuController;
-                    [self.menuController setMainViewController:viewController];
-                    [self.menuController setIsPro:YES];
-                    [self.menuController setAccount:account];
-                    [self.menuController setRightSwipeEnabled:YES];
-                    [self.menuController flipToView];
-                }else{
-                    [self.navigationController popViewControllerAnimated:YES];
-                }                
-            }];
-            
-        }else{
-
-            NSString *message = [CTLAPI messageFromResponse:response];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil, nil];
-            [alert show];
-        }
-    }];
+    NSDictionary *accountDict = @{ @"email":email, @"password":password, @"company":company, @"industry":industry, @"industry_id":self.industryID };
+    return accountDict;
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -245,7 +254,7 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 {
     if([[segue identifier] isEqualToString:@"toLogin"]){
         CTLLoginViewController *viewController = [segue destinationViewController];
-        [viewController setMenuController:self.menuController];
+        [viewController setContainerView:self.containerView];
         [viewController setEmailAddress:self.emailTextField.text];
         return;
     }

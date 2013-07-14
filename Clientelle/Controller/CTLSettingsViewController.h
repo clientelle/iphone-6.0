@@ -11,12 +11,9 @@
 
 @class CTLCDAccount;
 
-@interface CTLSettingsViewController : UITableViewController<CTLSlideMenuDelegate, MFMailComposeViewControllerDelegate>{
-    CTLCDAccount *_account;
-    UIAlertView *_purchaseAlertView;
-}
+@interface CTLSettingsViewController : UITableViewController<CTLContainerViewDelegate, MFMailComposeViewControllerDelegate>
 
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, weak) CTLContainerViewController *containerView;
 @property (nonatomic, strong) IBOutlet UISwitch *appointmentNotificationSwitch;
 @property (nonatomic, strong) IBOutlet UISwitch *messageNotificationSwitch;
 

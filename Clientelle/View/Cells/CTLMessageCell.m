@@ -6,24 +6,27 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+#import "UIColor+CTLColor.h"
+#import "CTLViewDecorator.h"
+
 #import "CTLMessageCell.h"
+#import "CTLCDMessage.h"
+
 
 @implementation CTLMessageCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+- (void)awakeFromNib {
+    self.messageTextView.textColor = [UIColor ctlGreen];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
++ (CGFloat)heightForCellWithMessage:(CTLCDMessage *)message
 {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+    CGFloat originalCellHeight = 65.0f;
+    CGFloat originalMessageTextHeight = 20.0f;
+    CGFloat messageTextHeight = [[message message_text] sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(236.0f, 1000.0f)].height;
+    
+    return originalCellHeight + messageTextHeight - originalMessageTextHeight;
 }
 
 @end

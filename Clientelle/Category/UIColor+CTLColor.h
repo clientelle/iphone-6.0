@@ -26,5 +26,6 @@
 + (UIColor *)ctlInputErrorBackground;
 + (UIColor *)ctlGroupedTableBackgroundColor;
 + (UIColor *)ctlRed;
++ (UIColor *)ctlErrorPink;
 
 @end

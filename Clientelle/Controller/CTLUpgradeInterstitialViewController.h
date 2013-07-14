@@ -10,11 +10,9 @@
 
 @class CTLCDAccount;
 
-@interface CTLUpgradeInterstitialViewController : UIViewController<CTLSlideMenuDelegate>{
-    CTLCDAccount *_account;
-}
+@interface CTLUpgradeInterstitialViewController : UIViewController<CTLContainerViewDelegate>
 
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, weak) CTLContainerViewController *containerView;
 @property (nonatomic, weak) IBOutlet UIButton *upgradeButton;
 @property (nonatomic, weak) IBOutlet UILabel *actionMessageLabel;
 

@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTLInboxInterstitialViewController : UIViewController<CTLSlideMenuDelegate>
+@interface CTLInboxInterstitialViewController : UIViewController<CTLContainerViewDelegate>
 
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, weak) CTLContainerViewController *containerView;
 
 @property (nonatomic, weak) IBOutlet UIButton *continueButton;
 

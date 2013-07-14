@@ -7,7 +7,7 @@
 //
 
 #import "CTLAppDelegate.h"
-#import "CTLSlideMenuController.h"
+#import "CTLContainerViewController.h"
 #import "CTLPinInterstialViewController.h"
 #import "Appirater.h"
 
@@ -35,10 +35,12 @@
     
     if(notification && [[notification userInfo][@"navigationController"] length] > 0){
         application.applicationIconBadgeNumber = notification.applicationIconBadgeNumber-1;
-        CTLSlideMenuController *rootViewController = (CTLSlideMenuController *)[self.window rootViewController];
+        CTLContainerViewController *rootViewController = (CTLContainerViewController *)[self.window rootViewController];
         [rootViewController launchWithViewFromNotification:notification];
         return YES;
     }
+    
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeAlert |UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSLog(@"PIN NUMBER %@", [defaults valueForKey:@"PIN_NUMBER"]),
@@ -51,10 +53,23 @@
     return YES;
 }
 
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)tokenData
+{
+    NSMutableString *token = [NSMutableString string];
+    const char *data = [tokenData bytes];
+    for (int i = 0; i < [tokenData length]; i++) {
+        [token appendFormat:@"%02.2hhX", data[i]];
+    }
+    NSLog(@"token %@", token);
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:token forKey:kCTLPushNotifToken];
+    [defaults synchronize];
+}
+
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    // Recieved local notification while using app
-    CTLSlideMenuController *rootViewController = (CTLSlideMenuController *)[self.window rootViewController];
+    //Recieved local notification while using app
+    CTLContainerViewController *rootViewController = (CTLContainerViewController *)[self.window rootViewController];
     [rootViewController setMainViewFromNotification:notification applicationState:application.applicationState];
     application.applicationIconBadgeNumber = notification.applicationIconBadgeNumber-1;
 }
@@ -74,7 +89,7 @@
 
 - (void)showPinView:(id)sender
 {
-    CTLSlideMenuController *rootViewController = (CTLSlideMenuController *)[self.window rootViewController];
+    CTLContainerViewController *rootViewController = (CTLContainerViewController *)[self.window rootViewController];
     CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[rootViewController.storyboard instantiateViewControllerWithIdentifier:@"pinInterstitial"];
     [rootViewController.mainNavigationController presentViewController:viewController animated:NO completion:nil];
 }

@@ -10,9 +10,9 @@
 
 @class CTLCDInbox;
 
-@interface CTLInboxViewController : UITableViewController<CTLSlideMenuDelegate>
+@interface CTLInboxViewController : UITableViewController<CTLContainerViewDelegate>
 
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, weak) CTLContainerViewController *containerView;
 
 @property (nonatomic, strong) CTLCDInbox *inbox;
 

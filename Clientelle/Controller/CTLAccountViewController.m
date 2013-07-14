@@ -7,27 +7,36 @@
 //
 
 #import "CTLAPI.h"
-#import "CTLCDAccount.h"
 #import "UIColor+CTLColor.h"
 #import "UITableViewCell+CellShadows.h"
 #import "NSDate+CTLDate.h"
 #import "CTLAccountViewController.h"
-#import "CTLSlideMenuController.h"
+#import "CTLContainerViewController.h"
+
+#import "CTLAccountManager.h"
+#import "CTLCDAccount.h"
+
+@interface CTLAccountViewController()
+
+@property(nonatomic, strong) CTLAPI *api;
+@property(nonatomic, strong) UIPickerView *industryPicker;
+@property(nonatomic, strong) NSArray *industries;
+@property(nonatomic, strong) NSNumber *industryID;
+
+@end
 
 @implementation CTLAccountViewController
 
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    _api = [CTLAPI sharedAPI];
+    self.currentUser = self.containerView.currentUser;
+     
+    self.industryPicker = [self configureIndustryPicker];
     
-    _industryPicker = [self configureIndustryPicker];
-    
-    self.industryTextField.inputView = _industryPicker;
+    self.industryTextField.inputView = self.industryPicker;
     self.industryTextField.tag = 170;
-    
-    _account = [CTLCDAccount findFirst];
-    
+
     self.firstNameTextField.placeholder = NSLocalizedString(@"FIRST_NAME", nil);
     self.lastNameTextField.placeholder = NSLocalizedString(@"LAST_NAME", nil);
     self.companyTextField.placeholder = NSLocalizedString(@"COMPANY_NAME", nil);
@@ -36,19 +45,18 @@
     self.accountEmailLabel.text = NSLocalizedString(@"ACCOUNT_EMAIL", nil);
     self.accountAgeLabel.text = NSLocalizedString(@"ACCOUNT_AGE", nil);
     
-    if(_account){
+    if(self.currentUser){
         
         self.navigationItem.title = NSLocalizedString(@"YOUR_ACCOUNT", nil);
+          
+        self.industryID = self.currentUser.industry_id;
+        self.firstNameTextField.text = self.currentUser.first_name;
+        self.lastNameTextField.text = self.currentUser.last_name;
+        self.companyTextField.text = self.currentUser.company;
+        self.industryTextField.text = self.currentUser.industry;
         
-        self.account = _account;
-        _industryID = self.account.industry_id;
-        self.firstNameTextField.text = [self.account first_name];
-        self.lastNameTextField.text = [self.account last_name];
-        self.companyTextField.text = [self.account company];
-        self.industryTextField.text = [self.account industry];
-        
-        self.emailLabel.text = [self.account email];
-        self.daysLabel.text = [self dateAgo:self.account.created_at];
+        self.emailLabel.text = [self.currentUser email];
+        self.daysLabel.text = [self dateAgo:self.currentUser.created_at];
                 
     }else{
         self.navigationItem.title = NSLocalizedString(@"CREATE_ACCOUNT", nil);
@@ -80,14 +88,14 @@
     industryPicker.dataSource = self;
     industryPicker.showsSelectionIndicator = YES;
     
-    if(!_industries){
+    if(!self.industries){
         NSMutableArray *industries = [[[NSArray alloc]initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Industries" ofType:@"plist"]] mutableCopy];
         for(NSInteger i=0;i<[industries count];i++){
             NSMutableDictionary *industry = [industries[i] mutableCopy];
             [industry setValue:NSLocalizedString(industry[@"i18n_key"], nil) forKey:@"industry_name"];
             industries[i] = industry;
         }
-        _industries = industries;
+        self.industries = industries;
     }
     
     return industryPicker;
@@ -111,10 +119,10 @@
 #pragma mark UIPickerViewDataSource
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.industryTextField.text = [[_industries objectAtIndex:row] objectForKey:@"industry_name"];
-    _industryID = [[_industries objectAtIndex:row] objectForKey:@"industry_id"];
+    self.industryTextField.text = [[self.industries objectAtIndex:row] objectForKey:@"industry_name"];
+    self.industryID = [[self.industries objectAtIndex:row] objectForKey:@"industry_id"];
     
-    if([_industryID isEqual: @(13)]){
+    if([self.industryID isEqual: @(13)]){
         [self.industryTextField resignFirstResponder];
         
         self.industryTextField.inputView = nil;
@@ -123,7 +131,7 @@
         
     }else{
         self.industryTextField.clearButtonMode = UITextFieldViewModeNever;
-        self.industryTextField.inputView = _industryPicker;
+        self.industryTextField.inputView = self.industryPicker;
         [NSTimer scheduledTimerWithTimeInterval:.5 target:self selector:@selector(togglePickerKeyboard:) userInfo:nil repeats:NO];
     }
 }
@@ -131,7 +139,7 @@
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     if(textField.tag == 170){
-        textField.inputView = _industryPicker;
+        textField.inputView = self.industryPicker;
         self.industryTextField.clearButtonMode = UITextFieldViewModeNever;
     }
     
@@ -144,11 +152,11 @@
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [[_industries objectAtIndex:row] objectForKey:@"industry_name"];
+    return [[self.industries objectAtIndex:row] objectForKey:@"industry_name"];
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-	return [_industries count];
+	return [self.industries count];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -156,66 +164,58 @@
 }
 
 - (void)toggleMenu:(id)sender{
-    [self.menuController toggleMenu:sender];
+    [self.containerView toggleMenu:sender];
 }
 
-- (IBAction)submit:(id)sender{
+- (IBAction)submit:(id)sender
+{
+    NSDictionary *accountDict = [self validateFields];    
+    if (accountDict) {                
+        [CTLAccountManager updateAccount:accountDict withUser:self.currentUser completionBlock:^(BOOL success, CTLCDAccount *account, NSError *error) {
+            if(success){
+                self.currentUser = account;
+                [self.navigationController popViewControllerAnimated:YES];            
+            }else{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                                message: [error localizedDescription]
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        }];
+    }
+}
+
+- (NSDictionary *)validateFields
+{    
+    NSArray *fields = @[self.firstNameTextField, self.lastNameTextField, self.companyTextField, self.industryTextField];
     
-    //TODO: loading 
+    for(int i=0;i<[fields count]; i++){
+        UITextField *textField = fields[i];
+        if([textField.text length] == 0){
+            textField.backgroundColor = [UIColor ctlErrorPink];
+        }
+    }
+    
     NSString *first_name = self.firstNameTextField.text;
     NSString *last_name = self.lastNameTextField.text;
     NSString *company = self.companyTextField.text;
     NSString *industry = self.industryTextField.text;
-    NSString *industry_id = [NSString stringWithFormat:@"%d", _industryID.intValue];
+    NSString *industry_id = [NSString stringWithFormat:@"%d", self.industryID.intValue];
     
+    //required fields. thow shall now pass!
     if ([first_name length] == 0 &&
-       [last_name length]   == 0 &&
-       [company length]     == 0 &&
-       [industry length]    == 0) {
-        return;
-    }    
+        [last_name length]  == 0 &&
+        [company length]    == 0 &&
+        [industry length]   == 0 ){
+        //form is empty!
+        return nil;
+    }
     
-    NSMutableDictionary *post = [NSMutableDictionary dictionary];
-    [post setValue:_account.user_id forKey:@"id"];
-    [post setValue:first_name forKey:@"user[first_name]"];
-    [post setValue:last_name forKey:@"user[last_name]"];
-    [post setValue:company forKey:@"company[name]"];
-    [post setValue:industry forKey:@"industry[name]"];
-    [post setValue:industry_id forKey:@"industry[id]"];
-        
-    NSString *path = [NSString stringWithFormat:@"/account/%@/?auth_token=%@&format=json", _account.user_id, _account.auth_token];
-    [_api makeRequest:path withParams:post method:GOHTTPMethodPUT withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
-        
-        if(requestSucceeded){
-
-            _account.first_name = first_name;
-            _account.last_name = last_name;
-            _account.company = company;
-            _account.industry = industry;
-            
-            if(response[@"user"]){
-                if(response[@"user"][@"industry"]){
-                    _account.industry_id = response[@"user"][@"industry"][@"id"];
-                }
-            }        
-            
-            _account.updated_at = [NSDate date];
-            
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-                //TODO: dismiss loading screen
-                [self.navigationController popViewControllerAnimated:YES];
-            }];
-                        
-        }else{
-            NSString *message = [CTLAPI messageFromResponse:response];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil, nil];
-            [alert show];
-        }
-    }];
+    NSDictionary *accountDict = @{ @"first_name":first_name, @"last_name":last_name, @"company":company, @"industry":industry, @"industry_id":industry_id };
+    return accountDict;
+    
 }
 
 - (void)alertErrorMessage:(NSString *)i18nKey

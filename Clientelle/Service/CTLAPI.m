@@ -8,6 +8,7 @@
 //
 
 #import "CTLAPI.h"
+#import "CTLCDAccount.h"
 
 BOOL const DEBUG_MODE = YES;
 
@@ -31,8 +32,11 @@ typedef enum{
 }CTLResponseCode;
 
 @interface CTLAPI()
+@property (nonatomic, strong) NSOperationQueue *internetOperationQueue;
+@property (nonatomic, strong) NSString *authToken;
 - (void)setUserDictionary:(NSDictionary *)user;
 - (NSString *)urlStringForAPIMethod:(NSString *)method;
+
 @end
 
 @implementation CTLAPI
@@ -40,6 +44,7 @@ typedef enum{
 + (id)sharedAPI{
     static CTLAPI *sharedAPI = nil;
     static dispatch_once_t onceToken;
+    
     dispatch_once(&onceToken, ^{
         sharedAPI = [[self alloc] init];
     });
@@ -49,8 +54,11 @@ typedef enum{
 
 - (id)init{
     if(self = [super init]){
-        _internetOperationQueue = [[NSOperationQueue alloc] init];
-        [_internetOperationQueue setName:@"com.clientelle.apiQueue"];
+        self.internetOperationQueue = [[NSOperationQueue alloc] init];
+        [self.internetOperationQueue setName:@"com.clientelle.apiQueue"];
+        
+        CTLCDAccount *account = [CTLCDAccount findFirst];
+        self.authToken = account.auth_token ? account.auth_token : @"";
     }
     return self;
 }
@@ -100,12 +108,11 @@ typedef enum{
         }
         block(YES, responseDict);
     }];
-    [_internetOperationQueue addOperation:operation];
+    [self.internetOperationQueue addOperation:operation];
 }
 
 - (void)makeRequest:(NSString *)path withParams:(NSDictionary *)params method:(GOHTTPMethod)method withBlock:(CTLResultBlock)block
 {
-    
     NSString *urlString = [self urlStringForAPIMethod:path];
     GOHTTPOperation *operation = [GOHTTPOperation operationWithURL:urlString method:method params:params];
     [operation addCompletion:^(NSData *responseData) {
@@ -133,7 +140,16 @@ typedef enum{
         block(YES, responseDict);
     }];
 
-    [_internetOperationQueue addOperation:operation];
+    [self.internetOperationQueue addOperation:operation];
+}
+
+- (void)makeSignedRequest:(NSString *)path withUser:(CTLCDAccount *)account params:(NSDictionary *)params method:(GOHTTPMethod)method withBlock:(CTLResultBlock)block
+{    
+    NSMutableDictionary *postDict = [params mutableCopy];
+    [postDict setValue:account.auth_token forKey:@"auth_token"];
+    [postDict setValue:@"json" forKey:@"format"];
+    
+    [self makeRequest:path withParams:postDict method:method withBlock:block];
 }
 
 - (void)makeRequest:(NSString *)path withParams:(NSDictionary *)params andWait:(CTLResultBlock)block
@@ -193,7 +209,7 @@ typedef enum{
         block(YES, [responseDict objectForKey:kCTLMessageKey]);
         //block(YES, [responseDict objectForKey:kCTLAuthTokenKey]);
     }];
-    [_internetOperationQueue addOperation:operation];
+    [self.internetOperationQueue addOperation:operation];
 }
 
 - (void)submitContacts:(NSSet *)contacts withBlock:(CTLResultBlock)block{
@@ -220,7 +236,7 @@ typedef enum{
             return;
         }
     }];
-    [_internetOperationQueue addOperation:operation];
+    [self.internetOperationQueue addOperation:operation];
 }
 
 - (void)fetchInboxWithBlock:(CTLResultBlock)block{
@@ -246,7 +262,7 @@ typedef enum{
             block(NO, responseDict);
         }
     }];
-    [_internetOperationQueue addOperation:operation];
+    [self.internetOperationQueue addOperation:operation];
 }
 
 - (void)logActivity:(CTLActivityType)type forContactID:(NSString *)contactID{
@@ -254,7 +270,7 @@ typedef enum{
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@(type), @"action_type", contactID, @"conact_id", nil];
     GOHTTPOperation *operation = [GOHTTPOperation operationWithURL:urlString method:GOHTTPMethodPOST params:params];
-    [_internetOperationQueue addOperation:operation];
+    [self.internetOperationQueue addOperation:operation];
 }
 
 + (NSString *)messageFromResponse:(NSDictionary *)response {
@@ -278,5 +294,5 @@ typedef enum{
     return kServerErrorGeneric;
 
 }
- 
+
 @end

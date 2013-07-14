@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTLPinInterstialViewController : UIViewController<UITextFieldDelegate, CTLSlideMenuDelegate>
+@interface CTLPinInterstialViewController : UIViewController<UITextFieldDelegate, CTLContainerViewDelegate>
 
 @property (nonatomic, weak)IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak)IBOutlet UIButton *enterPinButton;
 @property (nonatomic, weak)IBOutlet UILabel *forgotPinLabel;
 @property (nonatomic, weak)IBOutlet UIButton *retrievePinLinkButton;
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, weak) CTLContainerViewController *containerView;
 
 - (IBAction)promptForPin:(id)sender;
 

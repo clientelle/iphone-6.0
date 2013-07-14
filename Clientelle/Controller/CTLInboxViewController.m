@@ -7,7 +7,7 @@
 //
 
 #import "CTLInboxViewController.h"
-#import "CTLSlideMenuController.h"
+#import "CTLContainerViewController.h"
 
 @implementation CTLInboxViewController
 
@@ -24,7 +24,7 @@
     
     
         
-    [self.menuController renderMenuButton:self];
+    [self.containerView renderMenuButton:self];
     [self.navigationItem setHidesBackButton:YES animated:YES];
     
 }

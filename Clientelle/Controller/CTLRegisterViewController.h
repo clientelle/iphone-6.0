@@ -8,20 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-
 extern NSString *const CTLReloadInboxNotifiyer;
 
-@class CTLAPI;
 @class CTLCDAccount;
 
-@interface CTLRegisterViewController : UITableViewController<UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CTLSlideMenuDelegate>{
-    UIPickerView *_industryPicker;
-    NSArray *_industries;
-    CTLAPI *_api;
-    NSNumber *_industryID;
-}
+@interface CTLRegisterViewController : UITableViewController<UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CTLContainerViewDelegate>
 
-@property (nonatomic, weak) CTLSlideMenuController *menuController;
+@property (nonatomic, weak) CTLContainerViewController *containerView;
 
 @property (nonatomic, weak) IBOutlet UITextField *emailTextField;
 @property (nonatomic, weak) IBOutlet UITextField *passwordTextField;
@@ -29,11 +22,9 @@ extern NSString *const CTLReloadInboxNotifiyer;
 @property (nonatomic, weak) IBOutlet UITextField *companyTextField;
 @property (nonatomic, weak) IBOutlet UITextField *industryTextField;
 @property (nonatomic, weak) IBOutlet UIButton *signInButton;
-
 @property (nonatomic, assign) BOOL showMenuButton;
 
 - (IBAction)submit:(id)sender;
-
 - (IBAction)segueToLogin:(id)sender;
 
 @end

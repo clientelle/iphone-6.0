@@ -37,6 +37,7 @@ e†
 "FREE" = "FREE";
 "INCOMPLETE" = "Incomplete";
 "ACTION_REQUIRED" = "Action Required";
+"ME" = "Me";
 
 /* GENERIC TERMS */
 "CLIENTS" = "Clients";
@@ -127,13 +128,17 @@ e†
 "CONTACT_PLACEHOLDER_address2" = "City, State, Zip";
 
 
-/* Group Messaging */
-
 "NO_CONTACTS" = "No Contacts";
-
 "FORWARD_CONTACT" = "Forward %@'s contact info";
 "SEND_VIA_SMS" = "Send via SMS";
 "SEND_VIA_EMAIL" = "Send via Email";
+
+"CALL_MOBILE" = "Mobile: %@";
+"CALL_PHONE" = "Phone: %@";
+
+"SEND_SMS" = "Send SMS";
+"SEND_EMAIL" = "Send Email";
+"SEND_PRIVATE_MESSAGE" = "Private Message";
 
 "DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL" = "Device is not configured to send email messages";
 "DEVICE_NOT_CONFIGURED_TO_SEND_SMS" = "Device is not configured to send text messages";
@@ -247,8 +252,13 @@ e†
 "PASSWORD_REQUIREMENT" = "Password must be at least 6 characters";
 "PASSWORDS_DO_NOT_MATCH" = "Passwords do not match";
 
+"COULD_NOT_CREATE_ACCOUNT" = "Sorry, we cannot create your account right now";
+"COULD_NOT_UPDATE_ACCOUNT" = "Sorry, we cannot create your account right now";
 
-"CHOOSE_MESSAGE_TYPE" = "Choose a message type";
-"SEND_SMS" = "Send SMS";
-"SEND_EMAIL" = "Send Email";
-"SEND_PRIVATE" = "Private Message";
+
+
+/* MESSAGES */
+"COMPOSE_MESSSAGE" = "Compose Message";
+"REPLY"  = "Reply";
+"INVITE_CONTACT" = "Invite %@ to Clientelle";
+

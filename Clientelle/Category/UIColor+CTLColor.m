@@ -71,4 +71,9 @@
     return [self colorFromUnNormalizedRGB:160.0f green:36.0f blue:34.0f alpha:0.90f];
 }
 
++ (UIColor *)ctlErrorPink
+{
+    return [self colorFromUnNormalizedRGB:237.0f green:221.0f blue:221.0f alpha:0.60f];
+}
+
 @end

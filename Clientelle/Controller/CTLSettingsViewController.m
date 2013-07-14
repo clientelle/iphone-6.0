@@ -5,16 +5,29 @@
 //  Created by Kevin Liu on 1/22/13.
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
-#import "CTLSlideMenuController.h"
-#import "CTLSettingsViewController.h"
-#import "CTLRegisterViewController.h"
-#import "CTLCDAccount.h"
+
+#import <MessageUI/MessageUI.h>
 #import "UITableViewCell+CellShadows.h"
 #import "UIColor+CTLColor.h"
-#import <MessageUI/MessageUI.h>
+
+#import "CTLContainerViewController.h"
+#import "CTLSettingsViewController.h"
+#import "CTLRegisterViewController.h"
+#import "CTLAccountViewController.h"
+
+#import "CTLAccountManager.h"
+#import "CTLCDAccount.h"
 
 NSString *const CTLAccountSegueIdentifyer = @"toAccountInfo";
 NSString *const CTLSignupSegueIdentifyer = @"toSignup";
+
+@interface CTLSettingsViewController()
+
+@property (nonatomic, strong) CTLCDAccount *currentUser;
+@property (nonatomic, strong) UIAlertView *purchaseAlertView;
+@property (nonatomic, assign) BOOL hasPro;
+
+@end
 
 @implementation CTLSettingsViewController
 
@@ -28,15 +41,17 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
     
     self.navigationItem.title = NSLocalizedString(@"SETTINGS", nil);
     
-    [self.menuController setRightSwipeEnabled:NO];
+    [self.containerView setRightSwipeEnabled:NO];
     
-    _account = [CTLCDAccount MR_findFirst];
+    self.currentUser = self.containerView.currentUser;
+    
+    self.hasPro = [CTLAccountManager userDidPurchasePro];
     
     //Set the notification switch
     [self.appointmentNotificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsAppointmentNotification]];
     [self.messageNotificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsAppointmentNotification]];
-    
-    if(!self.menuController.isPro){
+
+    if(!self.hasPro){
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"UPGRADE", nil) style:UIBarButtonItemStylePlain target:self action:@selector(upgradeToPro:)];
     }
     
@@ -71,12 +86,12 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
 {
     self.accountTypeCell.textLabel.text = NSLocalizedString(@"ACCOUNT_TYPE", nil);
 
-    if([_account objectID]){
+    if([self.currentUser objectID]){
         self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"PRO", nil);
         self.accountTypeCell.detailTextLabel.textColor = [UIColor ctlGreen];
         self.accountTypeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else{
-        if(self.menuController.isPro){
+        if(self.hasPro){
             self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"INCOMPLETE", nil);
             self.accountTypeCell.detailTextLabel.textColor = [UIColor redColor];
             self.accountTypeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -105,14 +120,14 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
 {
     if(indexPath.section == 0){
         if(indexPath.row == 0){
-            if([_account objectID]){
+            if([self.currentUser objectID]){
                 [self performSegueWithIdentifier:CTLAccountSegueIdentifyer sender:nil];
             }else{
                 [self performSegueWithIdentifier:CTLSignupSegueIdentifyer sender:nil];
             }
         }
         if(indexPath.row == 3){
-            if(![_account objectID]){
+            if(![self.currentUser objectID]){
                 [self upgradeToPro:nil];
             }else{
                 [self performSegueWithIdentifier:@"toSetPin" sender:nil];
@@ -143,6 +158,14 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
     if([[segue identifier] isEqualToString:CTLSignupSegueIdentifyer]){
         CTLRegisterViewController *controller = [segue destinationViewController];
         [controller setShowMenuButton:NO];
+        return;
+    }
+    
+    if([[segue identifier] isEqualToString:CTLAccountSegueIdentifyer]){
+        CTLAccountViewController *controller = [segue destinationViewController];
+        
+        [controller setContainerView:self.containerView];
+      
         return;
     }
 }

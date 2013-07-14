@@ -8,15 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-//@protocol CTLFieldCellDelegate
-//
-//@property (nonatomic, weak) UITextField *focusedTextField;
-//
-//- (IBAction)highlightTextField:(UITextField *)textField;
-//- (IBAction)textFieldDidChange:(UITextField *)textField;
-//
-//@end
-
 @interface CTLFieldCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UITextField *textInput;

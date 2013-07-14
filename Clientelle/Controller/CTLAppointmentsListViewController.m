@@ -24,6 +24,9 @@
 
 #import "CTLPinInterstialViewController.h"
 
+
+#import "CTLCDAccount.h"
+
 NSString *const CTLAppointmentWasAddedNotification = @"com.clientelle.notifications.appointmentWasAdded";
 NSString *const CTLAppointmentFormSegueIdentifyer = @"toAppointmentForm";
 NSString *const CTLAppointmentModalSegueIdentifyer = @"toAppointmentModal";
@@ -47,6 +50,11 @@ int const CTLSelectedFilterIndexCompleted = 1;
 
     _emptyView = [self buildEmptyView];
     _eventStore = [[EKEventStore alloc] init];
+    
+    
+    CTLCDAccount *account = [CTLCDAccount MR_findFirst];
+    
+    NSLog(@"ACCOUNT %@", account);
 
     [self configureFilterPicker];
     [self createFilterPickerButton];

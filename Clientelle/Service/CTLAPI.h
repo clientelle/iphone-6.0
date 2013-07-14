@@ -23,10 +23,9 @@ extern NSString *const kCTLStatusKey;
 extern NSString *const kCTLResponseKey;
 extern NSString *const kCTLAuthTokenKey;
 
+@class CTLCDAccount;
 
-@interface CTLAPI : NSObject {
-    NSOperationQueue *_internetOperationQueue;
-}
+@interface CTLAPI : NSObject
 
 + (id)sharedAPI;
 
@@ -36,6 +35,9 @@ extern NSString *const kCTLAuthTokenKey;
 - (void)makeRequest:(NSString *)path withParams:(NSDictionary *)params andWait:(CTLResultBlock)block;
 - (void)makeRequest:(NSString *)path withParams:(NSDictionary *)params method:(GOHTTPMethod)method withBlock:(CTLResultBlock)block;
 - (void)makeRequest:(NSString *)path andWait:(CTLResultBlock)block;
+
+
+- (void)makeSignedRequest:(NSString *)path withUser:(CTLCDAccount *)account params:(NSDictionary *)params method:(GOHTTPMethod)method withBlock:(CTLResultBlock)block;
 
 - (void)loginWithEmail:(NSString *)email password:(NSString *)password andBlock:(CTLResultBlock)block;
 - (void)submitContacts:(NSSet *)contacts withBlock:(CTLResultBlock)block;
