@@ -5,10 +5,8 @@
 //
 #import <QuartzCore/QuartzCore.h>
 #import "CTLCDAppointment.h"
-
 #import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
-
 #import "CTLContainerViewController.h"
 #import "CTLMainMenuViewController.h"
 #import "CTLAppointmentFormViewController.h"
@@ -17,20 +15,20 @@
 const CGFloat CTLMainMenuWidth = 80.0f;
 NSString *const CTLDefaultNavigationControllerIdentifier = @"appointments";
 
-
 @implementation CTLContainerViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.currentUser = [CTLAccountManager currentUser];
+    
+    if([CTLCDAccount countOfEntities] == 0){
+        [CTLAccountManager createDefaultAccount];
+    }
 
     [self setupMenuView:self.view.bounds];
 
     if(!self.mainViewControllerIdentifier){
-        self.mainViewControllerIdentifier = CTLDefaultNavigationControllerIdentifier;
-        
+        self.mainViewControllerIdentifier = CTLDefaultNavigationControllerIdentifier;        
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
         [self setRightPanel:navigationController withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
     }
@@ -85,8 +83,7 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointments";
 {
     [self.view endEditing:YES];
     CGRect mainFrame = self.mainNavigationController.view.frame;
-    CGRect movedFrame = CGRectMake(CTLMainMenuWidth, mainFrame.origin.y, mainFrame.size.width, mainFrame.size.height);
-    
+    CGRect movedFrame = CGRectMake(CTLMainMenuWidth, mainFrame.origin.y, mainFrame.size.width, mainFrame.size.height);    
     [UIView animateWithDuration:0.3 animations:^{
         [self.mainNavigationController.view setFrame:movedFrame];
     }];
@@ -95,8 +92,7 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointments";
 -(void)hideMenu
 {
     CGRect mainFrame = self.mainNavigationController.view.frame;
-    CGRect movedFrame = CGRectMake(0, mainFrame.origin.y, mainFrame.size.width, mainFrame.size.height);
-    
+    CGRect movedFrame = CGRectMake(0, mainFrame.origin.y, mainFrame.size.width, mainFrame.size.height);    
     [UIView animateWithDuration:0.3 animations:^{
         [self.mainNavigationController.view setFrame:movedFrame];
     }];

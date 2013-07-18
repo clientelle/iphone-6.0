@@ -210,7 +210,7 @@
             <objects>
                 <tableViewController id="UoD-9H-AyX" customClass="CTLContactDetailsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="oK1-rL-5hz">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Zmb-Rx-c0Z">
@@ -1412,7 +1412,6 @@
                         <outlet property="recipientTextField" destination="vHj-35-boW" id="eFd-0f-BV5"/>
                         <outlet property="tableView" destination="Mdf-ZF-UAP" id="HDd-ud-bOi"/>
                         <segue destination="AaL-yu-Gmw" kind="modal" identifier="toImporter" id="nF8-oR-Kzh"/>
-                        <segue destination="UoD-9H-AyX" kind="push" identifier="toContactForm" id="8fT-Sa-DVy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Pv-B7-HAs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1782,7 +1781,7 @@
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="ibp-mD-j32" imageView="vOw-dX-dZx" style="IBUITableViewCellStyleDefault" id="Lnu-Tl-mC1">
-                                        <rect key="frame" x="0.0" y="143" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="143" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -1842,7 +1841,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="84c-LQ-Bdp" style="IBUITableViewCellStyleDefault" id="hvx-yT-Wfk">
-                                        <rect key="frame" x="0.0" y="296" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="296" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -3043,9 +3042,9 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="nF8-oR-Kzh"/>
-        <segue reference="8fT-Sa-DVy"/>
-        <segue reference="TgC-Gg-uWh"/>
         <segue reference="iGD-nT-ogT"/>
+        <segue reference="ajR-Vp-hIS"/>
         <segue reference="1JI-iC-iph"/>
+        <segue reference="TgC-Gg-uWh"/>
     </inferredMetricsTieBreakers>
 </document>

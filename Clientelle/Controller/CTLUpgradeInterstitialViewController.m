@@ -14,6 +14,10 @@
 #import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
 
+@interface CTLUpgradeInterstitialViewController()
+@property (nonatomic, strong) CTLCDAccount *currentUser;
+@end
+
 @implementation CTLUpgradeInterstitialViewController
 
 - (void)viewDidLoad
@@ -23,18 +27,17 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BACK", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
     
     [self.navigationItem setBackBarButtonItem: backButton];
-        
-    CTLCDAccount *account = [CTLCDAccount MR_findFirst];
-    BOOL hasPro = [CTLAccountManager userDidPurchasePro];
     
-    if(hasPro == NO && !account){
+    self.currentUser = [CTLCDAccount MR_findFirst];
+    
+    if(self.currentUser.is_proValue == NO){
         self.navigationItem.title = @"Upgrade";
         self.actionMessageLabel.text = @"You must upgrade to get this feature";
         [self.upgradeButton setTitle: @"Purchase" forState: UIControlStateNormal];
         [self.upgradeButton addTarget:self action:@selector(upgradeToPro:) forControlEvents:UIControlEventTouchUpInside];
     }    
     
-    if(hasPro && !account){
+    if(self.currentUser.is_proValue == YES && self.currentUser.email == nil){
         self.navigationItem.title = @"Register";
         self.actionMessageLabel.text = @"Thank you for purchasing.";
         [self.upgradeButton setTitle: @"Create Account" forState: UIControlStateNormal];
@@ -52,8 +55,10 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex == 1){       
-        [CTLAccountManager recordPurchase];                
-        [self toSignup:alertView];
+        self.currentUser.is_pro = @(YES);
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+            [self toSignup:alertView];
+        }];        
     }
 }
 

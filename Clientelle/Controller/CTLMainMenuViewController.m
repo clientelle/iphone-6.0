@@ -18,7 +18,6 @@
 #import "CTLCDAccount.h"
 
 @interface CTLMainMenuViewController()
-@property (nonatomic, assign) BOOL hasPro;
 @property (nonatomic, strong) CTLCDAccount *currentUser;
 @end
 
@@ -28,14 +27,7 @@
 {
     [super viewDidLoad];
     
-    if(self.containerView.currentUser != nil){
-        self.currentUser = self.containerView.currentUser;
-        self.hasPro = YES;
-    }else{
-        self.currentUser = nil;
-        self.hasPro = NO;
-    }
-
+    self.currentUser = [CTLAccountManager currentUser];
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:40 green:40 blue:40 alpha:1.0f];
 }
 
@@ -79,7 +71,7 @@
 {
     NSString *storyboardIdentifier = identifier;
 
-    if(self.hasPro){
+    if(self.currentUser.is_proValue){
         if([self shouldShowInboxSetup:identifier]){
             storyboardIdentifier = @"inboxSetup";
         }

@@ -15,7 +15,7 @@
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updated_at" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="account" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="contacts" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="account" inverseEntity="Contact" syncable="YES"/>
         <relationship name="conversation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="account" inverseEntity="Conversation" syncable="YES"/>
         <relationship name="inbox" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Inbox" inverseName="account" inverseEntity="Inbox" syncable="YES"/>
     </entity>
@@ -84,7 +84,7 @@
         <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-477" positionY="-288" width="128" height="298"/>
+        <element name="Account" positionX="-434" positionY="-253" width="128" height="298"/>
         <element name="Appointment" positionX="-47" positionY="-153" width="128" height="210"/>
         <element name="Contact" positionX="-279" positionY="8" width="128" height="343"/>
         <element name="ContactField" positionX="-729" positionY="-270" width="128" height="133"/>

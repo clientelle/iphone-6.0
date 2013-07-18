@@ -45,36 +45,32 @@
     NSMutableDictionary *post = [NSMutableDictionary dictionary];
     [post setValue:self.emailTextField.text forKey:@"user[email]"];
     [post setValue:self.passwordTextField.text forKey:@"user[password]"];
-    [post setValue:[[NSUserDefaults standardUserDefaults] objectForKey:kCTLPushNotifToken] forKey:@"user[apn_token]"];
-                           
-    [_api makeRequest:@"/login.json" withParams:post method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
+    
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:kCTLPushNotifToken];
+    
+    if(deviceToken){
+        [post setValue:deviceToken forKey:@"user[apn_token]"];
+    }
+    
+    [CTLAccountManager loginAndSync:post withCompletionBlock:^(BOOL result, CTLCDAccount *account, NSError *error){
         
-        if(requestSucceeded){
-            
-            [CTLAccountManager recordPurchase];
-            
-            CTLCDAccount *account = [CTLAccountManager createFromApiResponse:response];
-            
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-                
-                if(self.containerView.nextNavString){
-                    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.containerView.nextNavString];
-                    UIViewController<CTLContainerViewDelegate> *viewController = (UIViewController<CTLContainerViewDelegate> *)navigationController.topViewController;
-                    viewController.containerView = self.containerView;
-                    [self.containerView setMainViewController:viewController];
-                    [self.containerView setCurrentUser:account];
-                    [self.containerView setRightSwipeEnabled:YES];
-                    [self.containerView flipToView];
-                }else{
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
-            }];
-            
+        if(result){
+                  
+            if(self.containerView.nextNavString){
+                UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.containerView.nextNavString];
+                UIViewController<CTLContainerViewDelegate> *viewController = (UIViewController<CTLContainerViewDelegate> *)navigationController.topViewController;
+                viewController.containerView = self.containerView;
+                [self.containerView setMainViewController:viewController];
+                [self.containerView setRightSwipeEnabled:YES];
+                [self.containerView flipToView];
+            }else{
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+                     
         }else{
             
-            NSString *message = [CTLAPI messageFromResponse:response];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:message
+                                                            message:[error localizedDescription]
                                                            delegate:self
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil, nil];

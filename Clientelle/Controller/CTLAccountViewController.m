@@ -30,7 +30,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    self.currentUser = self.containerView.currentUser;
+    self.currentUser = [CTLAccountManager currentUser];
      
     self.industryPicker = [self configureIndustryPicker];
     

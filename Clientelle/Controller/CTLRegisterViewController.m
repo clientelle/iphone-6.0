@@ -165,15 +165,11 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
         [CTLAccountManager createAccount:accountDict completionBlock:^(BOOL success, CTLCDAccount *account, NSError *error) {
             
             if(success){
-                
-                [CTLAccountManager recordPurchase];
-                
                 if(self.containerView.nextNavString){
                     UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.containerView.nextNavString];
                     UIViewController<CTLContainerViewDelegate> *viewController = (UIViewController<CTLContainerViewDelegate> *)navigationController.topViewController;
                     viewController.containerView = self.containerView;
                     [self.containerView setMainViewController:viewController];
-                    [self.containerView setCurrentUser:account];
                     [self.containerView setRightSwipeEnabled:YES];
                     [self.containerView flipToView];
                 }else{

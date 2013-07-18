@@ -68,6 +68,8 @@
 		416DDAE716AFA9F100F2F8B3 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DDACA16AFA9F100F2F8B3 /* MagicalRecord+ShorthandSupport.m */; };
 		416DDAE816AFA9F100F2F8B3 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 416DDACC16AFA9F100F2F8B3 /* MagicalRecord.m */; };
 		416DDAEE16AFAB8200F2F8B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416DDAED16AFAB8200F2F8B3 /* CoreData.framework */; };
+		4172D7721797860E00FD8370 /* 31-paper-airplane-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 4172D7701797860E00FD8370 /* 31-paper-airplane-gray.png */; };
+		4172D7731797860E00FD8370 /* 31-paper-airplane-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4172D7711797860E00FD8370 /* 31-paper-airplane-gray@2x.png */; };
 		41786EBC176831AA008808BD /* 06-map-pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 41786E51176831AA008808BD /* 06-map-pin.png */; };
 		41786EBD176831AA008808BD /* 06-map-pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41786E52176831AA008808BD /* 06-map-pin@2x.png */; };
 		41786EBE176831AA008808BD /* 07-map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 41786E53176831AA008808BD /* 07-map-marker.png */; };
@@ -428,6 +430,8 @@
 		416DDACE16AFA9F100F2F8B3 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		416DDAED16AFAB8200F2F8B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		416DDB1816AFC24F00F2F8B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Clientelle.storyboard; sourceTree = "<group>"; };
+		4172D7701797860E00FD8370 /* 31-paper-airplane-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "31-paper-airplane-gray.png"; sourceTree = "<group>"; };
+		4172D7711797860E00FD8370 /* 31-paper-airplane-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "31-paper-airplane-gray@2x.png"; sourceTree = "<group>"; };
 		41786E51176831AA008808BD /* 06-map-pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-map-pin.png"; sourceTree = "<group>"; };
 		41786E52176831AA008808BD /* 06-map-pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-map-pin@2x.png"; sourceTree = "<group>"; };
 		41786E53176831AA008808BD /* 07-map-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "07-map-marker.png"; sourceTree = "<group>"; };
@@ -810,7 +814,7 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		416DD83416AF9C2D00F2F8B3 /* SliderMenu */ = {
+		416DD83416AF9C2D00F2F8B3 /* ContainerView */ = {
 			isa = PBXGroup;
 			children = (
 				416DD82816AF966300F2F8B3 /* CTLContainerViewController.h */,
@@ -819,7 +823,7 @@
 				417DC29616ADF60E0073199D /* CTLMainMenuViewController.h */,
 				417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */,
 			);
-			name = SliderMenu;
+			name = ContainerView;
 			sourceTree = "<group>";
 		};
 		416DDA9316AFA9F100F2F8B3 /* MagicalRecord */ = {
@@ -964,6 +968,8 @@
 				41786E72176831AA008808BD /* 25-box@2x.png */,
 				418514BE176FF4010005B737 /* 31-paper-airplane.png */,
 				418514BF176FF4010005B737 /* 31-paper-airplane@2x.png */,
+				4172D7701797860E00FD8370 /* 31-paper-airplane-gray.png */,
+				4172D7711797860E00FD8370 /* 31-paper-airplane-gray@2x.png */,
 				41786E73176831AA008808BD /* 253-person.png */,
 				41786E74176831AA008808BD /* 253-person@2x.png */,
 				41786E75176831AA008808BD /* 256-box2.png */,
@@ -1147,7 +1153,7 @@
 		417DC29316ADF60E0073199D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				416DD83416AF9C2D00F2F8B3 /* SliderMenu */,
+				416DD83416AF9C2D00F2F8B3 /* ContainerView */,
 				4167F5BA16D6FDA6005B7B08 /* CTLLoginViewController.h */,
 				4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */,
 				416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */,
@@ -1536,6 +1542,8 @@
 				418514C1176FF4010005B737 /* 31-paper-airplane@2x.png in Resources */,
 				418514DB1773F5430005B737 /* CTLMessengerInviteView.xib in Resources */,
 				41F17AF0177C131B00BB0368 /* CTLAutoCompleteTableView.xib in Resources */,
+				4172D7721797860E00FD8370 /* 31-paper-airplane-gray.png in Resources */,
+				4172D7731797860E00FD8370 /* 31-paper-airplane-gray@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

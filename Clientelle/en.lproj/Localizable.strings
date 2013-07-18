@@ -253,7 +253,8 @@ e†
 "PASSWORDS_DO_NOT_MATCH" = "Passwords do not match";
 
 "COULD_NOT_CREATE_ACCOUNT" = "Sorry, we cannot create your account right now";
-"COULD_NOT_UPDATE_ACCOUNT" = "Sorry, we cannot create your account right now";
+"COULD_NOT_UPDATE_ACCOUNT" = "Sorry, we cannot update your account right now";
+"COULD_NOT_LOGIN" = "Sorry, we cannot login to your account right now";
 
 
 

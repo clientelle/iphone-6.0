@@ -42,11 +42,8 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
     self.navigationItem.title = NSLocalizedString(@"SETTINGS", nil);
     
     [self.containerView setRightSwipeEnabled:NO];
-    
-    self.currentUser = self.containerView.currentUser;
-    
-    self.hasPro = [CTLAccountManager userDidPurchasePro];
-    
+    self.currentUser = [CTLAccountManager currentUser];
+     
     //Set the notification switch
     [self.appointmentNotificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsAppointmentNotification]];
     [self.messageNotificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsAppointmentNotification]];

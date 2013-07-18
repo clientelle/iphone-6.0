@@ -59,7 +59,7 @@ int const CTLDialActionSheetTag = 803;
 {
     [super viewDidLoad];    
     
-    self.currentUser = self.containerView.currentUser;
+    self.currentUser = [CTLAccountManager currentUser];
     
     self.emptyView = [self noContactsView];
     self.inContactMode = NO;
@@ -84,7 +84,7 @@ int const CTLDialActionSheetTag = 803;
 {
     self.filteredContacts = [NSMutableArray array];
     
-    if([self.currentUser.contacts count] > 0){
+    if([CTLCDContact countOfEntities] > 0){
         
         [self buildSearchBar];
        

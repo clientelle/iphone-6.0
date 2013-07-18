@@ -13,5 +13,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *senderLabel;
 @property (nonatomic, weak) IBOutlet UILabel *timeLabel;
 @property (nonatomic, weak) IBOutlet UILabel *messageLabel;
+@property (nonatomic, weak) IBOutlet UIButton *inviteButton;
 
 @end

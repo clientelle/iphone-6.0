@@ -74,7 +74,7 @@
 
 - (void)configure:(CTLConversationCell *)cell withConversation:(CTLCDConversation *)conversation
 {
-    NSString *contactName = conversation.contact.compositeName;
+    NSString *contactName = conversation.contact.firstName;
     
     //If top message is me, show a different label
     if([conversation.last_sender_uid isEqualToNumber:self.current_user.user_id]){

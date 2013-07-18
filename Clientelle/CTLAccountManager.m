@@ -22,13 +22,26 @@
     //device has mulitple accounts
     if([CTLCDAccount MR_countOfEntities] > 1){       
         int userId = [[NSUserDefaults standardUserDefaults] integerForKey:kCTLLoggedInUserId];
-        CTLCDAccount *account = [CTLCDAccount findFirstByAttribute:@"user_id" withValue:@(userId)];
-        if(account){
-            return account;
+        if(userId){
+            CTLCDAccount *account = [CTLCDAccount findFirstByAttribute:@"user_id" withValue:@(userId)];
+            if(account){
+                return account;
+            }
         }
-    }    
+    }
 
     return nil;    
+}
+
++ (void)createDefaultAccount
+{    
+    CTLCDAccount *defaultAccount = [CTLCDAccount createEntity];
+    defaultAccount.created_at = [NSDate date];
+    defaultAccount.updated_at = [NSDate date];
+    
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+                
+    }];
 }
 
 + (void)createAccount:(NSDictionary *)accountDict completionBlock:(CTLCreateAccountCompletionBlock)completionBlock
@@ -141,12 +154,27 @@
 }
 
 
++ (void)loginAndSync:(NSDictionary *)post withCompletionBlock:(CTLCreateAccountCompletionBlock)completionBlock
+{
+    CTLAPI *api = [CTLAPI sharedAPI];
+    [api makeRequest:@"/login.json" withParams:post method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *response) {        
+        if(requestSucceeded){
+            __block CTLCDAccount *account = [CTLAccountManager createFromApiResponse:response];
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){                
+                completionBlock(success, account, error);                
+            }];            
+        }else{            
+            NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedString(@"COULD_NOT_LOGIN", nil) };
+            NSError *error = [NSError errorWithDomain:@"com.ctl.clientelle.ErrorDomain" code:100 userInfo:userInfo];
+            completionBlock(NO, nil, error);
+        }
+    }];
 
-
+}
 
 + (CTLCDAccount *)createFromApiResponse:(NSDictionary *)dict
 {
-    CTLCDAccount *account = [CTLCDAccount MR_createEntity];
+    CTLCDAccount *account = [CTLCDAccount MR_findFirst];
     account.email = dict[@"user"][@"email"];
     account.user_id = dict[@"user"][@"id"];
     account.created_at = [NSDate date];
@@ -183,20 +211,6 @@
     }
     
     return account;
-}
-
-
-+ (void)recordPurchase
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:YES forKey:@"IS_PRO"];
-    [defaults synchronize];
-
-}
-
-+ (BOOL)userDidPurchasePro
-{
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"IS_PRO"];
 }
 
 @end

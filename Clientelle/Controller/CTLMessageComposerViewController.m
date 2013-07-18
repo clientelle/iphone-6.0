@@ -18,6 +18,7 @@
 #import "CTLContactDetailsViewController.h"
 #import "CTLMessengerInviteView.h"
 
+#import "CTLAPI.h"
 #import "CTLCDContact.h"
 #import "CTLCDConversation.h"
 #import "CTLCDMessage.h"
@@ -76,7 +77,6 @@ int const CTLContactPickerRowHeight = 35.0f;
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"COUNTS COUNT %i", [self.contacts count]);
     self.addContactButton.hidden = ([self.contacts count] > 0);
 }
 
@@ -129,7 +129,14 @@ int const CTLContactPickerRowHeight = 35.0f;
     }
 
     CTLCDContact *contact = [self.filteredContacts objectAtIndex:indexPath.row];
-    cell.textLabel.text = contact.compositeName;
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName];
+    
+    if(contact.user_idValue == 0){
+        
+        UIButton *accessory = [UIButton buttonWithType:UIButtonTypeContactAdd];
+        [accessory setUserInteractionEnabled:NO];
+        [cell setAccessoryView:accessory];
+    }
 
     cell.contentView.backgroundColor = [UIColor whiteColor];
     return cell;
@@ -221,6 +228,16 @@ int const CTLContactPickerRowHeight = 35.0f;
     }
 }
 
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    if([segue.identifier isEqualToString:CTLContactFormSegueIdentifier]){
+//        CTLContactDetailsViewController *viewController = [segue destinationViewController];
+//        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+//        
+//        [self.navigationController pushViewController:navController animated:YES];
+//    }
+//}
+
 - (void)chooseContact:(CTLCDContact *)contact
 {
     if(contact.user_idValue == 0){
@@ -268,8 +285,19 @@ int const CTLContactPickerRowHeight = 35.0f;
     message.message_text = self.messageTextView.text;
     message.created_at = [NSDate date];
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-       [self dismissViewControllerAnimated:YES completion:nil]; 
+    NSDictionary *postDict = @{@"message[content]": message.message_text, @"message[recipient_id]": self.conversation.contact.user_id};
+    
+    CTLAPI *api = [CTLAPI sharedAPI];
+    [api makeSignedRequest:@"/messages" withUser:self.current_user params:postDict method:GOHTTPMethodPOST withBlock:^(BOOL result, NSDictionary *responseDict) {
+        
+        if(result){
+    
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+               [self dismissViewControllerAnimated:YES completion:nil]; 
+            }];
+        }else{
+            
+        }
     }];
 }
 

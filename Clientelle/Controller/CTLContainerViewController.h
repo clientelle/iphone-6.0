@@ -8,12 +8,10 @@
 
 extern const CGFloat CTLMainMenuWidth;
 
-@class CTLCDAccount;
 @class CTLMainMenuViewController;
 
 @interface CTLContainerViewController : UIViewController;
 
-@property (nonatomic, strong) CTLCDAccount *currentUser;
 @property (nonatomic, weak) UINavigationController *mainNavigationController;
 
 @property (nonatomic, strong) NSString *mainViewControllerIdentifier;
