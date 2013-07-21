@@ -84,15 +84,15 @@ int const CTLDialActionSheetTag = 803;
 {
     self.filteredContacts = [NSMutableArray array];
     
-    if([CTLCDContact countOfEntities] > 0){
+    if([self.currentUser.contacts count] > 0){
         
         [self buildSearchBar];
        
         NSInteger sortFilterRow = [self.sortPickerView selectedRowInComponent:0];
         NSString *fieldName = self.sortArray[sortFilterRow][@"field"];
         BOOL ASC = [self.sortArray[sortFilterRow][@"asc"] boolValue];
-        
-        self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:fieldName ascending:ASC withPredicate:nil groupBy:nil delegate:self];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"account = %@", self.currentUser];
+        self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:fieldName ascending:ASC withPredicate:predicate groupBy:nil delegate:self];
         [self.fetchedResultsController performFetch:nil];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -140,12 +140,6 @@ int const CTLDialActionSheetTag = 803;
 - (void)reloadContactListAfterImport:(NSNotification *)notification
 {
     [self loadAllContacts];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if(![defaults boolForKey:@"display_sort_tooltip_once"]){
-        [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(displaySortTooltip:) userInfo:nil repeats:NO];
-        [defaults setBool:YES forKey:@"display_sort_tooltip_once"];
-        [defaults synchronize];
-    }
 }
 
 - (void)reloadContactList:(NSNotification *)notification

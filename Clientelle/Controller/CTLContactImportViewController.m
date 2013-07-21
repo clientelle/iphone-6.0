@@ -10,15 +10,19 @@
 #import "CTLContactImportViewController.h"
 #import "CTLABPerson.h"
 #import "CTLCDContact.h"
+#import "CTLCDAccount.h"
+#import "CTLAccountManager.h"
 
 @interface CTLContactImportViewController()
-@property(nonatomic, strong) NSArray *contacts;
-@property(nonatomic, strong) NSMutableArray *filteredContacts;
-@property(nonatomic, strong) NSMutableDictionary *selectedPeople;
-@property(nonatomic, strong) UIColor *textColor;
-@property(nonatomic, strong) UIColor *disabledTextColor;
-@property(nonatomic, strong) UIColor *selectedBackgroundColor;
-@property(nonatomic, assign) ABAddressBookRef addressBookRef;
+@property (nonatomic, strong) NSArray *contacts;
+@property (nonatomic, strong) NSMutableArray *filteredContacts;
+@property (nonatomic, strong) NSMutableDictionary *selectedPeople;
+@property (nonatomic, strong) UIColor *textColor;
+@property (nonatomic, strong) UIColor *disabledTextColor;
+@property (nonatomic, strong) UIColor *selectedBackgroundColor;
+@property (nonatomic, assign) ABAddressBookRef addressBookRef;
+@property (nonatomic, strong) CTLCDAccount *currentUser;
+@property (nonatomic, strong) NSSet *existingContacts;
 @end
 
 @implementation CTLContactImportViewController
@@ -27,6 +31,9 @@
 {
     self.busyIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.busyIndicator.hidden = YES;
+    
+    self.currentUser = [CTLAccountManager currentUser];
+    self.existingContacts = self.currentUser.contacts;
     
     self.contacts = [NSArray array];
     self.selectedPeople = [[NSMutableDictionary alloc] init];
@@ -82,15 +89,9 @@
 {
     [CTLABPerson peopleFromAddressBook:self.addressBookRef withBlock:^(NSDictionary *results){
         NSMutableDictionary *people = [results mutableCopy];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recordID != nil"];
-        NSArray *contacts = [CTLCDContact MR_findAllWithPredicate:predicate];
-        
-        //filter out contacts that have been added
-        for(NSInteger i=0;i<[contacts count];i++){
-            CTLCDContact *person = contacts[i];
-            [people removeObjectForKey:person.recordID];
-        }
-        
+        for(CTLCDContact *contact in self.existingContacts){
+            [people removeObjectForKey:contact.recordID];
+        }        
         self.contacts = [people allValues];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
@@ -256,13 +257,15 @@
     self.doneButton.enabled = NO;
     self.busyIndicator.hidden = NO;
     [self.busyIndicator startAnimating];
-    
+        
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    __block NSMutableArray *cdPeople = [NSMutableArray array];
+    __block NSMutableSet *cdPeople = [NSMutableArray array];
+    
     [self.selectedPeople enumerateKeysAndObjectsUsingBlock:^(NSNumber *recordID, CTLABPerson *person, BOOL *stop){
         CTLCDContact *contact = [CTLCDContact MR_createEntity];
         contact.recordID = @(person.recordID);
         [contact createFromABPerson:person];
+        contact.account = self.currentUser;
         [cdPeople addObject:contact];
     }];
     

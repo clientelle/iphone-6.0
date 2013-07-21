@@ -33,6 +33,9 @@ e†
 "TRY_AGAIN" = "Try Again";
 "UPGRADE" = "Upgrade";
 "ACCOUNT" = "Account";
+"ACCOUNTS" = "Accounts";
+"ACCOUNT_TYPE" = "Account Type";
+"MY_ACCOUNTS" = "My Accounts";
 "PRO" = "PRO";
 "FREE" = "FREE";
 "INCOMPLETE" = "Incomplete";
@@ -60,6 +63,7 @@ e†
 /* WELCOME SCREEN */
 
 "WELCOME" = "Welcome";
+"WELCOME_TO_CLIENTELLE" = "Welcome to Clientelle";
 "TITLE_SPIEL" = "With Clientelle, you can:";
 
 "BULLET_STORE_PRIVATE_CONTACTS" = "Store Private Contacts";
@@ -145,7 +149,6 @@ e†
 
 /* Preferences */
 "SETTINGS" = "Settings";
-"ACCOUNT_TYPE" = "Account Type";
 "FREE" = "Free";
 "PAID" = "Paid";
 "SET_A_PIN" = "Set a PIN Code";
@@ -155,7 +158,9 @@ e†
 "REQUEST_A_FEATURE" = "Request a Feature";
 "RATE_APP" = "Rate in App Store";
 "TELL_A_FRIEND" = "Tell a Friend about Clientelle";
-"IPHONE_FEEDBACK_SUBJECT" = "iPhone Feedback"; 
+"IPHONE_FEEDBACK_SUBJECT" = "iPhone Feedback";
+"LOGOUT_OF_THIS_ACCOUNT" = "Logout of this account";
+"CONFIRM_LOGOUT" = "Are you sure you want to log out?";
 
 /* Appointments */
 "CALENDAR" = "Clientelle Calendar";
@@ -244,6 +249,12 @@ e†
 
 "YOUR_ACCOUNT" = "Your Account";
 "CREATE_ACCOUNT" = "Create Account";
+"CREATE_NEW_ACCOUNT" = "Create New Account";
+"LOGIN" = "Login";
+"USE_DIFFERENT_ACCOUNT" = "Use a Different Account";
+"YOU_ARE_LOGGED_OUT" = "Your are logged out.";
+"SWITCH_TO_THIS_ACCOUNT" = "Switch to this Account";
+"LOGGED_IN_AS" = "Logged in as";
 
 "ACCOUNT_EMAIL" = "Account Email";
 "ACCOUNT_AGE" = "Account Age";
@@ -255,7 +266,7 @@ e†
 "COULD_NOT_CREATE_ACCOUNT" = "Sorry, we cannot create your account right now";
 "COULD_NOT_UPDATE_ACCOUNT" = "Sorry, we cannot update your account right now";
 "COULD_NOT_LOGIN" = "Sorry, we cannot login to your account right now";
-
+"COULD_NOT_SEND_MESSAGE" = "Sorry, we could not send the message right now";
 
 
 /* MESSAGES */

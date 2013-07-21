@@ -13,7 +13,6 @@
 #import "CTLPinInterstialViewController.h"
 
 const CGFloat CTLMainMenuWidth = 80.0f;
-NSString *const CTLDefaultNavigationControllerIdentifier = @"appointments";
 
 @implementation CTLContainerViewController
 
@@ -21,14 +20,21 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointments";
 {
     [super viewDidLoad];
     
+    NSString *defaultViewIdentifier = @"contacts";
+    
     if([CTLCDAccount countOfEntities] == 0){
-        [CTLAccountManager createDefaultAccount];
+        defaultViewIdentifier = @"welcome";
+        
+        self.storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        UIViewController *vc = [sb instantiateViewControllerWithIdentifier:@"myViewController"];
+        vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self presentViewController:vc animated:YES completion:NULL];
     }
 
     [self setupMenuView:self.view.bounds];
 
     if(!self.mainViewControllerIdentifier){
-        self.mainViewControllerIdentifier = CTLDefaultNavigationControllerIdentifier;        
+        self.mainViewControllerIdentifier = defaultViewIdentifier;        
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
         [self setRightPanel:navigationController withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
     }
@@ -154,6 +160,11 @@ NSString *const CTLDefaultNavigationControllerIdentifier = @"appointments";
 {
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"] style:UIBarButtonItemStyleBordered target:self action:@selector(toggleMenu:)];
     viewController.navigationItem.leftBarButtonItem = menuButton;
+}
+
+- (void)disableMenuButton
+{
+  self.mainViewController.navigationItem.leftBarButtonItem = nil;
 }
 
 - (void)setRightPanel:(UINavigationController *)rightNavigationController withFrame:(CGRect)frame

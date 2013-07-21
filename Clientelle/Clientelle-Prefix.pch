@@ -15,6 +15,17 @@
     #define MR_SHORTHAND
     #import "CoreData+MagicalRecord.h"
     #import "CTLContainerViewDelegate.h"
+    #import <SystemConfiguration/SystemConfiguration.h>
+    #import <MobileCoreServices/MobileCoreServices.h>
+    #import "AFNetworking.h"
+#endif
+
+#ifdef DEBUG
+    #define CTL_BASE_URL @"http://localhost:5000"
+    #define CTL_FAYE_CONFIG_URL @"http://localhost:5000/api/websockets/configuration.json?channel=%@"
+#else
+    #define CTL_BASE_URL @"http://localhost:5000"
+    #define CTL_FAYE_CONFIG_URL @"http://localhost:5000/api/websockets/configuration.json?channel=%@"
 #endif
 
 // Clientelle Global Keys

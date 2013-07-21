@@ -203,7 +203,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oaN-0W-nrg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7125" y="3840"/>
+            <point key="canvasLocation" x="-7141" y="4488"/>
         </scene>
         <!--Contact Details View Controller-->
         <scene sceneID="rgf-da-57t">
@@ -1280,7 +1280,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bsX-Qq-aSb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5432" y="4955"/>
+            <point key="canvasLocation" x="-5553" y="5279"/>
         </scene>
         <!--Message Composer View Controller-->
         <scene sceneID="gPD-Ya-5Su">
@@ -1317,13 +1317,13 @@
                                     <outlet property="delegate" destination="TnW-up-U8M" id="63j-jK-Ctj"/>
                                 </connections>
                             </textField>
-                            <textView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l6P-nS-gMG" customClass="MBTextView">
+                            <textView clipsSubviews="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l6P-nS-gMG">
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="433" id="hyp-dU-wH0"/>
                                     <constraint firstAttribute="width" constant="259" id="hyv-nX-Phm"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="15"/>
+                                <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
                                     <outlet property="delegate" destination="P5v-SC-4lY" id="cHq-pk-6CV"/>
@@ -1421,7 +1421,7 @@
         <!--Register View Controller - Sign up-->
         <scene sceneID="EtW-us-YwR">
             <objects>
-                <tableViewController id="CbC-t5-OQt" customClass="CTLRegisterViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="register" id="CbC-t5-OQt" customClass="CTLRegisterViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="MSX-he-WBl">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1607,18 +1607,18 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kSd-Lq-WVI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5521" y="2214"/>
+            <point key="canvasLocation" x="-5417" y="2594"/>
         </scene>
         <!--Login View Controller - Clientelle-->
         <scene sceneID="LSC-hk-t78">
             <objects>
-                <tableViewController id="Ugm-Nw-dpu" customClass="CTLLoginViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="login" id="Ugm-Nw-dpu" customClass="CTLLoginViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="87w-db-mx2">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.88797331199999996" alpha="1" colorSpace="calibratedWhite"/>
                         <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Mbq-G9-muO">
-                            <rect key="frame" x="0.0" y="146" width="320" height="31"/>
+                            <rect key="frame" x="0.0" y="110" width="320" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                             <state key="normal" title="Forgot your password?">
@@ -1633,22 +1633,22 @@
                             </connections>
                         </button>
                         <sections>
-                            <tableViewSection headerTitle="Sign in to Clientelle" id="wDJ-63-yZd">
+                            <tableViewSection id="wDJ-63-yZd">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="V3J-4M-vsF">
-                                        <rect key="frame" x="0.0" y="46" width="320" height="45"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="V3J-4M-vsF">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1qr-zd-bcK">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="kvnliu@gmail.com" placeholder="Email Address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1qr-zd-bcK">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="44k-dx-XLe"/>
                                                         <constraint firstAttribute="width" constant="260" id="M5h-4I-qMQ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                                 </textField>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1658,14 +1658,14 @@
                                             <constraint firstItem="1qr-zd-bcK" firstAttribute="centerX" secondItem="V3J-4M-vsF" secondAttribute="centerX" type="default" id="X6v-tZ-8bZ"/>
                                         </constraints>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="T5n-gU-1ir">
-                                        <rect key="frame" x="0.0" y="91" width="320" height="45"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="T5n-gU-1ir">
+                                        <rect key="frame" x="0.0" y="55" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4TC-gj-eQV">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123456" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4TC-gj-eQV">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="Vt4-wO-lmn"/>
                                                         <constraint firstAttribute="width" constant="260" id="sj8-MH-5gx"/>
@@ -1692,7 +1692,7 @@
                     <navigationItem key="navigationItem" title="Clientelle" id="myD-ZT-J0o">
                         <barButtonItem key="rightBarButtonItem" title="Login" id="6Xk-RF-pCj">
                             <connections>
-                                <action selector="loginAndSyncAccount:" destination="Ugm-Nw-dpu" id="wEO-U8-8xq"/>
+                                <action selector="login:" destination="Ugm-Nw-dpu" id="hnq-zQ-wLP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1703,7 +1703,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dWG-SK-vej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4782" y="2214"/>
+            <point key="canvasLocation" x="-4802" y="2594"/>
         </scene>
         <!--Settings View Controller - Settings-->
         <scene sceneID="TVB-xc-edL">
@@ -1732,6 +1732,7 @@
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Free" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gog-Y2-FK7">
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="13"/>
+                                                    <color key="textColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                             </subviews>
@@ -1879,15 +1880,16 @@
                         <outlet property="supportCell" destination="k03-zs-3gb" id="LRu-4T-cWd"/>
                         <outlet property="view" destination="2ld-di-sfQ" id="eff-fP-p8x"/>
                         <segue destination="lNS-Ua-D5H" kind="push" identifier="toSetPin" id="KND-gy-S7m"/>
-                        <segue destination="vaV-2o-6kT" kind="push" identifier="toAccountInfo" id="McU-cu-YMG"/>
+                        <segue destination="vaV-2o-6kT" kind="push" identifier="toAccountView" id="McU-cu-YMG"/>
                         <segue destination="CbC-t5-OQt" kind="push" identifier="toSignup" id="hcl-ja-9qa"/>
                         <segue destination="NAI-Hb-2eg" kind="push" identifier="toMessagePreference" id="FI3-8C-ZDq"/>
+                        <segue destination="Fn4-Z4-8Rr" kind="push" identifier="toAccounts" id="boM-oI-B0c"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zQ-8C-ERu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="ccw-dN-w8J"/>
             </objects>
-            <point key="canvasLocation" x="-6427" y="3840"/>
+            <point key="canvasLocation" x="-6443" y="4488"/>
         </scene>
         <!--Set Pin View Controller-->
         <scene sceneID="pj3-rp-5x8">
@@ -2023,7 +2025,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qP6-Sb-pra" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5645" y="4202"/>
+            <point key="canvasLocation" x="-5553" y="4488"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wv8-ra-VoP">
@@ -2201,6 +2203,102 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZjD-ld-Ogk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-5755" y="1174"/>
+        </scene>
+        <!--Logged Out Splash View Controller - Clientelle-->
+        <scene sceneID="csf-wn-3j1">
+            <objects>
+                <tableViewController storyboardIdentifier="accountsSplash" id="5ga-FU-lr3" customClass="CTLLoggedOutSplashViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fOa-3J-Kjr">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.91372555489999996" green="0.91372555489999996" blue="0.91372555489999996" alpha="1" colorSpace="deviceRGB"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="Sn0-wt-kJM">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Clientelle Accounts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NaW-f8-htL">
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="25" id="FlH-q5-oht"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="15"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="NaW-f8-htL" firstAttribute="top" secondItem="Sn0-wt-kJM" secondAttribute="top" constant="15" id="7d4-wM-8p3"/>
+                                <constraint firstAttribute="trailing" secondItem="NaW-f8-htL" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Hsv-HQ-np2"/>
+                                <constraint firstItem="NaW-f8-htL" firstAttribute="leading" secondItem="Sn0-wt-kJM" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="xuf-ym-8aT"/>
+                            </constraints>
+                        </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="MTL-GX-0hL">
+                            <rect key="frame" x="0.0" y="142" width="320" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pky-wx-uXM" customClass="CTLWhiteButton">
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="Tlq-SM-BOP"/>
+                                        <constraint firstAttribute="width" constant="300" id="kcO-hd-ZRi"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                    <state key="normal" title="Create a new account">
+                                        <color key="titleColor" red="0.23035256109999999" green="0.45386240430000002" blue="0.2082450921" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" red="0.072412590380000003" green="0.71962691329999995" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="Pky-wx-uXM" firstAttribute="centerX" secondItem="MTL-GX-0hL" secondAttribute="centerX" type="default" id="jom-Nq-cVy"/>
+                                <constraint firstItem="Pky-wx-uXM" firstAttribute="top" secondItem="MTL-GX-0hL" secondAttribute="top" constant="5" id="tCL-8H-8mD"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="accountCell" textLabel="RvU-xD-FPt" style="IBUITableViewCellStyleDefault" id="INB-Zf-VFl">
+                                <rect key="frame" x="0.0" y="86" width="320" height="46"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="account@email.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RvU-xD-FPt">
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Clientelle" id="UUP-aB-fdk">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Login" id="RS2-o9-bv2"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jNY-52-mql" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4618" y="686"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eOM-Jh-2aA">
+            <objects>
+                <navigationController storyboardIdentifier="loggedOutSplash" definesPresentationContext="YES" id="Igb-7b-TiW" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vtt-N1-xfx">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="5ga-FU-lr3" kind="relationship" relationship="rootViewController" id="Sfd-gZ-EcL"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nKZ-v3-YoA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5146" y="686"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pNN-IT-Xvp">
@@ -2555,6 +2653,35 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.88627457620000005" green="0.88627457620000005" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="TD5-bH-cRy">
+                            <rect key="frame" x="0.0" y="308" width="320" height="45"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NbG-t9-PRs" customClass="CTLWhiteButton">
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="300" id="dwS-C9-k39"/>
+                                        <constraint firstAttribute="height" constant="40" id="kch-18-xQq"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                                    <inset key="contentEdgeInsets" minX="18" minY="18" maxX="18" maxY="18"/>
+                                    <state key="normal" title="Logout of this account">
+                                        <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected">
+                                        <color key="titleColor" red="0.84263392859999997" green="0.0026140715990000001" blue="0.0051500570560000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="NbG-t9-PRs" firstAttribute="top" secondItem="TD5-bH-cRy" secondAttribute="top" constant="7" id="CI6-pB-n5k"/>
+                                <constraint firstItem="NbG-t9-PRs" firstAttribute="centerX" secondItem="TD5-bH-cRy" secondAttribute="centerX" type="default" id="nCB-Fr-N6w"/>
+                            </constraints>
+                        </view>
                         <sections>
                             <tableViewSection id="Yyj-56-Lea">
                                 <cells>
@@ -2735,6 +2862,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="accountActionButton" destination="NbG-t9-PRs" id="X2P-ZG-Wnp"/>
+                        <outlet property="accountActionButtonContainerView" destination="TD5-bH-cRy" id="COB-mm-daC"/>
                         <outlet property="accountAgeLabel" destination="jJ1-Cv-IRt" id="pb0-Sr-L0S"/>
                         <outlet property="accountEmailLabel" destination="UI2-yX-3N5" id="yQd-Eu-Eut"/>
                         <outlet property="companyTextField" destination="hyi-o9-bPc" id="8xP-ux-hIg"/>
@@ -2747,7 +2876,50 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ymv-1B-vtK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5645" y="3508"/>
+            <point key="canvasLocation" x="-5365" y="3634"/>
+        </scene>
+        <!--Accounts View Controller - Accounts-->
+        <scene sceneID="RZT-tn-MoN">
+            <objects>
+                <tableViewController id="Fn4-Z4-8Rr" customClass="CTLAccountsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="51" sectionHeaderHeight="10" sectionFooterHeight="10" id="A9A-RS-2Ib">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.91372555489999996" green="0.91372555489999996" blue="0.91372555489999996" alpha="1" colorSpace="deviceRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="accountCell" textLabel="tCW-EA-qLf" rowHeight="51" style="IBUITableViewCellStyleDefault" id="goV-Cr-2Bf">
+                                <rect key="frame" x="0.0" y="46" width="320" height="53"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="10" y="1" width="300" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="email1@email.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCW-EA-qLf">
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Fn4-Z4-8Rr" id="phr-u1-wHQ"/>
+                            <outlet property="delegate" destination="Fn4-Z4-8Rr" id="lW4-ZH-VcO"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Accounts" id="ktS-YN-Lzu">
+                        <barButtonItem key="rightBarButtonItem" title="New Account" id="W4x-4t-aPt"/>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="vaV-2o-6kT" kind="push" identifier="toAccountView" id="nyt-lU-PL5"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wEh-P6-ohZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6453" y="3634"/>
         </scene>
         <!--Message Thread View Controller - Buzz Lightyear-->
         <scene sceneID="A4n-dm-DT1">
@@ -3045,6 +3217,7 @@
         <segue reference="iGD-nT-ogT"/>
         <segue reference="ajR-Vp-hIS"/>
         <segue reference="1JI-iC-iph"/>
-        <segue reference="TgC-Gg-uWh"/>
+        <segue reference="hcl-ja-9qa"/>
+        <segue reference="nyt-lU-PL5"/>
     </inferredMetricsTieBreakers>
 </document>

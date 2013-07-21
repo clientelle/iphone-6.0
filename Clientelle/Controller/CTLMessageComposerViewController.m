@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
+
 #import <QuartzCore/QuartzCore.h>
 #import "UILabel+CTLLabel.h"
 #import "NSString+CTLString.h"
@@ -25,25 +26,11 @@
 #import "CTLAutoCompleteTableView.h"
 #import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
+#import "CTLMessageManager.h"
 
 int const CTLContactPickerRowHeight = 35.0f;
 
-
-@interface UITextView ()
-- (id)styleString; // make compiler happy
-@end
-
-@interface MBTextView : UITextView
-@end
-@implementation MBTextView
-- (id)styleString {
-    return [[super styleString] stringByAppendingString:@"; line-height: 2.35em"];
-}
-@end
-
-
 @interface CTLMessageComposerViewController ()
-
 @property (nonatomic, strong) CTLCDMessage *message;
 @property (nonatomic, strong) CTLCDContact *contact;
 @property (nonatomic, strong) NSArray *contacts;
@@ -262,43 +249,22 @@ int const CTLContactPickerRowHeight = 35.0f;
 
 - (void)sendMessage:(id)sender
 {
-    NSString *messageText = self.messageTextView.text;
-    
-    if(!self.contact || [messageText length] == 0){
-        return;
-    }
-    
-    if(!self.conversation){
-        self.conversation = [CTLCDConversation MR_createEntity];
-    }
-    
-    //Update conversation record
-    self.conversation.contact = self.contact;
-    self.conversation.preview_message= messageText;
-    self.conversation.account = self.current_user;
-    self.conversation.updated_at = [NSDate date];
-
-    //Create message record
-    CTLCDMessage *message = [CTLCDMessage createEntity];
-    message.conversation = self.conversation;
-    message.sender_uid = self.current_user.user_id;
-    message.message_text = self.messageTextView.text;
-    message.created_at = [NSDate date];
-    
-    NSDictionary *postDict = @{@"message[content]": message.message_text, @"message[recipient_id]": self.conversation.contact.user_id};
-    
-    CTLAPI *api = [CTLAPI sharedAPI];
-    [api makeSignedRequest:@"/messages" withUser:self.current_user params:postDict method:GOHTTPMethodPOST withBlock:^(BOOL result, NSDictionary *responseDict) {
-        
-        if(result){
-    
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-               [self dismissViewControllerAnimated:YES completion:nil]; 
-            }];
-        }else{
-            
-        }
-    }];
+  NSString *messageText = self.messageTextView.text;
+  
+  if(!self.contact || [messageText length] == 0){
+      return;
+  }
+  
+  if(!self.conversation){
+    self.conversation = [CTLCDConversation MR_createEntity];
+  }
+  
+  self.conversation.contact = self.contact;  
+  self.conversation.account = self.current_user;
+  
+  [CTLMessageManager sendMessage:messageText withConversation:self.conversation completionBlock:^(BOOL result, NSError *error){
+    [self dismissViewControllerAnimated:YES completion:nil]; 
+  }];  
 }
 
 - (void)dismiss:(id)sender
@@ -437,7 +403,6 @@ int const CTLContactPickerRowHeight = 35.0f;
         [self.view.layer addSublayer:shapelayer];
     }
 }
-
 
 - (void)didReceiveMemoryWarning
 {

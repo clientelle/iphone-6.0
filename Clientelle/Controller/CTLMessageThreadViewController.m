@@ -6,26 +6,38 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
+#import "SRWebSocket.h"
+#import "PrivatePubWebSocketDelegate.h"
+#import "AFJSONRequestOperation.h"
 #import "NSDate+CTLDate.h"
 
-#import "CTLCDContact.h"
-#import "CTLMessageThreadViewController.h"
-#import "CTLContainerViewController.h"
-#import "CTLMessageComposerViewController.h"
-#import "CTLCDMessage.h"
-#import "CTLMessageCell.h"
-#import "CTLCDConversation.h"
-
 #import "CTLAccountManager.h"
+
+#import "CTLMessageThreadViewController.h"
+#import "CTLMessageComposerViewController.h"
+#import "CTLContainerViewController.h"
+#import "CTLMessageCell.h"
+
+#import "CTLCDMessage.h"
+#import "CTLCDConversation.h"
+#import "CTLCDContact.h"
 #import "CTLCDAccount.h"
 
 @interface CTLMessageThreadViewController()
+
 @property (nonatomic, strong) NSArray *messages;
 @property (nonatomic, strong) CTLCDAccount *current_user;
+
+@property (nonatomic, retain) SRWebSocket *websocketClient;
+@property (nonatomic, retain) PrivatePubWebSocketDelegate *websocketDelegate;
+
+- (void) fetchPrivatePubConfiguration:(NSString *)channel;
+- (void) initializePrivatePubClientWithSubscriptionInformation: (id) JSON;
 
 @end
 
 @implementation CTLMessageThreadViewController
+
 
 - (void)viewDidLoad
 {
@@ -45,7 +57,41 @@
         
     [self.resultsController performFetch:nil];
     [self.tableView reloadData];
+    
+    [self fetchPrivatePubConfiguration:@"/messages/2_4"];
+    
+    NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];    
+    [notifCenter addObserver:self selector:@selector(didReceiveRealtimeMessage:) name:@"didReceiveRealtimeMessage" object:nil];
 }
+
+- (void)didReceiveRealtimeMessage:(NSNotification *)notification
+{
+    id JSON = [[notification.object JSONValue] objectAtIndex:0];
+    
+    NSDictionary *data = [JSON valueForKeyPath:@"data"];
+    NSString *messageText = data[@"data"][@"message"][@"content"];
+    NSTimeInterval timestamp = [data[@"data"][@"message"][@"created_at"] doubleValue];
+    int sender_uid = data[@"data"][@"message"][@"sender_id"];
+    
+    CTLCDMessage *message = [CTLCDMessage createEntity];    
+    message.created_at = [NSDate dateWithTimeIntervalSince1970:timestamp];    
+	message.message_text = messageText;
+	message.sender_uid = @(sender_uid);
+    message.conversation = self.conversation;
+    
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+        
+        NSLog(@"SAVED MSG %i", success);
+    }];
+    
+}
+
+//- (void)viewDidDisappear:(BOOL)animated
+//{
+//    [super viewDidDisappear:animated];
+//    [self.websocketClient close];
+//    [self.websocketDelegate disconnect];
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -171,4 +217,36 @@
     }
 }
 
+- (void) initializePrivatePubClientWithSubscriptionInformation: (id) JSON
+{
+    self.websocketDelegate = [[PrivatePubWebSocketDelegate alloc]
+                              initWithPrivatePubTimestamp: [JSON valueForKeyPath:@"timestamp"]
+                              andSignature: [JSON valueForKeyPath:@"signature"]
+                              andChannel:[JSON valueForKeyPath:@"channel"]];
+    
+    NSString *server = [JSON valueForKeyPath:@"server"];
+    NSURL *url = [NSURL URLWithString:server];
+    NSMutableURLRequest *configurationRequest = [NSMutableURLRequest requestWithURL:url];    
+    self.websocketClient = [[SRWebSocket alloc] initWithURLRequest:configurationRequest];
+    
+    [self.websocketClient setDelegate:self.websocketDelegate];
+    [self.websocketClient open];
+}
+
+- (void)fetchPrivatePubConfiguration:(NSString *)channel
+{
+    NSString *resourceUrl = [NSString stringWithFormat:CTL_FAYE_CONFIG_URL, channel];
+    NSURL *url = [NSURL URLWithString:resourceUrl];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        [self initializePrivatePubClientWithSubscriptionInformation: JSON];        
+    } failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON) {
+        NSLog(@"request was failed: %@", error);
+    }];
+    
+    [operation start];
+}
+
 @end
+

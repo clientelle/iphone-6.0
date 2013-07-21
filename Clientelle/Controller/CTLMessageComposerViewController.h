@@ -14,11 +14,7 @@
 
 @interface CTLMessageComposerViewController : UIViewController<UITextFieldDelegate,UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
-
-
 @property (nonatomic, strong) CTLCDConversation *conversation;
-
-
 
 @property (nonatomic, strong) IBOutlet UITextField *recipientTextField;
 @property (nonatomic, strong) IBOutlet UITextView *messageTextView;

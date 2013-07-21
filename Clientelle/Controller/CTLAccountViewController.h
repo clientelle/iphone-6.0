@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const CTLReloadAccountsNotification;
+
 @class CTLCDAccount;
 
 @interface CTLAccountViewController : UITableViewController<UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
 @property (nonatomic, strong) CTLContainerViewController *containerView;
-@property (nonatomic, strong) CTLCDAccount *currentUser;
+@property (nonatomic, strong) CTLCDAccount *account;
 
 @property (nonatomic, weak) IBOutlet UITextField *firstNameTextField;
 @property (nonatomic, weak) IBOutlet UITextField *lastNameTextField;
@@ -24,7 +26,9 @@
 @property (nonatomic, weak) IBOutlet UILabel *emailLabel;
 @property (nonatomic, weak) IBOutlet UILabel *accountAgeLabel;
 @property (nonatomic, weak) IBOutlet UILabel *daysLabel;
+@property (nonatomic, weak) IBOutlet UIView *accountActionButtonContainerView;
+@property (nonatomic, weak) IBOutlet UIButton *accountActionButton;
 
-- (IBAction)submit:(id)sender;
+- (IBAction)saveAccountInfo:(id)sender;
 
 @end

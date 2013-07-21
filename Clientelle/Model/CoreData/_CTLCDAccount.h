@@ -222,9 +222,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
-@property (nonatomic, strong) CTLCDContact *contacts;
+@property (nonatomic, strong) NSSet *contacts;
 
-//- (BOOL)validateContacts:(id*)value_ error:(NSError**)error_;
+- (NSMutableSet*)contactsSet;
 
 
 
@@ -247,6 +247,11 @@ extern const struct CTLCDAccountFetchedProperties {
 @end
 
 @interface _CTLCDAccount (CoreDataGeneratedAccessors)
+
+- (void)addContacts:(NSSet*)value_;
+- (void)removeContacts:(NSSet*)value_;
+- (void)addContactsObject:(CTLCDContact*)value_;
+- (void)removeContactsObject:(CTLCDContact*)value_;
 
 - (void)addConversation:(NSSet*)value_;
 - (void)removeConversation:(NSSet*)value_;
@@ -363,8 +368,8 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
-- (CTLCDContact*)primitiveContacts;
-- (void)setPrimitiveContacts:(CTLCDContact*)value;
+- (NSMutableSet*)primitiveContacts;
+- (void)setPrimitiveContacts:(NSMutableSet*)value;
 
 
 

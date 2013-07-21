@@ -21,7 +21,7 @@
 @property (nonatomic, weak) IBOutlet UITextField *emailTextField;
 @property (nonatomic, weak) IBOutlet UITextField *passwordTextField;
 
-- (IBAction)loginAndSyncAccount:(id)sender;
+- (IBAction)login:(id)sender;
 
 - (IBAction)forgotPassword:(id)sender;
 

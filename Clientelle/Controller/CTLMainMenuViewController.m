@@ -71,7 +71,7 @@
 {
     NSString *storyboardIdentifier = identifier;
 
-    if(self.currentUser.is_proValue){
+    if(self.currentUser.user_idValue){
         if([self shouldShowInboxSetup:identifier]){
             storyboardIdentifier = @"inboxSetup";
         }
@@ -81,7 +81,7 @@
             storyboardIdentifier = @"upgrade";
         }        
     }
-    
+
     [self.containerView setMainView:storyboardIdentifier];
 }
 

@@ -42,10 +42,10 @@
     
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeAlert |UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSLog(@"PIN NUMBER %@", [defaults valueForKey:@"PIN_NUMBER"]),
-    NSLog(@"PIN ENABLED %i", [defaults boolForKey:@"PIN_ENABLED"]);
-    
+   // NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //NSLog(@"PIN NUMBER %@", [defaults valueForKey:@"PIN_NUMBER"]),
+    //NSLog(@"PIN ENABLED %i", [defaults boolForKey:@"PIN_ENABLED"]);
+     
     if([self shouldPromptForPin]){
         [self performSelector:@selector(showPinView:) withObject:nil afterDelay:0.1];
     }
@@ -81,7 +81,7 @@
     NSTimeInterval timeLapse = [[NSDate date] timeIntervalSinceDate:idleDate];
 
     if(timeLapse > 300){ //5 minutes have passed
-        [self performSelector:@selector(showPinView:) withObject:nil afterDelay:0.1];
+        [self performSelector:@selector(:) withObject:nil afterDelay:0.1];
     }
     
     [Appirater appEnteredForeground:YES];
@@ -90,6 +90,7 @@
 - (void)showPinView:(id)sender
 {
     CTLContainerViewController *rootViewController = (CTLContainerViewController *)[self.window rootViewController];
+    
     CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[rootViewController.storyboard instantiateViewControllerWithIdentifier:@"pinInterstitial"];
     [rootViewController.mainNavigationController presentViewController:viewController animated:NO completion:nil];
 }

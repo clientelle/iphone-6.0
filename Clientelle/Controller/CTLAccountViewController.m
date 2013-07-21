@@ -12,9 +12,10 @@
 #import "NSDate+CTLDate.h"
 #import "CTLAccountViewController.h"
 #import "CTLContainerViewController.h"
-
 #import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
+
+NSString *const CTLReloadAccountsNotification = @"com.clientelle.account.reload";
 
 @interface CTLAccountViewController()
 
@@ -22,6 +23,7 @@
 @property(nonatomic, strong) UIPickerView *industryPicker;
 @property(nonatomic, strong) NSArray *industries;
 @property(nonatomic, strong) NSNumber *industryID;
+@property (nonatomic, assign) int loggedInUserId;
 
 @end
 
@@ -30,10 +32,11 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    self.currentUser = [CTLAccountManager currentUser];
-     
-    self.industryPicker = [self configureIndustryPicker];
+    self.navigationItem.title = NSLocalizedString(@"YOUR_ACCOUNT", nil);
     
+    self.loggedInUserId = [CTLAccountManager getLoggedInUserId];
+    
+    self.industryPicker = [self configureIndustryPicker];    
     self.industryTextField.inputView = self.industryPicker;
     self.industryTextField.tag = 170;
 
@@ -44,24 +47,24 @@
 
     self.accountEmailLabel.text = NSLocalizedString(@"ACCOUNT_EMAIL", nil);
     self.accountAgeLabel.text = NSLocalizedString(@"ACCOUNT_AGE", nil);
-    
-    if(self.currentUser){
-        
-        self.navigationItem.title = NSLocalizedString(@"YOUR_ACCOUNT", nil);
-          
-        self.industryID = self.currentUser.industry_id;
-        self.firstNameTextField.text = self.currentUser.first_name;
-        self.lastNameTextField.text = self.currentUser.last_name;
-        self.companyTextField.text = self.currentUser.company;
-        self.industryTextField.text = self.currentUser.industry;
-        
-        self.emailLabel.text = [self.currentUser email];
-        self.daysLabel.text = [self dateAgo:self.currentUser.created_at];
-                
+
+    if(self.account.user_idValue == self.loggedInUserId){
+        [self.accountActionButton setTitle:NSLocalizedString(@"LOGOUT_OF_THIS_ACCOUNT", nil) forState:UIControlStateNormal];
+        [self.accountActionButton addTarget:self action:@selector(logout:) forControlEvents:UIControlEventTouchUpInside];
     }else{
-        self.navigationItem.title = NSLocalizedString(@"CREATE_ACCOUNT", nil);
+        [self.accountActionButton setTitle:NSLocalizedString(@"SWITCH_TO_THIS_ACCOUNT", nil) forState:UIControlStateNormal];
+        [self.accountActionButton addTarget:self action:@selector(switchToAccount:) forControlEvents:UIControlEventTouchUpInside];
     }
-     
+      
+    self.industryID = self.account.industry_id;
+    self.firstNameTextField.text = self.account.first_name;
+    self.lastNameTextField.text = self.account.last_name;
+    self.companyTextField.text = self.account.company;
+    self.industryTextField.text = self.account.industry;    
+    self.emailLabel.text = [self.account email];
+    self.daysLabel.text = [self dateAgo:self.account.created_at];        
+   
+    
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissEditing:)];
     [self.view addGestureRecognizer:tapGesture];
 }
@@ -167,13 +170,13 @@
     [self.containerView toggleMenu:sender];
 }
 
-- (IBAction)submit:(id)sender
+- (IBAction)saveAccountInfo:(id)sender
 {
     NSDictionary *accountDict = [self validateFields];    
     if (accountDict) {                
-        [CTLAccountManager updateAccount:accountDict withUser:self.currentUser completionBlock:^(BOOL success, CTLCDAccount *account, NSError *error) {
+        [CTLAccountManager updateAccount:accountDict withUser:self.account completionBlock:^(BOOL success, CTLCDAccount *account, NSError *error) {
             if(success){
-                self.currentUser = account;
+                self.account = account;
                 [self.navigationController popViewControllerAnimated:YES];            
             }else{
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
@@ -187,8 +190,34 @@
     }
 }
 
+- (void)switchToAccount:(id)sender
+{
+    NSMutableDictionary *post = [NSMutableDictionary dictionary];
+    [post setValue:self.account.email forKey:@"user[email]"];
+    [post setValue:self.account.password forKey:@"user[password]"];
+    
+    [CTLAccountManager switchAccount:self.account withCompletionBlock:^(BOOL result, CTLCDAccount *account, NSError *error){        
+        if(result){            
+           [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadAccountsNotification object:nil];
+            [self.navigationController popViewControllerAnimated:YES];            
+        }else{            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:[error localizedDescription]
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+}
+
+- (void)logout:(id)sender
+{
+    [CTLAccountManager unsetLoggedInUserId];
+}
+
 - (NSDictionary *)validateFields
-{    
+{
     NSArray *fields = @[self.firstNameTextField, self.lastNameTextField, self.companyTextField, self.industryTextField];
     
     for(int i=0;i<[fields count]; i++){

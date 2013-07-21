@@ -283,6 +283,15 @@ const struct CTLCDAccountFetchedProperties CTLCDAccountFetchedProperties = {
 @dynamic contacts;
 
 	
+- (NSMutableSet*)contactsSet {
+	[self willAccessValueForKey:@"contacts"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"contacts"];
+  
+	[self didAccessValueForKey:@"contacts"];
+	return result;
+}
+	
 
 @dynamic conversation;
 

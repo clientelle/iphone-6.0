@@ -29,7 +29,7 @@
 
     self.current_user = [CTLAccountManager currentUser];
     
-    NSLog(@"CURRENT USER %@", self.current_user);
+    //NSLog(@"CURRENT USER %@", self.current_user);
     
     [self.containerView setRightSwipeEnabled:YES];
     [self.containerView renderMenuButton:self];

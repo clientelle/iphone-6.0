@@ -6,27 +6,43 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
-#import "CTLAPI.h"
 #import "CTLAccountManager.h"
+#import "CTLCDAccount.h"
 #import "CTLLoginViewController.h"
 #import "CTLContainerViewController.h"
 #import "CTLInboxInterstitialViewController.h"
+#import "UITableViewCell+CellShadows.h"
+#import "CTLNetworkClient.h"
+
+@interface CTLLoginViewController()
+
+@property (nonatomic, strong) CTLCDAccount *currentUser;
+
+@end
 
 @implementation CTLLoginViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.title = NSLocalizedString(@"LOGIN", nil);
+    
+    self.currentUser = [CTLAccountManager currentUser];
 
     if([self.emailAddress length] > 0){
         self.emailTextField.text = self.emailAddress;
     }
-    
-    _api = [CTLAPI sharedAPI];
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    [cell addShadowToCellInGroupedTableView:self.tableView atIndexPath:indexPath];
+    return cell;
+}
 
-- (IBAction)loginAndSyncAccount:(id)sender
+- (IBAction)login:(id)sender
 {
     if([self.emailTextField.text length] == 0 || [self.passwordTextField.text length] == 0){
         return;
@@ -46,13 +62,7 @@
     [post setValue:self.emailTextField.text forKey:@"user[email]"];
     [post setValue:self.passwordTextField.text forKey:@"user[password]"];
     
-    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:kCTLPushNotifToken];
-    
-    if(deviceToken){
-        [post setValue:deviceToken forKey:@"user[apn_token]"];
-    }
-    
-    [CTLAccountManager loginAndSync:post withCompletionBlock:^(BOOL result, CTLCDAccount *account, NSError *error){
+    [CTLAccountManager loginAndSync:post withUser:self.currentUser withCompletionBlock:^(BOOL result, CTLCDAccount *account, NSError *error){
         
         if(result){
                   
@@ -62,6 +72,7 @@
                 viewController.containerView = self.containerView;
                 [self.containerView setMainViewController:viewController];
                 [self.containerView setRightSwipeEnabled:YES];
+                [self.containerView renderMenuButton:viewController];
                 [self.containerView flipToView];
             }else{
                 [self.navigationController popViewControllerAnimated:YES];

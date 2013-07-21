@@ -23,6 +23,7 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 @property (nonatomic, strong) NSArray *industries;
 @property (nonatomic, strong) CTLAPI *api;
 @property (nonatomic, strong) NSNumber *industryID;
+@property (nonatomic, strong) CTLCDAccount *currentUser;
 @end
 
 
@@ -30,6 +31,8 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
+    self.currentUser = [CTLAccountManager currentUser];
             
     self.industryID = @(0);
     self.industryPicker = [self configureIndustryPicker];
@@ -49,6 +52,10 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     }
     
     [self.emailTextField becomeFirstResponder];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BACK", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
+    
+    [self.navigationItem setBackBarButtonItem: backButton];
 }
 
 - (void)translateInputPlaceholders
@@ -162,7 +169,7 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     
     if(accountDict){
         
-        [CTLAccountManager createAccount:accountDict completionBlock:^(BOOL success, CTLCDAccount *account, NSError *error) {
+        [CTLAccountManager createAccount:accountDict withUser:self.currentUser completionBlock:^(BOOL success, CTLCDAccount *account, NSError *error) {
             
             if(success){
                 if(self.containerView.nextNavString){
@@ -171,6 +178,7 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
                     viewController.containerView = self.containerView;
                     [self.containerView setMainViewController:viewController];
                     [self.containerView setRightSwipeEnabled:YES];
+                    [self.containerView renderMenuButton:viewController];
                     [self.containerView flipToView];
                 }else{
                     [self.navigationController popViewControllerAnimated:YES];

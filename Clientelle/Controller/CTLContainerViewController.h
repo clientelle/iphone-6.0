@@ -30,6 +30,7 @@ extern const CGFloat CTLMainMenuWidth;
 - (void)transitionToView:(UIViewController<CTLContainerViewDelegate> *)viewController withAnimationStyle:(UIViewAnimationTransition)animationStyle;
 
 - (void)renderMenuButton:(UIViewController<CTLContainerViewDelegate> *)mainViewController;
+- (void)disableMenuButton;
 
 - (IBAction)toggleMenu:(id)sender;
 
