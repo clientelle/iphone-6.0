@@ -7,13 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CTLNetworkClient.h"
 
+@class CTLCDMessage;
 @class CTLCDConversation;
 
 @interface CTLMessageManager : NSObject
 
-typedef void (^CTLCreateMessageCompletionBlock)(BOOL success, NSError *error);
+typedef void (^CTLMessageCompletionBlock)(CTLCDMessage *message, NSDictionary *responseObject);
+typedef void (^CTLMessageErrorBlock)(NSError *error);
 
-+ (void)sendMessage:(NSString *)messageText withConversation:(CTLCDConversation *)conversation completionBlock:(CTLCreateMessageCompletionBlock)completionBlock;
+
++ (CTLMessageManager *)sharedInstance;
+
+- (void)sendMessage:(NSString *)messageText withConversation:(CTLCDConversation *)conversation completionBlock:(CTLMessageCompletionBlock)completionBlock errorBlock:(CTLMessageErrorBlock)errorBlock;
 
 @end

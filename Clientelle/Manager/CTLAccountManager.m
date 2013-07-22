@@ -6,13 +6,37 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
-#import "CTLAPI.h"
+#import "CTLNetworkClient.h"
 #import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
 
 @implementation CTLAccountManager
 
-+ (CTLCDAccount *)currentUser
+//+ (CTLAccountManager *) sharedInstance
+//{
+//	static CTLAccountManager *shared;
+//	@synchronized(self)
+//    {
+//		if(!shared){
+//			shared = [[CTLAccountManager alloc] init];
+//		}
+//		return shared;
+//	}
+//}
+
++ (id)sharedInstance
+{
+    static CTLAccountManager *shared = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        shared = [[self alloc] init];
+    });
+    
+    return shared;
+}
+
+- (CTLCDAccount *)currentUser
 {
     //device has only one account
     if([CTLCDAccount MR_countOfEntities] == 1){
@@ -21,7 +45,7 @@
     
     //device has mulitple accounts
     if([CTLCDAccount MR_countOfEntities] > 1){       
-        int userId = [CTLAccountManager getLoggedInUserId];
+        int userId = [[NSUserDefaults standardUserDefaults] integerForKey:kCTLLoggedInUserId];
         if(userId){
             CTLCDAccount *account = [CTLCDAccount findFirstByAttribute:@"user_id" withValue:@(userId)];
             if(account){
@@ -33,18 +57,136 @@
     return nil;    
 }
 
-+ (void)createDefaultAccount
-{    
-    CTLCDAccount *defaultAccount = [CTLCDAccount createEntity];
-    defaultAccount.created_at = [NSDate date];
-    defaultAccount.updated_at = [NSDate date];
+- (void)loginWith:(NSDictionary *)credentials onComplete:(CTLCompletionBlock)completionBlock onError:(CTLErrorBlock)errorBlock
+{
+    __block NSString *clear_text_password = credentials[@"user[password]"];    
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-                
+    [[CTLNetworkClient api] post:@"login.json" params:credentials completionBlock:^(id responseObject){
+        [self createAccountInCoreData:responseObject withPassword:clear_text_password completionBlock:completionBlock errorBlock:errorBlock];
+    } errorBlock:^(NSError *error){
+        errorBlock(error);
     }];
 }
 
-+ (void)createAccount:(NSDictionary *)accountDict withUser:(CTLCDAccount *)account completionBlock:(CTLCreateAccountCompletionBlock)completionBlock
+- (void)createAccount:(NSDictionary *)accountDict onComplete:(CTLCompletionBlock)completionBlock onError:(CTLErrorBlock)errorBlock
+{    
+    NSDictionary *postDict = [self prepareAccountDictionary:accountDict];
+    __block NSString *clear_text_password = accountDict[@"password"];
+    
+    [[CTLNetworkClient api] post:@"register.json" params:postDict completionBlock:^(id responseObject){
+        [self createAccountInCoreData:responseObject withPassword:clear_text_password completionBlock:completionBlock errorBlock:errorBlock];       
+    } errorBlock:^(NSError *error){
+        errorBlock(error);
+    }];
+}
+
+- (void)updateAccount:(NSDictionary *)accountDict withAccount:(CTLCDAccount *)account onComplete:(CTLCompletionWithAccountBlock)completionBlock onError:(CTLErrorBlock)errorBlock
+{       
+    NSString *path = [NSString stringWithFormat:@"/account/%@", account.user_id];
+    NSDictionary *postDict = [self prepareAccountDetailsDictionary:accountDict]; 
+    
+    [[CTLNetworkClient api] signedPut:path withParams:postDict completionBlock:^(id responseDict){
+        [self setValues:responseDict[@"user"] forAccount:account];
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+            if(success){
+                completionBlock(account, responseDict);
+            }else{
+                errorBlock(error);
+            }
+        }];
+    } errorBlock:^(NSError *error){
+        errorBlock(error);
+    }];
+}
+
+- (void)switchAccount:(CTLCDAccount *)account onComplete:(CTLCompletionBlock)completionBlock onError:(CTLErrorBlock)errorBlock;
+{
+    NSDictionary *credentials = @{ @"user[email]":account.email, @"user[password]":account.password };    
+    [[CTLNetworkClient api] post:@"login.json" params:credentials completionBlock:^(id responseObject){
+        [self setLoggedInUserId:account.user_idValue];
+        completionBlock(responseObject);
+    } errorBlock:^(NSError *error){
+        errorBlock(error);
+    }];
+}
+
+- (CTLCDAccount *)createNewAccountFromApiResponse:(NSDictionary *)dict
+{
+    NSDictionary *userDict = dict[@"user"];
+    CTLCDAccount *account = [CTLCDAccount findFirstByAttribute:@"user_id" withValue:userDict[@"id"]];
+    
+    if(!account){
+        account = [CTLCDAccount createEntity];
+        account.email = userDict[@"email"];
+        account.user_id = userDict[@"id"];
+        account.created_at = [NSDate date];
+    }
+    
+    [self setValues:userDict forAccount:account];
+    return account;
+}
+
+- (void)setValues:(NSDictionary *)dict forAccount:(CTLCDAccount *)account
+{
+    account.updated_at = [NSDate date];
+    
+    if(dict[@"authentication_token"]){
+        account.auth_token = dict[@"authentication_token"];
+    }
+    
+    if(dict[@"first_name"]){
+        account.first_name = dict[@"first_name"];
+    }
+    
+    if(dict[@"last_name"]){
+        account.last_name = dict[@"last_name"];
+    }
+    
+    if(dict[@"company"]){
+        account.company = dict[@"company"][@"name"];
+        account.company_id = dict[@"company"][@"id"];
+    }
+    
+    if(dict[@"industry"]){
+        account.industry = dict[@"industry"][@"name"];
+        account.industry_id = dict[@"industry"][@"id"];
+    }
+}
+
+- (int)getLoggedInUserId
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kCTLLoggedInUserId];
+}
+
+- (void)unsetLoggedInUserId
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:kCTLLoggedInUserId];
+}
+
+- (void)setLoggedInUserId:(int)user_id
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:user_id forKey:kCTLLoggedInUserId];
+    [defaults synchronize];
+}
+
+//Helpers
+
+- (void)createAccountInCoreData:(NSDictionary *)returnData withPassword:(NSString *)password completionBlock:(CTLCompletionBlock)completionBlock errorBlock:(CTLErrorBlock)errorBlock
+{
+    __block CTLCDAccount *account = [self createNewAccountFromApiResponse:returnData];
+    account.password = password;//store plaintext password for autologin and multiple accounts (future feature)
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+        if(success){
+            [self setLoggedInUserId:account.user_idValue];
+            completionBlock(returnData);            
+        }else{
+            errorBlock(error);
+        }
+    }];
+}
+
+- (NSDictionary *)prepareAccountDictionary:(NSDictionary *)accountDict
 {
     //required fields
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
@@ -72,43 +214,14 @@
     //Set meta data for account
     [postDict setValue:[[NSLocale currentLocale] localeIdentifier] forKey:@"user[locale]"];
     [postDict setValue:@"iphone" forKey:@"user[source]"];
-
-    //set password so we can swith accounts
-    __block NSString *clear_text_password = accountDict[@"password"];
-    __block CTLCDAccount *myaccount = account;    
     
-    [[CTLAPI sharedAPI] makeRequest:@"/register.json" withParams:postDict method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *responseDict) {        
-     
-        if(requestSucceeded){
-            
-            //if it has a user_id then it's alternate account
-            if(myaccount.user_idValue != 0){
-                myaccount = [CTLCDAccount createEntity];
-            }            
-                
-            [CTLAccountManager createFromApiResponse:responseDict withAccount:myaccount];
-            myaccount.password = clear_text_password;
-                            
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-                completionBlock(success, account, error);
-                if(success){
-                    //Save account user_id to NSUserDefaults for current_user login
-                    [CTLAccountManager setLoggedInUserId:account.user_idValue];
-                }
-            }];
-
-        }else{
-            NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedString(@"COULD_NOT_CREATE_ACCOUNT", nil) };
-            NSError *error = [NSError errorWithDomain:@"com.ctl.clientelle.ErrorDomain" code:100 userInfo:userInfo];
-            completionBlock(NO, nil, error);
-        }
-    }];
+    return postDict;
 }
 
-+ (void)updateAccount:(NSDictionary *)accountDict withUser:(CTLCDAccount *)account completionBlock:(CTLCreateAccountCompletionBlock)completionBlock
+- (NSDictionary *)prepareAccountDetailsDictionary:(NSDictionary *)accountDict
 {
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
-     
+    
     if(accountDict[@"first_name"]){
         [postDict setValue:accountDict[@"first_name"] forKey:@"user[first_name]"];
     }
@@ -133,139 +246,8 @@
     if(apn_token){
         [postDict setValue:apn_token forKey:@"user[apn_token]"];
     }
-   
-    NSString *path = [NSString stringWithFormat:@"/account/%@", account.user_id];
-    [[CTLAPI sharedAPI] makeSignedRequest:path withUser:account params:postDict method:GOHTTPMethodPUT withBlock:^(BOOL result, NSDictionary *responseDict) {
-        
-        if(result){
-            __block CTLCDAccount *loggedInUser = [CTLCDAccount MR_findFirstByAttribute:@"user_id" withValue:account.user_id];
-            
-            loggedInUser = [CTLAccountManager setValues:responseDict[@"user"] forAccount:loggedInUser];
-                
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
-                
-                completionBlock(success, loggedInUser, error);
-                
-            }];
-        } else {
-            NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedString(@"COULD_NOT_UPDATE_ACCOUNT", nil) };
-            NSError *error = [NSError errorWithDomain:@"com.ctl.clientelle.ErrorDomain" code:100 userInfo:userInfo];
-            completionBlock(NO, nil, error);
-        }        
-    }];
-}
-
-
-+ (void)loginAndSync:(NSDictionary *)post withUser:(CTLCDAccount *)account withCompletionBlock:(CTLCreateAccountCompletionBlock)completionBlock
-{
-    __block CTLCDAccount *myaccount = account;
-    __block NSString *clear_text_password = post[@"user[password]"];
     
-    [[CTLAPI sharedAPI] makeRequest:@"/login.json" withParams:post method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *response) {        
-        if(requestSucceeded){
-
-            if(myaccount.user_idValue != 0){
-                myaccount = [CTLCDAccount createEntity];
-            }
-            
-            [CTLAccountManager createFromApiResponse:response withAccount:myaccount];
-            myaccount.password = clear_text_password;
-                     
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){                
-                completionBlock(success, account, error);
-                if(success){
-                    [CTLAccountManager setLoggedInUserId:account.user_idValue];
-                }
-            }];
-            
-        }else{
-          
-          NSString *loginErrorTranslationKey = (response[@"error"]) ? response[@"error"] : @"COULD_NOT_LOGIN";          
-          NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedString(loginErrorTranslationKey, nil) };
-          NSError *error = [NSError errorWithDomain:@"com.ctl.clientelle.ErrorDomain" code:100 userInfo:userInfo];
-          completionBlock(NO, nil, error);
-        }
-    }];
-}
-
-+ (void)switchAccount:(CTLCDAccount *)account withCompletionBlock:(CTLCreateAccountCompletionBlock)completionBlock
-{
-    NSMutableDictionary *post = [NSMutableDictionary dictionary];
-    [post setValue:account.email forKey:@"user[email]"];
-    [post setValue:account.password forKey:@"user[password]"];
-    
-    [[CTLAPI sharedAPI] makeRequest:@"/login.json" withParams:post method:GOHTTPMethodPOST withBlock:^(BOOL requestSucceeded, NSDictionary *response) {
-        if(requestSucceeded){
-            
-            //Save account user_id to NSUserDefaults for current_user login
-            [CTLAccountManager setLoggedInUserId:account.user_idValue];         
-            completionBlock(requestSucceeded, account, nil);
-            
-        }else{
-            
-            NSString *loginErrorTranslationKey = (response[@"error"]) ? response[@"error"] : @"COULD_NOT_LOGIN";
-            NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedString(loginErrorTranslationKey, nil) };
-            NSError *error = [NSError errorWithDomain:@"com.ctl.clientelle.ErrorDomain" code:100 userInfo:userInfo];
-            completionBlock(NO, nil, error);
-        }
-    }];
-}
-
-+ (CTLCDAccount *)createFromApiResponse:(NSDictionary *)dict withAccount:(CTLCDAccount *)account
-{
-    account.email = dict[@"user"][@"email"];
-    account.user_id = dict[@"user"][@"id"];
-    account.created_at = [NSDate date];
-    account.is_pro = @(1);
-    
-    account = [CTLAccountManager setValues:dict[@"user"] forAccount:account];
-    return account;
-}
-
-+ (CTLCDAccount *)setValues:(NSDictionary *)dict forAccount:(CTLCDAccount *)account
-{
-    account.updated_at = [NSDate date];
-    
-    if(dict[@"authentication_token"]){
-        account.auth_token = dict[@"authentication_token"];
-    }
-    
-    if(dict[@"first_name"]){
-        account.first_name = dict[@"first_name"];
-    }
-    
-    if(dict[@"last_name"]){
-        account.last_name = dict[@"last_name"];
-    }
-    
-    if(dict[@"company"]){
-        account.company = dict[@"company"][@"name"];
-        account.company_id = dict[@"company"][@"id"];
-    }
-    
-    if(dict[@"industry"]){
-        account.industry = dict[@"industry"][@"name"];
-        account.industry_id = dict[@"industry"][@"id"];
-    }
-    
-    return account;
-}
-
-+ (int)getLoggedInUserId
-{
-    return [[NSUserDefaults standardUserDefaults] integerForKey:kCTLLoggedInUserId];
-}
-
-+ (void)unsetLoggedInUserId
-{
-    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:kCTLLoggedInUserId];
-}
-
-+ (void)setLoggedInUserId:(int)user_id
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:user_id forKey:kCTLLoggedInUserId];
-    [defaults synchronize];
+    return postDict;
 }
 
 @end

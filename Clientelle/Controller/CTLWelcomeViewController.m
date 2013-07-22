@@ -6,33 +6,32 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
+#import "UILabel+CTLLabel.h"
 #import "CTLWelcomeViewController.h"
-
-@interface CTLWelcomeViewController ()
-
-@end
 
 @implementation CTLWelcomeViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    [super viewDidLoad];	
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
+    [self.navigationItem setHidesBackButton:YES animated:YES];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)tanslateLabels
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.navigationItem.title = NSLocalizedString(@"WELCOME", nil);
+    self.sloganLabel.text = NSLocalizedString(@"WELCOME_SLOGAN", nil);
+    self.bullet1Label.text = NSLocalizedString(@"SEPARATE_ADDRESS_BOOK", nil);
+    self.bullet2Label.text = NSLocalizedString(@"MANAGE_APPOINTMENTS", nil);
+    self.bullet3Label.text = NSLocalizedString(@"REALTIME_MESSAGING", nil);
+    self.bullet4Label.text = NSLocalizedString(@"COLLECT_LEADS", nil);
+    self.requireUpgradeLabel.text = NSLocalizedString(@"REQUIRES_UPGRADE", nil);
+    self.registerButton.titleLabel.text = NSLocalizedString(@"CREATE_NEW_ACCOUNT", nil);
+    self.loginButton.titleLabel.text = NSLocalizedString(@"LOGIN_TO_MY_ACCOUNT", nil);
+    
+    [UILabel autoWidth:self.registerButton.titleLabel];
+    [UILabel autoWidth:self.loginButton.titleLabel];
 }
 
 @end

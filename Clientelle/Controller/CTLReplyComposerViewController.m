@@ -35,7 +35,7 @@
 {
     [super viewDidLoad];
     
-    self.current_user = [CTLAccountManager currentUser];
+    self.current_user = [[CTLAccountManager sharedInstance] currentUser];
     
     self.navigationItem.title = NSLocalizedString(@"REPLY", nil);
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];

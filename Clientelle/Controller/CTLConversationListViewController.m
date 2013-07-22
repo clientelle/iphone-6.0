@@ -11,7 +11,6 @@
 #import "CTLCDContact.h"
 #import "CTLCDAccount.h"
 #import "CTLConversationListViewController.h"
-#import "CTLContainerViewController.h"
 #import "CTLCDConversation.h"
 #import "CTLConversationCell.h"
 #import "CTLMessageThreadViewController.h"
@@ -27,7 +26,7 @@
 {
     [super viewDidLoad];
 
-    self.current_user = [CTLAccountManager currentUser];
+    self.current_user = [[CTLAccountManager sharedInstance] currentUser];
     
     //NSLog(@"CURRENT USER %@", self.current_user);
     

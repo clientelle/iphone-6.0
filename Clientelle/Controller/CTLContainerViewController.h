@@ -5,17 +5,17 @@
 //
 
 #import <UIKit/UIKit.h>
-
-extern const CGFloat CTLMainMenuWidth;
+#import "CTLContainerViewController.h"
+#import "CTLContainerViewDelegate.h"
 
 @class CTLMainMenuViewController;
 
 @interface CTLContainerViewController : UIViewController;
 
-@property (nonatomic, weak) UINavigationController *mainNavigationController;
+@property (nonatomic, strong) UINavigationController *mainNavigationController;
 
 @property (nonatomic, strong) NSString *mainViewControllerIdentifier;
-
+@property (nonatomic, strong) UIStoryboard *mainStoryboard;
 @property (nonatomic, strong) UIViewController<CTLContainerViewDelegate> *nextViewController;
 @property (nonatomic, strong) UIViewController<CTLContainerViewDelegate> *mainViewController;
 @property (nonatomic, assign) ABAddressBookRef addressBookRef;
@@ -28,7 +28,7 @@ extern const CGFloat CTLMainMenuWidth;
 - (void)flipToView;
 
 - (void)transitionToView:(UIViewController<CTLContainerViewDelegate> *)viewController withAnimationStyle:(UIViewAnimationTransition)animationStyle;
-
+- (void)setMainViewWithStoryboardName:(NSString *)storyboardName withMenuButton:(BOOL)shouldRenderMenuButton;
 - (void)renderMenuButton:(UIViewController<CTLContainerViewDelegate> *)mainViewController;
 - (void)disableMenuButton;
 

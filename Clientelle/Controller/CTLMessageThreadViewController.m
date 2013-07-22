@@ -15,7 +15,6 @@
 
 #import "CTLMessageThreadViewController.h"
 #import "CTLMessageComposerViewController.h"
-#import "CTLContainerViewController.h"
 #import "CTLMessageCell.h"
 
 #import "CTLCDMessage.h"
@@ -47,7 +46,7 @@
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
 
 
-    self.current_user = [CTLAccountManager currentUser];
+    self.current_user = [[CTLAccountManager sharedInstance] currentUser];
         
     [self.containerView setRightSwipeEnabled:YES];
     [self.containerView renderMenuButton:self];

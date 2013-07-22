@@ -6,20 +6,18 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
-#import "CTLAPI.h"
 #import "UIColor+CTLColor.h"
 #import "UITableViewCell+CellShadows.h"
 #import "NSDate+CTLDate.h"
 #import "CTLAccountViewController.h"
-#import "CTLContainerViewController.h"
 #import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
+#import "CTLWelcomeViewController.h"
 
 NSString *const CTLReloadAccountsNotification = @"com.clientelle.account.reload";
 
 @interface CTLAccountViewController()
 
-@property(nonatomic, strong) CTLAPI *api;
 @property(nonatomic, strong) UIPickerView *industryPicker;
 @property(nonatomic, strong) NSArray *industries;
 @property(nonatomic, strong) NSNumber *industryID;
@@ -33,9 +31,8 @@ NSString *const CTLReloadAccountsNotification = @"com.clientelle.account.reload"
     [super viewDidLoad];
     
     self.navigationItem.title = NSLocalizedString(@"YOUR_ACCOUNT", nil);
-    
-    self.loggedInUserId = [CTLAccountManager getLoggedInUserId];
-    
+        
+    self.loggedInUserId = [[CTLAccountManager sharedInstance] getLoggedInUserId];    
     self.industryPicker = [self configureIndustryPicker];    
     self.industryTextField.inputView = self.industryPicker;
     self.industryTextField.tag = 170;
@@ -55,15 +52,14 @@ NSString *const CTLReloadAccountsNotification = @"com.clientelle.account.reload"
         [self.accountActionButton setTitle:NSLocalizedString(@"SWITCH_TO_THIS_ACCOUNT", nil) forState:UIControlStateNormal];
         [self.accountActionButton addTarget:self action:@selector(switchToAccount:) forControlEvents:UIControlEventTouchUpInside];
     }
-      
+    
     self.industryID = self.account.industry_id;
     self.firstNameTextField.text = self.account.first_name;
     self.lastNameTextField.text = self.account.last_name;
     self.companyTextField.text = self.account.company;
     self.industryTextField.text = self.account.industry;    
     self.emailLabel.text = [self.account email];
-    self.daysLabel.text = [self dateAgo:self.account.created_at];        
-   
+    self.daysLabel.text = [self dateAgo:self.account.created_at];   
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissEditing:)];
     [self.view addGestureRecognizer:tapGesture];
@@ -173,47 +169,46 @@ NSString *const CTLReloadAccountsNotification = @"com.clientelle.account.reload"
 - (IBAction)saveAccountInfo:(id)sender
 {
     NSDictionary *accountDict = [self validateFields];    
-    if (accountDict) {                
-        [CTLAccountManager updateAccount:accountDict withUser:self.account completionBlock:^(BOOL success, CTLCDAccount *account, NSError *error) {
-            if(success){
-                self.account = account;
-                [self.navigationController popViewControllerAnimated:YES];            
-            }else{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                message: [error localizedDescription]
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil, nil];
-                [alert show];
-            }
+    if (accountDict) {        
+        [[CTLAccountManager sharedInstance] updateAccount:accountDict withAccount:self.account onComplete:^(CTLCDAccount *account, NSDictionary *responseDict){
+            self.account = account;
+            [self.navigationController popViewControllerAnimated:YES];
+        } onError:^(NSError *error){
+            [self displayAlert:[error localizedDescription]];
         }];
     }
 }
 
 - (void)switchToAccount:(id)sender
-{
-    NSMutableDictionary *post = [NSMutableDictionary dictionary];
-    [post setValue:self.account.email forKey:@"user[email]"];
-    [post setValue:self.account.password forKey:@"user[password]"];
-    
-    [CTLAccountManager switchAccount:self.account withCompletionBlock:^(BOOL result, CTLCDAccount *account, NSError *error){        
-        if(result){            
-           [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadAccountsNotification object:nil];
-            [self.navigationController popViewControllerAnimated:YES];            
-        }else{            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:[error localizedDescription]
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil, nil];
-            [alert show];
-        }
+{    
+    [[CTLAccountManager sharedInstance] switchAccount:self.account onComplete:^(NSDictionary *responseObject){
+        [[NSNotificationCenter defaultCenter] postNotificationName:CTLReloadAccountsNotification object:nil];
+        [self.navigationController popViewControllerAnimated:YES];
+    } onError:^(NSError *error){
+        
     }];
 }
 
 - (void)logout:(id)sender
 {
-    [CTLAccountManager unsetLoggedInUserId];
+    [[CTLAccountManager sharedInstance] unsetLoggedInUserId];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Welcome" bundle:[NSBundle mainBundle]];
+    UINavigationController *navigationController = [storyboard instantiateInitialViewController];
+    
+    CTLWelcomeViewController<CTLContainerViewDelegate> *welcomeViewController = (CTLWelcomeViewController<CTLContainerViewDelegate> *)navigationController.topViewController;
+    welcomeViewController.containerView = self.containerView;
+        
+    [UIView  beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.75];
+    [self.navigationController pushViewController:welcomeViewController animated:NO];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.navigationController.view cache:NO];
+    [UIView commitAnimations];
+    
+    
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    
 }
 
 - (NSDictionary *)validateFields
@@ -247,15 +242,14 @@ NSString *const CTLReloadAccountsNotification = @"com.clientelle.account.reload"
     
 }
 
-- (void)alertErrorMessage:(NSString *)i18nKey
+- (void)displayAlert:(NSString *)alertMessage
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:NSLocalizedString(i18nKey, nil)
+                                                    message:alertMessage
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil, nil];
     [alert show];
-    
 }
 
 @end

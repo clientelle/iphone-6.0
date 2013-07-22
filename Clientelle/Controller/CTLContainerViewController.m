@@ -4,48 +4,50 @@
 //  Copyright (c) 2013 Clientelle. All rights reserved.
 //
 #import <QuartzCore/QuartzCore.h>
-#import "CTLCDAppointment.h"
-#import "CTLAccountManager.h"
-#import "CTLCDAccount.h"
-#import "CTLContainerViewController.h"
 #import "CTLMainMenuViewController.h"
 #import "CTLAppointmentFormViewController.h"
 #import "CTLPinInterstialViewController.h"
+#import "CTLWelcomeViewController.h"
 
-const CGFloat CTLMainMenuWidth = 80.0f;
+#import "CTLCDAppointment.h"
+#import "CTLAccountManager.h"
+#import "CTLCDAccount.h"
+
+@interface CTLContainerViewController()
+
+@end
 
 @implementation CTLContainerViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setupMenuView];
     
-    NSString *defaultViewIdentifier = @"contacts";
-    
-    if([CTLCDAccount countOfEntities] == 0){
-        defaultViewIdentifier = @"welcome";
-        
-        self.storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        UIViewController *vc = [sb instantiateViewControllerWithIdentifier:@"myViewController"];
-        vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self presentViewController:vc animated:YES completion:NULL];
-    }
-
-    [self setupMenuView:self.view.bounds];
-
-    if(!self.mainViewControllerIdentifier){
-        self.mainViewControllerIdentifier = defaultViewIdentifier;        
-        UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
-        [self setRightPanel:navigationController withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+    int loggedInUserId = [[CTLAccountManager sharedInstance] getLoggedInUserId];
+    NSLog(@"loggedinUser ID %d", loggedInUserId);
+    //Brand new user does not have an account yet!
+    if([CTLCDAccount countOfEntities] == 0 || loggedInUserId == 0){
+        [self setMainViewWithStoryboardName:@"Welcome" withMenuButton:NO];
+    }else{
+        self.mainViewControllerIdentifier = @"contacts";
+        self.mainStoryboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
+        self.mainNavigationController = [self.mainStoryboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
+        CGRect mainViewFrame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
+        [self setRightPanel:mainViewFrame];
     }
 }
 
--  (void)setupMenuView:(CGRect)frame
-{
-    CTLMainMenuViewController *menuViewController = (CTLMainMenuViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"mainMenuViewController"];
+-  (void)setupMenuView
+{     
+    CTLMainMenuViewController *menuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"mainMenuViewController"];
     [menuViewController setContainerView:self];
-    frame.size.width = CTLMainMenuWidth;
-    menuViewController.view.frame = frame;
+    
+    //set slideout drawer width
+    CGRect menuFrame = self.view.bounds;
+    menuFrame.size.width = CTLMainMenuWidth;
+    menuViewController.view.frame = menuFrame;
+    
     [self addChildViewController:menuViewController];
     [self.view addSubview:menuViewController.view];
 
@@ -106,33 +108,12 @@ const CGFloat CTLMainMenuWidth = 80.0f;
 
 #pragma mark - Set Panels
 
-- (void)setMainView:(NSString *)identifier
+- (void)renderMenuDropShadow
 {
-    if(self.mainNavigationController){
-        [self.mainNavigationController removeFromParentViewController];
-        [self.mainNavigationController.view removeFromSuperview];
-    }
-    
-    CGFloat width = CGRectGetWidth(self.view.bounds);
-    CGFloat height = CGRectGetHeight(self.view.bounds);
-    
-    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:identifier];
-    
-    [self setRightPanel:navigationController withFrame:CGRectMake(CTLMainMenuWidth, 0.0f, width, height)];
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        self.mainNavigationController.view.frame = CGRectMake(0.0f, 0.0f, width, height);
-    }];
-
-    [self setShadow:navigationController];
-}
-
-- (void)setShadow:(UINavigationController *)mainView
-{
-    mainView.view.layer.shadowPath = [UIBezierPath bezierPathWithRect:mainView.view.bounds].CGPath;
-    mainView.view.layer.shadowOpacity = 0.85f;
-    mainView.view.layer.shadowRadius = 5.0f;
-    mainView.view.layer.shadowOffset = CGSizeMake(-3, 0);
+    self.mainNavigationController.view.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.mainNavigationController.view.bounds].CGPath;
+    self.mainNavigationController.view.layer.shadowOpacity = 0.85f;
+    self.mainNavigationController.view.layer.shadowRadius = 5.0f;
+    self.mainNavigationController.view.layer.shadowOffset = CGSizeMake(-3, 0);
 }
 
 - (void)flipToView
@@ -167,22 +148,59 @@ const CGFloat CTLMainMenuWidth = 80.0f;
   self.mainViewController.navigationItem.leftBarButtonItem = nil;
 }
 
-- (void)setRightPanel:(UINavigationController *)rightNavigationController withFrame:(CGRect)frame
+//Called from main menu
+- (void)setMainView:(NSString *)identifier
+{
+    CGFloat width = CGRectGetWidth(self.view.bounds);
+    CGFloat height = CGRectGetHeight(self.view.bounds);
+    
+    self.mainStoryboard = [UIStoryboard storyboardWithName:identifier bundle:[NSBundle mainBundle]];
+    
+    self.mainNavigationController = [self.mainStoryboard instantiateInitialViewController];
+    
+    [self setRightPanel:CGRectMake(CTLMainMenuWidth, 0.0f, width, height)];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.mainNavigationController.view.frame = CGRectMake(0.0f, 0.0f, width, height);
+    }];
+    
+    [self renderMenuDropShadow];
+}
+
+- (void)setRightPanel:(CGRect)frame
 {
     if(self.mainNavigationController){
         [self.mainNavigationController removeFromParentViewController];
         [self.mainNavigationController.view removeFromSuperview];
     }
     
-    self.mainNavigationController = rightNavigationController;
-    self.mainViewController = (UIViewController<CTLContainerViewDelegate> *)rightNavigationController.topViewController;
+    self.mainViewController = (UIViewController<CTLContainerViewDelegate> *)self.mainNavigationController.topViewController;
         
     [self renderMenuButton:self.mainViewController];
     [self.mainViewController setContainerView:self];
     [self addChildViewController:self.mainNavigationController];
     self.mainNavigationController.view.frame = frame;
     [self.view addSubview:self.mainNavigationController.view];
-    [self setShadow:self.mainNavigationController];
+    [self renderMenuDropShadow];
+}
+
+- (void)setMainViewWithStoryboardName:(NSString *)storyboardName withMenuButton:(BOOL)shouldRenderMenuButton
+{
+    self.mainStoryboard = [UIStoryboard storyboardWithName:storyboardName bundle:nil];
+    self.mainNavigationController = [self.mainStoryboard instantiateInitialViewController];    
+    self.mainViewController = (UIViewController<CTLContainerViewDelegate> *)self.mainNavigationController.topViewController;
+    [self.mainViewController setContainerView:self];       
+    
+    [self addChildViewController:self.mainNavigationController];
+    
+    self.mainNavigationController.view.frame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
+    [self.view addSubview:self.mainNavigationController.view];
+    
+    if(shouldRenderMenuButton){
+        [self renderMenuButton:self.mainViewController];
+    }
+    
+    [self renderMenuDropShadow];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -228,13 +246,13 @@ const CGFloat CTLMainMenuWidth = 80.0f;
     self.mainViewControllerIdentifier = userInfo[@"navigationController"];
     
     if([userInfo[@"viewController"] isEqualToString:@"appointmentFormViewController"]){
-        CTLAppointmentFormViewController *viewController = (CTLAppointmentFormViewController *)[self.storyboard instantiateViewControllerWithIdentifier:userInfo[@"viewController"]];
+        CTLAppointmentFormViewController *viewController = (CTLAppointmentFormViewController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:userInfo[@"viewController"]];
         CTLCDAppointment *appointment = [CTLCDAppointment MR_findFirstByAttribute:@"eventID" withValue:userInfo[@"eventID"]];
         [viewController setAppointment:appointment];
         self.mainViewController = viewController;
     }
 
-    self.mainNavigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
+    self.mainNavigationController = [self.mainStoryboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
     self.mainNavigationController.view.frame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
     
     self.mainViewController.containerView = self;
@@ -244,8 +262,7 @@ const CGFloat CTLMainMenuWidth = 80.0f;
     
     [self addChildViewController:self.mainNavigationController];
     [self.view addSubview:self.mainNavigationController.view];
-    [self setShadow:self.mainNavigationController];
-    
+    [self renderMenuDropShadow];
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:@"IS_LOCKED"]){
         [self performSelector:@selector(showPinView:) withObject:nil afterDelay:0.1];
@@ -255,7 +272,7 @@ const CGFloat CTLMainMenuWidth = 80.0f;
 
 - (void)showPinView:(id)sender
 {
-    CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"pinInterstitial"];
+    CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:@"pinInterstitial"];
     [self.mainNavigationController presentViewController:viewController animated:YES completion:nil];
 }
 
@@ -264,7 +281,7 @@ const CGFloat CTLMainMenuWidth = 80.0f;
     NSDictionary *userInfo = [notification userInfo];
         
     if([userInfo[@"viewController"] isEqualToString:@"appointmentFormViewController"]){
-        CTLAppointmentFormViewController *viewController = (CTLAppointmentFormViewController *)[self.storyboard instantiateViewControllerWithIdentifier:userInfo[@"viewController"]];
+        CTLAppointmentFormViewController *viewController = (CTLAppointmentFormViewController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:userInfo[@"viewController"]];
         
         CTLCDAppointment *appointment = [CTLCDAppointment MR_findFirstByAttribute:@"eventID" withValue:userInfo[@"eventID"]];
         [viewController setAppointment:appointment];
@@ -291,11 +308,11 @@ const CGFloat CTLMainMenuWidth = 80.0f;
 - (void)requirePin
 {
     self.mainViewControllerIdentifier = @"pinInterstitial";
-    CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[self.storyboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
+    CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    self.mainNavigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     
-    [self setRightPanel:navigationController withFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+    [self setRightPanel:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
 

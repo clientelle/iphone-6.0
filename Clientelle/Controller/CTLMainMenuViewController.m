@@ -9,13 +9,14 @@
 #import "UIColor+CTLColor.h"
 #import "CTLMainMenuViewController.h"
 #import "CTLMenuItemCell.h"
-#import "CTLContainerViewController.h"
 #import "CTLContactsListViewController.h"
 #import "CTLConversationListViewController.h"
 #import "CTLInboxViewController.h"
 
 #import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
+
+const CGFloat CTLMainMenuWidth = 80.0f;
 
 @interface CTLMainMenuViewController()
 @property (nonatomic, strong) CTLCDAccount *currentUser;
@@ -26,8 +27,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.currentUser = [CTLAccountManager currentUser];
     self.tableView.backgroundColor = [UIColor colorFromUnNormalizedRGB:40 green:40 blue:40 alpha:1.0f];
 }
 
@@ -69,30 +68,30 @@
 
 - (void)switchActiveView:(NSString *)identifier
 {
-    NSString *storyboardIdentifier = identifier;
-
+    NSString *storyboardName = identifier;
+    
     if(self.currentUser.user_idValue){
         if([self shouldShowInboxSetup:identifier]){
-            storyboardIdentifier = @"inboxSetup";
+            storyboardName = @"InboxSetup";
         }
     }else{
         if([self shouldShowUpgradeInterstitial:identifier]){
             [self.containerView setNextNavString:identifier];
-            storyboardIdentifier = @"upgrade";
+            storyboardName = @"Upgrade";
         }        
     }
 
-    [self.containerView setMainView:storyboardIdentifier];
+    [self.containerView setMainView:storyboardName];
 }
 
 - (BOOL)shouldShowInboxSetup:(NSString *)identifier
 {
-    return [identifier isEqualToString:@"inboxes"] && self.currentUser.has_inboxValue == 0;
+    return [identifier isEqualToString:@"Inbox"] && self.currentUser.has_inboxValue == 0;
 }
 
 - (BOOL)shouldShowUpgradeInterstitial:(NSString *)identifier
 {
-    return [@[@"messages", @"inboxes"] containsObject:identifier];
+    return [@[@"Messages", @"Inbox"] containsObject:identifier];
 }
 
 - (void)styleActiveCell:(NSIndexPath *)indexPath

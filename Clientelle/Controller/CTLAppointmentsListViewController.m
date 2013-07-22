@@ -47,7 +47,7 @@ int const CTLSelectedFilterIndexCompleted = 1;
     _eventStore = [[EKEventStore alloc] init];
     
     
-    //CTLCDAccount *account = [CTLAccountManager currentUser];
+    //CTLCDAccount *account = [[CTLAccountManager sharedInstance] currentUser];
 
     [self configureFilterPicker];
     [self createFilterPickerButton];

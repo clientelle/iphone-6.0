@@ -19,7 +19,6 @@
 #import "CTLContactDetailsViewController.h"
 #import "CTLMessengerInviteView.h"
 
-#import "CTLAPI.h"
 #import "CTLCDContact.h"
 #import "CTLCDConversation.h"
 #import "CTLCDMessage.h"
@@ -46,7 +45,7 @@ int const CTLContactPickerRowHeight = 35.0f;
 {
     [super viewDidLoad];
     
-    self.current_user = [CTLAccountManager currentUser];
+    self.current_user = [[CTLAccountManager sharedInstance] currentUser];
     
     self.navigationItem.title = NSLocalizedString(@"COMPOSE_MESSSAGE", nil);
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
@@ -249,22 +248,24 @@ int const CTLContactPickerRowHeight = 35.0f;
 
 - (void)sendMessage:(id)sender
 {
-  NSString *messageText = self.messageTextView.text;
+    NSString *messageText = self.messageTextView.text;
+    
+    if(!self.contact || [messageText length] == 0){
+        return;
+    }
+    
+    if(!self.conversation){
+        self.conversation = [CTLCDConversation MR_createEntity];
+    }
+      
+    self.conversation.contact = self.contact;
+    self.conversation.account = self.current_user;
   
-  if(!self.contact || [messageText length] == 0){
-      return;
-  }
-  
-  if(!self.conversation){
-    self.conversation = [CTLCDConversation MR_createEntity];
-  }
-  
-  self.conversation.contact = self.contact;  
-  self.conversation.account = self.current_user;
-  
-  [CTLMessageManager sendMessage:messageText withConversation:self.conversation completionBlock:^(BOOL result, NSError *error){
-    [self dismissViewControllerAnimated:YES completion:nil]; 
-  }];  
+    [[CTLMessageManager sharedInstance] sendMessage:messageText withConversation:self.conversation completionBlock:^(CTLCDMessage *message, id responseObject){
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } errorBlock:^(NSError *error){
+        
+    }];
 }
 
 - (void)dismiss:(id)sender

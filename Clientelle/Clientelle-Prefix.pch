@@ -12,12 +12,15 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <AddressBook/AddressBook.h>
-    #define MR_SHORTHAND
-    #import "CoreData+MagicalRecord.h"
-    #import "CTLContainerViewDelegate.h"
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
+
+    #define MR_SHORTHAND
+    #import "CoreData+MagicalRecord.h"
     #import "AFNetworking.h"
+    #import "CTLContainerViewDelegate.h"
+    #import "CTLContainerViewController.h"
+       
 #endif
 
 #ifdef DEBUG

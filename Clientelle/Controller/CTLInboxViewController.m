@@ -7,7 +7,6 @@
 //
 
 #import "CTLInboxViewController.h"
-#import "CTLContainerViewController.h"
 
 @implementation CTLInboxViewController
 

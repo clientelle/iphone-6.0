@@ -8,16 +8,21 @@
 
 #import "AFHTTPClient.h"
 
-@class CTLCDAccount;
-
 @interface CTLNetworkClient : AFHTTPClient
 
-
-+ (CTLNetworkClient *) sharedClient;
-typedef void (^CTLNetworkCompletionBlock)(id returnData);
+typedef void (^CTLNetworkCompletionBlock)(id responseDict);
 typedef void (^CTLNetworkErrorBlock)(NSError *error);
-typedef void (^CTLNewAccountCompletionBlock)(BOOL success, CTLCDAccount *account, NSError *error);
 
-- (void)loginAndSync:(NSDictionary *)post withUser:(CTLCDAccount *)account withCompletionBlock:(CTLNewAccountCompletionBlock)completionBlock;
++ (CTLNetworkClient *) api;
+
+- (void)get:(NSString *)path params:(NSDictionary *)params completionBlock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock;
+
+- (void)post:(NSString *)path params:(NSDictionary *)params completionBlock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock;
+
+- (void)put:(NSString *)path params:(NSDictionary *)params completionBlock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock;
+
+- (void)signedPost:(NSString *)path withParams:(NSDictionary *)postDict completionBlock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock;
+
+- (void)signedPut:(NSString *)path withParams:(NSDictionary *)postDict completionBlock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock;
 
 @end

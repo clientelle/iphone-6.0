@@ -10,7 +10,6 @@
 #import "UITableViewCell+CellShadows.h"
 #import "UIColor+CTLColor.h"
 
-#import "CTLContainerViewController.h"
 #import "CTLSettingsViewController.h"
 #import "CTLRegisterViewController.h"
 #import "CTLAccountViewController.h"
@@ -44,10 +43,7 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
     self.navigationItem.title = NSLocalizedString(@"SETTINGS", nil);
     
     [self.containerView setRightSwipeEnabled:NO];
-    self.currentUser = [CTLAccountManager currentUser];
-    
-    
-    NSLog(@"CRRENT ACCT %@", self.currentUser);
+    self.currentUser = [[CTLAccountManager sharedInstance] currentUser];
     
     //Set the notification switch
     [self.appointmentNotificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kCTLSettingsAppointmentNotification]];
@@ -93,18 +89,16 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
         self.accountTypeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         self.accountTypeCell.detailTextLabel.text = [NSString stringWithFormat:@"%@", self.currentUser.email];
     }else{
-                
+        self.accountTypeCell.textLabel.text = NSLocalizedString(@"ACCOUNT_TYPE", nil);
+        
         if(self.currentUser.is_proValue){
-            self.accountTypeCell.textLabel.text = NSLocalizedString(@"LOGGED_IN_AS", nil);
-            self.accountTypeCell.detailTextLabel.text = [NSString stringWithFormat:@"%@", self.currentUser.email];
-            self.accountTypeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }else{
-            self.accountTypeCell.textLabel.text = NSLocalizedString(@"ACCOUNT_TYPE", nil);
+            self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"PRO", nil);            
+        }else{            
             self.accountTypeCell.detailTextLabel.text = NSLocalizedString(@"FREE", nil);            
-            self.accountTypeCell.accessoryType = UITableViewCellAccessoryNone;
         }
     }
     
+    self.accountTypeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.accountTypeCell.detailTextLabel.textColor = [UIColor ctlGreen];
     
     self.appointmentNotificationCell.textLabel.text = NSLocalizedString(@"APPT_NOTIFICATIONS", nil);
@@ -127,7 +121,7 @@ NSString *const CTLSignupSegueIdentifyer = @"toSignup";
         if(indexPath.row == 0){            
             if(self.hasManyAccounts){
                 [self performSegueWithIdentifier:CTLAccountsSegueIdentifyer sender:nil];
-            }else if(self.currentUser.is_proValue){
+            }else if(self.currentUser.email){
                 [self performSegueWithIdentifier:CTLAccountSegueIdentifyer sender:self.currentUser];
             }           
         }

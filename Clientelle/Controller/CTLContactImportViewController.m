@@ -30,9 +30,9 @@
 - (void)viewDidLoad
 {
     self.busyIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.busyIndicator.hidden = YES;
+    self.busyIndicator.hidden = YES;    
     
-    self.currentUser = [CTLAccountManager currentUser];
+    self.currentUser = [[CTLAccountManager sharedInstance] currentUser];
     self.existingContacts = self.currentUser.contacts;
     
     self.contacts = [NSArray array];

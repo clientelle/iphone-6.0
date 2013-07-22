@@ -4,14 +4,11 @@
 #import "NSDate+CTLDate.h"
 #import "UILabel+CTLLabel.h"
 
-#import "CTLContainerViewController.h"
-
 #import "CTLContactsListViewController.h"
 #import "CTLContactDetailsViewController.h"
 #import "CTLContactImportViewController.h"
 #import "CTLAppointmentFormViewController.h"
 #import "CTLContactCell.h"
-
 
 #import "CTLABPerson.h"
 #import "CTLCDContact.h"
@@ -59,7 +56,7 @@ int const CTLDialActionSheetTag = 803;
 {
     [super viewDidLoad];    
     
-    self.currentUser = [CTLAccountManager currentUser];
+    self.currentUser = [[CTLAccountManager sharedInstance] currentUser];
     
     self.emptyView = [self noContactsView];
     self.inContactMode = NO;

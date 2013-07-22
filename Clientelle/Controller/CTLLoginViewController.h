@@ -8,21 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class CTLAPI;
+@interface CTLLoginViewController : UITableViewController<CTLContainerViewDelegate>
 
-@interface CTLLoginViewController : UITableViewController<CTLContainerViewDelegate>{
-    CTLAPI *_api;
-}
-
-@property (nonatomic, weak) CTLContainerViewController *containerView;
-
-@property (nonatomic, strong) NSString *emailAddress;
+@property (nonatomic, strong) CTLContainerViewController *containerView;
 
 @property (nonatomic, weak) IBOutlet UITextField *emailTextField;
 @property (nonatomic, weak) IBOutlet UITextField *passwordTextField;
+@property (nonatomic, strong) NSString *emailAddress;
 
 - (IBAction)login:(id)sender;
-
 - (IBAction)forgotPassword:(id)sender;
 
 @end

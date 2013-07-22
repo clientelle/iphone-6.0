@@ -15,6 +15,7 @@
 
 @interface CTLAccountsViewController ()
 
+@property (nonatomic, strong) CTLCDAccount *currentUser;
 @property (nonatomic, assign) int loggedInUserId;
 
 @end
@@ -27,7 +28,9 @@
     [super viewDidLoad];
 
     self.navigationItem.title = NSLocalizedString(@"ACCOUNTS", nil);    
-    self.loggedInUserId = [CTLAccountManager getLoggedInUserId];
+    self.currentUser = [[CTLAccountManager sharedInstance] currentUser];
+    self.loggedInUserId = self.currentUser.user_idValue;
+    
     self.resultsController = [CTLCDAccount fetchAllSortedBy:@"created_at" ascending:YES withPredicate:nil groupBy:nil delegate:self];
     [self.resultsController performFetch:nil];
     
@@ -36,7 +39,7 @@
 
 - (void)reloadAccountsTable:(NSNotification *)notification
 {
-    self.loggedInUserId = [CTLAccountManager getLoggedInUserId];
+    self.loggedInUserId = [[CTLAccountManager sharedInstance] getLoggedInUserId];
     [self.tableView reloadData];
 }
 
@@ -61,13 +64,13 @@
     
     [self configureCell:cell withAccount:account];
     [cell addShadowToCellInGroupedTableView:self.tableView atIndexPath:indexPath];
-
+    
     if(account.user_idValue == self.loggedInUserId){
         cell.textLabel.textColor = [UIColor blackColor];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else{
         cell.textLabel.textColor = [UIColor darkGrayColor];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
     return cell;

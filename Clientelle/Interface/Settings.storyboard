@@ -1,0 +1,882 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0ba-1X-HRY">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="k4Z-Iw-o6F">
+            <objects>
+                <navigationController storyboardIdentifier="" definesPresentationContext="YES" id="0ba-1X-HRY" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FWO-4W-FBP">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="MnT-ba-Nf5" kind="relationship" relationship="rootViewController" id="HZd-bw-wSP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XCz-nO-SVm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-8181" y="4116"/>
+        </scene>
+        <!--Message Preference View Controller-->
+        <scene sceneID="Eg3-5g-sgF">
+            <objects>
+                <tableViewController id="Dds-Sr-dfY" customClass="CTLMessagePreferenceViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="aa1-PT-Ut1">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.85882359740000003" green="0.85882359740000003" blue="0.85882359740000003" alpha="1" colorSpace="deviceRGB"/>
+                        <sections>
+                            <tableViewSection id="h8l-Ju-1kM">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="81" id="nPN-bD-57I">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="82"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Select a default message composer." translatesAutoresizingMaskIntoConstraints="NO" id="GW6-9y-ybb">
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="CLP-tF-zPM"/>
+                                                        <constraint firstAttribute="width" constant="213" id="EQw-Vm-w40"/>
+                                                    </constraints>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="20-gear-2@2x.png" translatesAutoresizingMaskIntoConstraints="NO" id="UzS-2f-dAR"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="( You can change this in settings )" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzL-24-UR0">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="Rry-mF-pGm"/>
+                                                        <constraint firstAttribute="width" constant="213" id="aOI-ma-omS"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="13"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="UzS-2f-dAR" firstAttribute="top" secondItem="nPN-bD-57I" secondAttribute="top" constant="14" id="1r3-yU-lEA"/>
+                                            <constraint firstAttribute="bottom" secondItem="dzL-24-UR0" secondAttribute="bottom" constant="10" id="6o7-Wb-xor"/>
+                                            <constraint firstItem="UzS-2f-dAR" firstAttribute="leading" secondItem="nPN-bD-57I" secondAttribute="leading" constant="22" id="RZL-8H-BXy"/>
+                                            <constraint firstItem="dzL-24-UR0" firstAttribute="leading" secondItem="nPN-bD-57I" secondAttribute="leading" constant="85" id="biC-RM-qNr"/>
+                                            <constraint firstItem="GW6-9y-ybb" firstAttribute="leading" secondItem="nPN-bD-57I" secondAttribute="leading" constant="72" id="eY4-eZ-z0U"/>
+                                            <constraint firstItem="GW6-9y-ybb" firstAttribute="top" secondItem="nPN-bD-57I" secondAttribute="top" constant="6" id="p2a-5C-Zvw"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="WIW-ot-xgb" detailTextLabel="zFl-FK-xho" imageView="CAP-XG-Syd" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="L4O-m7-ogF">
+                                        <rect key="frame" x="0.0" y="92" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Email Composer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WIW-ot-xgb">
+                                                    <rect key="frame" x="44" y="14" width="119" height="17"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Send email messages" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zFl-FK-xho">
+                                                    <rect key="frame" x="44" y="31" width="135" height="15"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="18-envelope-grey.png" id="CAP-XG-Syd">
+                                                    <rect key="frame" x="10" y="21" width="24" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="tc1-HA-GmB" detailTextLabel="9pi-Wi-ZSf" imageView="sF6-Wn-dPv" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="YwJ-L2-ieR">
+                                        <rect key="frame" x="0.0" y="152" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="SMS Composer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tc1-HA-GmB">
+                                                    <rect key="frame" x="44" y="14" width="109" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Send SMS messages" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9pi-Wi-ZSf">
+                                                    <rect key="frame" x="44" y="31" width="126" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="286-speechbubble-grey.png" id="sF6-Wn-dPv">
+                                                    <rect key="frame" x="10" y="17" width="24" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="IrO-Yq-juE" detailTextLabel="gFe-mm-e9h" imageView="k7j-wf-xct" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="soj-11-F4u">
+                                        <rect key="frame" x="0.0" y="212" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clientelle Messenger" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IrO-Yq-juE">
+                                                    <rect key="frame" x="44" y="14" width="150" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Send realtime private messages " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gFe-mm-e9h">
+                                                    <rect key="frame" x="44" y="31" width="203" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="09-chat-grey.png" id="k7j-wf-xct">
+                                                    <rect key="frame" x="10" y="18" width="24" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="8Pt-km-2RY" detailTextLabel="p2s-99-OQG" imageView="djE-hu-Itm" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="jM2-uC-zWM">
+                                        <rect key="frame" x="0.0" y="272" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="58"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Ask Me Each Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8Pt-km-2RY">
+                                                    <rect key="frame" x="44" y="14" width="130" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Displays a prompt to let you select" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="p2s-99-OQG">
+                                                    <rect key="frame" x="44" y="31" width="198" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="12"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="08-chat-grey.png" id="djE-hu-Itm">
+                                                    <rect key="frame" x="10" y="18" width="24" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="Dds-Sr-dfY" id="GNs-g1-ZgY"/>
+                            <outlet property="delegate" destination="Dds-Sr-dfY" id="x72-HJ-zdo"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Zll-uw-Hie"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ocz-Kn-Zpt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6593" y="4907"/>
+        </scene>
+        <!--Settings View Controller - Settings-->
+        <scene sceneID="hMH-PO-oS4">
+            <objects>
+                <tableViewController id="MnT-ba-Nf5" customClass="CTLSettingsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="uue-Ph-tPF">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.88797331199999996" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection id="zje-ma-bln">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="XO7-Kr-im0" detailTextLabel="wgj-aU-8gH" style="IBUITableViewCellStyleValue1" id="wyX-qe-2cz">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Account Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XO7-Kr-im0">
+                                                    <rect key="frame" x="10" y="14" width="96" height="16"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Free" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wgj-aU-8gH">
+                                                    <rect key="frame" x="262" y="15" width="28" height="15"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="13"/>
+                                                    <color key="textColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ejI-7y-yjK">
+                                        <rect key="frame" x="0.0" y="55" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YCy-Jd-JTO">
+                                                    <color key="onTintColor" red="1" green="0.79231352590000004" blue="0.37115173620000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="toggleNotificationSetting:" destination="MnT-ba-Nf5" eventType="valueChanged" id="tdv-nK-ACZ"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="YCy-Jd-JTO" secondAttribute="trailing" constant="20" type="default" id="eU6-HO-QYw"/>
+                                            <constraint firstItem="YCy-Jd-JTO" firstAttribute="top" secondItem="ejI-7y-yjK" secondAttribute="top" constant="8" id="jOH-HQ-fuE"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="sIY-PI-n5h">
+                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w7n-KK-LRU">
+                                                    <color key="onTintColor" red="1" green="0.79231352590000004" blue="0.37115173620000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="toggleNotificationSetting:" destination="MnT-ba-Nf5" eventType="valueChanged" id="ybO-js-g9c"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="w7n-KK-LRU" firstAttribute="top" secondItem="sIY-PI-n5h" secondAttribute="top" constant="8" id="8MV-oz-s11"/>
+                                            <constraint firstAttribute="trailing" secondItem="w7n-KK-LRU" secondAttribute="trailing" constant="20" type="default" id="LaU-9A-Rdo"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="CVd-I3-hhG" imageView="Ytr-XT-QCj" style="IBUITableViewCellStyleDefault" id="xph-uD-jRe">
+                                        <rect key="frame" x="0.0" y="143" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Configure PIN Lock" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CVd-I3-hhG">
+                                                    <rect key="frame" x="39" y="0.0" width="231" height="43"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="54-lock.png" id="Ytr-XT-QCj">
+                                                    <rect key="frame" x="9" y="9" width="20" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="OW7-96-8Sr">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="eP5-Jb-BMH" style="IBUITableViewCellStyleDefault" id="61g-WK-Vk1">
+                                        <rect key="frame" x="0.0" y="207" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Report a problem" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eP5-Jb-BMH">
+                                                    <rect key="frame" x="10" y="0.0" width="260" height="43"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="hA0-cv-1TC" style="IBUITableViewCellStyleDefault" id="agu-Dx-inA">
+                                        <rect key="frame" x="0.0" y="252" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Request a feature" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hA0-cv-1TC">
+                                                    <rect key="frame" x="10" y="0.0" width="260" height="43"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="2lw-Zh-gXx" style="IBUITableViewCellStyleDefault" id="gCK-Vh-TvM">
+                                        <rect key="frame" x="0.0" y="296" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Tell a friend about Clientelle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2lw-Zh-gXx">
+                                                    <rect key="frame" x="10" y="0.0" width="260" height="43"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="MnT-ba-Nf5" id="j0V-FF-cQB"/>
+                            <outlet property="delegate" destination="MnT-ba-Nf5" id="d5m-9i-0wn"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="o4X-fg-ouc"/>
+                    <connections>
+                        <outlet property="accountTypeCell" destination="wyX-qe-2cz" id="HsX-KY-bv9"/>
+                        <outlet property="appointmentNotificationCell" destination="ejI-7y-yjK" id="CvU-Hc-WVG"/>
+                        <outlet property="appointmentNotificationSwitch" destination="YCy-Jd-JTO" id="Yro-Ag-Sam"/>
+                        <outlet property="featureCell" destination="agu-Dx-inA" id="rAe-nR-8KS"/>
+                        <outlet property="messageNotificationCell" destination="sIY-PI-n5h" id="cmk-ed-zki"/>
+                        <outlet property="messageNotificationSwitch" destination="w7n-KK-LRU" id="T2t-1X-6j5"/>
+                        <outlet property="pinCell" destination="xph-uD-jRe" id="hm4-3b-7dq"/>
+                        <outlet property="shareCell" destination="gCK-Vh-TvM" id="KjB-8o-dq2"/>
+                        <outlet property="supportCell" destination="61g-WK-Vk1" id="Jbk-S2-DNB"/>
+                        <outlet property="view" destination="uue-Ph-tPF" id="vo8-BA-Y0p"/>
+                        <segue destination="Obl-nx-FAl" kind="push" identifier="toSetPin" id="noU-gE-D5E"/>
+                        <segue destination="sB1-yP-D8k" kind="push" identifier="toAccountView" id="Vy7-jX-BRA"/>
+                        <segue destination="Dds-Sr-dfY" kind="push" identifier="toMessagePreference" id="Hqh-qt-GuU"/>
+                        <segue destination="bre-7a-GRz" kind="push" identifier="toAccounts" id="iss-Wo-kbc"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RGT-B3-H1I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="HWC-65-clI"/>
+            </objects>
+            <point key="canvasLocation" x="-7483" y="4116"/>
+        </scene>
+        <!--Set Pin View Controller-->
+        <scene sceneID="9H6-J0-Dj7">
+            <objects>
+                <tableViewController id="Obl-nx-FAl" customClass="CTLSetPinViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="uHd-Yg-m7H">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.88627457620000005" green="0.88627457620000005" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
+                        <sections>
+                            <tableViewSection id="Yt5-sB-r4s">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pinCell" rowHeight="172" id="JfK-xR-Sac">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="173"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="171"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter PIN " minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="h26-C4-dtb">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="207" id="tc0-9n-Fe9"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="Obl-nx-FAl" id="Url-XT-jW1"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm PIN" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="UQO-Xa-HCV">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="Obl-nx-FAl" id="LJc-vX-Qkj"/>
+                                                    </connections>
+                                                </textField>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enable PIN Locking" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bzE-OB-bS9">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="foa-EL-KuL"/>
+                                                        <constraint firstAttribute="width" constant="260" id="p7U-a0-Shy"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enter a 4 digit PIN code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rxD-9K-k9P">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="eQj-oy-gNZ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="rxD-9K-k9P" firstAttribute="centerX" secondItem="h26-C4-dtb" secondAttribute="centerX" type="default" id="8fj-6D-lvS"/>
+                                            <constraint firstItem="bzE-OB-bS9" firstAttribute="leading" secondItem="rxD-9K-k9P" secondAttribute="leading" type="default" id="FTm-b7-x11"/>
+                                            <constraint firstItem="bzE-OB-bS9" firstAttribute="top" secondItem="JfK-xR-Sac" secondAttribute="top" constant="23" id="LHH-ae-dTl"/>
+                                            <constraint firstItem="rxD-9K-k9P" firstAttribute="top" secondItem="JfK-xR-Sac" secondAttribute="top" constant="47" id="P1t-dA-gah"/>
+                                            <constraint firstItem="h26-C4-dtb" firstAttribute="top" secondItem="JfK-xR-Sac" secondAttribute="top" constant="84" id="Pzh-9w-z7q"/>
+                                            <constraint firstItem="UQO-Xa-HCV" firstAttribute="leading" secondItem="h26-C4-dtb" secondAttribute="leading" type="default" id="aat-Ma-Pq3"/>
+                                            <constraint firstAttribute="bottom" secondItem="UQO-Xa-HCV" secondAttribute="bottom" constant="14" id="d09-z1-ele"/>
+                                            <constraint firstItem="rxD-9K-k9P" firstAttribute="trailing" secondItem="bzE-OB-bS9" secondAttribute="trailing" type="default" id="ibl-Rt-FA5"/>
+                                            <constraint firstItem="UQO-Xa-HCV" firstAttribute="trailing" secondItem="h26-C4-dtb" secondAttribute="trailing" type="default" id="upC-lQ-zAI"/>
+                                            <constraint firstItem="UQO-Xa-HCV" firstAttribute="centerX" secondItem="JfK-xR-Sac" secondAttribute="centerX" type="default" id="zH5-57-ABu"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pinSwithCell" rowHeight="103" id="75y-3g-Ryx">
+                                        <rect key="frame" x="0.0" y="183" width="320" height="104"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="102"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GUq-zU-k0a">
+                                                    <color key="onTintColor" red="1" green="0.79231352590000004" blue="0.37115173620000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="switchDidChange:" destination="Obl-nx-FAl" eventType="valueChanged" id="qfl-4T-ecj"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Turn off to disable" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9V6-5z-pzv">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="F9w-mx-IIy"/>
+                                                        <constraint firstAttribute="width" constant="162" id="xda-1d-Oeo"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Will lock after 5 minutes of inactivity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MRR-rZ-Xdh">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="EwM-tg-WrZ"/>
+                                                        <constraint firstAttribute="width" constant="260" id="J8A-VA-SvZ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="MRR-rZ-Xdh" firstAttribute="leading" secondItem="9V6-5z-pzv" secondAttribute="leading" type="default" id="anf-mO-BtY"/>
+                                            <constraint firstItem="GUq-zU-k0a" firstAttribute="top" secondItem="75y-3g-Ryx" secondAttribute="top" constant="20" type="default" id="c1V-5h-ie0"/>
+                                            <constraint firstItem="MRR-rZ-Xdh" firstAttribute="centerX" secondItem="75y-3g-Ryx" secondAttribute="centerX" type="default" id="c95-H7-5lW"/>
+                                            <constraint firstItem="MRR-rZ-Xdh" firstAttribute="trailing" secondItem="GUq-zU-k0a" secondAttribute="trailing" type="default" id="g06-8Q-vys"/>
+                                            <constraint firstItem="9V6-5z-pzv" firstAttribute="centerY" secondItem="GUq-zU-k0a" secondAttribute="centerY" type="default" id="lBr-lR-Mfu"/>
+                                            <constraint firstAttribute="bottom" secondItem="MRR-rZ-Xdh" secondAttribute="bottom" constant="29" id="nhm-gm-o5k"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="Obl-nx-FAl" id="OgL-KD-0Vk"/>
+                            <outlet property="delegate" destination="Obl-nx-FAl" id="z05-jK-mUu"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="kRt-z2-SkM">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="5g3-ql-iYB"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="confirmPinTextField" destination="UQO-Xa-HCV" id="jh2-ao-uzO"/>
+                        <outlet property="enter4digitLabel" destination="rxD-9K-k9P" id="Arj-Cz-yzS"/>
+                        <outlet property="pinSwitch" destination="GUq-zU-k0a" id="44F-2b-YCM"/>
+                        <outlet property="pinTextField" destination="h26-C4-dtb" id="YbR-GH-4Sx"/>
+                        <outlet property="switchLabel" destination="9V6-5z-pzv" id="pBA-NL-CoD"/>
+                        <outlet property="switchNoteLabel" destination="MRR-rZ-Xdh" id="rav-xY-YTb"/>
+                        <outlet property="titleLabel" destination="bzE-OB-bS9" id="bc8-JZ-zbV"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CEt-bC-s7Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6593" y="4116"/>
+        </scene>
+        <!--Account View Controller - Account-->
+        <scene sceneID="jtp-AM-C7J">
+            <objects>
+                <tableViewController id="sB1-yP-D8k" customClass="CTLAccountViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="7go-Xd-KLg">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.88627457620000005" green="0.88627457620000005" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="iIc-Qk-5cd">
+                            <rect key="frame" x="0.0" y="308" width="320" height="45"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbj-Hb-sIH" customClass="CTLWhiteButton">
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="HNf-Oc-MaC"/>
+                                        <constraint firstAttribute="width" constant="300" id="tDR-48-bAB"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                                    <inset key="contentEdgeInsets" minX="18" minY="18" maxX="18" maxY="18"/>
+                                    <state key="normal" title="Logout of this account">
+                                        <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected">
+                                        <color key="titleColor" red="0.84263392859999997" green="0.0026140715990000001" blue="0.0051500570560000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="mbj-Hb-sIH" firstAttribute="centerX" secondItem="iIc-Qk-5cd" secondAttribute="centerX" type="default" id="Bku-ks-i5f"/>
+                                <constraint firstItem="mbj-Hb-sIH" firstAttribute="top" secondItem="iIc-Qk-5cd" secondAttribute="top" constant="7" id="wgd-0m-bw1"/>
+                            </constraints>
+                        </view>
+                        <sections>
+                            <tableViewSection id="GIV-Mv-M4Z">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hF4-g4-XIT">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="yUy-az-fsP">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="G0A-AH-ROn"/>
+                                                        <constraint firstAttribute="width" constant="270" id="gSM-xN-2wL"/>
+                                                    </constraints>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="sB1-yP-D8k" id="yti-YU-IpE"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="yUy-az-fsP" firstAttribute="top" secondItem="hF4-g4-XIT" secondAttribute="top" constant="8" id="Nol-Yo-aUN"/>
+                                            <constraint firstItem="yUy-az-fsP" firstAttribute="centerX" secondItem="hF4-g4-XIT" secondAttribute="centerX" type="default" id="XMM-Sg-VS1"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="EHj-4Q-b3O">
+                                        <rect key="frame" x="0.0" y="55" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="2IM-hk-KQw">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="h5s-TT-FPj"/>
+                                                        <constraint firstAttribute="width" constant="270" id="lAB-YC-ZeY"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="sB1-yP-D8k" id="kDN-Ke-XnT"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="2IM-hk-KQw" firstAttribute="top" secondItem="EHj-4Q-b3O" secondAttribute="top" constant="10" id="J0Y-2l-e5m"/>
+                                            <constraint firstItem="2IM-hk-KQw" firstAttribute="centerX" secondItem="EHj-4Q-b3O" secondAttribute="centerX" type="default" id="KsB-dO-nz7"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="jTX-EM-VUb">
+                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Company Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="D09-Zl-qet">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="270" id="sb1-P0-tu8"/>
+                                                        <constraint firstAttribute="height" constant="30" id="tIE-ag-9ON"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="sB1-yP-D8k" id="8F1-6c-UpM"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="D09-Zl-qet" firstAttribute="top" secondItem="jTX-EM-VUb" secondAttribute="top" constant="10" id="TdG-IB-SrN"/>
+                                            <constraint firstItem="D09-Zl-qet" firstAttribute="centerX" secondItem="jTX-EM-VUb" secondAttribute="centerX" type="default" id="x6h-zf-PZi"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ZGQ-4q-uJJ">
+                                        <rect key="frame" x="0.0" y="143" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Industry (E.g. Real Estate)" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CR8-oU-Ev8">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="270" id="OiI-Pb-u8n"/>
+                                                        <constraint firstAttribute="height" constant="30" id="gos-FX-2zi"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="sB1-yP-D8k" id="uGp-FQ-E5a"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="CR8-oU-Ev8" firstAttribute="centerX" secondItem="ZGQ-4q-uJJ" secondAttribute="centerX" type="default" id="lzI-1b-vCb"/>
+                                            <constraint firstItem="CR8-oU-Ev8" firstAttribute="centerY" secondItem="ZGQ-4q-uJJ" secondAttribute="centerY" type="default" id="wAb-cR-hRx"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="Iib-wU-cK4">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="nHW-fx-5CV" detailTextLabel="TDQ-52-bwf" style="IBUITableViewCellStyleValue1" id="gLg-Lg-fof">
+                                        <rect key="frame" x="0.0" y="208" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Account Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nHW-fx-5CV">
+                                                    <rect key="frame" x="10" y="15" width="92" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="13"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TDQ-52-bwf">
+                                                    <rect key="frame" x="250" y="14" width="40" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" red="0.13073106749999999" green="0.3658759124" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="MzG-xP-eeS" detailTextLabel="zE5-fV-ZfB" style="IBUITableViewCellStyleValue1" id="pYH-CE-6Yk">
+                                        <rect key="frame" x="0.0" y="253" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Account Age" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MzG-xP-eeS">
+                                                    <rect key="frame" x="10" y="15" width="86" height="15"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="13"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="0 d" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zE5-fV-ZfB">
+                                                    <rect key="frame" x="269" y="14" width="21" height="16"/>
+                                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="sB1-yP-D8k" id="Zqs-jc-cY7"/>
+                            <outlet property="delegate" destination="sB1-yP-D8k" id="dNd-x2-02O"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Account" id="m4d-bv-vTS">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="Pbq-3Z-xgq">
+                            <connections>
+                                <action selector="submit:" destination="sB1-yP-D8k" id="0Xa-gG-OTu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="accountActionButton" destination="mbj-Hb-sIH" id="dLS-Kw-afi"/>
+                        <outlet property="accountActionButtonContainerView" destination="iIc-Qk-5cd" id="MNW-uG-i05"/>
+                        <outlet property="accountAgeLabel" destination="MzG-xP-eeS" id="ydl-Fd-gte"/>
+                        <outlet property="accountEmailLabel" destination="nHW-fx-5CV" id="SDN-4A-CKK"/>
+                        <outlet property="companyTextField" destination="D09-Zl-qet" id="6IY-MX-nQK"/>
+                        <outlet property="daysLabel" destination="zE5-fV-ZfB" id="PL4-iT-14f"/>
+                        <outlet property="emailLabel" destination="TDQ-52-bwf" id="CJM-Zw-EpL"/>
+                        <outlet property="firstNameTextField" destination="yUy-az-fsP" id="sB3-dX-bun"/>
+                        <outlet property="industryTextField" destination="CR8-oU-Ev8" id="eJq-Tt-fUa"/>
+                        <outlet property="lastNameTextField" destination="2IM-hk-KQw" id="C9l-5K-euB"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fEh-Rr-ygG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6405" y="3262"/>
+        </scene>
+        <!--Accounts View Controller - Accounts-->
+        <scene sceneID="8in-5y-pr1">
+            <objects>
+                <tableViewController id="bre-7a-GRz" customClass="CTLAccountsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="51" sectionHeaderHeight="10" sectionFooterHeight="10" id="pbA-QX-5mL">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.91372555489999996" green="0.91372555489999996" blue="0.91372555489999996" alpha="1" colorSpace="deviceRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="accountCell" textLabel="iO2-wX-b63" rowHeight="51" style="IBUITableViewCellStyleDefault" id="1G7-f6-o4f">
+                                <rect key="frame" x="0.0" y="46" width="320" height="53"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="10" y="1" width="300" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="email1@email.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iO2-wX-b63">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="bre-7a-GRz" id="nGa-za-C3E"/>
+                            <outlet property="delegate" destination="bre-7a-GRz" id="3VQ-Re-5Mg"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Accounts" id="B4m-B0-DPi">
+                        <barButtonItem key="rightBarButtonItem" title="New Account" id="ObU-10-QDH"/>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="sB1-yP-D8k" kind="push" identifier="toAccountView" id="Vxx-WW-JdA"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JYS-mN-cj9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-7493" y="3262"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="08-chat-grey.png" width="24" height="22"/>
+        <image name="09-chat-grey.png" width="24" height="22"/>
+        <image name="18-envelope-grey.png" width="24" height="16"/>
+        <image name="20-gear-2@2x.png" width="52" height="56"/>
+        <image name="286-speechbubble-grey.png" width="24" height="24"/>
+        <image name="54-lock.png" width="20" height="24"/>
+    </resources>
+    <classes>
+        <class className="CTLAccountViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAccountViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="saveAccountInfo:"/>
+                <relationship kind="outlet" name="accountActionButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="accountActionButtonContainerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="accountAgeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="accountEmailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="companyTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="daysLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="firstNameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="industryTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="lastNameTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="CTLAccountsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLAccountsViewController.h"/>
+        </class>
+        <class className="CTLSetPinViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSetPinViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="switchDidChange:" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="confirmPinTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="enter4digitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="pinSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="pinTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="switchLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="switchNoteLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CTLSettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLSettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleNotificationSetting:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="accountTypeCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="appointmentNotificationCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="appointmentNotificationSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="featureCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="messageNotificationCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="messageNotificationSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="pinCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="shareCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="supportCell" candidateClass="UITableViewCell"/>
+            </relationships>
+        </class>
+        <class className="CTLWhiteButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLWhiteButton.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="Vxx-WW-JdA"/>
+    </inferredMetricsTieBreakers>
+</document>

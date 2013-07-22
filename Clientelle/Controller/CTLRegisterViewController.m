@@ -6,22 +6,24 @@
 //  Copyright (c) 2012 Clientelle Ltd.. All rights reserved.
 //
 
+#import "CTLNetworkClient.h"
+
 #import "UITableViewCell+CellShadows.h"
 #import "UIColor+CTLColor.h"
 
 #import "CTLRegisterViewController.h"
-#import "CTLAccountManager.h"
 #import "CTLLoginViewController.h"
-#import "CTLContainerViewController.h"
 #import "CTLInboxInterstitialViewController.h"
 #import "CTLConversationListViewController.h"
+
+#import "CTLAccountManager.h"
+#import "CTLCDAccount.h"
 
 NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.reloadInbox";
 
 @interface CTLRegisterViewController()
 @property (nonatomic, strong) UIPickerView *industryPicker;
 @property (nonatomic, strong) NSArray *industries;
-@property (nonatomic, strong) CTLAPI *api;
 @property (nonatomic, strong) NSNumber *industryID;
 @property (nonatomic, strong) CTLCDAccount *currentUser;
 @end
@@ -31,9 +33,9 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+
+    self.currentUser = [[CTLAccountManager sharedInstance] currentUser];
     
-    self.currentUser = [CTLAccountManager currentUser];
-            
     self.industryID = @(0);
     self.industryPicker = [self configureIndustryPicker];
     
@@ -152,47 +154,24 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     [self.containerView toggleMenu:sender];
 }
 
-- (void)alertErrorMessage:(NSString *)message
+- (void)displayErrorMessage:(NSString *)errorMessage
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:NSLocalizedString(message, nil)
+                                                    message:errorMessage
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil, nil];
     [alert show];
-
 }
 
 - (IBAction)submit:(id)sender
 {
-    NSDictionary *accountDict = [self validateFields];
-    
-    if(accountDict){
-        
-        [CTLAccountManager createAccount:accountDict withUser:self.currentUser completionBlock:^(BOOL success, CTLCDAccount *account, NSError *error) {
-            
-            if(success){
-                if(self.containerView.nextNavString){
-                    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.containerView.nextNavString];
-                    UIViewController<CTLContainerViewDelegate> *viewController = (UIViewController<CTLContainerViewDelegate> *)navigationController.topViewController;
-                    viewController.containerView = self.containerView;
-                    [self.containerView setMainViewController:viewController];
-                    [self.containerView setRightSwipeEnabled:YES];
-                    [self.containerView renderMenuButton:viewController];
-                    [self.containerView flipToView];
-                }else{
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
-                           
-            }else{
-                            
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                message:[error localizedDescription]
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil, nil];
-                [alert show];
-            }
+    NSDictionary *accountDict = [self validateFields];    
+    if(accountDict){        
+        [[CTLAccountManager sharedInstance] createAccount:accountDict onComplete:^(NSDictionary *responseObject){
+            //TODO: Flip to default view
+        } onError:^(NSError *error){
+            [self displayErrorMessage:[error localizedDescription]];            
         }];
     }
 }
@@ -221,19 +200,19 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 
     if ([email rangeOfString:@"@"].location == NSNotFound) {
         [self.emailTextField becomeFirstResponder];
-        [self alertErrorMessage:@"INVALID_EMAIL"];
+        [self displayErrorMessage:NSLocalizedString(@"INVALID_EMAIL", nil)];
         return nil;
     }
     
     if([password length] < 6 || [confirmPassword length] < 6){
         [self.passwordTextField becomeFirstResponder];
-        [self alertErrorMessage:@"PASSWORD_REQUIREMENT"];
+        [self displayErrorMessage:NSLocalizedString(@"PASSWORD_REQUIREMENT", nil)];
         return nil;
     }
     
     if([password isEqualToString:confirmPassword] == NO){
         [self.confirmPasswordTextField becomeFirstResponder];
-        [self alertErrorMessage:@"PASSWORDS_DO_NOT_MATCH"];
+        [self displayErrorMessage:NSLocalizedString(@"PASSWORDS_DO_NOT_MATCH", nil)];
         return nil;
     }
     
@@ -257,7 +236,9 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([[segue identifier] isEqualToString:@"toLogin"]){
+        
         CTLLoginViewController *viewController = [segue destinationViewController];
+        
         [viewController setContainerView:self.containerView];
         [viewController setEmailAddress:self.emailTextField.text];
         return;

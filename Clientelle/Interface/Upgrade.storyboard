@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="XzF-0S-Bey">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="8C5-28-hCT">
+            <objects>
+                <navigationController storyboardIdentifier="upgrade" definesPresentationContext="YES" id="XzF-0S-Bey" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yDB-f9-eKE">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Si3-Gx-qfp" kind="relationship" relationship="rootViewController" id="2zo-pf-Eb0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rOj-j5-gwm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-7343" y="2067"/>
+        </scene>
+        <!--Upgrade Interstitial View Controller-->
+        <scene sceneID="eyW-H7-eHa">
+            <objects>
+                <viewController id="Si3-Gx-qfp" customClass="CTLUpgradeInterstitialViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DC9-HI-XtH">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pip-eA-eGZ">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="190" id="sl6-f4-NrJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Upgrade">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Buy this feature and stuff" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uMb-9f-bZO">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="266" id="LRg-pd-0AS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Pip-eA-eGZ" firstAttribute="centerX" secondItem="DC9-HI-XtH" secondAttribute="centerX" type="default" id="2Q6-Jw-ygJ"/>
+                            <constraint firstItem="Pip-eA-eGZ" firstAttribute="top" secondItem="DC9-HI-XtH" secondAttribute="top" constant="99" id="Qiz-aK-2H7"/>
+                            <constraint firstItem="uMb-9f-bZO" firstAttribute="leading" secondItem="DC9-HI-XtH" secondAttribute="leading" constant="26" id="dSh-bM-GwJ"/>
+                            <constraint firstItem="uMb-9f-bZO" firstAttribute="top" secondItem="DC9-HI-XtH" secondAttribute="top" constant="48" id="xAO-0X-Ldw"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="OTr-GV-BYQ"/>
+                    <connections>
+                        <outlet property="actionMessageLabel" destination="uMb-9f-bZO" id="ClD-7D-Tbz"/>
+                        <outlet property="upgradeButton" destination="Pip-eA-eGZ" id="In4-qs-lgB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7gX-1l-Z6t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6645" y="2067"/>
+        </scene>
+    </scenes>
+    <classes>
+        <class className="CTLUpgradeInterstitialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLUpgradeInterstitialViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="actionMessageLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="upgradeButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

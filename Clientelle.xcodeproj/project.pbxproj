@@ -44,7 +44,16 @@
 		411F24B4179AF41300842564 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 411F249B179AF30A00842564 /* SBJsonWriter.m */; };
 		411F24B7179B2BFE00842564 /* CTLNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 411F24B6179B2BFE00842564 /* CTLNetworkClient.m */; };
 		411F24BA179C9E2100842564 /* CTLWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411F24B9179C9E2100842564 /* CTLWelcomeViewController.m */; };
-		411F24BE179C9FDC00842564 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24BD179C9FDC00842564 /* Welcome.storyboard */; };
+		411F24C6179CA6B500842564 /* MainMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24C5179CA6B500842564 /* MainMenu.storyboard */; };
+		411F24C8179CA75A00842564 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24C7179CA75A00842564 /* Welcome.storyboard */; };
+		411F24CB179D1E6200842564 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24CA179D1E6200842564 /* Settings.storyboard */; };
+		411F24D2179D1F9F00842564 /* Upgrade.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24D1179D1F9F00842564 /* Upgrade.storyboard */; };
+		411F24D4179D200100842564 /* Inbox.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24D3179D200100842564 /* Inbox.storyboard */; };
+		411F24D7179D206000842564 /* InboxSetup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24D6179D206000842564 /* InboxSetup.storyboard */; };
+		411F24D9179D20E300842564 /* Messages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24D8179D20E300842564 /* Messages.storyboard */; };
+		411F24DC179D213000842564 /* Pin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24DB179D213000842564 /* Pin.storyboard */; };
+		411F24DE179D216A00842564 /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24DD179D216A00842564 /* Contacts.storyboard */; };
+		411F24E0179D217C00842564 /* Appointments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24DF179D217C00842564 /* Appointments.storyboard */; };
 		412C3C8B16E98123009E662E /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 412C3C8916E98123009E662E /* app-icon.png */; };
 		412C3C8C16E98123009E662E /* app-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412C3C8A16E98123009E662E /* app-icon@2x.png */; };
 		4130652816BE4E5E0063AC10 /* PhoneFormats.dat in Resources */ = {isa = PBXBuildFile; fileRef = 4130652716BE4E5E0063AC10 /* PhoneFormats.dat */; };
@@ -61,7 +70,6 @@
 		415A4F2B16F69DF6007A0BD4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415A4F2A16F69DF6007A0BD4 /* SystemConfiguration.framework */; };
 		415A4F2F16F6A00D007A0BD4 /* GOHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F2E16F6A00D007A0BD4 /* GOHTTPOperation.m */; };
 		415A4F3316F6A0AC007A0BD4 /* RMPhoneFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F3216F6A0AC007A0BD4 /* RMPhoneFormat.m */; };
-		415A4F3716F6A127007A0BD4 /* CTLAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F3616F6A127007A0BD4 /* CTLAPI.m */; };
 		415A4F4116F6A886007A0BD4 /* NSDate+CTLDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F3A16F6A886007A0BD4 /* NSDate+CTLDate.m */; };
 		415A4F4216F6A886007A0BD4 /* NSString+CTLString.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F3C16F6A886007A0BD4 /* NSString+CTLString.m */; };
 		415A4F4316F6A886007A0BD4 /* UIColor+CTLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F3E16F6A886007A0BD4 /* UIColor+CTLColor.m */; };
@@ -235,7 +243,6 @@
 		417DC25016ADF1140073199D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC24F16ADF1140073199D /* Default.png */; };
 		417DC25216ADF1140073199D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC25116ADF1140073199D /* Default@2x.png */; };
 		417DC25416ADF1140073199D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417DC25316ADF1140073199D /* Default-568h@2x.png */; };
-		417DC25716ADF1140073199D /* Clientelle.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 417DC25516ADF1140073199D /* Clientelle.storyboard */; };
 		417DC26216ADF1140073199D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC26116ADF1140073199D /* SenTestingKit.framework */; };
 		417DC26316ADF1140073199D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23D16ADF1140073199D /* UIKit.framework */; };
 		417DC26416ADF1140073199D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417DC23F16ADF1140073199D /* Foundation.framework */; };
@@ -366,24 +373,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4102C415178E81FE00244EC3 /* CTLMessageThreadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMessageThreadViewController.h; sourceTree = "<group>"; };
-		4102C416178E81FE00244EC3 /* CTLMessageThreadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMessageThreadViewController.m; sourceTree = "<group>"; };
+		4102C415178E81FE00244EC3 /* CTLMessageThreadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLMessageThreadViewController.h; path = ../Controller/CTLMessageThreadViewController.h; sourceTree = "<group>"; };
+		4102C416178E81FE00244EC3 /* CTLMessageThreadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLMessageThreadViewController.m; path = ../Controller/CTLMessageThreadViewController.m; sourceTree = "<group>"; };
 		4102C418178E82A800244EC3 /* CTLMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMessageCell.h; sourceTree = "<group>"; };
 		4102C419178E82A800244EC3 /* CTLMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMessageCell.m; sourceTree = "<group>"; };
 		411256F4179A1B37006A87FD /* CTLAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAccountManager.h; sourceTree = "<group>"; };
 		411256F5179A1B37006A87FD /* CTLAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAccountManager.m; sourceTree = "<group>"; };
 		411256F6179A1B37006A87FD /* CTLMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMessageManager.h; sourceTree = "<group>"; };
 		411256F7179A1B37006A87FD /* CTLMessageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMessageManager.m; sourceTree = "<group>"; };
-		41173EA217922E7000141E88 /* CTLReplyComposerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLReplyComposerViewController.h; sourceTree = "<group>"; };
-		41173EA317922E7000141E88 /* CTLReplyComposerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLReplyComposerViewController.m; sourceTree = "<group>"; };
+		41173EA217922E7000141E88 /* CTLReplyComposerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLReplyComposerViewController.h; path = ../Controller/CTLReplyComposerViewController.h; sourceTree = "<group>"; };
+		41173EA317922E7000141E88 /* CTLReplyComposerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLReplyComposerViewController.m; path = ../Controller/CTLReplyComposerViewController.m; sourceTree = "<group>"; };
 		41173EA517923B2B00141E88 /* CTLReplyToCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLReplyToCell.h; sourceTree = "<group>"; };
 		41173EA617923B2B00141E88 /* CTLReplyToCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLReplyToCell.m; sourceTree = "<group>"; };
 		41173EA817923B3D00141E88 /* CTLReplyComposerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLReplyComposerCell.h; sourceTree = "<group>"; };
 		41173EA917923B3D00141E88 /* CTLReplyComposerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLReplyComposerCell.m; sourceTree = "<group>"; };
 		411F2473179A4B0100842564 /* CTLWhiteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLWhiteButton.h; sourceTree = "<group>"; };
 		411F2474179A4B0100842564 /* CTLWhiteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLWhiteButton.m; sourceTree = "<group>"; };
-		411F2479179A5C7100842564 /* CTLAccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAccountsViewController.h; sourceTree = "<group>"; };
-		411F247A179A5C7100842564 /* CTLAccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAccountsViewController.m; sourceTree = "<group>"; };
+		411F2479179A5C7100842564 /* CTLAccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLAccountsViewController.h; path = ../Controller/CTLAccountsViewController.h; sourceTree = "<group>"; };
+		411F247A179A5C7100842564 /* CTLAccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLAccountsViewController.m; path = ../Controller/CTLAccountsViewController.m; sourceTree = "<group>"; };
 		411F247F179AF22100842564 /* PrivatePubWebSocketDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivatePubWebSocketDelegate.h; sourceTree = "<group>"; };
 		411F2480179AF22100842564 /* PrivatePubWebSocketDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivatePubWebSocketDelegate.m; sourceTree = "<group>"; };
 		411F2483179AF30900842564 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
@@ -413,9 +420,18 @@
 		411F249B179AF30A00842564 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		411F24B5179B2BFE00842564 /* CTLNetworkClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLNetworkClient.h; sourceTree = "<group>"; };
 		411F24B6179B2BFE00842564 /* CTLNetworkClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLNetworkClient.m; sourceTree = "<group>"; };
-		411F24B8179C9E2100842564 /* CTLWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLWelcomeViewController.h; sourceTree = "<group>"; };
-		411F24B9179C9E2100842564 /* CTLWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLWelcomeViewController.m; sourceTree = "<group>"; };
-		411F24BD179C9FDC00842564 /* Welcome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
+		411F24B8179C9E2100842564 /* CTLWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLWelcomeViewController.h; path = ../Controller/CTLWelcomeViewController.h; sourceTree = "<group>"; };
+		411F24B9179C9E2100842564 /* CTLWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLWelcomeViewController.m; path = ../Controller/CTLWelcomeViewController.m; sourceTree = "<group>"; };
+		411F24C5179CA6B500842564 /* MainMenu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainMenu.storyboard; sourceTree = "<group>"; };
+		411F24C7179CA75A00842564 /* Welcome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
+		411F24CA179D1E6200842564 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		411F24D1179D1F9F00842564 /* Upgrade.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Upgrade.storyboard; sourceTree = "<group>"; };
+		411F24D3179D200100842564 /* Inbox.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Inbox.storyboard; sourceTree = "<group>"; };
+		411F24D6179D206000842564 /* InboxSetup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InboxSetup.storyboard; sourceTree = "<group>"; };
+		411F24D8179D20E300842564 /* Messages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Messages.storyboard; sourceTree = "<group>"; };
+		411F24DB179D213000842564 /* Pin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Pin.storyboard; sourceTree = "<group>"; };
+		411F24DD179D216A00842564 /* Contacts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Contacts.storyboard; sourceTree = "<group>"; };
+		411F24DF179D217C00842564 /* Appointments.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Appointments.storyboard; sourceTree = "<group>"; };
 		412C3C8916E98123009E662E /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon.png"; sourceTree = "<group>"; };
 		412C3C8A16E98123009E662E /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon@2x.png"; sourceTree = "<group>"; };
 		4130652716BE4E5E0063AC10 /* PhoneFormats.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = PhoneFormats.dat; sourceTree = "<group>"; };
@@ -423,8 +439,8 @@
 		4130653416C149D90063AC10 /* _CTLCDAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CTLCDAccount.m; sourceTree = "<group>"; };
 		4130653516C149D90063AC10 /* CTLCDAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLCDAccount.h; path = CoreData/CTLCDAccount.h; sourceTree = "<group>"; };
 		4130653616C149D90063AC10 /* CTLCDAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLCDAccount.m; path = CoreData/CTLCDAccount.m; sourceTree = "<group>"; };
-		4130653D16C14A950063AC10 /* CTLRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLRegisterViewController.h; sourceTree = "<group>"; };
-		4130653E16C14A960063AC10 /* CTLRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLRegisterViewController.m; sourceTree = "<group>"; };
+		4130653D16C14A950063AC10 /* CTLRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLRegisterViewController.h; path = ../Controller/CTLRegisterViewController.h; sourceTree = "<group>"; };
+		4130653E16C14A960063AC10 /* CTLRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLRegisterViewController.m; path = ../Controller/CTLRegisterViewController.m; sourceTree = "<group>"; };
 		4130654116C189630063AC10 /* Industries.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Industries.plist; sourceTree = "<group>"; };
 		4130CF8816F014CD00D398EF /* CTLPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLPickerView.h; sourceTree = "<group>"; };
 		4130CF8916F014CD00D398EF /* CTLPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPickerView.m; sourceTree = "<group>"; };
@@ -439,8 +455,6 @@
 		415A4F2E16F6A00D007A0BD4 /* GOHTTPOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOHTTPOperation.m; sourceTree = "<group>"; };
 		415A4F3116F6A0AC007A0BD4 /* RMPhoneFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPhoneFormat.h; sourceTree = "<group>"; };
 		415A4F3216F6A0AC007A0BD4 /* RMPhoneFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPhoneFormat.m; sourceTree = "<group>"; };
-		415A4F3516F6A127007A0BD4 /* CTLAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAPI.h; sourceTree = "<group>"; };
-		415A4F3616F6A127007A0BD4 /* CTLAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAPI.m; sourceTree = "<group>"; };
 		415A4F3916F6A886007A0BD4 /* NSDate+CTLDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CTLDate.h"; sourceTree = "<group>"; };
 		415A4F3A16F6A886007A0BD4 /* NSDate+CTLDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+CTLDate.m"; sourceTree = "<group>"; };
 		415A4F3B16F6A886007A0BD4 /* NSString+CTLString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CTLString.h"; sourceTree = "<group>"; };
@@ -453,17 +467,17 @@
 		415A4F4A16F6B7EB007A0BD4 /* CTLViewDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLViewDecorator.m; sourceTree = "<group>"; };
 		415A4F4C16F6B829007A0BD4 /* CTLCellBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLCellBackground.h; sourceTree = "<group>"; };
 		415A4F4D16F6B829007A0BD4 /* CTLCellBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLCellBackground.m; sourceTree = "<group>"; };
-		4167F5BA16D6FDA6005B7B08 /* CTLLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLLoginViewController.h; sourceTree = "<group>"; };
-		4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLLoginViewController.m; sourceTree = "<group>"; };
-		416DD82816AF966300F2F8B3 /* CTLContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContainerViewController.h; sourceTree = "<group>"; };
-		416DD82916AF966300F2F8B3 /* CTLContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContainerViewController.m; sourceTree = "<group>"; };
-		416DD82A16AF966400F2F8B3 /* CTLContainerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContainerViewDelegate.h; sourceTree = "<group>"; };
-		416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAccountViewController.h; sourceTree = "<group>"; };
-		416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAccountViewController.m; sourceTree = "<group>"; };
-		416DD83516AF9D9B00F2F8B3 /* CTLInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInboxViewController.h; sourceTree = "<group>"; };
-		416DD83616AF9D9B00F2F8B3 /* CTLInboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInboxViewController.m; sourceTree = "<group>"; };
-		416DD83816AF9E9000F2F8B3 /* CTLSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSettingsViewController.h; sourceTree = "<group>"; };
-		416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLSettingsViewController.m; sourceTree = "<group>"; };
+		4167F5BA16D6FDA6005B7B08 /* CTLLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLLoginViewController.h; path = ../Controller/CTLLoginViewController.h; sourceTree = "<group>"; };
+		4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLLoginViewController.m; path = ../Controller/CTLLoginViewController.m; sourceTree = "<group>"; };
+		416DD82816AF966300F2F8B3 /* CTLContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLContainerViewController.h; path = ../Controller/CTLContainerViewController.h; sourceTree = "<group>"; };
+		416DD82916AF966300F2F8B3 /* CTLContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLContainerViewController.m; path = ../Controller/CTLContainerViewController.m; sourceTree = "<group>"; };
+		416DD82A16AF966400F2F8B3 /* CTLContainerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLContainerViewDelegate.h; path = ../Controller/CTLContainerViewDelegate.h; sourceTree = "<group>"; };
+		416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLAccountViewController.h; path = ../Controller/CTLAccountViewController.h; sourceTree = "<group>"; };
+		416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLAccountViewController.m; path = ../Controller/CTLAccountViewController.m; sourceTree = "<group>"; };
+		416DD83516AF9D9B00F2F8B3 /* CTLInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLInboxViewController.h; path = ../Controller/CTLInboxViewController.h; sourceTree = "<group>"; };
+		416DD83616AF9D9B00F2F8B3 /* CTLInboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLInboxViewController.m; path = ../Controller/CTLInboxViewController.m; sourceTree = "<group>"; };
+		416DD83816AF9E9000F2F8B3 /* CTLSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLSettingsViewController.h; path = ../Controller/CTLSettingsViewController.h; sourceTree = "<group>"; };
+		416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLSettingsViewController.m; path = ../Controller/CTLSettingsViewController.m; sourceTree = "<group>"; };
 		416DDA9616AFA9F100F2F8B3 /* MagicalImportFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalImportFunctions.h; sourceTree = "<group>"; };
 		416DDA9716AFA9F100F2F8B3 /* MagicalImportFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicalImportFunctions.m; sourceTree = "<group>"; };
 		416DDA9816AFA9F100F2F8B3 /* NSAttributeDescription+MagicalDataImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributeDescription+MagicalDataImport.h"; sourceTree = "<group>"; };
@@ -519,7 +533,6 @@
 		416DDACD16AFA9F100F2F8B3 /* MagicalRecordShorthand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordShorthand.h; sourceTree = "<group>"; };
 		416DDACE16AFA9F100F2F8B3 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		416DDAED16AFAB8200F2F8B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		416DDB1816AFC24F00F2F8B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Clientelle.storyboard; sourceTree = "<group>"; };
 		4172D7701797860E00FD8370 /* 31-paper-airplane-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "31-paper-airplane-gray.png"; sourceTree = "<group>"; };
 		4172D7711797860E00FD8370 /* 31-paper-airplane-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "31-paper-airplane-gray@2x.png"; sourceTree = "<group>"; };
 		4172D7FD1798F76200FD8370 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
@@ -673,8 +686,8 @@
 		417DC26116ADF1140073199D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		417DC26916ADF1140073199D /* ClientelleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClientelleTests-Info.plist"; sourceTree = "<group>"; };
 		417DC26B16ADF1140073199D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		417DC29616ADF60E0073199D /* CTLMainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMainMenuViewController.h; sourceTree = "<group>"; };
-		417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMainMenuViewController.m; sourceTree = "<group>"; };
+		417DC29616ADF60E0073199D /* CTLMainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLMainMenuViewController.h; path = ../Controller/CTLMainMenuViewController.h; sourceTree = "<group>"; };
+		417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLMainMenuViewController.m; path = ../Controller/CTLMainMenuViewController.m; sourceTree = "<group>"; };
 		417DC2AC16AE17560073199D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		417F281D172F8C82003CC9A3 /* KBPopupBubbleView+Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KBPopupBubbleView+Animations.h"; sourceTree = "<group>"; };
 		417F281E172F8C83003CC9A3 /* KBPopupBubbleView+Animations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KBPopupBubbleView+Animations.m"; sourceTree = "<group>"; };
@@ -683,19 +696,19 @@
 		417F2821172F8C83003CC9A3 /* KBPopupDrawableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBPopupDrawableView.h; sourceTree = "<group>"; };
 		417F2822172F8C83003CC9A3 /* KBPopupDrawableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBPopupDrawableView.m; sourceTree = "<group>"; };
 		417F2823172F8C83003CC9A3 /* KBPopupHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBPopupHeaders.h; sourceTree = "<group>"; };
-		417F2827173090A1003CC9A3 /* CTLConversationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLConversationListViewController.h; sourceTree = "<group>"; };
-		417F2828173090A1003CC9A3 /* CTLConversationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLConversationListViewController.m; sourceTree = "<group>"; };
+		417F2827173090A1003CC9A3 /* CTLConversationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLConversationListViewController.h; path = ../Controller/CTLConversationListViewController.h; sourceTree = "<group>"; };
+		417F2828173090A1003CC9A3 /* CTLConversationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLConversationListViewController.m; path = ../Controller/CTLConversationListViewController.m; sourceTree = "<group>"; };
 		41848DCE16B0271B004BFE30 /* CTLCDContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLCDContact.h; path = CoreData/CTLCDContact.h; sourceTree = "<group>"; };
 		41848DCF16B0271B004BFE30 /* CTLCDContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLCDContact.m; path = CoreData/CTLCDContact.m; sourceTree = "<group>"; };
 		41848DFE16B17430004BFE30 /* CTLABPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLABPerson.h; sourceTree = "<group>"; };
 		41848E0E16B1D211004BFE30 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		418500C11743BD1700F5FFA2 /* CTLPinInterstialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLPinInterstialViewController.h; sourceTree = "<group>"; };
-		418500C21743BD1700F5FFA2 /* CTLPinInterstialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPinInterstialViewController.m; sourceTree = "<group>"; };
+		418500C11743BD1700F5FFA2 /* CTLPinInterstialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLPinInterstialViewController.h; path = ../Controller/CTLPinInterstialViewController.h; sourceTree = "<group>"; };
+		418500C21743BD1700F5FFA2 /* CTLPinInterstialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLPinInterstialViewController.m; path = ../Controller/CTLPinInterstialViewController.m; sourceTree = "<group>"; };
 		418514B0176E916B0005B737 /* CTLEmptyMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLEmptyMessagesView.h; sourceTree = "<group>"; };
 		418514B1176E916B0005B737 /* CTLEmptyMessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLEmptyMessagesView.m; sourceTree = "<group>"; };
 		418514B3176E91A50005B737 /* CTLEmptyMessagesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CTLEmptyMessagesView.xib; sourceTree = "<group>"; };
-		418514BB176FED2D0005B737 /* CTLMessageComposerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMessageComposerViewController.h; sourceTree = "<group>"; };
-		418514BC176FED2D0005B737 /* CTLMessageComposerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMessageComposerViewController.m; sourceTree = "<group>"; };
+		418514BB176FED2D0005B737 /* CTLMessageComposerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLMessageComposerViewController.h; path = ../Controller/CTLMessageComposerViewController.h; sourceTree = "<group>"; };
+		418514BC176FED2D0005B737 /* CTLMessageComposerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLMessageComposerViewController.m; path = ../Controller/CTLMessageComposerViewController.m; sourceTree = "<group>"; };
 		418514BE176FF4010005B737 /* 31-paper-airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "31-paper-airplane.png"; sourceTree = "<group>"; };
 		418514BF176FF4010005B737 /* 31-paper-airplane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "31-paper-airplane@2x.png"; sourceTree = "<group>"; };
 		418514C2176FF6D80005B737 /* CTLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLTextField.h; sourceTree = "<group>"; };
@@ -713,12 +726,12 @@
 		418514DA1773F5430005B737 /* CTLMessengerInviteView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CTLMessengerInviteView.xib; sourceTree = "<group>"; };
 		418514DC1773F5690005B737 /* CTLMessengerInviteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMessengerInviteView.h; sourceTree = "<group>"; };
 		418514DD1773F5690005B737 /* CTLMessengerInviteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMessengerInviteView.m; sourceTree = "<group>"; };
-		41AB94B71741ABE6003741BB /* CTLSetPinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSetPinViewController.h; sourceTree = "<group>"; };
-		41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLSetPinViewController.m; sourceTree = "<group>"; };
+		41AB94B71741ABE6003741BB /* CTLSetPinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLSetPinViewController.h; path = ../Controller/CTLSetPinViewController.h; sourceTree = "<group>"; };
+		41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLSetPinViewController.m; path = ../Controller/CTLSetPinViewController.m; sourceTree = "<group>"; };
 		41AEBDA416EC792900BC397F /* CTLMenuItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMenuItemCell.h; sourceTree = "<group>"; };
 		41AEBDA516EC792900BC397F /* CTLMenuItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMenuItemCell.m; sourceTree = "<group>"; };
-		41AEBDAB16EE8FD600BC397F /* CTLAppointmentsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAppointmentsListViewController.h; sourceTree = "<group>"; };
-		41AEBDAC16EE8FD600BC397F /* CTLAppointmentsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAppointmentsListViewController.m; sourceTree = "<group>"; };
+		41AEBDAB16EE8FD600BC397F /* CTLAppointmentsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLAppointmentsListViewController.h; path = ../Controller/CTLAppointmentsListViewController.h; sourceTree = "<group>"; };
+		41AEBDAC16EE8FD600BC397F /* CTLAppointmentsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLAppointmentsListViewController.m; path = ../Controller/CTLAppointmentsListViewController.m; sourceTree = "<group>"; };
 		41AEBDAE16EECB6D00BC397F /* _CTLCDAppointment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CTLCDAppointment.h; sourceTree = "<group>"; };
 		41AEBDAF16EECB6D00BC397F /* _CTLCDAppointment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CTLCDAppointment.m; sourceTree = "<group>"; };
 		41AEBDB016EECB6D00BC397F /* CTLCDAppointment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLCDAppointment.h; path = CoreData/CTLCDAppointment.h; sourceTree = "<group>"; };
@@ -735,14 +748,14 @@
 		41B546D316B39BC500302652 /* CTLContactHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactHeaderView.m; sourceTree = "<group>"; };
 		41B546D416B39BC500302652 /* CTLContactToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactToolbarView.h; sourceTree = "<group>"; };
 		41B546D516B39BC500302652 /* CTLContactToolbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactToolbarView.m; sourceTree = "<group>"; };
-		41B546DD16B39C2300302652 /* CTLContactDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactDetailsViewController.h; sourceTree = "<group>"; };
-		41B546DE16B39C2300302652 /* CTLContactDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactDetailsViewController.m; sourceTree = "<group>"; };
-		41B546DF16B39C2300302652 /* CTLContactImportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactImportViewController.h; sourceTree = "<group>"; };
-		41B546E016B39C2400302652 /* CTLContactImportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactImportViewController.m; sourceTree = "<group>"; };
-		41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactFormEditorViewController.h; sourceTree = "<group>"; };
-		41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactFormEditorViewController.m; sourceTree = "<group>"; };
-		41B546E516B39C2500302652 /* CTLAppointmentFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAppointmentFormViewController.h; sourceTree = "<group>"; };
-		41B546E616B39C2500302652 /* CTLAppointmentFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAppointmentFormViewController.m; sourceTree = "<group>"; };
+		41B546DD16B39C2300302652 /* CTLContactDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLContactDetailsViewController.h; path = ../Controller/CTLContactDetailsViewController.h; sourceTree = "<group>"; };
+		41B546DE16B39C2300302652 /* CTLContactDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLContactDetailsViewController.m; path = ../Controller/CTLContactDetailsViewController.m; sourceTree = "<group>"; };
+		41B546DF16B39C2300302652 /* CTLContactImportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLContactImportViewController.h; path = ../Controller/CTLContactImportViewController.h; sourceTree = "<group>"; };
+		41B546E016B39C2400302652 /* CTLContactImportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLContactImportViewController.m; path = ../Controller/CTLContactImportViewController.m; sourceTree = "<group>"; };
+		41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLContactFormEditorViewController.h; path = ../Controller/CTLContactFormEditorViewController.h; sourceTree = "<group>"; };
+		41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLContactFormEditorViewController.m; path = ../Controller/CTLContactFormEditorViewController.m; sourceTree = "<group>"; };
+		41B546E516B39C2500302652 /* CTLAppointmentFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLAppointmentFormViewController.h; path = ../Controller/CTLAppointmentFormViewController.h; sourceTree = "<group>"; };
+		41B546E616B39C2500302652 /* CTLAppointmentFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLAppointmentFormViewController.m; path = ../Controller/CTLAppointmentFormViewController.m; sourceTree = "<group>"; };
 		41B5472E16B4556500302652 /* CTLFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLFieldCell.h; sourceTree = "<group>"; };
 		41B5472F16B4556500302652 /* CTLFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLFieldCell.m; sourceTree = "<group>"; };
 		41B5473516B4562D00302652 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
@@ -756,24 +769,24 @@
 		41D791561737E30A00FCA232 /* _CTLCDContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CTLCDContact.h; sourceTree = "<group>"; };
 		41D791571737E30A00FCA232 /* _CTLCDContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CTLCDContact.m; sourceTree = "<group>"; };
 		41D7915F1737E91200FCA232 /* CTLABPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLABPerson.m; sourceTree = "<group>"; };
-		41D791611737EAF600FCA232 /* CTLContactsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactsListViewController.m; sourceTree = "<group>"; };
+		41D791611737EAF600FCA232 /* CTLContactsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLContactsListViewController.m; path = ../Controller/CTLContactsListViewController.m; sourceTree = "<group>"; };
 		41D791641738AE4700FCA232 /* Clientelle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clientelle.xcdatamodel; sourceTree = "<group>"; };
 		41D791661738C97400FCA232 /* _CTLCDContactField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CTLCDContactField.h; sourceTree = "<group>"; };
 		41D791671738C97400FCA232 /* _CTLCDContactField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CTLCDContactField.m; sourceTree = "<group>"; };
 		41D791681738C97400FCA232 /* CTLCDContactField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLCDContactField.h; path = CoreData/CTLCDContactField.h; sourceTree = "<group>"; };
 		41D791691738C97400FCA232 /* CTLCDContactField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLCDContactField.m; path = CoreData/CTLCDContactField.m; sourceTree = "<group>"; };
 		41D7916C1738D36900FCA232 /* ContactFormDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ContactFormDefaults.plist; sourceTree = "<group>"; };
-		41DA1DB416CC57ED0017F71F /* CTLUpgradeInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLUpgradeInterstitialViewController.h; sourceTree = "<group>"; };
-		41DA1DB516CC57ED0017F71F /* CTLUpgradeInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLUpgradeInterstitialViewController.m; sourceTree = "<group>"; };
-		41DA1DB716CC8B4D0017F71F /* CTLInboxInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInboxInterstitialViewController.h; sourceTree = "<group>"; };
-		41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInboxInterstitialViewController.m; sourceTree = "<group>"; };
-		41DA1DBA16CE781B0017F71F /* CTLEnterFormCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLEnterFormCodeViewController.h; sourceTree = "<group>"; };
-		41DA1DBB16CE781B0017F71F /* CTLEnterFormCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLEnterFormCodeViewController.m; sourceTree = "<group>"; };
+		41DA1DB416CC57ED0017F71F /* CTLUpgradeInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLUpgradeInterstitialViewController.h; path = ../Controller/CTLUpgradeInterstitialViewController.h; sourceTree = "<group>"; };
+		41DA1DB516CC57ED0017F71F /* CTLUpgradeInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLUpgradeInterstitialViewController.m; path = ../Controller/CTLUpgradeInterstitialViewController.m; sourceTree = "<group>"; };
+		41DA1DB716CC8B4D0017F71F /* CTLInboxInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLInboxInterstitialViewController.h; path = ../Controller/CTLInboxInterstitialViewController.h; sourceTree = "<group>"; };
+		41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLInboxInterstitialViewController.m; path = ../Controller/CTLInboxInterstitialViewController.m; sourceTree = "<group>"; };
+		41DA1DBA16CE781B0017F71F /* CTLEnterFormCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLEnterFormCodeViewController.h; path = ../Controller/CTLEnterFormCodeViewController.h; sourceTree = "<group>"; };
+		41DA1DBB16CE781B0017F71F /* CTLEnterFormCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLEnterFormCodeViewController.m; path = ../Controller/CTLEnterFormCodeViewController.m; sourceTree = "<group>"; };
 		41DA1DCB16D003DC0017F71F /* _CTLCDInbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CTLCDInbox.h; sourceTree = "<group>"; };
 		41DA1DCC16D003DC0017F71F /* _CTLCDInbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CTLCDInbox.m; sourceTree = "<group>"; };
 		41DA1DCD16D003DC0017F71F /* CTLCDInbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLCDInbox.h; path = CoreData/CTLCDInbox.h; sourceTree = "<group>"; };
 		41DA1DCE16D003DC0017F71F /* CTLCDInbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLCDInbox.m; path = CoreData/CTLCDInbox.m; sourceTree = "<group>"; };
-		41E56D231725FE75004B3CEB /* CTLContactsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactsListViewController.h; sourceTree = "<group>"; };
+		41E56D231725FE75004B3CEB /* CTLContactsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLContactsListViewController.h; path = ../Controller/CTLContactsListViewController.h; sourceTree = "<group>"; };
 		41E9BA4F16B459E100FEF1FE /* DevConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DevConfig.plist; sourceTree = "<group>"; };
 		41F17AEC177C10BD00BB0368 /* CTLAutoCompleteTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAutoCompleteTableView.h; sourceTree = "<group>"; };
 		41F17AED177C10BD00BB0368 /* CTLAutoCompleteTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAutoCompleteTableView.m; sourceTree = "<group>"; };
@@ -904,12 +917,150 @@
 			path = SBJson;
 			sourceTree = "<group>";
 		};
-		411F24BC179C9FBD00842564 /* Storyboard */ = {
+		411F24C1179CA56000842564 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				411F24BD179C9FDC00842564 /* Welcome.storyboard */,
+				411F24C4179CA5E100842564 /* MainMenu */,
+				411F24C3179CA5C500842564 /* Welcome */,
+				411F24D0179D1F8A00842564 /* Upgrade */,
+				411F24CC179D1F0800842564 /* Contacts */,
+				411F24CD179D1F1500842564 /* Appointments */,
+				411F24CE179D1F1E00842564 /* Messages */,
+				411F24D5179D203A00842564 /* InboxSetup */,
+				411F24CF179D1F3800842564 /* Inbox */,
+				411F24C9179D1E0B00842564 /* Settings */,
+				411F24DA179D211400842564 /* Pin */,
 			);
-			path = Storyboard;
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		411F24C3179CA5C500842564 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				411F24C7179CA75A00842564 /* Welcome.storyboard */,
+				411F24B8179C9E2100842564 /* CTLWelcomeViewController.h */,
+				411F24B9179C9E2100842564 /* CTLWelcomeViewController.m */,
+				4167F5BA16D6FDA6005B7B08 /* CTLLoginViewController.h */,
+				4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */,
+				4130653D16C14A950063AC10 /* CTLRegisterViewController.h */,
+				4130653E16C14A960063AC10 /* CTLRegisterViewController.m */,
+			);
+			name = Welcome;
+			sourceTree = "<group>";
+		};
+		411F24C4179CA5E100842564 /* MainMenu */ = {
+			isa = PBXGroup;
+			children = (
+				411F24C5179CA6B500842564 /* MainMenu.storyboard */,
+				416DD82A16AF966400F2F8B3 /* CTLContainerViewDelegate.h */,
+				416DD82816AF966300F2F8B3 /* CTLContainerViewController.h */,
+				416DD82916AF966300F2F8B3 /* CTLContainerViewController.m */,
+				417DC29616ADF60E0073199D /* CTLMainMenuViewController.h */,
+				417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */,
+			);
+			name = MainMenu;
+			sourceTree = "<group>";
+		};
+		411F24C9179D1E0B00842564 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				411F24CA179D1E6200842564 /* Settings.storyboard */,
+				416DD83816AF9E9000F2F8B3 /* CTLSettingsViewController.h */,
+				416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */,
+				416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */,
+				416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */,
+				411F2479179A5C7100842564 /* CTLAccountsViewController.h */,
+				411F247A179A5C7100842564 /* CTLAccountsViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		411F24CC179D1F0800842564 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				411F24DD179D216A00842564 /* Contacts.storyboard */,
+				41E56D231725FE75004B3CEB /* CTLContactsListViewController.h */,
+				41D791611737EAF600FCA232 /* CTLContactsListViewController.m */,
+				41B546DD16B39C2300302652 /* CTLContactDetailsViewController.h */,
+				41B546DE16B39C2300302652 /* CTLContactDetailsViewController.m */,
+				41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */,
+				41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */,
+				41B546DF16B39C2300302652 /* CTLContactImportViewController.h */,
+				41B546E016B39C2400302652 /* CTLContactImportViewController.m */,
+			);
+			name = Contacts;
+			sourceTree = "<group>";
+		};
+		411F24CD179D1F1500842564 /* Appointments */ = {
+			isa = PBXGroup;
+			children = (
+				411F24DF179D217C00842564 /* Appointments.storyboard */,
+				41AEBDAB16EE8FD600BC397F /* CTLAppointmentsListViewController.h */,
+				41AEBDAC16EE8FD600BC397F /* CTLAppointmentsListViewController.m */,
+				41B546E516B39C2500302652 /* CTLAppointmentFormViewController.h */,
+				41B546E616B39C2500302652 /* CTLAppointmentFormViewController.m */,
+			);
+			name = Appointments;
+			sourceTree = "<group>";
+		};
+		411F24CE179D1F1E00842564 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				417F2827173090A1003CC9A3 /* CTLConversationListViewController.h */,
+				417F2828173090A1003CC9A3 /* CTLConversationListViewController.m */,
+				418514BB176FED2D0005B737 /* CTLMessageComposerViewController.h */,
+				418514BC176FED2D0005B737 /* CTLMessageComposerViewController.m */,
+				4102C415178E81FE00244EC3 /* CTLMessageThreadViewController.h */,
+				4102C416178E81FE00244EC3 /* CTLMessageThreadViewController.m */,
+				41173EA217922E7000141E88 /* CTLReplyComposerViewController.h */,
+				41173EA317922E7000141E88 /* CTLReplyComposerViewController.m */,
+				411F24D8179D20E300842564 /* Messages.storyboard */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
+		411F24CF179D1F3800842564 /* Inbox */ = {
+			isa = PBXGroup;
+			children = (
+				416DD83516AF9D9B00F2F8B3 /* CTLInboxViewController.h */,
+				416DD83616AF9D9B00F2F8B3 /* CTLInboxViewController.m */,
+				411F24D3179D200100842564 /* Inbox.storyboard */,
+			);
+			name = Inbox;
+			sourceTree = "<group>";
+		};
+		411F24D0179D1F8A00842564 /* Upgrade */ = {
+			isa = PBXGroup;
+			children = (
+				41DA1DB416CC57ED0017F71F /* CTLUpgradeInterstitialViewController.h */,
+				41DA1DB516CC57ED0017F71F /* CTLUpgradeInterstitialViewController.m */,
+				411F24D1179D1F9F00842564 /* Upgrade.storyboard */,
+			);
+			name = Upgrade;
+			sourceTree = "<group>";
+		};
+		411F24D5179D203A00842564 /* InboxSetup */ = {
+			isa = PBXGroup;
+			children = (
+				41DA1DBA16CE781B0017F71F /* CTLEnterFormCodeViewController.h */,
+				41DA1DBB16CE781B0017F71F /* CTLEnterFormCodeViewController.m */,
+				41DA1DB716CC8B4D0017F71F /* CTLInboxInterstitialViewController.h */,
+				41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */,
+				411F24D6179D206000842564 /* InboxSetup.storyboard */,
+			);
+			name = InboxSetup;
+			sourceTree = "<group>";
+		};
+		411F24DA179D211400842564 /* Pin */ = {
+			isa = PBXGroup;
+			children = (
+				411F24DB179D213000842564 /* Pin.storyboard */,
+				418500C11743BD1700F5FFA2 /* CTLPinInterstialViewController.h */,
+				418500C21743BD1700F5FFA2 /* CTLPinInterstialViewController.m */,
+				41AB94B71741ABE6003741BB /* CTLSetPinViewController.h */,
+				41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */,
+			);
+			name = Pin;
 			sourceTree = "<group>";
 		};
 		4146971816F7491700B22EDD /* Factory */ = {
@@ -942,8 +1093,6 @@
 		415A4F3416F6A126007A0BD4 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				415A4F3516F6A127007A0BD4 /* CTLAPI.h */,
-				415A4F3616F6A127007A0BD4 /* CTLAPI.m */,
 				411F24B5179B2BFE00842564 /* CTLNetworkClient.h */,
 				411F24B6179B2BFE00842564 /* CTLNetworkClient.m */,
 			);
@@ -982,18 +1131,6 @@
 				41B47EED16F922DB000B08E1 /* CTLBottomRoundedCorners.m */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		416DD83416AF9C2D00F2F8B3 /* ContainerView */ = {
-			isa = PBXGroup;
-			children = (
-				416DD82816AF966300F2F8B3 /* CTLContainerViewController.h */,
-				416DD82916AF966300F2F8B3 /* CTLContainerViewController.m */,
-				416DD82A16AF966400F2F8B3 /* CTLContainerViewDelegate.h */,
-				417DC29616ADF60E0073199D /* CTLMainMenuViewController.h */,
-				417DC29716ADF60E0073199D /* CTLMainMenuViewController.m */,
-			);
-			name = ContainerView;
 			sourceTree = "<group>";
 		};
 		416DDA9316AFA9F100F2F8B3 /* MagicalRecord */ = {
@@ -1298,7 +1435,7 @@
 		417DC24316ADF1140073199D /* Clientelle */ = {
 			isa = PBXGroup;
 			children = (
-				411F24BC179C9FBD00842564 /* Storyboard */,
+				411F24C1179CA56000842564 /* Interface */,
 				411256F3179A1B37006A87FD /* Manager */,
 				417DC29A16ADF60E0073199D /* Model */,
 				417DC29B16ADF60E0073199D /* View */,
@@ -1317,8 +1454,6 @@
 				417DC24916ADF1140073199D /* main.m */,
 				417DC24C16ADF1140073199D /* CTLAppDelegate.h */,
 				417DC24D16ADF1140073199D /* CTLAppDelegate.m */,
-				417DC25516ADF1140073199D /* Clientelle.storyboard */,
-				41D791631738AE4700FCA232 /* Clientelle.xcdatamodeld */,
 				417DC24516ADF1140073199D /* Clientelle-Info.plist */,
 				417DC24B16ADF1140073199D /* Clientelle-Prefix.pch */,
 				417DC24616ADF1140073199D /* InfoPlist.strings */,
@@ -1371,51 +1506,6 @@
 		417DC29316ADF60E0073199D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				416DD83416AF9C2D00F2F8B3 /* ContainerView */,
-				411F24B8179C9E2100842564 /* CTLWelcomeViewController.h */,
-				411F24B9179C9E2100842564 /* CTLWelcomeViewController.m */,
-				4167F5BA16D6FDA6005B7B08 /* CTLLoginViewController.h */,
-				4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */,
-				416DD83016AF9C0100F2F8B3 /* CTLAccountViewController.h */,
-				416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */,
-				411F2479179A5C7100842564 /* CTLAccountsViewController.h */,
-				411F247A179A5C7100842564 /* CTLAccountsViewController.m */,
-				4130653D16C14A950063AC10 /* CTLRegisterViewController.h */,
-				4130653E16C14A960063AC10 /* CTLRegisterViewController.m */,
-				416DD83816AF9E9000F2F8B3 /* CTLSettingsViewController.h */,
-				416DD83916AF9E9000F2F8B3 /* CTLSettingsViewController.m */,
-				41E56D231725FE75004B3CEB /* CTLContactsListViewController.h */,
-				41D791611737EAF600FCA232 /* CTLContactsListViewController.m */,
-				41B546DD16B39C2300302652 /* CTLContactDetailsViewController.h */,
-				41B546DE16B39C2300302652 /* CTLContactDetailsViewController.m */,
-				41B546E116B39C2400302652 /* CTLContactFormEditorViewController.h */,
-				41B546E216B39C2400302652 /* CTLContactFormEditorViewController.m */,
-				41B546DF16B39C2300302652 /* CTLContactImportViewController.h */,
-				41B546E016B39C2400302652 /* CTLContactImportViewController.m */,
-				41AEBDAB16EE8FD600BC397F /* CTLAppointmentsListViewController.h */,
-				41AEBDAC16EE8FD600BC397F /* CTLAppointmentsListViewController.m */,
-				41B546E516B39C2500302652 /* CTLAppointmentFormViewController.h */,
-				41B546E616B39C2500302652 /* CTLAppointmentFormViewController.m */,
-				41DA1DB716CC8B4D0017F71F /* CTLInboxInterstitialViewController.h */,
-				41DA1DB816CC8B4E0017F71F /* CTLInboxInterstitialViewController.m */,
-				416DD83516AF9D9B00F2F8B3 /* CTLInboxViewController.h */,
-				416DD83616AF9D9B00F2F8B3 /* CTLInboxViewController.m */,
-				41DA1DBA16CE781B0017F71F /* CTLEnterFormCodeViewController.h */,
-				41DA1DBB16CE781B0017F71F /* CTLEnterFormCodeViewController.m */,
-				417F2827173090A1003CC9A3 /* CTLConversationListViewController.h */,
-				417F2828173090A1003CC9A3 /* CTLConversationListViewController.m */,
-				418514BB176FED2D0005B737 /* CTLMessageComposerViewController.h */,
-				418514BC176FED2D0005B737 /* CTLMessageComposerViewController.m */,
-				4102C415178E81FE00244EC3 /* CTLMessageThreadViewController.h */,
-				4102C416178E81FE00244EC3 /* CTLMessageThreadViewController.m */,
-				41173EA217922E7000141E88 /* CTLReplyComposerViewController.h */,
-				41173EA317922E7000141E88 /* CTLReplyComposerViewController.m */,
-				418500C11743BD1700F5FFA2 /* CTLPinInterstialViewController.h */,
-				418500C21743BD1700F5FFA2 /* CTLPinInterstialViewController.m */,
-				41AB94B71741ABE6003741BB /* CTLSetPinViewController.h */,
-				41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */,
-				41DA1DB416CC57ED0017F71F /* CTLUpgradeInterstitialViewController.h */,
-				41DA1DB516CC57ED0017F71F /* CTLUpgradeInterstitialViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1496,6 +1586,7 @@
 		41848DC716B0271B004BFE30 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				41D791631738AE4700FCA232 /* Clientelle.xcdatamodeld */,
 				4130653316C149D90063AC10 /* _CTLCDAccount.h */,
 				4130653416C149D90063AC10 /* _CTLCDAccount.m */,
 				41AEBDAE16EECB6D00BC397F /* _CTLCDAppointment.h */,
@@ -1649,7 +1740,6 @@
 				417DC25016ADF1140073199D /* Default.png in Resources */,
 				417DC25216ADF1140073199D /* Default@2x.png in Resources */,
 				417DC25416ADF1140073199D /* Default-568h@2x.png in Resources */,
-				417DC25716ADF1140073199D /* Clientelle.storyboard in Resources */,
 				41FEEE4216AFC7FE00094A70 /* Localizable.strings in Resources */,
 				41E9BA5316B459E100FEF1FE /* DevConfig.plist in Resources */,
 				4130652816BE4E5E0063AC10 /* PhoneFormats.dat in Resources */,
@@ -1768,7 +1858,16 @@
 				41F17AF0177C131B00BB0368 /* CTLAutoCompleteTableView.xib in Resources */,
 				4172D7721797860E00FD8370 /* 31-paper-airplane-gray.png in Resources */,
 				4172D7731797860E00FD8370 /* 31-paper-airplane-gray@2x.png in Resources */,
-				411F24BE179C9FDC00842564 /* Welcome.storyboard in Resources */,
+				411F24C6179CA6B500842564 /* MainMenu.storyboard in Resources */,
+				411F24C8179CA75A00842564 /* Welcome.storyboard in Resources */,
+				411F24CB179D1E6200842564 /* Settings.storyboard in Resources */,
+				411F24D2179D1F9F00842564 /* Upgrade.storyboard in Resources */,
+				411F24D4179D200100842564 /* Inbox.storyboard in Resources */,
+				411F24D7179D206000842564 /* InboxSetup.storyboard in Resources */,
+				411F24D9179D20E300842564 /* Messages.storyboard in Resources */,
+				411F24DC179D213000842564 /* Pin.storyboard in Resources */,
+				411F24DE179D216A00842564 /* Contacts.storyboard in Resources */,
+				411F24E0179D217C00842564 /* Appointments.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1881,7 +1980,6 @@
 				413DB90016F022950018B38C /* CTLPickerButton.m in Sources */,
 				415A4F2F16F6A00D007A0BD4 /* GOHTTPOperation.m in Sources */,
 				415A4F3316F6A0AC007A0BD4 /* RMPhoneFormat.m in Sources */,
-				415A4F3716F6A127007A0BD4 /* CTLAPI.m in Sources */,
 				415A4F4116F6A886007A0BD4 /* NSDate+CTLDate.m in Sources */,
 				415A4F4216F6A886007A0BD4 /* NSString+CTLString.m in Sources */,
 				415A4F4316F6A886007A0BD4 /* UIColor+CTLColor.m in Sources */,
@@ -2027,14 +2125,6 @@
 				417DC24716ADF1140073199D /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		417DC25516ADF1140073199D /* Clientelle.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				416DDB1816AFC24F00F2F8B3 /* en */,
-			);
-			name = Clientelle.storyboard;
 			sourceTree = "<group>";
 		};
 		417DC26A16ADF1140073199D /* InfoPlist.strings */ = {
@@ -2242,7 +2332,8 @@
 				41D791641738AE4700FCA232 /* Clientelle.xcdatamodel */,
 			);
 			currentVersion = 41D791641738AE4700FCA232 /* Clientelle.xcdatamodel */;
-			path = Clientelle.xcdatamodeld;
+			name = Clientelle.xcdatamodeld;
+			path = ../../Clientelle.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

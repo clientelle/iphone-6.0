@@ -10,7 +10,15 @@
 
 @interface CTLWelcomeViewController : UIViewController<CTLContainerViewDelegate>
 
-@property (nonatomic, weak) CTLContainerViewController *containerView;
+@property (nonatomic, strong) CTLContainerViewController *containerView;
 
+@property (nonatomic, weak) IBOutlet UILabel *sloganLabel;
+@property (nonatomic, weak) IBOutlet UILabel *bullet1Label;
+@property (nonatomic, weak) IBOutlet UILabel *bullet2Label;
+@property (nonatomic, weak) IBOutlet UILabel *bullet3Label;
+@property (nonatomic, weak) IBOutlet UILabel *bullet4Label;
+@property (nonatomic, weak) IBOutlet UILabel *requireUpgradeLabel;
+@property (nonatomic, weak) IBOutlet UIButton *registerButton;
+@property (nonatomic, weak) IBOutlet UIButton *loginButton;
 
 @end

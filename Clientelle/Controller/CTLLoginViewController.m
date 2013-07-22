@@ -6,31 +6,20 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
-#import "CTLAccountManager.h"
-#import "CTLCDAccount.h"
-#import "CTLLoginViewController.h"
-#import "CTLContainerViewController.h"
-#import "CTLInboxInterstitialViewController.h"
-#import "UITableViewCell+CellShadows.h"
 #import "CTLNetworkClient.h"
 
-@interface CTLLoginViewController()
-
-@property (nonatomic, strong) CTLCDAccount *currentUser;
-
-@end
+#import "CTLLoginViewController.h"
+#import "UITableViewCell+CellShadows.h"
+#import "CTLAccountManager.h"
 
 @implementation CTLLoginViewController
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    
+    [super viewDidLoad];    
     self.navigationItem.title = NSLocalizedString(@"LOGIN", nil);
     
-    self.currentUser = [CTLAccountManager currentUser];
-
-    if([self.emailAddress length] > 0){
+    if(self.emailAddress){
         self.emailTextField.text = self.emailAddress;
     }
 }
@@ -49,51 +38,28 @@
     }
     
     if([self.emailTextField.text rangeOfString:@"@"].location == NSNotFound){
-        [self alertMessage:@"INVALID_EMAIL"];
+        [self displayAlert:NSLocalizedString(@"INVALID_EMAIL", nil)];
         return;
     }
     
     if([self.passwordTextField.text length] < 6){
-        [self alertMessage:@"PASSWORD_REQUIREMENT"];
+        [self displayAlert:NSLocalizedString(@"PASSWORD_REQUIREMENT", nil)];
         return;
     }
     
-    NSMutableDictionary *post = [NSMutableDictionary dictionary];
-    [post setValue:self.emailTextField.text forKey:@"user[email]"];
-    [post setValue:self.passwordTextField.text forKey:@"user[password]"];
+    NSDictionary *credentials = @{@"user[email]":self.emailTextField.text, @"user[password]":self.passwordTextField.text};
     
-    [CTLAccountManager loginAndSync:post withUser:self.currentUser withCompletionBlock:^(BOOL result, CTLCDAccount *account, NSError *error){
-        
-        if(result){
-                  
-            if(self.containerView.nextNavString){
-                UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:self.containerView.nextNavString];
-                UIViewController<CTLContainerViewDelegate> *viewController = (UIViewController<CTLContainerViewDelegate> *)navigationController.topViewController;
-                viewController.containerView = self.containerView;
-                [self.containerView setMainViewController:viewController];
-                [self.containerView setRightSwipeEnabled:YES];
-                [self.containerView renderMenuButton:viewController];
-                [self.containerView flipToView];
-            }else{
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-                     
-        }else{
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:[error localizedDescription]
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil, nil];
-            [alert show];
-        }
+    [[CTLAccountManager sharedInstance] loginWith:credentials onComplete:^(NSDictionary *responseObject){
+        //TODO: Flip to logged-in view        
+    } onError:^(NSError *error){
+        [self displayAlert:[error localizedDescription]];
     }];
 }
 
-- (void)alertMessage:(NSString *)i18nKey
+- (void)displayAlert:(NSString *)alertMessage
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:NSLocalizedString(i18nKey, nil)
+                                                    message:alertMessage
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil, nil];

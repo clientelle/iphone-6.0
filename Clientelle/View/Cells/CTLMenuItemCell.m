@@ -8,7 +8,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "UIColor+CTLColor.h"
-#import "CTLContainerViewController.h"
 #import "CTLMenuItemCell.h"
 
 const CGFloat CTLMainMenuCellHeight = 60.0f;

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern const CGFloat CTLMainMenuWidth;
+
 @class CTLCDAccount;
 
 @interface CTLMainMenuViewController : UITableViewController

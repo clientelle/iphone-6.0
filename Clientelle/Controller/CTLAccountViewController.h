@@ -12,7 +12,7 @@ extern NSString *const CTLReloadAccountsNotification;
 
 @class CTLCDAccount;
 
-@interface CTLAccountViewController : UITableViewController<UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
+@interface CTLAccountViewController : UITableViewController<UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CTLContainerViewDelegate>
 
 @property (nonatomic, strong) CTLContainerViewController *containerView;
 @property (nonatomic, strong) CTLCDAccount *account;
