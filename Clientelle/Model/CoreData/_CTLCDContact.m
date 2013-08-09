@@ -7,9 +7,9 @@ const struct CTLCDContactAttributes CTLCDContactAttributes = {
 	.address = @"address",
 	.address2 = @"address2",
 	.compositeName = @"compositeName",
-	.contactID = @"contactID",
 	.email = @"email",
 	.firstName = @"firstName",
+	.hasMessenger = @"hasMessenger",
 	.jobTitle = @"jobTitle",
 	.lastAccessed = @"lastAccessed",
 	.lastName = @"lastName",
@@ -20,13 +20,14 @@ const struct CTLCDContactAttributes CTLCDContactAttributes = {
 	.phone = @"phone",
 	.picture = @"picture",
 	.recordID = @"recordID",
-	.user_id = @"user_id",
+	.userId = @"userId",
 };
 
 const struct CTLCDContactRelationships CTLCDContactRelationships = {
 	.account = @"account",
 	.appointment = @"appointment",
 	.conversation = @"conversation",
+	.invite = @"invite",
 };
 
 const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
@@ -58,8 +59,8 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"contactIDValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"contactID"];
+	if ([key isEqualToString:@"hasMessengerValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"hasMessenger"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -68,8 +69,8 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
-	if ([key isEqualToString:@"user_idValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"user_id"];
+	if ([key isEqualToString:@"userIdValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"userId"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -101,32 +102,6 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 
 
 
-@dynamic contactID;
-
-
-
-- (int16_t)contactIDValue {
-	NSNumber *result = [self contactID];
-	return [result shortValue];
-}
-
-- (void)setContactIDValue:(int16_t)value_ {
-	[self setContactID:[NSNumber numberWithShort:value_]];
-}
-
-- (int16_t)primitiveContactIDValue {
-	NSNumber *result = [self primitiveContactID];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveContactIDValue:(int16_t)value_ {
-	[self setPrimitiveContactID:[NSNumber numberWithShort:value_]];
-}
-
-
-
-
-
 @dynamic email;
 
 
@@ -136,6 +111,32 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 
 @dynamic firstName;
 
+
+
+
+
+
+@dynamic hasMessenger;
+
+
+
+- (BOOL)hasMessengerValue {
+	NSNumber *result = [self hasMessenger];
+	return [result boolValue];
+}
+
+- (void)setHasMessengerValue:(BOOL)value_ {
+	[self setHasMessenger:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveHasMessengerValue {
+	NSNumber *result = [self primitiveHasMessenger];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveHasMessengerValue:(BOOL)value_ {
+	[self setPrimitiveHasMessenger:[NSNumber numberWithBool:value_]];
+}
 
 
 
@@ -230,26 +231,26 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 
 
 
-@dynamic user_id;
+@dynamic userId;
 
 
 
-- (int32_t)user_idValue {
-	NSNumber *result = [self user_id];
-	return [result intValue];
+- (int16_t)userIdValue {
+	NSNumber *result = [self userId];
+	return [result shortValue];
 }
 
-- (void)setUser_idValue:(int32_t)value_ {
-	[self setUser_id:[NSNumber numberWithInt:value_]];
+- (void)setUserIdValue:(int16_t)value_ {
+	[self setUserId:[NSNumber numberWithShort:value_]];
 }
 
-- (int32_t)primitiveUser_idValue {
-	NSNumber *result = [self primitiveUser_id];
-	return [result intValue];
+- (int16_t)primitiveUserIdValue {
+	NSNumber *result = [self primitiveUserId];
+	return [result shortValue];
 }
 
-- (void)setPrimitiveUser_idValue:(int32_t)value_ {
-	[self setPrimitiveUser_id:[NSNumber numberWithInt:value_]];
+- (void)setPrimitiveUserIdValue:(int16_t)value_ {
+	[self setPrimitiveUserId:[NSNumber numberWithShort:value_]];
 }
 
 
@@ -274,6 +275,10 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 	
 
 @dynamic conversation;
+
+	
+
+@dynamic invite;
 
 	
 

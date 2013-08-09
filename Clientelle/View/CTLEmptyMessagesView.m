@@ -6,22 +6,18 @@
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+#import "CTLViewDecorator.h"
 #import "CTLEmptyMessagesView.h"
 
 @implementation CTLEmptyMessagesView
 
 - (void)awakeFromNib
 {
-    self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+    self.backgroundColor = [UIColor clearColor];
+    CTLViewDecorator *decorator = [[CTLViewDecorator alloc] init];
+    CAShapeLayer *dottedLine = [decorator createDottedLine:self.frame];
+    [self.layer addSublayer:dottedLine];
 }
 
 @end

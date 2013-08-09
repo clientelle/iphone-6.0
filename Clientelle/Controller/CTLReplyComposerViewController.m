@@ -25,7 +25,7 @@
 
 @property (nonatomic, strong) CTLCDMessage *message;
 @property (nonatomic, strong) CTLCDContact *contact;
-@property (nonatomic, strong) CTLCDAccount *current_user;
+@property (nonatomic, strong) CTLCDAccount *currentUser;
 
 @end
 
@@ -35,7 +35,7 @@
 {
     [super viewDidLoad];
     
-    self.current_user = [[CTLAccountManager sharedInstance] currentUser];
+    self.currentUser = [[CTLAccountManager sharedInstance] currentUser];
     
     self.navigationItem.title = NSLocalizedString(@"REPLY", nil);
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
@@ -69,7 +69,7 @@
     
     self.conversation.contact = self.contact;
     self.conversation.preview_message = replyString;
-    self.conversation.last_sender_uid = self.current_user.user_id;
+    self.conversation.last_sender_uid = self.currentUser.user_id;
     self.conversation.updated_at = [NSDate date];
 
     CTLCDMessage *message = [CTLCDMessage createEntity];

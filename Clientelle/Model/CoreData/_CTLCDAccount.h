@@ -23,7 +23,7 @@ extern const struct CTLCDAccountAttributes {
 
 extern const struct CTLCDAccountRelationships {
 	__unsafe_unretained NSString *contacts;
-	__unsafe_unretained NSString *conversation;
+	__unsafe_unretained NSString *conversations;
 	__unsafe_unretained NSString *inbox;
 } CTLCDAccountRelationships;
 
@@ -229,9 +229,9 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet *conversation;
+@property (nonatomic, strong) NSSet *conversations;
 
-- (NSMutableSet*)conversationSet;
+- (NSMutableSet*)conversationsSet;
 
 
 
@@ -253,10 +253,10 @@ extern const struct CTLCDAccountFetchedProperties {
 - (void)addContactsObject:(CTLCDContact*)value_;
 - (void)removeContactsObject:(CTLCDContact*)value_;
 
-- (void)addConversation:(NSSet*)value_;
-- (void)removeConversation:(NSSet*)value_;
-- (void)addConversationObject:(CTLCDConversation*)value_;
-- (void)removeConversationObject:(CTLCDConversation*)value_;
+- (void)addConversations:(NSSet*)value_;
+- (void)removeConversations:(NSSet*)value_;
+- (void)addConversationsObject:(CTLCDConversation*)value_;
+- (void)removeConversationsObject:(CTLCDConversation*)value_;
 
 - (void)addInbox:(NSSet*)value_;
 - (void)removeInbox:(NSSet*)value_;
@@ -373,8 +373,8 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
-- (NSMutableSet*)primitiveConversation;
-- (void)setPrimitiveConversation:(NSMutableSet*)value;
+- (NSMutableSet*)primitiveConversations;
+- (void)setPrimitiveConversations:(NSMutableSet*)value;
 
 
 

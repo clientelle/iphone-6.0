@@ -41,6 +41,8 @@ e†
 "INCOMPLETE" = "Incomplete";
 "ACTION_REQUIRED" = "Action Required";
 "ME" = "Me";
+"PURCHASE_PRO" = "Purchase Pro?";
+"PURCHASE" = "Purchase";
 
 /* GENERIC TERMS */
 "CLIENTS" = "Clients";
@@ -63,14 +65,14 @@ e†
 /* WELCOME SCREEN */
 
 "WELCOME" = "Welcome";
-"WELCOME_SLOGAN" = "Clientelle is the ultimate day-planner for professionals on the go.";
-"SEPARATE_ADDRESS_BOOK" = "Separate address book for clients";
-"MANAGE_APPOINTMENTS" = "Manage your appointments";
-"REALTIME_MESSAGING" = "Realtime messaging with clients";
+"WELCOME_SLOGAN" = "Clientelle is a day-planner for professionals on the go.";
+"SEPARATE_ADDRESS_BOOK" = "* Separate address book for clients";
+"MANAGE_APPOINTMENTS" = "* Manage your appointments";
+"REALTIME_MESSAGING" = "* Realtime messaging with clients";
 "COLLECT_LEADS" = "Collect leads from your website";
 "REQUIRES_UPGRADE" = "* Features that require a pro account";
 "CREATE_NEW_ACCOUNT" = "Create new account";
-"LOGIN_TO_MY_ACCOUNT" = "Login to my account";
+"ALREADY_HAVE_AN_ACCOUNT" = "Already have an account?";
 
 
 /* SORT CONTACTS */
@@ -102,6 +104,7 @@ e†
 "EDIT_CONTACT" = "Edit Contact";
 "ADD_CONTACT" = "Add Contact";
 "EDIT_FORM" = "Edit Form";
+
 
 
 /* CONTACT FIELDS */
@@ -218,6 +221,7 @@ e†
 
 "LOCK_IS_ON" = "Lock is on";
 "LOCK_IS_OFF" = "Lock is off";
+"LOCK_ENABLED" = "Lock enabled";
 
 "NEW_PIN" = "New PIN";
 "PIN_DOES_NOT_MATCH" = "PIN does not match!";
@@ -268,7 +272,16 @@ e†
 
 
 /* MESSAGES */
+"MESSAGE_FEATURE_REQUIRES_UPGRADE" = "Private messaging requires upgrading to pro";
 "COMPOSE_MESSSAGE" = "Compose Message";
 "REPLY"  = "Reply";
 "INVITE_CONTACT" = "Invite %@ to Clientelle";
+"INVITE_TO_CONTINUE" = "You must invite contacts to continue";
+"INVITE_CONTACTS" = "Invite Contacts";
+"SEND_INVITE_VIA_EMAIL" = "Send invite via email";
+"SEND_INVITE_VIA_SMS" = "Send invite via SMS";
+"SEND_INVITE" = "Send an invite";
+"SEND_MESSAGE" = "Send a message";
+"PENDING" = "pending";
+
 

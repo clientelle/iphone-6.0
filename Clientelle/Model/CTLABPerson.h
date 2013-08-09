@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 Clientelle Ltd. All rights reserved.
 //
 
-typedef void (^CTLDictionayBlock)(NSDictionary* results);
-
 extern NSString *const CTLPersonRecordIDProperty;
 extern NSString *const CTLPersonCompositeNameProperty;
 extern NSString *const CTLPersonFirstNameProperty;
@@ -52,10 +50,6 @@ extern NSString *const CTLAddressZIPProperty;
 
 - (id)initWithRecordID:(ABRecordID)recordID withAddressBookRef:(ABAddressBookRef)addressBookRef;
 - (id)initWithRecordRef:(ABRecordRef)recordRef withAddressBookRef:(ABAddressBookRef)addressBookRef;
-
-+ (void)peopleFromAddressBook:(ABAddressBookRef)addressBookRef withBlock:(CTLDictionayBlock)block;
-+ (ABRecordRef)sourceByType:(ABSourceType)sourceType addessBookRef:(ABAddressBookRef)addressBookRef;
-+ (BOOL)deletePerson:(ABRecordRef)recordRef withAddressBook:(ABAddressBookRef)addressBookRef;
 - (NSString *)description;
 
 @end

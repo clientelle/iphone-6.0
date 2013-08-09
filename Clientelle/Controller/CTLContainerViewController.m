@@ -25,13 +25,16 @@
     [self setupMenuView];
     
     int loggedInUserId = [[CTLAccountManager sharedInstance] getLoggedInUserId];
-    NSLog(@"loggedinUser ID %d", loggedInUserId);
+    
+//NSLog(@"loggedinUser ID %d", loggedInUserId);
+//[self setMainViewWithStoryboardName:@"Welcome" withMenuButton:NO];
+    
     //Brand new user does not have an account yet!
     if([CTLCDAccount countOfEntities] == 0 || loggedInUserId == 0){
         [self setMainViewWithStoryboardName:@"Welcome" withMenuButton:NO];
     }else{
         self.mainViewControllerIdentifier = @"contacts";
-        self.mainStoryboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
+        self.mainStoryboard = [UIStoryboard storyboardWithName:@"Contacts" bundle:[NSBundle mainBundle]];
         self.mainNavigationController = [self.mainStoryboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
         CGRect mainViewFrame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
         [self setRightPanel:mainViewFrame];
@@ -164,7 +167,7 @@
         self.mainNavigationController.view.frame = CGRectMake(0.0f, 0.0f, width, height);
     }];
     
-    [self renderMenuDropShadow];
+   // [self renderMenuDropShadow];
 }
 
 - (void)setRightPanel:(CGRect)frame
@@ -181,7 +184,7 @@
     [self addChildViewController:self.mainNavigationController];
     self.mainNavigationController.view.frame = frame;
     [self.view addSubview:self.mainNavigationController.view];
-    [self renderMenuDropShadow];
+   // [self renderMenuDropShadow];
 }
 
 - (void)setMainViewWithStoryboardName:(NSString *)storyboardName withMenuButton:(BOOL)shouldRenderMenuButton
@@ -200,7 +203,7 @@
         [self renderMenuButton:self.mainViewController];
     }
     
-    [self renderMenuDropShadow];
+    //[self renderMenuDropShadow];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -262,7 +265,7 @@
     
     [self addChildViewController:self.mainNavigationController];
     [self.view addSubview:self.mainNavigationController.view];
-    [self renderMenuDropShadow];
+    //[self renderMenuDropShadow];
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:@"IS_LOCKED"]){
         [self performSelector:@selector(showPinView:) withObject:nil afterDelay:0.1];
@@ -272,7 +275,8 @@
 
 - (void)showPinView:(id)sender
 {
-    CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:@"pinInterstitial"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Pin" bundle:[NSBundle mainBundle]];
+    CTLPinInterstialViewController *viewController = [storyboard instantiateInitialViewController];
     [self.mainNavigationController presentViewController:viewController animated:YES completion:nil];
 }
 
@@ -307,8 +311,8 @@
 
 - (void)requirePin
 {
-    self.mainViewControllerIdentifier = @"pinInterstitial";
-    CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[self.mainStoryboard instantiateViewControllerWithIdentifier:self.mainViewControllerIdentifier];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Pin" bundle:[NSBundle mainBundle]];
+    CTLPinInterstialViewController *viewController = [storyboard instantiateInitialViewController];
     
     self.mainNavigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     

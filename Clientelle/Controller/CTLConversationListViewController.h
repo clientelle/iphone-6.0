@@ -8,14 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class CTLMessageUpgradeView;
 
-@interface CTLConversationListViewController : UITableViewController<NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, CTLContainerViewDelegate>{
-}
+@interface CTLConversationListViewController : UITableViewController<NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, CTLContainerViewDelegate>
 
 @property (nonatomic, weak) CTLContainerViewController *containerView;
-@property (nonatomic, strong) IBOutlet UIView *emptyMessageView;
 @property (nonatomic, strong) NSFetchedResultsController *resultsController;
-
-- (IBAction)composeMessage:(id)sender;
 
 @end

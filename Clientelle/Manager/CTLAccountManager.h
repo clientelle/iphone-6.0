@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @class CTLCDAccount;
+@class CTLCDContact;
 
 @interface CTLAccountManager : NSObject
 
 typedef void (^CTLCompletionBlock)(NSDictionary *responseObject);
 typedef void (^CTLCompletionWithAccountBlock)(CTLCDAccount *account, NSDictionary *responseObject);
+typedef void (^CTLCompletionWithInviteTokenBlock)(NSString *inviteToken);
 typedef void (^CTLErrorBlock)(NSError *error);
 
 + (id)sharedInstance;
@@ -29,5 +31,10 @@ typedef void (^CTLErrorBlock)(NSError *error);
 - (void)unsetLoggedInUserId;
 - (void)setLoggedInUserId:(int)user_id;
 - (int)getLoggedInUserId;
+
+- (NSString *)generatePassword;
+
+- (void)createInviteLinkWithContact:(CTLCDContact *)contact onComplete:(CTLCompletionWithInviteTokenBlock)completionBlock onError:(CTLErrorBlock)errorBlock;
+- (void)syncInvites:(CTLErrorBlock)errorBlock;
 
 @end

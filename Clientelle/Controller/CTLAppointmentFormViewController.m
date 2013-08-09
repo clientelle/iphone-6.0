@@ -102,14 +102,6 @@ int CTLTitleInputTag = 4;
 
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    if(self.presentedAsModal != YES && [[NSUserDefaults standardUserDefaults] boolForKey:@"IS_LOCKED"]){
-        CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"pinInterstitial"];
-        [self presentViewController:viewController animated:NO completion:nil];
-    }
-}
-
 - (void)createPlaceholderAppointment
 {
     if(!_event){

@@ -671,18 +671,18 @@ int const CTLDialActionSheetTag = 803;
         cell = [[CTLContactCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
     
-    CTLCDContact *person = nil;
+    CTLCDContact *contact = nil;
     if (tableView == self.searchDisplayController.searchResultsTableView){
-        person = [self.filteredContacts objectAtIndex:indexPath.row];
+        contact = [self.filteredContacts objectAtIndex:indexPath.row];
     }else{
-        person = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+        contact = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
     }
      
-    cell.nameLabel.text = [self generatePersonName:person];
-    cell.detailsLabel.text = [person displayContactStr];
-        
-    if(person.lastAccessed){
-        cell.timestampLabel.text = [self generateDateStamp:person.lastAccessed];
+    cell.nameLabel.text = [self generatePersonName:contact];
+    cell.detailsLabel.text = [contact displayContactStr];
+    
+    if(contact.lastAccessed){
+        cell.timestampLabel.text = [self generateDateStamp:contact.lastAccessed];
     }
     
     [cell showingDeleteConfirmation];
@@ -868,7 +868,7 @@ int const CTLDialActionSheetTag = 803;
         [messageTypes addObject:NSLocalizedString(@"SEND_EMAIL", nil)];
     }
     
-    if(self.selectedPerson.contactID){
+    if(self.selectedPerson.hasMessengerValue == 1){
         [messageTypes addObject:NSLocalizedString(@"SEND_PRIVATE_MESSAGE", nil)];
     }
     

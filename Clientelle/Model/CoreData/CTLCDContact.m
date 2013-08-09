@@ -5,6 +5,8 @@
 
 - (void)createFromABPerson:(CTLABPerson *)person
 {
+    self.recordID = @(person.recordID);
+    
     if(person.compositeName){
         self.compositeName = person.compositeName;
     }

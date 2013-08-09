@@ -5,22 +5,12 @@
 //  Created by Kevin Liu on 1/21/13.
 //  Copyright (c) 2013 Kevin Liu. All rights reserved.
 //
-#import <QuartzCore/QuartzCore.h>
+
 #import "UIColor+CTLColor.h"
 #import "CTLMainMenuViewController.h"
 #import "CTLMenuItemCell.h"
-#import "CTLContactsListViewController.h"
-#import "CTLConversationListViewController.h"
-#import "CTLInboxViewController.h"
-
-#import "CTLAccountManager.h"
-#import "CTLCDAccount.h"
 
 const CGFloat CTLMainMenuWidth = 80.0f;
-
-@interface CTLMainMenuViewController()
-@property (nonatomic, strong) CTLCDAccount *currentUser;
-@end
 
 @implementation CTLMainMenuViewController
 
@@ -63,35 +53,7 @@ const CGFloat CTLMainMenuWidth = 80.0f;
     [self styleActiveCell:indexPath];
     
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];    
-    [self switchActiveView:cell.reuseIdentifier];
-}
-
-- (void)switchActiveView:(NSString *)identifier
-{
-    NSString *storyboardName = identifier;
-    
-    if(self.currentUser.user_idValue){
-        if([self shouldShowInboxSetup:identifier]){
-            storyboardName = @"InboxSetup";
-        }
-    }else{
-        if([self shouldShowUpgradeInterstitial:identifier]){
-            [self.containerView setNextNavString:identifier];
-            storyboardName = @"Upgrade";
-        }        
-    }
-
-    [self.containerView setMainView:storyboardName];
-}
-
-- (BOOL)shouldShowInboxSetup:(NSString *)identifier
-{
-    return [identifier isEqualToString:@"Inbox"] && self.currentUser.has_inboxValue == 0;
-}
-
-- (BOOL)shouldShowUpgradeInterstitial:(NSString *)identifier
-{
-    return [@[@"Messages", @"Inbox"] containsObject:identifier];
+    [self.containerView setMainView:cell.reuseIdentifier];
 }
 
 - (void)styleActiveCell:(NSIndexPath *)indexPath

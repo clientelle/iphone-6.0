@@ -30,7 +30,6 @@ NSString *const CTLAddressZIPProperty = @"ZIP";
 NSString *const CTLLabelKey = @"label";
 NSString *const CTLFieldKey = @"field";
 
-
 @interface CTLABPerson()
     id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef labelKey);
 @end
@@ -102,7 +101,6 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
         if(!recordRef){
             return nil;
         }
-        self.addressBookRef = addressBookRef;
         self.recordID = recordID;
         self.recordRef = recordRef;
         [self personFromAddressbookRef];
@@ -118,7 +116,6 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
         if(!recordID){
             return nil;
         }
-        self.addressBookRef = addressBookRef;
         self.recordID = recordID;
         self.recordRef = recordRef;
         [self personFromAddressbookRef];
@@ -236,62 +233,6 @@ id copyValueFromMultiValueWithLabelKey(ABMutableMultiValueRef multi, CFStringRef
 
 - (NSString *)description{
     return [NSString stringWithFormat:@"<%@: %@, %@>", [self class], [self compositeName], [self email]];
-}
-
-+ (void)peopleFromAddressBook:(ABAddressBookRef)addressBookRef withBlock:(CTLDictionayBlock)block
-{
-    ABRecordRef localSource = [CTLABPerson sourceByType:kABSourceTypeLocal addessBookRef:addressBookRef];
-    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeopleInSource(addressBookRef, localSource);
-    
-    if(!allPeople){
-        return;
-    }
-    
-    CFIndex count = CFArrayGetCount(allPeople);
-    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    
-    for(CFIndex i = 0;i < count; i++){
-        ABRecordRef contactRef = CFArrayGetValueAtIndex(allPeople, i);
-        CTLABPerson *abPerson = [[CTLABPerson alloc] initWithRecordRef:contactRef withAddressBookRef:addressBookRef];
-        if(abPerson){
-            [results setObject:abPerson forKey:@(abPerson.recordID)];
-        }
-    }
-    
-    block(results);
-    CFRelease(allPeople);
-    
-}
-
-+ (ABRecordRef)sourceByType:(ABSourceType)sourceType addessBookRef:(ABAddressBookRef)addressBookRef
-{
-    CFArrayRef sourcesRef = ABAddressBookCopyArrayOfAllSources(addressBookRef);
-    CFIndex sourceCount = CFArrayGetCount(sourcesRef);
-    
-    for (CFIndex i = 0 ; i < sourceCount; i++) {
-        ABRecordRef currentSource = CFArrayGetValueAtIndex(sourcesRef, i);
-        CFTypeRef sourceTypeRef = ABRecordCopyValue(currentSource, kABSourceTypeProperty);
-        if (sourceType == [(__bridge NSNumber *)sourceTypeRef intValue]) {
-            CFRelease(sourcesRef);
-            CFRelease(sourceTypeRef);
-            return currentSource;
-        }
-        CFRelease(sourceTypeRef);
-    }
-    
-    CFRelease(sourcesRef);
-    return nil;
-}
-
-+ (BOOL)deletePerson:(ABRecordRef)recordRef withAddressBook:(ABAddressBookRef)addressBookRef
-{
-    __block BOOL result = NO;
-    CFErrorRef error = NULL;
-    if(ABAddressBookRemoveRecord(addressBookRef, recordRef, &error)){
-        result = ABAddressBookSave(addressBookRef, &error);
-    }
-    
-    return result;
 }
 
 @end

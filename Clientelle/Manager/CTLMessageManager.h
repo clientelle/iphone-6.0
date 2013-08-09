@@ -22,4 +22,6 @@ typedef void (^CTLMessageErrorBlock)(NSError *error);
 
 - (void)sendMessage:(NSString *)messageText withConversation:(CTLCDConversation *)conversation completionBlock:(CTLMessageCompletionBlock)completionBlock errorBlock:(CTLMessageErrorBlock)errorBlock;
 
+- (void)sendInviteMessage:(NSString *)messageText withConversation:(CTLCDConversation *)conversation completionBlock:(CTLMessageCompletionBlock)completionBlock errorBlock:(CTLMessageErrorBlock)errorBlock;
+
 @end

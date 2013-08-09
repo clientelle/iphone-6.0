@@ -7,28 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MessageUI/MessageUI.h>
 
-@class CTLMessengerInviteView;
+extern NSString *const CTLChooseContactToMessageNotification;
+
 @class CTLCDConversation;
 
-@interface CTLMessageComposerViewController : UIViewController<UITextFieldDelegate,UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
+@interface CTLMessageComposerViewController : UIViewController<UITextFieldDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) CTLCDConversation *conversation;
 
 @property (nonatomic, strong) IBOutlet UITextField *recipientTextField;
 @property (nonatomic, strong) IBOutlet UITextView *messageTextView;
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UIButton *addContactButton;
-@property (nonatomic, strong) IBOutlet CTLMessengerInviteView *messengerInviteView;
+@property (nonatomic, strong) IBOutlet UIButton *inviteButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *sendButton;
 
 - (IBAction)sendMessage:(id)sender;
 - (IBAction)dismiss:(id)sender;
-- (IBAction)dismissInviterModal:(id)sender;
-- (IBAction)inviteViaSms:(id)sender;
-- (IBAction)inviteViaEmail:(id)sender;
-- (IBAction)copyInviteLinkToClipboard:(id)sender;
-- (IBAction)recipientTextFieldDidChange:(id)sender;
-- (IBAction)promptToAddContacts:(id)sender;
 
 @end

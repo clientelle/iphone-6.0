@@ -10,8 +10,6 @@
 
 extern const CGFloat CTLMainMenuWidth;
 
-@class CTLCDAccount;
-
 @interface CTLMainMenuViewController : UITableViewController
 
 - (void)styleActiveCell:(NSIndexPath *)indexPath;

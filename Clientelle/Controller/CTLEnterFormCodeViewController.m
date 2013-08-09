@@ -32,9 +32,9 @@
     
     [self.containerView setRightSwipeEnabled:YES];
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Clientelle" bundle:[NSBundle mainBundle]];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Inbox" bundle:[NSBundle mainBundle]];
     
-    UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"inboxes"];
+    UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateInitialViewController];
         
     CTLInboxViewController<CTLContainerViewDelegate> *inboxViewController = (CTLInboxViewController<CTLContainerViewDelegate> *)navigationController.topViewController;
     [inboxViewController setInbox:newInbox];

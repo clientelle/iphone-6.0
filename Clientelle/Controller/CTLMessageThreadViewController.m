@@ -204,12 +204,12 @@
 
 - (IBAction)composeMessage:(id)sender
 {
-    [self performSegueWithIdentifier:@"toMessageComposerView" sender:sender];
+    [self performSegueWithIdentifier:@"toReplyComposer" sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"toMessageComposerView"]){        
+    if ([[segue identifier] isEqualToString:@"toReplyComposerView"]){
         CTLMessageComposerViewController *viewController = [segue destinationViewController];
         [viewController setConversation:self.conversation];       
         return;

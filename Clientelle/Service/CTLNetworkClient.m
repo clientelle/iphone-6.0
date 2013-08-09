@@ -26,7 +26,7 @@
     {
 		if(!shared){
 			shared = [[CTLNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:CTL_BASE_URL]];
-            [shared registerHTTPOperationClass:[AFJSONRequestOperation class]];
+            [shared registerHTTPOperationClass:[AFJSONRequestOperation class]];            
 		}
 		return shared;
 	}
@@ -42,7 +42,7 @@
 }
 
 - (void)post:(NSString *)path params:(NSDictionary *)params completionBlock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock
-{
+{        
     [self postPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject){
         [self proccessResponse:responseObject completionBock:completionBlock errorBlock:errorBlock];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -59,20 +59,27 @@
     }];
 }
 
-- (void)signedPost:(NSString *)path withParams:(NSDictionary *)postDict completionBlock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock
+- (void)signedGet:(NSString *)path params:(NSDictionary *)params completionBlock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock
 {
-    NSDictionary *params = [self signedParams:postDict];    
-    [self postPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject){
+    [self getPath:path parameters:[self signedParams:params] success:^(AFHTTPRequestOperation *operation, id responseObject){
         [self proccessResponse:responseObject completionBock:completionBlock errorBlock:errorBlock];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         errorBlock(error);//AFNetworking Error
     }];
 }
 
-- (void)signedPut:(NSString *)path withParams:(NSDictionary *)postDict completionBlock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock
+- (void)signedPost:(NSString *)path params:(NSDictionary *)postDict completionBlock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock
 {
-    NSDictionary *params = [self signedParams:postDict];
-    [self putPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject){
+    [self postPath:path parameters:[self signedParams:postDict] success:^(AFHTTPRequestOperation *operation, id responseObject){
+        [self proccessResponse:responseObject completionBock:completionBlock errorBlock:errorBlock];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        errorBlock(error);//AFNetworking Error
+    }];
+}
+
+- (void)signedPut:(NSString *)path params:(NSDictionary *)postDict completionBlock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock
+{
+    [self putPath:path parameters:[self signedParams:postDict] success:^(AFHTTPRequestOperation *operation, id responseObject){
         [self proccessResponse:responseObject completionBock:completionBlock errorBlock:errorBlock];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         errorBlock(error);//AFNetworking Error
@@ -82,7 +89,15 @@
 - (NSDictionary *)signedParams:(NSDictionary *)dict
 {
     CTLCDAccount *currentUser = [[CTLAccountManager sharedInstance] currentUser];
-    NSDictionary *params = [dict mutableCopy];
+    
+    NSMutableDictionary *params = nil;
+    
+    if(dict){
+        params = [dict mutableCopy];
+    }else{
+        params = [NSMutableDictionary dictionary];
+    }
+    
     [params setValue:@"json" forKey:@"format"];
     [params setValue:currentUser.auth_token forKey:@"auth_token"];
     

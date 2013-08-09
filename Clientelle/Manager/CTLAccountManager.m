@@ -9,20 +9,10 @@
 #import "CTLNetworkClient.h"
 #import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
+#import "CTLCDContact.h"
+#import "CTLCDInvite.h"
 
 @implementation CTLAccountManager
-
-//+ (CTLAccountManager *) sharedInstance
-//{
-//	static CTLAccountManager *shared;
-//	@synchronized(self)
-//    {
-//		if(!shared){
-//			shared = [[CTLAccountManager alloc] init];
-//		}
-//		return shared;
-//	}
-//}
 
 + (id)sharedInstance
 {
@@ -61,7 +51,7 @@
 {
     __block NSString *clear_text_password = credentials[@"user[password]"];    
     
-    [[CTLNetworkClient api] post:@"login.json" params:credentials completionBlock:^(id responseObject){
+    [[CTLNetworkClient api] post:@"/login.json" params:credentials completionBlock:^(id responseObject){
         [self createAccountInCoreData:responseObject withPassword:clear_text_password completionBlock:completionBlock errorBlock:errorBlock];
     } errorBlock:^(NSError *error){
         errorBlock(error);
@@ -73,7 +63,7 @@
     NSDictionary *postDict = [self prepareAccountDictionary:accountDict];
     __block NSString *clear_text_password = accountDict[@"password"];
     
-    [[CTLNetworkClient api] post:@"register.json" params:postDict completionBlock:^(id responseObject){
+    [[CTLNetworkClient api] post:@"/register.json" params:postDict completionBlock:^(id responseObject){
         [self createAccountInCoreData:responseObject withPassword:clear_text_password completionBlock:completionBlock errorBlock:errorBlock];       
     } errorBlock:^(NSError *error){
         errorBlock(error);
@@ -85,7 +75,7 @@
     NSString *path = [NSString stringWithFormat:@"/account/%@", account.user_id];
     NSDictionary *postDict = [self prepareAccountDetailsDictionary:accountDict]; 
     
-    [[CTLNetworkClient api] signedPut:path withParams:postDict completionBlock:^(id responseDict){
+    [[CTLNetworkClient api] signedPut:path params:postDict completionBlock:^(id responseDict){
         [self setValues:responseDict[@"user"] forAccount:account];
         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
             if(success){
@@ -102,7 +92,7 @@
 - (void)switchAccount:(CTLCDAccount *)account onComplete:(CTLCompletionBlock)completionBlock onError:(CTLErrorBlock)errorBlock;
 {
     NSDictionary *credentials = @{ @"user[email]":account.email, @"user[password]":account.password };    
-    [[CTLNetworkClient api] post:@"login.json" params:credentials completionBlock:^(id responseObject){
+    [[CTLNetworkClient api] post:@"/login.json" params:credentials completionBlock:^(id responseObject){
         [self setLoggedInUserId:account.user_idValue];
         completionBlock(responseObject);
     } errorBlock:^(NSError *error){
@@ -248,6 +238,94 @@
     }
     
     return postDict;
+}
+
+- (NSString *)generatePassword
+{
+    int passwordLength = 12;
+    NSString *alphabet  = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789";
+    NSInteger alphabetLength = [alphabet length];
+    NSMutableString *string = [NSMutableString stringWithCapacity:passwordLength];
+    
+    for (NSUInteger i = 0U; i < passwordLength; i++) {
+        u_int32_t r = arc4random() % alphabetLength;
+        unichar c = [alphabet characterAtIndex:r];
+        [string appendFormat:@"%C", c];
+    }
+    
+    return string;
+}
+
+- (void)createInviteLinkWithContact:(CTLCDContact *)contact onComplete:(CTLCompletionWithInviteTokenBlock)completionBlock onError:(CTLErrorBlock)errorBlock;
+{    
+    CTLCDInvite *invite = [CTLCDInvite findFirstByAttribute:@"record_id" withValue:contact.recordID];
+    
+    if(invite){
+        completionBlock([self generateInviteLinkFromToken:invite.token]);
+        return;
+    }    
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];    
+    params[@"invite[name]"] = contact.compositeName;
+    params[@"invite[record_id]"] = contact.recordID;    
+    if(contact.email){
+        params[@"invite[recipient_email]"] = contact.email;
+    }
+    
+    [[CTLNetworkClient api] signedPost:@"invite.json" params:params completionBlock:^(id responseObject){        
+        __block NSString *token = responseObject[@"invite"][@"token"];        
+        CTLCDInvite *invite = [CTLCDInvite createEntity];
+        invite.record_id = contact.recordID;
+        invite.token = token;
+        invite.name = responseObject[@"invite"][@"name"];
+        invite.created_at = [NSDate date];
+                
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+            if(success){                
+                NSString *inviteLink = [self generateInviteLinkFromToken:token];
+                completionBlock(inviteLink);
+            }else{
+                errorBlock(error);
+            }
+        }];        
+    } errorBlock:^(NSError *error){
+        errorBlock(error);
+    }];
+}
+
+- (NSString *)generateInviteLinkFromToken:(NSString *)token
+{
+    return [NSString stringWithFormat:@"%@/invite?token=%@", CTL_BASE_URL, token];
+}
+
+- (void)syncInvites:(CTLErrorBlock)errorBlock
+{
+    [[CTLNetworkClient api] signedGet:@"/invites/sync.json" params:nil completionBlock:^(id responseObject){
+        __block BOOL hasChanges = NO;
+        NSArray *invitations = responseObject[@"invitations"];              
+        for(int i=0;i<[invitations count];i++){
+            NSDictionary *inviteDict = invitations[i];
+            CTLCDInvite *invite = [CTLCDInvite findFirstByAttribute:@"token" withValue:inviteDict[@"token"]];
+            if(invite){
+                CTLCDContact *contact = [CTLCDContact findFirstByAttribute:@"recordID" withValue:invite.record_id];
+                if(contact.userIdValue == 0 && [inviteDict[@"recipient_user_id"] integerValue] > 0){                    
+                    contact.hasMessenger = @(YES);
+                    contact.userId = inviteDict[@"recipient_user_id"];
+                    hasChanges = YES;
+                }
+            }
+        }
+        
+        if(hasChanges){               
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+                if(!success){
+                    errorBlock(error);
+                }
+            }];
+        }
+    } errorBlock:^(NSError *error){
+        errorBlock(error);
+    }];
 }
 
 @end

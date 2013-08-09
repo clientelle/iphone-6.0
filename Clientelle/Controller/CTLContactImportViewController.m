@@ -8,6 +8,7 @@
 #import "UIColor+CTLColor.h"
 #import "CTLContactsListViewController.h"
 #import "CTLContactImportViewController.h"
+#import "CTLAddressBook.h"
 #import "CTLABPerson.h"
 #import "CTLCDContact.h"
 #import "CTLCDAccount.h"
@@ -20,7 +21,6 @@
 @property (nonatomic, strong) UIColor *textColor;
 @property (nonatomic, strong) UIColor *disabledTextColor;
 @property (nonatomic, strong) UIColor *selectedBackgroundColor;
-@property (nonatomic, assign) ABAddressBookRef addressBookRef;
 @property (nonatomic, strong) CTLCDAccount *currentUser;
 @property (nonatomic, strong) NSSet *existingContacts;
 @end
@@ -43,55 +43,11 @@
     self.selectedBackgroundColor = [UIColor ctlLightGray];
     self.disabledTextColor = [UIColor colorFromUnNormalizedRGB:78.0f green:78.0f blue:78.0f alpha:1.0f];
 
-    if(!self.addressBookRef){
-        [self checkAddressbookPermission];
-    }else{
-        [self loadAddressBookContacts];
-    }
-}
-
-- (void)checkAddressbookPermission
-{
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
-        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
-            // First time access has been granted
-            if(granted){
-                self.addressBookRef = addressBookRef;
-                [self loadAddressBookContacts];
-            }else{
-                [self displayPermissionPrompt];
-            }
-        });
-    } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
-        // The user has previously given access.
-        self.addressBookRef = addressBookRef;
-        [self loadAddressBookContacts];
-        
-    } else {
-        // The user has previously denied access
-        [self displayPermissionPrompt];
-    }
-}
-
-- (void)displayPermissionPrompt
-{
-    UIAlertView *requirePermission = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"REQUIRES_ACCESS_TO_CONTACTS", nil)
-                                                                message:NSLocalizedString(@"GO_TO_SETTINGS_CONTACTS", nil)
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil, nil];
-    
-    [requirePermission show];
-}
-
-- (void)loadAddressBookContacts
-{
-    [CTLABPerson peopleFromAddressBook:self.addressBookRef withBlock:^(NSDictionary *results){
+    [[CTLAddressBook sharedInstance] loadContactsWithCompletionBlock:^(NSDictionary *results){        
         NSMutableDictionary *people = [results mutableCopy];
         for(CTLCDContact *contact in self.existingContacts){
             [people removeObjectForKey:contact.recordID];
-        }        
+        }
         self.contacts = [people allValues];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
@@ -262,8 +218,7 @@
     __block NSMutableSet *cdPeople = [NSMutableArray array];
     
     [self.selectedPeople enumerateKeysAndObjectsUsingBlock:^(NSNumber *recordID, CTLABPerson *person, BOOL *stop){
-        CTLCDContact *contact = [CTLCDContact MR_createEntity];
-        contact.recordID = @(person.recordID);
+        CTLCDContact *contact = [CTLCDContact MR_createEntity];        
         [contact createFromABPerson:person];
         contact.account = self.currentUser;
         [cdPeople addObject:contact];

@@ -54,6 +54,10 @@
 		411F24DC179D213000842564 /* Pin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24DB179D213000842564 /* Pin.storyboard */; };
 		411F24DE179D216A00842564 /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24DD179D216A00842564 /* Contacts.storyboard */; };
 		411F24E0179D217C00842564 /* Appointments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 411F24DF179D217C00842564 /* Appointments.storyboard */; };
+		411F24E5179D712500842564 /* CTLMessageUpgradeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 411F24E3179D712400842564 /* CTLMessageUpgradeView.xib */; };
+		411F24E8179D721400842564 /* CTLMessageUpgradeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 411F24E7179D721300842564 /* CTLMessageUpgradeView.m */; };
+		411F24EB179E020500842564 /* CTLInviteContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411F24E9179E020300842564 /* CTLInviteContactViewController.m */; };
+		411F24F0179F5DE700842564 /* CTLInviteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 411F24EF179F5DE700842564 /* CTLInviteCell.m */; };
 		412C3C8B16E98123009E662E /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 412C3C8916E98123009E662E /* app-icon.png */; };
 		412C3C8C16E98123009E662E /* app-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412C3C8A16E98123009E662E /* app-icon@2x.png */; };
 		4130652816BE4E5E0063AC10 /* PhoneFormats.dat in Resources */ = {isa = PBXBuildFile; fileRef = 4130652716BE4E5E0063AC10 /* PhoneFormats.dat */; };
@@ -66,9 +70,12 @@
 		4130CF8A16F014CD00D398EF /* CTLPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4130CF8916F014CD00D398EF /* CTLPickerView.m */; };
 		413DB90016F022950018B38C /* CTLPickerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DB8FF16F022950018B38C /* CTLPickerButton.m */; };
 		4146971B16F7494F00B22EDD /* CTLFactoryAppointment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4146971A16F7494F00B22EDD /* CTLFactoryAppointment.m */; };
+		41508A6317AE1D1F00F00032 /* CTLLearnMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41508A6217AE1D1F00F00032 /* CTLLearnMoreView.m */; };
+		41508A6617AF5AB100F00032 /* _CTLCDInvite.m in Sources */ = {isa = PBXBuildFile; fileRef = 41508A6517AF5AB100F00032 /* _CTLCDInvite.m */; };
+		41508A6917AF5AC800F00032 /* CTLCDInvite.m in Sources */ = {isa = PBXBuildFile; fileRef = 41508A6817AF5AC800F00032 /* CTLCDInvite.m */; };
+		41508A6C17B06AB400F00032 /* CTLAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 41508A6B17B06AB400F00032 /* CTLAddressBook.m */; };
 		4154A76A1755945300C3E280 /* CTLConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4154A7691755945300C3E280 /* CTLConversationCell.m */; };
 		415A4F2B16F69DF6007A0BD4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415A4F2A16F69DF6007A0BD4 /* SystemConfiguration.framework */; };
-		415A4F2F16F6A00D007A0BD4 /* GOHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F2E16F6A00D007A0BD4 /* GOHTTPOperation.m */; };
 		415A4F3316F6A0AC007A0BD4 /* RMPhoneFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F3216F6A0AC007A0BD4 /* RMPhoneFormat.m */; };
 		415A4F4116F6A886007A0BD4 /* NSDate+CTLDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F3A16F6A886007A0BD4 /* NSDate+CTLDate.m */; };
 		415A4F4216F6A886007A0BD4 /* NSString+CTLString.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A4F3C16F6A886007A0BD4 /* NSString+CTLString.m */; };
@@ -432,6 +439,13 @@
 		411F24DB179D213000842564 /* Pin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Pin.storyboard; sourceTree = "<group>"; };
 		411F24DD179D216A00842564 /* Contacts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Contacts.storyboard; sourceTree = "<group>"; };
 		411F24DF179D217C00842564 /* Appointments.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Appointments.storyboard; sourceTree = "<group>"; };
+		411F24E3179D712400842564 /* CTLMessageUpgradeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CTLMessageUpgradeView.xib; sourceTree = "<group>"; };
+		411F24E6179D721200842564 /* CTLMessageUpgradeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLMessageUpgradeView.h; sourceTree = "<group>"; };
+		411F24E7179D721300842564 /* CTLMessageUpgradeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLMessageUpgradeView.m; sourceTree = "<group>"; };
+		411F24E9179E020300842564 /* CTLInviteContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInviteContactViewController.m; sourceTree = "<group>"; };
+		411F24EA179E020400842564 /* CTLInviteContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInviteContactViewController.h; sourceTree = "<group>"; };
+		411F24EE179F5DE700842564 /* CTLInviteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLInviteCell.h; sourceTree = "<group>"; };
+		411F24EF179F5DE700842564 /* CTLInviteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLInviteCell.m; sourceTree = "<group>"; };
 		412C3C8916E98123009E662E /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon.png"; sourceTree = "<group>"; };
 		412C3C8A16E98123009E662E /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon@2x.png"; sourceTree = "<group>"; };
 		4130652716BE4E5E0063AC10 /* PhoneFormats.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = PhoneFormats.dat; sourceTree = "<group>"; };
@@ -448,11 +462,17 @@
 		413DB8FF16F022950018B38C /* CTLPickerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPickerButton.m; sourceTree = "<group>"; };
 		4146971916F7494F00B22EDD /* CTLFactoryAppointment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLFactoryAppointment.h; path = Factory/CTLFactoryAppointment.h; sourceTree = "<group>"; };
 		4146971A16F7494F00B22EDD /* CTLFactoryAppointment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLFactoryAppointment.m; path = Factory/CTLFactoryAppointment.m; sourceTree = "<group>"; };
+		41508A6117AE1D1E00F00032 /* CTLLearnMoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLLearnMoreView.h; path = ../View/CTLLearnMoreView.h; sourceTree = "<group>"; };
+		41508A6217AE1D1F00F00032 /* CTLLearnMoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLLearnMoreView.m; path = ../View/CTLLearnMoreView.m; sourceTree = "<group>"; };
+		41508A6417AF5AB100F00032 /* _CTLCDInvite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CTLCDInvite.h; sourceTree = "<group>"; };
+		41508A6517AF5AB100F00032 /* _CTLCDInvite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CTLCDInvite.m; sourceTree = "<group>"; };
+		41508A6717AF5AC800F00032 /* CTLCDInvite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLCDInvite.h; path = CoreData/CTLCDInvite.h; sourceTree = "<group>"; };
+		41508A6817AF5AC800F00032 /* CTLCDInvite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLCDInvite.m; path = CoreData/CTLCDInvite.m; sourceTree = "<group>"; };
+		41508A6A17B06AB300F00032 /* CTLAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLAddressBook.h; sourceTree = "<group>"; };
+		41508A6B17B06AB400F00032 /* CTLAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLAddressBook.m; sourceTree = "<group>"; };
 		4154A7681755945300C3E280 /* CTLConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLConversationCell.h; sourceTree = "<group>"; };
 		4154A7691755945300C3E280 /* CTLConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLConversationCell.m; sourceTree = "<group>"; };
 		415A4F2A16F69DF6007A0BD4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		415A4F2D16F6A00D007A0BD4 /* GOHTTPOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOHTTPOperation.h; sourceTree = "<group>"; };
-		415A4F2E16F6A00D007A0BD4 /* GOHTTPOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOHTTPOperation.m; sourceTree = "<group>"; };
 		415A4F3116F6A0AC007A0BD4 /* RMPhoneFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPhoneFormat.h; sourceTree = "<group>"; };
 		415A4F3216F6A0AC007A0BD4 /* RMPhoneFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPhoneFormat.m; sourceTree = "<group>"; };
 		415A4F3916F6A886007A0BD4 /* NSDate+CTLDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CTLDate.h"; sourceTree = "<group>"; };
@@ -704,9 +724,9 @@
 		41848E0E16B1D211004BFE30 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		418500C11743BD1700F5FFA2 /* CTLPinInterstialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLPinInterstialViewController.h; path = ../Controller/CTLPinInterstialViewController.h; sourceTree = "<group>"; };
 		418500C21743BD1700F5FFA2 /* CTLPinInterstialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLPinInterstialViewController.m; path = ../Controller/CTLPinInterstialViewController.m; sourceTree = "<group>"; };
-		418514B0176E916B0005B737 /* CTLEmptyMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLEmptyMessagesView.h; sourceTree = "<group>"; };
-		418514B1176E916B0005B737 /* CTLEmptyMessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLEmptyMessagesView.m; sourceTree = "<group>"; };
-		418514B3176E91A50005B737 /* CTLEmptyMessagesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CTLEmptyMessagesView.xib; sourceTree = "<group>"; };
+		418514B0176E916B0005B737 /* CTLEmptyMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLEmptyMessagesView.h; path = ../View/CTLEmptyMessagesView.h; sourceTree = "<group>"; };
+		418514B1176E916B0005B737 /* CTLEmptyMessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLEmptyMessagesView.m; path = ../View/CTLEmptyMessagesView.m; sourceTree = "<group>"; };
+		418514B3176E91A50005B737 /* CTLEmptyMessagesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CTLEmptyMessagesView.xib; path = ../View/CTLEmptyMessagesView.xib; sourceTree = "<group>"; };
 		418514BB176FED2D0005B737 /* CTLMessageComposerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLMessageComposerViewController.h; path = ../Controller/CTLMessageComposerViewController.h; sourceTree = "<group>"; };
 		418514BC176FED2D0005B737 /* CTLMessageComposerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLMessageComposerViewController.m; path = ../Controller/CTLMessageComposerViewController.m; sourceTree = "<group>"; };
 		418514BE176FF4010005B737 /* 31-paper-airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "31-paper-airplane.png"; sourceTree = "<group>"; };
@@ -742,8 +762,8 @@
 		41B47EEA16F89512000B08E1 /* CTLTopRoundedCorners.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLTopRoundedCorners.m; sourceTree = "<group>"; };
 		41B47EEC16F922DB000B08E1 /* CTLBottomRoundedCorners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLBottomRoundedCorners.h; sourceTree = "<group>"; };
 		41B47EED16F922DB000B08E1 /* CTLBottomRoundedCorners.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLBottomRoundedCorners.m; sourceTree = "<group>"; };
-		41B546CF16B39A9F00302652 /* CTLContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactCell.h; sourceTree = "<group>"; };
-		41B546D016B39A9F00302652 /* CTLContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactCell.m; sourceTree = "<group>"; };
+		41B546CF16B39A9F00302652 /* CTLContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTLContactCell.h; path = ../View/Cells/CTLContactCell.h; sourceTree = "<group>"; };
+		41B546D016B39A9F00302652 /* CTLContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTLContactCell.m; path = ../View/Cells/CTLContactCell.m; sourceTree = "<group>"; };
 		41B546D216B39BC500302652 /* CTLContactHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactHeaderView.h; sourceTree = "<group>"; };
 		41B546D316B39BC500302652 /* CTLContactHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLContactHeaderView.m; sourceTree = "<group>"; };
 		41B546D416B39BC500302652 /* CTLContactToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLContactToolbarView.h; sourceTree = "<group>"; };
@@ -881,6 +901,8 @@
 				411256F5179A1B37006A87FD /* CTLAccountManager.m */,
 				411256F6179A1B37006A87FD /* CTLMessageManager.h */,
 				411256F7179A1B37006A87FD /* CTLMessageManager.m */,
+				41508A6A17B06AB300F00032 /* CTLAddressBook.h */,
+				41508A6B17B06AB400F00032 /* CTLAddressBook.m */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -920,6 +942,7 @@
 		411F24C1179CA56000842564 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				411F24ED179F5DB300842564 /* Shared */,
 				411F24C4179CA5E100842564 /* MainMenu */,
 				411F24C3179CA5C500842564 /* Welcome */,
 				411F24D0179D1F8A00842564 /* Upgrade */,
@@ -944,6 +967,8 @@
 				4167F5BB16D6FDA6005B7B08 /* CTLLoginViewController.m */,
 				4130653D16C14A950063AC10 /* CTLRegisterViewController.h */,
 				4130653E16C14A960063AC10 /* CTLRegisterViewController.m */,
+				41508A6117AE1D1E00F00032 /* CTLLearnMoreView.h */,
+				41508A6217AE1D1F00F00032 /* CTLLearnMoreView.m */,
 			);
 			name = Welcome;
 			sourceTree = "<group>";
@@ -971,6 +996,8 @@
 				416DD83116AF9C0100F2F8B3 /* CTLAccountViewController.m */,
 				411F2479179A5C7100842564 /* CTLAccountsViewController.h */,
 				411F247A179A5C7100842564 /* CTLAccountsViewController.m */,
+				41AB94B71741ABE6003741BB /* CTLSetPinViewController.h */,
+				41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -978,6 +1005,7 @@
 		411F24CC179D1F0800842564 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
+				411F24EC179E2BC000842564 /* Cells */,
 				411F24DD179D216A00842564 /* Contacts.storyboard */,
 				41E56D231725FE75004B3CEB /* CTLContactsListViewController.h */,
 				41D791611737EAF600FCA232 /* CTLContactsListViewController.m */,
@@ -1006,6 +1034,15 @@
 		411F24CE179D1F1E00842564 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				411F24EE179F5DE700842564 /* CTLInviteCell.h */,
+				411F24EF179F5DE700842564 /* CTLInviteCell.m */,
+				411F24D8179D20E300842564 /* Messages.storyboard */,
+				411F24E6179D721200842564 /* CTLMessageUpgradeView.h */,
+				411F24E7179D721300842564 /* CTLMessageUpgradeView.m */,
+				411F24E3179D712400842564 /* CTLMessageUpgradeView.xib */,
+				418514B0176E916B0005B737 /* CTLEmptyMessagesView.h */,
+				418514B1176E916B0005B737 /* CTLEmptyMessagesView.m */,
+				418514B3176E91A50005B737 /* CTLEmptyMessagesView.xib */,
 				417F2827173090A1003CC9A3 /* CTLConversationListViewController.h */,
 				417F2828173090A1003CC9A3 /* CTLConversationListViewController.m */,
 				418514BB176FED2D0005B737 /* CTLMessageComposerViewController.h */,
@@ -1014,7 +1051,8 @@
 				4102C416178E81FE00244EC3 /* CTLMessageThreadViewController.m */,
 				41173EA217922E7000141E88 /* CTLReplyComposerViewController.h */,
 				41173EA317922E7000141E88 /* CTLReplyComposerViewController.m */,
-				411F24D8179D20E300842564 /* Messages.storyboard */,
+				411F24EA179E020400842564 /* CTLInviteContactViewController.h */,
+				411F24E9179E020300842564 /* CTLInviteContactViewController.m */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -1057,10 +1095,24 @@
 				411F24DB179D213000842564 /* Pin.storyboard */,
 				418500C11743BD1700F5FFA2 /* CTLPinInterstialViewController.h */,
 				418500C21743BD1700F5FFA2 /* CTLPinInterstialViewController.m */,
-				41AB94B71741ABE6003741BB /* CTLSetPinViewController.h */,
-				41AB94B81741ABE6003741BB /* CTLSetPinViewController.m */,
 			);
 			name = Pin;
+			sourceTree = "<group>";
+		};
+		411F24EC179E2BC000842564 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				41B546CF16B39A9F00302652 /* CTLContactCell.h */,
+				41B546D016B39A9F00302652 /* CTLContactCell.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		411F24ED179F5DB300842564 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Shared;
 			sourceTree = "<group>";
 		};
 		4146971816F7491700B22EDD /* Factory */ = {
@@ -1070,15 +1122,6 @@
 				4146971A16F7494F00B22EDD /* CTLFactoryAppointment.m */,
 			);
 			name = Factory;
-			sourceTree = "<group>";
-		};
-		415A4F2C16F6A00D007A0BD4 /* GOHTTP */ = {
-			isa = PBXGroup;
-			children = (
-				415A4F2D16F6A00D007A0BD4 /* GOHTTPOperation.h */,
-				415A4F2E16F6A00D007A0BD4 /* GOHTTPOperation.m */,
-			);
-			path = GOHTTP;
 			sourceTree = "<group>";
 		};
 		415A4F3016F6A0AC007A0BD4 /* RMPhoneFormat */ = {
@@ -1440,7 +1483,6 @@
 				417DC29A16ADF60E0073199D /* Model */,
 				417DC29B16ADF60E0073199D /* View */,
 				415A4F3816F6A886007A0BD4 /* Category */,
-				417DC29316ADF60E0073199D /* Controller */,
 				415A4F3416F6A126007A0BD4 /* Service */,
 				417DC24416ADF1140073199D /* Supporting Files */,
 				41786E50176831AA008808BD /* Resources */,
@@ -1498,16 +1540,8 @@
 				83EB272D170B0B4D00EBB3D3 /* Appirater */,
 				415A4F3016F6A0AC007A0BD4 /* RMPhoneFormat */,
 				416DDA9316AFA9F100F2F8B3 /* MagicalRecord */,
-				415A4F2C16F6A00D007A0BD4 /* GOHTTP */,
 			);
 			path = Vendor;
-			sourceTree = "<group>";
-		};
-		417DC29316ADF60E0073199D /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		417DC29A16ADF60E0073199D /* Model */ = {
@@ -1531,6 +1565,8 @@
 				41DA1DCE16D003DC0017F71F /* CTLCDInbox.m */,
 				418514CF17711F610005B737 /* CTLCDMessage.h */,
 				418514D017711F610005B737 /* CTLCDMessage.m */,
+				41508A6717AF5AC800F00032 /* CTLCDInvite.h */,
+				41508A6817AF5AC800F00032 /* CTLCDInvite.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1544,9 +1580,6 @@
 				41B546D316B39BC500302652 /* CTLContactHeaderView.m */,
 				41B546D416B39BC500302652 /* CTLContactToolbarView.h */,
 				41B546D516B39BC500302652 /* CTLContactToolbarView.m */,
-				418514B0176E916B0005B737 /* CTLEmptyMessagesView.h */,
-				418514B1176E916B0005B737 /* CTLEmptyMessagesView.m */,
-				418514B3176E91A50005B737 /* CTLEmptyMessagesView.xib */,
 				413DB8FE16F022950018B38C /* CTLPickerButton.h */,
 				413DB8FF16F022950018B38C /* CTLPickerButton.m */,
 				4130CF8816F014CD00D398EF /* CTLPickerView.h */,
@@ -1587,6 +1620,8 @@
 			isa = PBXGroup;
 			children = (
 				41D791631738AE4700FCA232 /* Clientelle.xcdatamodeld */,
+				41508A6417AF5AB100F00032 /* _CTLCDInvite.h */,
+				41508A6517AF5AB100F00032 /* _CTLCDInvite.m */,
 				4130653316C149D90063AC10 /* _CTLCDAccount.h */,
 				4130653416C149D90063AC10 /* _CTLCDAccount.m */,
 				41AEBDAE16EECB6D00BC397F /* _CTLCDAppointment.h */,
@@ -1610,8 +1645,6 @@
 			children = (
 				4102C418178E82A800244EC3 /* CTLMessageCell.h */,
 				4102C419178E82A800244EC3 /* CTLMessageCell.m */,
-				41B546CF16B39A9F00302652 /* CTLContactCell.h */,
-				41B546D016B39A9F00302652 /* CTLContactCell.m */,
 				41B5472E16B4556500302652 /* CTLFieldCell.h */,
 				41B5472F16B4556500302652 /* CTLFieldCell.m */,
 				41AEBDA416EC792900BC397F /* CTLMenuItemCell.h */,
@@ -1868,6 +1901,7 @@
 				411F24DC179D213000842564 /* Pin.storyboard in Resources */,
 				411F24DE179D216A00842564 /* Contacts.storyboard in Resources */,
 				411F24E0179D217C00842564 /* Appointments.storyboard in Resources */,
+				411F24E5179D712500842564 /* CTLMessageUpgradeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1978,7 +2012,6 @@
 				41AEBDB616EEEE6F00BC397F /* CTLAppointmentCell.m in Sources */,
 				4130CF8A16F014CD00D398EF /* CTLPickerView.m in Sources */,
 				413DB90016F022950018B38C /* CTLPickerButton.m in Sources */,
-				415A4F2F16F6A00D007A0BD4 /* GOHTTPOperation.m in Sources */,
 				415A4F3316F6A0AC007A0BD4 /* RMPhoneFormat.m in Sources */,
 				415A4F4116F6A886007A0BD4 /* NSDate+CTLDate.m in Sources */,
 				415A4F4216F6A886007A0BD4 /* NSString+CTLString.m in Sources */,
@@ -2036,6 +2069,13 @@
 				411F247B179A5C7100842564 /* CTLAccountsViewController.m in Sources */,
 				411F24B7179B2BFE00842564 /* CTLNetworkClient.m in Sources */,
 				411F24BA179C9E2100842564 /* CTLWelcomeViewController.m in Sources */,
+				411F24E8179D721400842564 /* CTLMessageUpgradeView.m in Sources */,
+				411F24EB179E020500842564 /* CTLInviteContactViewController.m in Sources */,
+				411F24F0179F5DE700842564 /* CTLInviteCell.m in Sources */,
+				41508A6317AE1D1F00F00032 /* CTLLearnMoreView.m in Sources */,
+				41508A6617AF5AB100F00032 /* _CTLCDInvite.m in Sources */,
+				41508A6917AF5AC800F00032 /* CTLCDInvite.m in Sources */,
+				41508A6C17B06AB400F00032 /* CTLAddressBook.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

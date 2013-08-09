@@ -14,10 +14,13 @@
 #import "CTLCDConversation.h"
 #import "CTLConversationCell.h"
 #import "CTLMessageThreadViewController.h"
+#import "CTLMessageUpgradeView.h"
 
 @interface CTLConversationListViewController ()
 @property (nonatomic, strong) NSArray *conversations;
-@property (nonatomic, strong) CTLCDAccount *current_user;
+@property (nonatomic, strong) CTLCDAccount *currentUser;
+@property (nonatomic, strong) UIView *emptyMessageView;
+
 @end
 
 @implementation CTLConversationListViewController
@@ -25,28 +28,44 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.current_user = [[CTLAccountManager sharedInstance] currentUser];
     
-    //NSLog(@"CURRENT USER %@", self.current_user);
-    
-    [self.containerView setRightSwipeEnabled:YES];
-    [self.containerView renderMenuButton:self];
-    [self.navigationItem setHidesBackButton:YES animated:YES];
-    
-    self.resultsController = [CTLCDConversation fetchAllSortedBy:@"updated_at" ascending:YES withPredicate:nil groupBy:nil delegate:self];
-        
-    [self.resultsController performFetch:nil];
-    [self.tableView reloadData];
-    
-    [[NSBundle mainBundle] loadNibNamed:@"CTLEmptyMessagesView" owner:self options:nil];
-       
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BACK", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
-    
-    [self.navigationItem setBackBarButtonItem: backButton];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BACK", nil) style:UIBarButtonItemStyleBordered target:nil action:nil];
 
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(chooseContact:)];
+              
+    [self.containerView setRightSwipeEnabled:YES];
+    [self.containerView renderMenuButton:self];
+    [self.navigationItem setHidesBackButton:YES animated:YES];    
+    
+    self.currentUser = [[CTLAccountManager sharedInstance] currentUser];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"account = %@", self.currentUser];
+    self.resultsController = [CTLCDConversation fetchAllSortedBy:@"updated_at" ascending:YES withPredicate:predicate groupBy:nil delegate:self];        
+    [self.resultsController performFetch:nil];
+
+    if([self.currentUser.conversations count] == 0){
+        [[NSBundle mainBundle] loadNibNamed:@"CTLEmptyMessagesView" owner:self options:nil];
+    }
+
+    [self.tableView reloadData]; 
+    [self checkForAcceptedInvitations];
+}
+
+- (void)checkForAcceptedInvitations
+{    
+    [[CTLAccountManager sharedInstance] syncInvites:^(NSError *error){
+        if(error){
+            [self displayAlertMessage:[error localizedDescription]];
+        }
+    }];
+}
+
+- (void)displayAlertMessage:(NSString *)message
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,7 +95,7 @@
     NSString *contactName = conversation.contact.firstName;
     
     //If top message is me, show a different label
-    if([conversation.last_sender_uid isEqualToNumber:self.current_user.user_id]){
+    if([conversation.last_sender_uid isEqualToNumber:self.currentUser.user_id]){
         cell.senderLabel.text = [NSString stringWithFormat:@"%@ > %@", NSLocalizedString(@"ME", nil), contactName];
     }else{
         cell.senderLabel.text = contactName;
@@ -160,7 +179,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if([[self.resultsController fetchedObjects] count] == 0){
-        return self.view.frame.size.height;
+        return 60.0f;
     }
     return 0;
 }
@@ -174,21 +193,15 @@
     return nil;
 }
 
-- (IBAction)inviteContacts:(id)sender
+- (void)chooseContact:(id)sender
 {
-    NSLog(@"INVITE CONTACTS");
-}
-
-- (IBAction)composeMessage:(id)sender
-{
-    [self performSegueWithIdentifier:@"toMessageComposerView" sender:sender];
+    [self performSegueWithIdentifier:@"toChooseContact" sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(CTLConversationCell *)cell
 {
     if([[segue identifier] isEqualToString:@"toThreadView"]){
-        CTLMessageThreadViewController *viewController = [segue destinationViewController];
-        
+        CTLMessageThreadViewController *viewController = [segue destinationViewController];        
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         CTLCDConversation *conversation = [[self.resultsController fetchedObjects] objectAtIndex:indexPath.row];
         

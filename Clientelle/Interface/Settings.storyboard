@@ -796,9 +796,7 @@
                             <outlet property="delegate" destination="bre-7a-GRz" id="3VQ-Re-5Mg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Accounts" id="B4m-B0-DPi">
-                        <barButtonItem key="rightBarButtonItem" title="New Account" id="ObU-10-QDH"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Accounts" id="B4m-B0-DPi"/>
                     <connections>
                         <segue destination="sB1-yP-D8k" kind="push" identifier="toAccountView" id="Vxx-WW-JdA"/>
                     </connections>

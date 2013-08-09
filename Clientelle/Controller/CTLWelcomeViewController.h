@@ -8,17 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTLWelcomeViewController : UIViewController<CTLContainerViewDelegate>
+@interface CTLWelcomeViewController : UIViewController<UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CTLContainerViewDelegate>
 
 @property (nonatomic, strong) CTLContainerViewController *containerView;
 
-@property (nonatomic, weak) IBOutlet UILabel *sloganLabel;
-@property (nonatomic, weak) IBOutlet UILabel *bullet1Label;
-@property (nonatomic, weak) IBOutlet UILabel *bullet2Label;
-@property (nonatomic, weak) IBOutlet UILabel *bullet3Label;
-@property (nonatomic, weak) IBOutlet UILabel *bullet4Label;
-@property (nonatomic, weak) IBOutlet UILabel *requireUpgradeLabel;
+@property (nonatomic, weak) IBOutlet UITextField *emailTextField;
+@property (nonatomic, weak) IBOutlet UITextField *companyTextField;
+@property (nonatomic, weak) IBOutlet UITextField *industryTextField;
+
+@property (nonatomic, weak) IBOutlet UIView *learnMoreView;
 @property (nonatomic, weak) IBOutlet UIButton *registerButton;
 @property (nonatomic, weak) IBOutlet UIButton *loginButton;
+
+- (IBAction)submit:(id)sender;
+- (IBAction)dismissLearnMorePopup:(id)sender;
 
 @end

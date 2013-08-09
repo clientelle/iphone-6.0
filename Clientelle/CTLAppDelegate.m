@@ -88,9 +88,9 @@
 
 - (void)showPinView:(id)sender
 {
-    CTLContainerViewController *rootViewController = (CTLContainerViewController *)[self.window rootViewController];
-    
-    CTLPinInterstialViewController *viewController = (CTLPinInterstialViewController *)[rootViewController.storyboard instantiateViewControllerWithIdentifier:@"pinInterstitial"];
+    CTLContainerViewController *rootViewController = (CTLContainerViewController *)[self.window rootViewController];    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Pin" bundle:[NSBundle mainBundle]];
+    CTLPinInterstialViewController *viewController = [storyboard instantiateInitialViewController];
     [rootViewController.mainNavigationController presentViewController:viewController animated:NO completion:nil];
 }
 

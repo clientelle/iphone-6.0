@@ -8,9 +8,9 @@ extern const struct CTLCDContactAttributes {
 	__unsafe_unretained NSString *address;
 	__unsafe_unretained NSString *address2;
 	__unsafe_unretained NSString *compositeName;
-	__unsafe_unretained NSString *contactID;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *firstName;
+	__unsafe_unretained NSString *hasMessenger;
 	__unsafe_unretained NSString *jobTitle;
 	__unsafe_unretained NSString *lastAccessed;
 	__unsafe_unretained NSString *lastName;
@@ -21,13 +21,14 @@ extern const struct CTLCDContactAttributes {
 	__unsafe_unretained NSString *phone;
 	__unsafe_unretained NSString *picture;
 	__unsafe_unretained NSString *recordID;
-	__unsafe_unretained NSString *user_id;
+	__unsafe_unretained NSString *userId;
 } CTLCDContactAttributes;
 
 extern const struct CTLCDContactRelationships {
 	__unsafe_unretained NSString *account;
 	__unsafe_unretained NSString *appointment;
 	__unsafe_unretained NSString *conversation;
+	__unsafe_unretained NSString *invite;
 } CTLCDContactRelationships;
 
 extern const struct CTLCDContactFetchedProperties {
@@ -36,6 +37,7 @@ extern const struct CTLCDContactFetchedProperties {
 @class CTLCDAccount;
 @class CTLCDAppointment;
 @class CTLCDConversation;
+@class CTLCDInvite;
 
 
 
@@ -98,20 +100,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* contactID;
-
-
-
-@property int16_t contactIDValue;
-- (int16_t)contactIDValue;
-- (void)setContactIDValue:(int16_t)value_;
-
-//- (BOOL)validateContactID:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSString* email;
 
 
@@ -127,6 +115,20 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 //- (BOOL)validateFirstName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* hasMessenger;
+
+
+
+@property BOOL hasMessengerValue;
+- (BOOL)hasMessengerValue;
+- (void)setHasMessengerValue:(BOOL)value_;
+
+//- (BOOL)validateHasMessenger:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -236,15 +238,15 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* user_id;
+@property (nonatomic, strong) NSNumber* userId;
 
 
 
-@property int32_t user_idValue;
-- (int32_t)user_idValue;
-- (void)setUser_idValue:(int32_t)value_;
+@property int16_t userIdValue;
+- (int16_t)userIdValue;
+- (void)setUserIdValue:(int16_t)value_;
 
-//- (BOOL)validateUser_id:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateUserId:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -267,6 +269,13 @@ extern const struct CTLCDContactFetchedProperties {
 @property (nonatomic, strong) CTLCDConversation *conversation;
 
 //- (BOOL)validateConversation:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) CTLCDInvite *invite;
+
+//- (BOOL)validateInvite:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -304,15 +313,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
-- (NSNumber*)primitiveContactID;
-- (void)setPrimitiveContactID:(NSNumber*)value;
-
-- (int16_t)primitiveContactIDValue;
-- (void)setPrimitiveContactIDValue:(int16_t)value_;
-
-
-
-
 - (NSString*)primitiveEmail;
 - (void)setPrimitiveEmail:(NSString*)value;
 
@@ -321,6 +321,15 @@ extern const struct CTLCDContactFetchedProperties {
 
 - (NSString*)primitiveFirstName;
 - (void)setPrimitiveFirstName:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveHasMessenger;
+- (void)setPrimitiveHasMessenger:(NSNumber*)value;
+
+- (BOOL)primitiveHasMessengerValue;
+- (void)setPrimitiveHasMessengerValue:(BOOL)value_;
 
 
 
@@ -388,11 +397,11 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
-- (NSNumber*)primitiveUser_id;
-- (void)setPrimitiveUser_id:(NSNumber*)value;
+- (NSNumber*)primitiveUserId;
+- (void)setPrimitiveUserId:(NSNumber*)value;
 
-- (int32_t)primitiveUser_idValue;
-- (void)setPrimitiveUser_idValue:(int32_t)value_;
+- (int16_t)primitiveUserIdValue;
+- (void)setPrimitiveUserIdValue:(int16_t)value_;
 
 
 
@@ -410,6 +419,11 @@ extern const struct CTLCDContactFetchedProperties {
 
 - (CTLCDConversation*)primitiveConversation;
 - (void)setPrimitiveConversation:(CTLCDConversation*)value;
+
+
+
+- (CTLCDInvite*)primitiveInvite;
+- (void)setPrimitiveInvite:(CTLCDInvite*)value;
 
 
 @end
