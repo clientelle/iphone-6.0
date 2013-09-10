@@ -57,7 +57,15 @@
     [self.resultsController performFetch:nil];
     [self.tableView reloadData];
     
-    [self fetchPrivatePubConfiguration:@"/messages/2_4"];
+    
+    NSString *channelString = nil;
+    if(self.current_user.user_idValue < self.conversation.contact.userIdValue){
+        channelString = [NSString stringWithFormat:@"/messages/%@_%@", self.current_user.user_id, self.conversation.contact.userId];
+    }else{
+        channelString = [NSString stringWithFormat:@"/messages/%@_%@", self.conversation.contact.userId, self.current_user.user_id];
+    }
+    
+    [self fetchPrivatePubConfiguration:channelString];
     
     NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];    
     [notifCenter addObserver:self selector:@selector(didReceiveRealtimeMessage:) name:@"didReceiveRealtimeMessage" object:nil];

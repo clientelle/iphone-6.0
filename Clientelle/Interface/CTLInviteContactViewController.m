@@ -33,9 +33,9 @@
 
 @property (nonatomic, strong) NSIndexPath *selectedIndex;
 @property (nonatomic, strong) id selectedContact;
+@property (nonatomic, strong) NSMutableDictionary *invites;
 
 @end
-
 
 @implementation CTLInviteContactViewController
 
@@ -47,6 +47,12 @@
     self.filteredContacts = [NSMutableArray array];
     self.existingContacts = self.currentUser.contacts;
     
+    self.invites = [NSMutableDictionary dictionaryWithCapacity:[self.currentUser.invites count]];
+    
+    for(CTLCDInvite *invite in self.currentUser.invites){
+        [self.invites setValue:invite forKey:[invite.record_id stringValue]];
+    }
+                
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];    
     self.textColor = [UIColor ctlDarkGray];
     self.selectedBackgroundColor = [UIColor ctlLightGray];
@@ -110,16 +116,35 @@
 - (void)configureCell:(CTLInviteCell *)cell withAbPerson:(CTLABPerson *)contact
 {    
     cell.textLabel.text = contact.compositeName;
-    cell.detailTextLabel.text = NSLocalizedString(@"SEND_INVITE", nil);
-    cell.detailTextLabel.textColor = [UIColor ctlRed];
+    NSString *key = [NSString stringWithFormat:@"%i", contact.recordID];
+    
+    if(self.invites[key]){
+        cell.detailTextLabel.text = @"Request pending";
+        cell.detailTextLabel.textColor = [UIColor ctlRed];
+    }else{
+        cell.detailTextLabel.text = NSLocalizedString(@"SEND_INVITE", nil);
+        cell.detailTextLabel.textColor = [UIColor ctlGreen];
+    }    
 }
 
 - (void)configureCell:(CTLInviteCell *)cell withContact:(CTLCDContact *)contact
 {
     cell.textLabel.text = contact.compositeName;
+    
     if(contact.userIdValue == 0){
         cell.detailTextLabel.text = NSLocalizedString(@"SEND_INVITE", nil);
         cell.detailTextLabel.textColor = [UIColor ctlRed];
+        
+        NSString *key = [NSString stringWithFormat:@"%@", contact.recordID];
+        
+        if(self.invites[key]){
+            cell.detailTextLabel.text = @"Request pending";
+            cell.detailTextLabel.textColor = [UIColor ctlRed];
+        }else{
+            cell.detailTextLabel.text = NSLocalizedString(@"SEND_INVITE", nil);
+            cell.detailTextLabel.textColor = [UIColor ctlGreen];
+        }        
+        
     }else{
         UIImage *icon = [UIImage imageNamed:@"09-chat-grey"];
         cell.accessoryView = [[UIImageView alloc] initWithImage:icon];
@@ -193,7 +218,11 @@
     
     if([[self.selectedContact valueForKey:@"email"] length] > 0){
         [inviteTypes addObject:NSLocalizedString(@"SEND_INVITE_VIA_EMAIL", nil)];
-    }    
+    }
+    
+    
+    [inviteTypes addObject:NSLocalizedString(@"COPY_INVITE_LINK", nil)];
+   
     
     for(NSInteger i=0;i<[inviteTypes count];i++){
         [actionSheet addButtonWithTitle:inviteTypes[i]];
@@ -214,6 +243,9 @@
                 break;
             case 1:
                 [self inviteViaEmail];
+                break;
+            case 2:                
+                [self copyInviteLink];
                 break;
         }
     }else{        
@@ -243,44 +275,66 @@
     }
 }
 
+- (void)inviteViaSms
+{
+    [self saveInvitedRecipientToContacts:^(CTLCDContact *invitedContact){
+        self.selectedContact = invitedContact;
+        [[CTLAccountManager sharedInstance] createInviteLinkWithContact:self.selectedContact onComplete:^(NSString *invitationMessage){
+            if([MFMessageComposeViewController canSendText]){
+                MFMessageComposeViewController *smsController = [[MFMessageComposeViewController alloc] init];
+                smsController.messageComposeDelegate = self;
+                smsController.body = invitationMessage;
+                [self createInviteMessage:invitationMessage];
+                [self presentViewController:smsController animated:YES completion:nil];
+            }else{
+                [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_SMS", nil)];
+            }
+        } onError:^(NSError *error){
+            [self displayAlertMessage:[error localizedDescription]];
+        }];
+    }];
+}
+
 - (void)inviteViaEmail
 {    
     [self saveInvitedRecipientToContacts:^(CTLCDContact *invitedContact){        
         self.selectedContact = invitedContact;        
-        [[CTLAccountManager sharedInstance] createInviteLinkWithContact:self.selectedContact onComplete:^(NSString *invitationLink){
-            NSLog(@"INVITATION LINK %@", invitationLink);            
-          if([MFMailComposeViewController canSendMail]){
-              MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
-              [mailController setMailComposeDelegate:self];
-              [mailController setToRecipients:@[self.currentUser.email]];
-              [self presentViewController:mailController animated:YES completion:nil];
-          }else{
-              [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL", nil)];
-          }            
-            
-        } onError:^(NSError *error){
-            [self displayAlertMessage:[error localizedDescription]];            
-        }];
-    }];    
-}
-
-- (void)inviteViaSms
-{    
-    [self saveInvitedRecipientToContacts:^(CTLCDContact *invitedContact){
-        self.selectedContact = invitedContact;        
-        
-        [[CTLAccountManager sharedInstance] createInviteLinkWithContact:self.selectedContact onComplete:^(NSString *invitationLink){
-            NSLog(@"INVITATION LINK %@", invitationLink);
-            
-            if([MFMessageComposeViewController canSendText]){
-                NSString *sms = [NSString stringWithFormat:@"sms: %@", [NSString cleanPhoneNumber:[self.selectedContact valueForKey:@"mobile"]]];
-                NSString *smsEncoded = [sms stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-                [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:smsEncoded]];
+        [[CTLAccountManager sharedInstance] createInviteLinkWithContact:self.selectedContact onComplete:^(NSString *invitationMessage){
+            if([MFMailComposeViewController canSendMail]){
+                MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
+                [mailController setMailComposeDelegate:self];
+                [mailController setToRecipients:@[[self.selectedContact valueForKey:@"email"]]];
+                [mailController setMessageBody:invitationMessage isHTML:NO];
+                [self presentViewController:mailController animated:YES completion:nil];
             }else{
-                [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_SMS", nil)];
+                [self displayAlertMessage: NSLocalizedString(@"DEVICE_NOT_CONFIGURED_TO_SEND_EMAIL", nil)];
             }            
         } onError:^(NSError *error){
             [self displayAlertMessage:[error localizedDescription]];            
+        }];
+    }];
+}
+
+-(void)copyInviteLink
+{
+    [self saveInvitedRecipientToContacts:^(CTLCDContact *invitedContact){
+        self.selectedContact = invitedContact;
+        [[CTLAccountManager sharedInstance] createInviteLinkOnlyWithContact:self.selectedContact onComplete:^(NSString *invitationLink){
+            NSLog(@"INVITE LINK %@", invitationLink);
+            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            pasteboard.string = invitationLink;
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:NSLocalizedString(@"INVITE_LINK_COPIED", nil)
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil, nil];
+            
+            [alert show];
+            
+            
+        } onError:^(NSError *error){
+            [self displayAlertMessage:[error localizedDescription]];
         }];
     }];    
 }
@@ -306,31 +360,34 @@
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
-    //if(result == MFMailComposeResultSent){
+    if(result == MFMailComposeResultSent){
         //invite sent
-        [self createInviteMessage];
-    //}
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-    //if(result == MessageComposeResultSent){
-        //invite sent
-        [self createInviteMessage];
-    //}
-    //[self dismissViewControllerAnimated:YES completion:nil];
+    if(result == MessageComposeResultSent){
+        //invite sent        
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
-- (void)createInviteMessage
+- (void)createInviteMessage:(NSString *)inviteMessage
 {
-    NSString *messageText = [NSString stringWithFormat:@"Invitation sent to %@", [self.selectedContact valueForKey:@"compositeName"]];    
+    NSString *messageText = @"Invitation sent";
     
     CTLCDConversation *conversation = [CTLCDConversation MR_createEntity];       
     conversation.contact = self.selectedContact;
     conversation.account = self.currentUser;
     
     [[CTLMessageManager sharedInstance] sendInviteMessage:messageText withConversation:conversation completionBlock:^(CTLCDMessage *message, id responseObject){
+        
+        CTLInviteCell *cell = (CTLInviteCell *)[self.tableView cellForRowAtIndexPath:self.selectedIndex];
+        cell.detailTextLabel.text = @"Request pending";
+        cell.detailTextLabel.textColor = [UIColor ctlRed];
+        
         [self dismissViewControllerAnimated:YES completion:nil];
     } errorBlock:^(NSError *error){
         

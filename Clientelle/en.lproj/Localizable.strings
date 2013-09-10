@@ -278,6 +278,8 @@ e†
 "INVITE_CONTACT" = "Invite %@ to Clientelle";
 "INVITE_TO_CONTINUE" = "You must invite contacts to continue";
 "INVITE_CONTACTS" = "Invite Contacts";
+"COPY_INVITE_LINK" = "Copy Invite Link";
+"INVITE_LINK_COPIED" = "Invite link has been copied";
 "SEND_INVITE_VIA_EMAIL" = "Send invite via email";
 "SEND_INVITE_VIA_SMS" = "Send invite via SMS";
 "SEND_INVITE" = "Send an invite";

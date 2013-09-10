@@ -25,6 +25,7 @@ extern const struct CTLCDAccountRelationships {
 	__unsafe_unretained NSString *contacts;
 	__unsafe_unretained NSString *conversations;
 	__unsafe_unretained NSString *inbox;
+	__unsafe_unretained NSString *invites;
 } CTLCDAccountRelationships;
 
 extern const struct CTLCDAccountFetchedProperties {
@@ -33,6 +34,7 @@ extern const struct CTLCDAccountFetchedProperties {
 @class CTLCDContact;
 @class CTLCDConversation;
 @class CTLCDInbox;
+@class CTLCDInvite;
 
 
 
@@ -243,6 +245,13 @@ extern const struct CTLCDAccountFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSSet *invites;
+
+- (NSMutableSet*)invitesSet;
+
+
+
+
 
 @end
 
@@ -262,6 +271,11 @@ extern const struct CTLCDAccountFetchedProperties {
 - (void)removeInbox:(NSSet*)value_;
 - (void)addInboxObject:(CTLCDInbox*)value_;
 - (void)removeInboxObject:(CTLCDInbox*)value_;
+
+- (void)addInvites:(NSSet*)value_;
+- (void)removeInvites:(NSSet*)value_;
+- (void)addInvitesObject:(CTLCDInvite*)value_;
+- (void)removeInvitesObject:(CTLCDInvite*)value_;
 
 @end
 
@@ -380,6 +394,11 @@ extern const struct CTLCDAccountFetchedProperties {
 
 - (NSMutableSet*)primitiveInbox;
 - (void)setPrimitiveInbox:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveInvites;
+- (void)setPrimitiveInvites:(NSMutableSet*)value;
 
 
 @end

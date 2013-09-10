@@ -27,7 +27,6 @@ const struct CTLCDContactRelationships CTLCDContactRelationships = {
 	.account = @"account",
 	.appointment = @"appointment",
 	.conversation = @"conversation",
-	.invite = @"invite",
 };
 
 const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
@@ -275,10 +274,6 @@ const struct CTLCDContactFetchedProperties CTLCDContactFetchedProperties = {
 	
 
 @dynamic conversation;
-
-	
-
-@dynamic invite;
 
 	
 

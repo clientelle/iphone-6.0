@@ -18,6 +18,7 @@
         <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="account" inverseEntity="Contact" syncable="YES"/>
         <relationship name="conversations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="account" inverseEntity="Conversation" syncable="YES"/>
         <relationship name="inbox" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Inbox" inverseName="account" inverseEntity="Inbox" syncable="YES"/>
+        <relationship name="invites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Invite" inverseName="account" inverseEntity="Invite" syncable="YES"/>
     </entity>
     <entity name="Appointment" representedClassName="CTLCDAppointment" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
@@ -53,7 +54,6 @@
         <relationship name="account" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="contacts" inverseEntity="Account" syncable="YES"/>
         <relationship name="appointment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Appointment" inverseName="contact" inverseEntity="Appointment" syncable="YES"/>
         <relationship name="conversation" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="contact" inverseEntity="Conversation" syncable="YES"/>
-        <relationship name="invite" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Invite" inverseName="contact" inverseEntity="Invite" syncable="YES"/>
     </entity>
     <entity name="ContactField" representedClassName="CTLCDContactField" syncable="YES">
         <attribute name="autocapitalizationType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -85,7 +85,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="record_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="contact" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="invite" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="account" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="invites" inverseEntity="Account" syncable="YES"/>
     </entity>
     <entity name="Message" representedClassName="CTLCDMessage" syncable="YES">
         <attribute name="created_at" optional="YES" attributeType="Date" syncable="YES"/>
@@ -94,13 +94,13 @@
         <relationship name="conversation" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-434" positionY="-253" width="128" height="298"/>
+        <element name="Account" positionX="-434" positionY="-262" width="128" height="313"/>
         <element name="Appointment" positionX="-47" positionY="-153" width="128" height="208"/>
-        <element name="Contact" positionX="-234" positionY="-54" width="128" height="358"/>
+        <element name="Contact" positionX="-234" positionY="-54" width="128" height="343"/>
         <element name="ContactField" positionX="-659" positionY="-243" width="128" height="133"/>
         <element name="Conversation" positionX="-596" positionY="155" width="128" height="133"/>
         <element name="Inbox" positionX="-765" positionY="-9" width="128" height="118"/>
-        <element name="Invite" positionX="-371" positionY="317" width="128" height="148"/>
+        <element name="Invite" positionX="-461" positionY="323" width="128" height="148"/>
         <element name="Message" positionX="-668" positionY="414" width="128" height="103"/>
     </elements>
 </model>

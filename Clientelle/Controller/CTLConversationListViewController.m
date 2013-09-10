@@ -54,12 +54,14 @@
 }
 
 - (void)checkForAcceptedInvitations
-{    
-    [[CTLAccountManager sharedInstance] syncInvites:^(NSError *error){
-        if(error){
-            [self displayAlertMessage:[error localizedDescription]];
-        }
-    }];
+{
+    if([self.currentUser.invites count] > 0){
+        [[CTLAccountManager sharedInstance] syncInvites:^(NSError *error){
+            if(error){
+                [self displayAlertMessage:[error localizedDescription]];
+            }
+        }];
+    }
 }
 
 - (void)displayAlertMessage:(NSString *)message

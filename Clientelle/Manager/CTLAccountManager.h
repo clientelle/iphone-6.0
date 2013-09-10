@@ -35,6 +35,7 @@ typedef void (^CTLErrorBlock)(NSError *error);
 - (NSString *)generatePassword;
 
 - (void)createInviteLinkWithContact:(CTLCDContact *)contact onComplete:(CTLCompletionWithInviteTokenBlock)completionBlock onError:(CTLErrorBlock)errorBlock;
+- (void)createInviteLinkOnlyWithContact:(CTLCDContact *)contact onComplete:(CTLCompletionWithInviteTokenBlock)completionBlock onError:(CTLErrorBlock)errorBlock;
 - (void)syncInvites:(CTLErrorBlock)errorBlock;
 
 @end

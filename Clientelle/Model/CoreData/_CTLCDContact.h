@@ -28,7 +28,6 @@ extern const struct CTLCDContactRelationships {
 	__unsafe_unretained NSString *account;
 	__unsafe_unretained NSString *appointment;
 	__unsafe_unretained NSString *conversation;
-	__unsafe_unretained NSString *invite;
 } CTLCDContactRelationships;
 
 extern const struct CTLCDContactFetchedProperties {
@@ -37,7 +36,6 @@ extern const struct CTLCDContactFetchedProperties {
 @class CTLCDAccount;
 @class CTLCDAppointment;
 @class CTLCDConversation;
-@class CTLCDInvite;
 
 
 
@@ -273,13 +271,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 
 
-@property (nonatomic, strong) CTLCDInvite *invite;
-
-//- (BOOL)validateInvite:(id*)value_ error:(NSError**)error_;
-
-
-
-
 
 @end
 
@@ -419,11 +410,6 @@ extern const struct CTLCDContactFetchedProperties {
 
 - (CTLCDConversation*)primitiveConversation;
 - (void)setPrimitiveConversation:(CTLCDConversation*)value;
-
-
-
-- (CTLCDInvite*)primitiveInvite;
-- (void)setPrimitiveInvite:(CTLCDInvite*)value;
 
 
 @end

@@ -13,7 +13,7 @@ const struct CTLCDInviteAttributes CTLCDInviteAttributes = {
 };
 
 const struct CTLCDInviteRelationships CTLCDInviteRelationships = {
-	.contact = @"contact",
+	.account = @"account",
 };
 
 const struct CTLCDInviteFetchedProperties CTLCDInviteFetchedProperties = {
@@ -166,7 +166,7 @@ const struct CTLCDInviteFetchedProperties CTLCDInviteFetchedProperties = {
 
 
 
-@dynamic contact;
+@dynamic account;
 
 	
 

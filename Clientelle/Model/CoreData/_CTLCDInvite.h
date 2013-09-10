@@ -14,13 +14,13 @@ extern const struct CTLCDInviteAttributes {
 } CTLCDInviteAttributes;
 
 extern const struct CTLCDInviteRelationships {
-	__unsafe_unretained NSString *contact;
+	__unsafe_unretained NSString *account;
 } CTLCDInviteRelationships;
 
 extern const struct CTLCDInviteFetchedProperties {
 } CTLCDInviteFetchedProperties;
 
-@class CTLCDContact;
+@class CTLCDAccount;
 
 
 
@@ -114,9 +114,9 @@ extern const struct CTLCDInviteFetchedProperties {
 
 
 
-@property (nonatomic, strong) CTLCDContact *contact;
+@property (nonatomic, strong) CTLCDAccount *account;
 
-//- (BOOL)validateContact:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateAccount:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -177,8 +177,8 @@ extern const struct CTLCDInviteFetchedProperties {
 
 
 
-- (CTLCDContact*)primitiveContact;
-- (void)setPrimitiveContact:(CTLCDContact*)value;
+- (CTLCDAccount*)primitiveAccount;
+- (void)setPrimitiveAccount:(CTLCDAccount*)value;
 
 
 @end

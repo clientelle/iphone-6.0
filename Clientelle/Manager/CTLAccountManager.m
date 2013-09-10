@@ -89,7 +89,7 @@
     }];
 }
 
-- (void)switchAccount:(CTLCDAccount *)account onComplete:(CTLCompletionBlock)completionBlock onError:(CTLErrorBlock)errorBlock;
+- (void)switchAccount:(CTLCDAccount *)account onComplete:(CTLCompletionBlock)completionBlock onError:(CTLErrorBlock)errorBlock
 {
     NSDictionary *credentials = @{ @"user[email]":account.email, @"user[password]":account.password };    
     [[CTLNetworkClient api] post:@"/login.json" params:credentials completionBlock:^(id responseObject){
@@ -256,12 +256,12 @@
     return string;
 }
 
-- (void)createInviteLinkWithContact:(CTLCDContact *)contact onComplete:(CTLCompletionWithInviteTokenBlock)completionBlock onError:(CTLErrorBlock)errorBlock;
-{    
+- (void)createInviteLinkWithContact:(CTLCDContact *)contact onComplete:(CTLCompletionWithInviteTokenBlock)completionBlock onError:(CTLErrorBlock)errorBlock{    
     CTLCDInvite *invite = [CTLCDInvite findFirstByAttribute:@"record_id" withValue:contact.recordID];
     
     if(invite){
-        completionBlock([self generateInviteLinkFromToken:invite.token]);
+        NSString *inviteMessage = [NSString stringWithFormat:@"Message me on Clientelle: %@", [self generateInviteLinkFromToken:invite.token]]; 
+        completionBlock(inviteMessage);
         return;
     }    
     
@@ -275,15 +275,18 @@
     [[CTLNetworkClient api] signedPost:@"invite.json" params:params completionBlock:^(id responseObject){        
         __block NSString *token = responseObject[@"invite"][@"token"];        
         CTLCDInvite *invite = [CTLCDInvite createEntity];
+        invite.id = responseObject[@"invite"][@"id"];
         invite.record_id = contact.recordID;
         invite.token = token;
         invite.name = responseObject[@"invite"][@"name"];
         invite.created_at = [NSDate date];
+        invite.account = [self currentUser];
                 
         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
             if(success){                
-                NSString *inviteLink = [self generateInviteLinkFromToken:token];
-                completionBlock(inviteLink);
+                NSString *inviteLink = [self generateInviteLinkFromToken:token];                
+                NSString *inviteMessage = [NSString stringWithFormat:@"Message me on Clientelle: %@", inviteLink];                
+                completionBlock(inviteMessage);
             }else{
                 errorBlock(error);
             }
@@ -292,6 +295,44 @@
         errorBlock(error);
     }];
 }
+
+- (void)createInviteLinkOnlyWithContact:(CTLCDContact *)contact onComplete:(CTLCompletionWithInviteTokenBlock)completionBlock onError:(CTLErrorBlock)errorBlock
+{
+    CTLCDInvite *invite = [CTLCDInvite findFirstByAttribute:@"record_id" withValue:contact.recordID];
+    
+    if(invite){
+        completionBlock([self generateInviteLinkFromToken:invite.token]);
+        return;
+    }
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"invite[name]"] = contact.compositeName;
+    params[@"invite[record_id]"] = contact.recordID;
+    if(contact.email){
+        params[@"invite[recipient_email]"] = contact.email;
+    }
+    
+    [[CTLNetworkClient api] signedPost:@"invite.json" params:params completionBlock:^(id responseObject){
+        __block NSString *token = responseObject[@"invite"][@"token"];
+        CTLCDInvite *invite = [CTLCDInvite createEntity];
+        invite.id = responseObject[@"invite"][@"id"];
+        invite.record_id = contact.recordID;
+        invite.token = token;
+        invite.name = responseObject[@"invite"][@"name"];
+        invite.created_at = [NSDate date];
+        invite.account = [self currentUser];        
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error){
+            if(success){
+                completionBlock([self generateInviteLinkFromToken:token]);
+            }else{
+                errorBlock(error);
+            }
+        }];
+    } errorBlock:^(NSError *error){
+        errorBlock(error);
+    }];
+}
+
 
 - (NSString *)generateInviteLinkFromToken:(NSString *)token
 {
