@@ -20,7 +20,7 @@ extern NSString *const CTLContactFormSegueIdentifier;
 
 @class CTLContactToolbarView;
 
-@interface CTLContactsListViewController : UIViewController <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate,UIPickerViewDataSource, UIPickerViewDelegate, CTLContainerViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, CTLContactHeaderDelegate, CTLContactToolbarDelegate>
+@interface CTLContactsListViewController : UIViewController <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, CTLContainerViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, CTLContactHeaderDelegate, CTLContactToolbarDelegate>
 
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
@@ -29,7 +29,5 @@ extern NSString *const CTLContactFormSegueIdentifier;
 @property (nonatomic, strong) CTLContactHeaderView *contactHeader;
 @property (nonatomic, strong) CTLContactToolbarView *contactToolbar;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-
-- (IBAction)dismissSortPickerFromTap:(UITapGestureRecognizer *)recognizer;
 
 @end

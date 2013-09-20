@@ -9,6 +9,7 @@
 #import "UILabel+CTLLabel.h"
 #import "UIColor+CTLColor.h"
 #import "CTLWelcomeViewController.h"
+#import "CTLContactsListViewController.h"
 #import "CTLAccountManager.h"
 #import "CTLCDAccount.h"
 
@@ -171,15 +172,31 @@
 }
 
 - (IBAction)submit:(id)sender
-{
+{       
     NSDictionary *accountDict = [self validateFields];
     if(accountDict){
         [[CTLAccountManager sharedInstance] createAccount:accountDict onComplete:^(NSDictionary *responseObject){
-            //TODO: Flip to default view
+            [self flipToContactsView];
         } onError:^(NSError *error){
             [self displayErrorMessage:[error localizedDescription]];
         }];
     }
+}
+
+- (void)flipToContactsView
+{
+    [self.containerView setRightSwipeEnabled:YES];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Contacts" bundle:[NSBundle mainBundle]];
+    
+    UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateInitialViewController];
+    
+    CTLContactsListViewController<CTLContainerViewDelegate> *contactsListController = (CTLContactsListViewController<CTLContainerViewDelegate> *)navigationController.topViewController;
+    
+    [self.containerView setMainViewController:contactsListController];
+    [self.containerView flipToView];
+    [self.containerView renderMenuButton:contactsListController];
+    [contactsListController.navigationItem setHidesBackButton:YES animated:YES];
 }
 
 - (NSDictionary *)validateFields

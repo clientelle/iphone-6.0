@@ -25,7 +25,6 @@ NSString *const CTLContactListReloadNotification = @"com.clientelle.notification
 NSString *const CTLTimestampForRowNotification = @"com.clientelle.notifications.updateContactTimestamp";
 NSString *const CTLNewContactWasAddedNotification = @"com.clientelle.com.notifications.contactWasAdded";
 NSString *const CTLContactRowDidChangeNotification = @"com.clientelle.com.notifications.contactRowDidChange";
-NSString *const CTLSortOrderSelectedIndex = @"com.clientelle.notifcations.selectedSortOrder";
 
 NSString *const CTLImporterSegueIdentifier = @"toImporter";
 NSString *const CTLContactFormSegueIdentifier = @"toContactForm";
@@ -37,17 +36,14 @@ int const CTLMessageActionSheetTag = 802;
 int const CTLDialActionSheetTag = 803;
 
 @interface CTLContactsListViewController ()
+@property (nonatomic, strong) CTLCDAccount *currentUser;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) CTLCDContact *selectedPerson;
-@property (nonatomic, strong) CTLPickerView *sortPickerView;
-@property (nonatomic, strong) NSArray *sortArray;
 @property (nonatomic, strong) NSMutableArray *filteredContacts;
 @property (nonatomic, strong) UIView *emptyView;
 @property (nonatomic, assign) BOOL inContactMode;
 @property (nonatomic, assign) BOOL shouldReorderListOnScroll;
 @property (nonatomic, strong) UISearchDisplayController *searchController;
-@property (nonatomic, strong) KBPopupBubbleView *sortTooltip;
-@property (nonatomic, strong) CTLCDAccount *currentUser;
 @end
 
 @implementation CTLContactsListViewController
@@ -64,9 +60,8 @@ int const CTLDialActionSheetTag = 803;
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"groovepaper"]];
     
+    self.navigationItem.title = NSLocalizedString(@"CONTACTS", nil);
     [self rightTitlebarWithAddContactButton];
-    [self buildSortPicker];
-    [self buildPickerButton];
     [self prepareContactViewMode];
     
     //load users contacts
@@ -85,11 +80,8 @@ int const CTLDialActionSheetTag = 803;
         
         [self buildSearchBar];
        
-        NSInteger sortFilterRow = [self.sortPickerView selectedRowInComponent:0];
-        NSString *fieldName = self.sortArray[sortFilterRow][@"field"];
-        BOOL ASC = [self.sortArray[sortFilterRow][@"asc"] boolValue];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"account = %@", self.currentUser];
-        self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:fieldName ascending:ASC withPredicate:predicate groupBy:nil delegate:self];
+        self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:@"lastAccesssed" ascending:NO withPredicate:predicate groupBy:nil delegate:self];
         [self.fetchedResultsController performFetch:nil];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -157,83 +149,6 @@ int const CTLDialActionSheetTag = 803;
     });
 }
 
-- (void)updateSortPickerButtonWithTitle:(NSString *)sortLabel
-{
-    CTLPickerButton *uiButton = (CTLPickerButton *)self.navigationItem.titleView;
-    [uiButton updateTitle:sortLabel];
-    self.navigationItem.titleView = uiButton;
-}
-
-- (void)buildSortPicker
-{
-    self.sortPickerView = [[CTLPickerView alloc] initWithWidth:self.view.bounds.size.width];
-    self.sortPickerView.delegate = self;
-    self.sortPickerView.dataSource = self;
-    [self.view addSubview:self.sortPickerView];
-    
-    NSDictionary *activity   = @{@"title":NSLocalizedString(@"ACTIVITY", nil),   @"field":@"lastAccessed", @"asc": @(0)};
-    NSDictionary *first_name = @{@"title":NSLocalizedString(@"FIRST_NAME", nil), @"field":@"firstName", @"asc": @(1)};
-    NSDictionary *last_name  = @{@"title":NSLocalizedString(@"LAST_NAME", nil),  @"field":@"lastName", @"asc": @(1)};
-    
-    NSInteger selectedRow = [self savedSortOrderIndex];
-    
-    self.sortArray = @[activity, first_name, last_name];
-    [self.sortPickerView selectRow:selectedRow inComponent:0 animated:NO];
-}
-
-- (int)savedSortOrderIndex
-{
-    return [[NSUserDefaults standardUserDefaults] integerForKey:CTLSortOrderSelectedIndex];
-}
-
-- (void)saveSortOrder:(NSInteger)filterIndex
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:filterIndex forKey:CTLSortOrderSelectedIndex];
-    [defaults synchronize];
-}
-
-- (void)buildPickerButton
-{
-    CTLPickerButton *filterButton = [[CTLPickerButton alloc] initWithTitle:NSLocalizedString(@"CLIENTS", nil)];
-    [filterButton addTarget:self action:@selector(toggleSortPicker:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationItem.titleView = filterButton;
-}
-
-- (void)toggleSortPicker:(id)sender
-{
-    if(self.inContactMode){
-        [self exitContactMode];
-    }
-    
-    if(self.sortPickerView.isVisible){
-        [self hideSortPicker];
-    }else{
-        [self showSortPicker];
-    }
-}
-
-- (void)hideSortPicker
-{
-    [self.sortPickerView hidePicker];
-    [self rightTitlebarWithAddContactButton];
-    [self updateSortPickerButtonWithTitle:NSLocalizedString(@"CLIENTS", nil)];
-    
-    NSInteger selectedRow = [self.sortPickerView selectedRowInComponent:0];
-    NSInteger savedSelectedRow = [[NSUserDefaults standardUserDefaults] integerForKey:CTLSortOrderSelectedIndex];
-    
-    if(selectedRow != savedSelectedRow){
-        [self.sortPickerView selectRow:savedSelectedRow inComponent:0 animated:NO];
-    }
-}
-
-- (void)showSortPicker
-{
-    [self.sortPickerView showPicker];
-    [self rightTitlebarWithDoneButton];
-    [self updateSortPickerButtonWithTitle:NSLocalizedString(@"SORT_BY", nil)];
-}
 
 - (void)rightTitlebarWithEditContactButton
 {
@@ -252,20 +167,6 @@ int const CTLDialActionSheetTag = 803;
     self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
-- (void)selectSortFilter:(id)sender
-{
-    NSInteger selectedFilterRow = [self.sortPickerView selectedRowInComponent:0];
-    [self updateSortPickerButtonWithTitle:self.sortArray[selectedFilterRow][@"title"]];
-    [self loadAllContacts];
-    [self saveSortOrder:selectedFilterRow];
-    [self hideSortPicker];
-}
-
-- (IBAction)dismissSortPickerFromTap:(UITapGestureRecognizer *)recognizer
-{
-    [self hideSortPicker];
-}
-
 #pragma mark - Sort Picker Delegate
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -277,17 +178,6 @@ int const CTLDialActionSheetTag = 803;
     [self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStyleDone];
     self.navigationItem.rightBarButtonItem.enabled = YES;
 }
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return self.sortArray[row][@"title"];
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-	return [self.sortArray count];
-}
-
-#pragma mark - Titlebar Helper
 
 - (void)displayAddContactActionSheet:(id)sender
 {
@@ -411,7 +301,6 @@ int const CTLDialActionSheetTag = 803;
 
 - (void)showImporter:(id)sender
 {
-    [self hideSortPicker];
     [self performSegueWithIdentifier:CTLImporterSegueIdentifier sender:sender];
 }
 
@@ -630,10 +519,6 @@ int const CTLDialActionSheetTag = 803;
         [self rightTitlebarWithAddContactButton];
         [self exitContactMode];
     }
-    
-    if(self.sortPickerView.isVisible){
-        [self hideSortPicker];
-    }
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
@@ -728,12 +613,6 @@ int const CTLDialActionSheetTag = 803;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //if groupPicker is open dismiss it and do nothing else.
-    if(self.sortPickerView.isVisible){
-        [self hideSortPicker];
-        return;
-    }
-    
     //if there is a previously selected cell, clear that indicator
     if(self.selectedIndexPath != nil){
         CTLContactCell *selectedCell = (CTLContactCell *)[self.tableView cellForRowAtIndexPath:self.selectedIndexPath];
@@ -764,27 +643,13 @@ int const CTLDialActionSheetTag = 803;
 - (NSString *)generatePersonName:(CTLCDContact *)person
 {
     NSMutableString *compositeName = [NSMutableString stringWithString:@""];
+
+    if([person.firstName length] > 0){
+        [compositeName appendString:person.firstName];
+    }
     
-    if([self.sortPickerView selectedRowInComponent:0] == 2){
-        if([person.lastName length] > 0){
-            [compositeName appendString:person.lastName];
-        }
-        
-        if([person.firstName length] > 0){
-            if([person.lastName length] > 0){
-                [compositeName appendFormat:@", %@", person.firstName];
-            }else{
-                [compositeName appendFormat:@" %@", person.firstName];
-            }
-        }
-    }else{
-        if([person.firstName length] > 0){
-            [compositeName appendString:person.firstName];
-        }
-        
-        if([person.lastName length] > 0){
-            [compositeName appendFormat:@" %@", person.lastName];
-        }
+    if([person.lastName length] > 0){
+        [compositeName appendFormat:@" %@", person.lastName];
     }
     
     return compositeName;

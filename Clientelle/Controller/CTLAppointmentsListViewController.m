@@ -31,6 +31,11 @@ CGFloat CTLAppointmentRowHeight = 90.0f;
 int const CTLSelectedFilterIndexActive = 0;
 int const CTLSelectedFilterIndexCompleted = 1;
 
+@interface CTLAppointmentsListViewController()
+@property (nonatomic, strong) EKEventStore *eventStore;
+@property (nonatomic, strong) UIView *emptyView;
+@end
+
 @implementation CTLAppointmentsListViewController
 
 - (void)viewDidLoad
@@ -43,36 +48,17 @@ int const CTLSelectedFilterIndexCompleted = 1;
 
     [self.navigationItem setBackBarButtonItem: backButton];
 
-    _emptyView = [self buildEmptyView];
-    _eventStore = [[EKEventStore alloc] init];
-    
-    
-    //CTLCDAccount *account = [[CTLAccountManager sharedInstance] currentUser];
+    self.emptyView = [self buildEmptyView];
+    self.eventStore = [[EKEventStore alloc] init];
 
-    [self configureFilterPicker];
-    [self createFilterPickerButton];
     [self loadAllAppointments];
-
-    //tap to dissmiss the filter picker
-    //[self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPickerFromTap:)]];
-}
-
-- (void)configureFilterPicker
-{
-    NSDictionary *active = @{@"title":NSLocalizedString(@"ACTIVE", nil), @"completed": @NO};
-    NSDictionary *completed = @{@"title":NSLocalizedString(@"COMPLETED", nil), @"completed": @YES};
     
-    _filterArray = @[active, completed];
-    _filterPickerView = [self createFilterPickerView];
-    [_filterPickerView selectRow:0 inComponent:0 animated:NO];
+    self.navigationItem.title = NSLocalizedString(@"APPOINTMENTS", nil);
 }
 
 - (void)loadAllAppointments
-{    
-    NSInteger filterRow = [_filterPickerView selectedRowInComponent:0];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"completed = %i", [_filterArray[filterRow][@"completed"] intValue]];
-    
-    self.resultsController = [CTLCDAppointment fetchAllSortedBy:@"startDate" ascending:YES withPredicate:predicate groupBy:nil delegate:self];
+{
+    self.resultsController = [CTLCDAppointment fetchAllSortedBy:@"startDate" ascending:YES withPredicate:nil groupBy:nil delegate:self];
     [self.resultsController performFetch:nil];
     [self.tableView reloadData];
 }
@@ -172,14 +158,8 @@ int const CTLSelectedFilterIndexCompleted = 1;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if([_filterPickerView selectedRowInComponent:0] == 0){
-        if([[self.resultsController fetchedObjects] count] == 0){
-            return self.view.bounds.size.height;
-        }
-    }else{
-        if([[self.resultsController fetchedObjects] count] == 0){
-            return CTLAppointmentRowHeight;
-        }
+    if([[self.resultsController fetchedObjects] count] == 0){
+        return CTLAppointmentRowHeight;
     }
     
     return 0;
@@ -188,11 +168,7 @@ int const CTLSelectedFilterIndexCompleted = 1;
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if([[self.resultsController fetchedObjects] count] == 0){
-        if([_filterPickerView selectedRowInComponent:0] == 0){
-            return _emptyView;
-        }else{
-            return [self emptyRow];
-        }
+        return [self emptyRow];
     }
 
     return nil;
@@ -247,11 +223,6 @@ int const CTLSelectedFilterIndexCompleted = 1;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(_filterPickerView.isVisible){
-        [_filterPickerView hidePicker];
-        return;
-    }
-    
     CTLCDAppointment *appointment = [[self.resultsController fetchedObjects] objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:CTLAppointmentFormSegueIdentifyer sender:appointment];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -284,8 +255,8 @@ int const CTLSelectedFilterIndexCompleted = 1;
         }];
         
         NSError *error = nil;
-        EKEvent *event = [_eventStore eventWithIdentifier:appointment.eventID];
-        [_eventStore removeEvent:event span:EKSpanThisEvent error:&error];
+        EKEvent *event = [self.eventStore eventWithIdentifier:appointment.eventID];
+        [self.eventStore removeEvent:event span:EKSpanThisEvent error:&error];
     }
 }
 
@@ -304,11 +275,6 @@ int const CTLSelectedFilterIndexCompleted = 1;
         case NSFetchedResultsChangeInsert:
             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView reloadData];
-            
-            if([_filterPickerView selectedRowInComponent:0] == 1){
-                [_filterPickerView selectRow:0 inComponent:0 animated:NO];
-            }
-            
             break;
             
         case NSFetchedResultsChangeDelete:
@@ -422,84 +388,17 @@ int const CTLSelectedFilterIndexCompleted = 1;
     }
 }
 
-#pragma mark - Filter Picker
-
-- (void)createFilterPickerButton
-{
-    self.navigationItem.titleView = [self filterPickerButtonWithTitle:NSLocalizedString(@"APPOINTMENTS", nil)];
-}
-
-- (UIButton *)filterPickerButtonWithTitle:(NSString *)selectedFilterName
-{
-    CTLPickerButton *uiButton = [[CTLPickerButton alloc] initWithTitle:selectedFilterName];
-    [uiButton addTarget:self action:@selector(togglePicker:) forControlEvents:UIControlEventTouchUpInside];
-    return uiButton;
-}
-
-- (void)updatePickerButtonWithTitle:(NSString *)title
-{
-    CTLPickerButton *uiButton = (CTLPickerButton *)self.navigationItem.titleView;
-    [uiButton updateTitle:title];
-    self.navigationItem.titleView = uiButton;
-}
-
-- (CTLPickerView *)createFilterPickerView
-{
-    CTLPickerView *filterPicker = [[CTLPickerView alloc] initWithWidth:self.view.bounds.size.width];
-    filterPicker.delegate = self;
-    filterPicker.dataSource = self;
-    [self.view addSubview:filterPicker];
-    return filterPicker;
-}
-
-- (void)togglePicker:(id)sender
-{
-    if(_filterPickerView.isVisible){
-        [_filterPickerView hidePicker];
-    }else{
-        [_filterPickerView showPicker];
-    }
-}
-
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint touchPoint = [gestureRecognizer locationInView:self.view];
     UIView *touchedView = [self.view hitTest:touchPoint withEvent:nil];
-    return (touchedView == self.tableView || touchedView == _emptyView);
-}
-
-- (IBAction)dismissPickerFromTap:(UITapGestureRecognizer *)recognizer
-{
-    if(_filterPickerView.isVisible){
-        [_filterPickerView hidePicker];
-    }
+    return (touchedView == self.tableView || touchedView == self.emptyView);
 }
 
 #pragma mark - Filter Picker Delegate
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
 	return 1;
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    [self loadAllAppointments];
-    
-    if(row == 1){
-        [self updatePickerButtonWithTitle:NSLocalizedString(@"COMPLETED", nil)];
-    }else{
-        [self updatePickerButtonWithTitle:NSLocalizedString(@"APPOINTMENTS", nil)];
-    }
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-     return [_filterArray objectAtIndex:row][@"title"];
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-	return [_filterArray count];
 }
 
 - (void)markAsCompleted:(id)sender
