@@ -81,7 +81,7 @@ int const CTLDialActionSheetTag = 803;
         [self buildSearchBar];
        
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"account = %@", self.currentUser];
-        self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:@"lastAccesssed" ascending:NO withPredicate:predicate groupBy:nil delegate:self];
+        self.fetchedResultsController = [CTLCDContact fetchAllSortedBy:@"lastAccessed" ascending:NO withPredicate:predicate groupBy:nil delegate:self];
         [self.fetchedResultsController performFetch:nil];
         
         dispatch_async(dispatch_get_main_queue(), ^{

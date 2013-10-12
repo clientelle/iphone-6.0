@@ -248,11 +248,15 @@
                 [self copyInviteLink];
                 break;
         }
-    }else{        
-        if([[self.selectedContact valueForKey:@"email"] length] > 0){
-            [self inviteViaEmail];
+    }else{
+        if(buttonIndex == 0){
+            if([[self.selectedContact valueForKey:@"email"] length] > 0){
+                [self inviteViaEmail];
+            }else{
+                [self inviteViaSms];
+            }
         }else{
-            [self inviteViaSms];
+            [self copyInviteLink];
         }
     }
 }

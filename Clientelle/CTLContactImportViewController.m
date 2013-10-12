@@ -215,7 +215,7 @@
     [self.busyIndicator startAnimating];
         
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    __block NSMutableSet *cdPeople = [NSMutableArray array];
+    __block NSMutableSet *cdPeople = [NSMutableSet set];
     
     [self.selectedPeople enumerateKeysAndObjectsUsingBlock:^(NSNumber *recordID, CTLABPerson *person, BOOL *stop){
         CTLCDContact *contact = [CTLCDContact MR_createEntity];        

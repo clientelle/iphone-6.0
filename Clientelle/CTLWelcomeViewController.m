@@ -42,13 +42,6 @@
     
     [UILabel autoWidth:self.registerButton.titleLabel];
     [UILabel autoWidth:self.loginButton.titleLabel];
-    
-    self.learnMoreView.alpha = 0;
-    [self.view bringSubviewToFront:self.learnMoreView];
-    [self showLearnMoreView:nil];
-     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissLearnMorePopup:)];    
-    [self.learnMoreView addGestureRecognizer:tap];
 }
 
 - (void)configureRegistrationForm
@@ -87,28 +80,6 @@
     }
     
     return industryPicker;
-}
-
-- (void)showLearnMoreView:(id)sender
-{
-    self.learnMoreView.hidden = NO;
-    self.navigationItem.leftBarButtonItem.enabled = NO;
-    
-    [UIView beginAnimations:@"fadeIn" context:nil];
-    self.learnMoreView.alpha = 0.8f;
-    [UIView commitAnimations];    
-}
-
-- (IBAction)dismissLearnMorePopup:(id)sender
-{
-    [UIView beginAnimations:@"fadeOut" context:nil];
-    self.learnMoreView.alpha = 0;
-    [UIView commitAnimations];
-    
-    self.learnMoreView.hidden = YES;
-    self.navigationItem.leftBarButtonItem.enabled = NO;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"more" style:UIBarButtonItemStylePlain target:self action:@selector(showLearnMoreView:)];
-   
 }
 
 #pragma mark -

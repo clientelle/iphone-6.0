@@ -16,11 +16,9 @@
 @property (nonatomic, weak) IBOutlet UITextField *companyTextField;
 @property (nonatomic, weak) IBOutlet UITextField *industryTextField;
 
-@property (nonatomic, weak) IBOutlet UIView *learnMoreView;
 @property (nonatomic, weak) IBOutlet UIButton *registerButton;
 @property (nonatomic, weak) IBOutlet UIButton *loginButton;
 
 - (IBAction)submit:(id)sender;
-- (IBAction)dismissLearnMorePopup:(id)sender;
 
 @end
