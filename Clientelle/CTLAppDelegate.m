@@ -7,7 +7,6 @@
 //
 
 #import "CTLAppDelegate.h"
-#import "CTLPinInterstialViewController.h"
 #import "Appirater.h"
 
 @implementation CTLAppDelegate
@@ -18,16 +17,18 @@
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackOpaque];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar"] forBarMetrics:UIBarMetricsDefault];
     
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
     //hookup data source
     [MagicalRecord setupCoreDataStack];
     
     //prompt for rating
     //[Appirater setDebug:YES];
-    [Appirater setAppId:kAppiraterAppId];
-    [Appirater setDaysUntilPrompt:kAppiraterDaysUntilPrompt];
-    [Appirater setUsesUntilPrompt:kAppiraterUsesUntilPrompt];
-    [Appirater setTimeBeforeReminding:kAppiraterTimeBeforeReminding];
-    [Appirater appLaunched:YES];
+//    [Appirater setAppId:kAppiraterAppId];
+//    [Appirater setDaysUntilPrompt:kAppiraterDaysUntilPrompt];
+//    [Appirater setUsesUntilPrompt:kAppiraterUsesUntilPrompt];
+//    [Appirater setTimeBeforeReminding:kAppiraterTimeBeforeReminding];
+//    [Appirater appLaunched:YES];
 
     //When app is launched from a local notification
     UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
@@ -84,14 +85,6 @@
     }
     
     [Appirater appEnteredForeground:YES];
-}
-
-- (void)showPinView:(id)sender
-{
-    CTLContainerViewController *rootViewController = (CTLContainerViewController *)[self.window rootViewController];    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Pin" bundle:[NSBundle mainBundle]];
-    CTLPinInterstialViewController *viewController = [storyboard instantiateInitialViewController];
-    [rootViewController.mainNavigationController presentViewController:viewController animated:NO completion:nil];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

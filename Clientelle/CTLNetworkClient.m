@@ -106,12 +106,19 @@
 
 - (void)proccessResponse:(NSDictionary *)responseObject completionBock:(CTLNetworkCompletionBlock)completionBlock errorBlock:(CTLNetworkErrorBlock)errorBlock
 {
-    if([self responseStatus:responseObject]){
+    if([self responseStatusIsSuccessful:responseObject]){
         //Request was succesfull
         completionBlock(responseObject);
     }else{
-        //TODO: translaßtion key!
-        NSString *loginErrorTranslationKey = (responseObject[@"error"]) ? responseObject[@"error"] : @"COULD_NOT_LOGIN";
+
+        //TODO: translation key!
+        NSString *loginErrorTranslationKey = @"COULD_NOT_REGISTER";        
+        if(responseObject[@"message"]){
+            if(responseObject[@"message"][@"email"] && [responseObject[@"message"][@"email"][0]isEqualToString:@"has already been taken"]){
+                loginErrorTranslationKey = @"EMAIL_TAKEN";
+            }
+        }
+        
         NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedString(loginErrorTranslationKey, nil) };
         NSError *error = [NSError errorWithDomain:@"com.ctl.clientelle.ErrorDomain" code:100 userInfo:userInfo];
         //Application Error
@@ -119,7 +126,7 @@
     }
 }
     
-- (BOOL)responseStatus:(NSDictionary *)responseDict
+- (BOOL)responseStatusIsSuccessful:(NSDictionary *)responseDict
 {
     if(responseDict[@"status"]){
         return [responseDict[@"status"] isEqualToNumber:@(0)];

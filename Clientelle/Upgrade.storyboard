@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="XzF-0S-Bey">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="XzF-0S-Bey">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -23,24 +24,25 @@
         <scene sceneID="eyW-H7-eHa">
             <objects>
                 <viewController id="Si3-Gx-qfp" customClass="CTLUpgradeInterstitialViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="69C-kv-Uz1"/>
+                        <viewControllerLayoutGuide type="bottom" id="Dvl-nF-dZE"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="DC9-HI-XtH">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pip-eA-eGZ">
+                                <rect key="frame" x="65" y="99" width="190" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="190" id="sl6-f4-NrJ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Upgrade">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Buy this feature and stuff" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uMb-9f-bZO">
+                                <rect key="frame" x="26" y="48" width="266" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="266" id="LRg-pd-0AS"/>
                                 </constraints>
@@ -51,7 +53,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Pip-eA-eGZ" firstAttribute="centerX" secondItem="DC9-HI-XtH" secondAttribute="centerX" type="default" id="2Q6-Jw-ygJ"/>
+                            <constraint firstItem="Pip-eA-eGZ" firstAttribute="centerX" secondItem="DC9-HI-XtH" secondAttribute="centerX" id="2Q6-Jw-ygJ"/>
                             <constraint firstItem="Pip-eA-eGZ" firstAttribute="top" secondItem="DC9-HI-XtH" secondAttribute="top" constant="99" id="Qiz-aK-2H7"/>
                             <constraint firstItem="uMb-9f-bZO" firstAttribute="leading" secondItem="DC9-HI-XtH" secondAttribute="leading" constant="26" id="dSh-bM-GwJ"/>
                             <constraint firstItem="uMb-9f-bZO" firstAttribute="top" secondItem="DC9-HI-XtH" secondAttribute="top" constant="48" id="xAO-0X-Ldw"/>
@@ -68,18 +70,6 @@
             <point key="canvasLocation" x="-6645" y="2067"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="CTLUpgradeInterstitialViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CTLUpgradeInterstitialViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="actionMessageLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="upgradeButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

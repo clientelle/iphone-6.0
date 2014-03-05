@@ -6,7 +6,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CTLMainMenuViewController.h"
 #import "CTLAppointmentFormViewController.h"
-#import "CTLPinInterstialViewController.h"
 #import "CTLWelcomeViewController.h"
 
 #import "CTLCDAppointment.h"
@@ -22,7 +21,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setupMenuView];
+    //[self setupMenuView];
     
     int loggedInUserId = [[CTLAccountManager sharedInstance] getLoggedInUserId];
     
@@ -49,6 +48,10 @@
     //set slideout drawer width
     CGRect menuFrame = self.view.bounds;
     menuFrame.size.width = CTLMainMenuWidth;
+    
+    CGRect rect = [[UIApplication sharedApplication] statusBarFrame];
+    
+    menuFrame.origin.y += rect.size.height;
     menuViewController.view.frame = menuFrame;
     
     [self addChildViewController:menuViewController];
@@ -149,6 +152,11 @@
 - (void)disableMenuButton
 {
   self.mainViewController.navigationItem.leftBarButtonItem = nil;
+}
+
+- (void)setActiveView:(NSString *)identifier
+{
+    
 }
 
 //Called from main menu
@@ -273,13 +281,6 @@
     
 }
 
-- (void)showPinView:(id)sender
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Pin" bundle:[NSBundle mainBundle]];
-    CTLPinInterstialViewController *viewController = [storyboard instantiateInitialViewController];
-    [self.mainNavigationController presentViewController:viewController animated:YES completion:nil];
-}
-
 - (void)setMainViewFromNotification:(UILocalNotification *)notification applicationState:(UIApplicationState)applicationState
 {
     NSDictionary *userInfo = [notification userInfo];
@@ -307,16 +308,6 @@
             self.nextViewController = viewController;
         }
     }
-}
-
-- (void)requirePin
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Pin" bundle:[NSBundle mainBundle]];
-    CTLPinInterstialViewController *viewController = [storyboard instantiateInitialViewController];
-    
-    self.mainNavigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    
-    [self setRightPanel:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
 

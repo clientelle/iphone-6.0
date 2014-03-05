@@ -270,6 +270,9 @@ e†
 "COULD_NOT_LOGIN" = "Sorry, we cannot login to your account right now";
 "COULD_NOT_SEND_MESSAGE" = "Sorry, we could not send the message right now";
 
+"COULD_NOT_REGISTER" = "Sorry, we could not register your account right now";
+"EMAIL_TAKEN" = "This email is already in use";
+
 
 /* MESSAGES */
 "MESSAGE_FEATURE_REQUIRES_UPGRADE" = "Private messaging requires upgrading to pro";

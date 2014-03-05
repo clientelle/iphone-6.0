@@ -49,12 +49,10 @@
 		0A87A337180A026700171619 /* CTLMessengerInviteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A87A2F2180A026600171619 /* CTLMessengerInviteView.xib */; };
 		0A87A338180A026700171619 /* CTLPickerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A2F4180A026600171619 /* CTLPickerButton.m */; };
 		0A87A339180A026700171619 /* CTLPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A2F6180A026600171619 /* CTLPickerView.m */; };
-		0A87A33A180A026700171619 /* CTLPinInterstialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A2F8180A026700171619 /* CTLPinInterstialViewController.m */; };
 		0A87A33B180A026700171619 /* CTLRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A2FA180A026700171619 /* CTLRegisterViewController.m */; };
 		0A87A33C180A026700171619 /* CTLReplyComposerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A2FC180A026700171619 /* CTLReplyComposerCell.m */; };
 		0A87A33D180A026700171619 /* CTLReplyComposerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A2FE180A026700171619 /* CTLReplyComposerViewController.m */; };
 		0A87A33E180A026700171619 /* CTLReplyToCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A300180A026700171619 /* CTLReplyToCell.m */; };
-		0A87A33F180A026700171619 /* CTLSearchTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A302180A026700171619 /* CTLSearchTextField.m */; };
 		0A87A340180A026700171619 /* CTLSetPinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A304180A026700171619 /* CTLSetPinViewController.m */; };
 		0A87A341180A026700171619 /* CTLSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A306180A026700171619 /* CTLSettingsViewController.m */; };
 		0A87A342180A026700171619 /* CTLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A308180A026700171619 /* CTLTextField.m */; };
@@ -87,7 +85,6 @@
 		0A87A395180A034C00171619 /* NSDate+TimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A38F180A034C00171619 /* NSDate+TimeAgo.m */; };
 		0A87A396180A034C00171619 /* NSManagedObject+CTLSafeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A391180A034C00171619 /* NSManagedObject+CTLSafeSet.m */; };
 		0A87A397180A034C00171619 /* NSString+CTLString.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A393180A034C00171619 /* NSString+CTLString.m */; };
-		0A87A39C180A036200171619 /* Pin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A87A398180A036200171619 /* Pin.storyboard */; };
 		0A87A39D180A036200171619 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A87A399180A036200171619 /* Settings.storyboard */; };
 		0A87A39E180A036200171619 /* Upgrade.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A87A39A180A036200171619 /* Upgrade.storyboard */; };
 		0A87A39F180A036200171619 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A87A39B180A036200171619 /* Welcome.storyboard */; };
@@ -98,12 +95,13 @@
 		0A87A3B5180A039100171619 /* CTLFactoryAppointment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A3A9180A039100171619 /* CTLFactoryAppointment.m */; };
 		0A87A3B6180A039100171619 /* Inbox.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A87A3AA180A039100171619 /* Inbox.storyboard */; };
 		0A87A3B7180A039100171619 /* InboxSetup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A87A3AB180A039100171619 /* InboxSetup.storyboard */; };
-		0A87A3B8180A039100171619 /* MainMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A87A3AC180A039100171619 /* MainMenu.storyboard */; };
+		0A87A3B8180A039100171619 /* Container.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A87A3AC180A039100171619 /* Container.storyboard */; };
 		0A87A3B9180A039100171619 /* Messages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A87A3AD180A039100171619 /* Messages.storyboard */; };
 		0A87A3BA180A039100171619 /* PrivatePubWebSocketDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A3AF180A039100171619 /* PrivatePubWebSocketDelegate.m */; };
 		0A87A3C1180A03A300171619 /* UIColor+CTLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A3BC180A03A300171619 /* UIColor+CTLColor.m */; };
 		0A87A3C2180A03A300171619 /* UILabel+CTLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A3BE180A03A300171619 /* UILabel+CTLLabel.m */; };
 		0A87A3C3180A03A300171619 /* UITableViewCell+CellShadows.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87A3C0180A03A300171619 /* UITableViewCell+CellShadows.m */; };
+		0A87A3D1180A164700171619 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A87A3D0180A164700171619 /* Images.xcassets */; };
 		411F249C179AF30A00842564 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 411F2484179AF30900842564 /* NSObject+SBJson.m */; };
 		411F249D179AF30A00842564 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 411F2487179AF30900842564 /* SBJsonParser.m */; };
 		411F249E179AF30A00842564 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 411F2489179AF30900842564 /* SBJsonStreamParser.m */; };
@@ -444,8 +442,6 @@
 		0A87A2F4180A026600171619 /* CTLPickerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPickerButton.m; sourceTree = "<group>"; };
 		0A87A2F5180A026600171619 /* CTLPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLPickerView.h; sourceTree = "<group>"; };
 		0A87A2F6180A026600171619 /* CTLPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPickerView.m; sourceTree = "<group>"; };
-		0A87A2F7180A026700171619 /* CTLPinInterstialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLPinInterstialViewController.h; sourceTree = "<group>"; };
-		0A87A2F8180A026700171619 /* CTLPinInterstialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLPinInterstialViewController.m; sourceTree = "<group>"; };
 		0A87A2F9180A026700171619 /* CTLRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLRegisterViewController.h; sourceTree = "<group>"; };
 		0A87A2FA180A026700171619 /* CTLRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLRegisterViewController.m; sourceTree = "<group>"; };
 		0A87A2FB180A026700171619 /* CTLReplyComposerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLReplyComposerCell.h; sourceTree = "<group>"; };
@@ -454,8 +450,6 @@
 		0A87A2FE180A026700171619 /* CTLReplyComposerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLReplyComposerViewController.m; sourceTree = "<group>"; };
 		0A87A2FF180A026700171619 /* CTLReplyToCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLReplyToCell.h; sourceTree = "<group>"; };
 		0A87A300180A026700171619 /* CTLReplyToCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLReplyToCell.m; sourceTree = "<group>"; };
-		0A87A301180A026700171619 /* CTLSearchTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSearchTextField.h; sourceTree = "<group>"; };
-		0A87A302180A026700171619 /* CTLSearchTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLSearchTextField.m; sourceTree = "<group>"; };
 		0A87A303180A026700171619 /* CTLSetPinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSetPinViewController.h; sourceTree = "<group>"; };
 		0A87A304180A026700171619 /* CTLSetPinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLSetPinViewController.m; sourceTree = "<group>"; };
 		0A87A305180A026700171619 /* CTLSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTLSettingsViewController.h; sourceTree = "<group>"; };
@@ -520,7 +514,6 @@
 		0A87A391180A034C00171619 /* NSManagedObject+CTLSafeSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CTLSafeSet.m"; sourceTree = "<group>"; };
 		0A87A392180A034C00171619 /* NSString+CTLString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CTLString.h"; sourceTree = "<group>"; };
 		0A87A393180A034C00171619 /* NSString+CTLString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CTLString.m"; sourceTree = "<group>"; };
-		0A87A398180A036200171619 /* Pin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Pin.storyboard; sourceTree = "<group>"; };
 		0A87A399180A036200171619 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		0A87A39A180A036200171619 /* Upgrade.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Upgrade.storyboard; sourceTree = "<group>"; };
 		0A87A39B180A036200171619 /* Welcome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
@@ -534,7 +527,7 @@
 		0A87A3A9180A039100171619 /* CTLFactoryAppointment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTLFactoryAppointment.m; sourceTree = "<group>"; };
 		0A87A3AA180A039100171619 /* Inbox.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Inbox.storyboard; sourceTree = "<group>"; };
 		0A87A3AB180A039100171619 /* InboxSetup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InboxSetup.storyboard; sourceTree = "<group>"; };
-		0A87A3AC180A039100171619 /* MainMenu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainMenu.storyboard; sourceTree = "<group>"; };
+		0A87A3AC180A039100171619 /* Container.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Container.storyboard; sourceTree = "<group>"; };
 		0A87A3AD180A039100171619 /* Messages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Messages.storyboard; sourceTree = "<group>"; };
 		0A87A3AE180A039100171619 /* PrivatePubWebSocketDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivatePubWebSocketDelegate.h; sourceTree = "<group>"; };
 		0A87A3AF180A039100171619 /* PrivatePubWebSocketDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivatePubWebSocketDelegate.m; sourceTree = "<group>"; };
@@ -544,6 +537,7 @@
 		0A87A3BE180A03A300171619 /* UILabel+CTLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+CTLLabel.m"; sourceTree = "<group>"; };
 		0A87A3BF180A03A300171619 /* UITableViewCell+CellShadows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+CellShadows.h"; sourceTree = "<group>"; };
 		0A87A3C0180A03A300171619 /* UITableViewCell+CellShadows.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+CellShadows.m"; sourceTree = "<group>"; };
+		0A87A3D0180A164700171619 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		411F2483179AF30900842564 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		411F2484179AF30900842564 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		411F2485179AF30900842564 /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
@@ -882,127 +876,15 @@
 		0A87A2A0180A01A500171619 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				0A87A3A0180A039100171619 /* Appointments.storyboard */,
-				0A87A3A3180A039100171619 /* Contacts.storyboard */,
-				0A87A3AA180A039100171619 /* Inbox.storyboard */,
-				0A87A3AB180A039100171619 /* InboxSetup.storyboard */,
-				0A87A3AC180A039100171619 /* MainMenu.storyboard */,
-				0A87A3AD180A039100171619 /* Messages.storyboard */,
-				0A87A398180A036200171619 /* Pin.storyboard */,
-				0A87A399180A036200171619 /* Settings.storyboard */,
-				0A87A39A180A036200171619 /* Upgrade.storyboard */,
-				0A87A39B180A036200171619 /* Welcome.storyboard */,
-				0A87A2B1180A026600171619 /* CTLAutoCompleteTableView.m */,
-				0A87A2B2180A026600171619 /* CTLAutoCompleteTableView.xib */,
-				0A87A2B3180A026600171619 /* CTLBottomRoundedCorners.h */,
-				0A87A2B4180A026600171619 /* CTLBottomRoundedCorners.m */,
-				0A87A2B5180A026600171619 /* CTLCellBackground.h */,
-				0A87A2B6180A026600171619 /* CTLCellBackground.m */,
-				0A87A2B7180A026600171619 /* CTLContactCell.h */,
-				0A87A2B8180A026600171619 /* CTLContactCell.m */,
-				0A87A2B9180A026600171619 /* CTLContactDetailsViewController.h */,
-				0A87A2BA180A026600171619 /* CTLContactDetailsViewController.m */,
-				0A87A2BB180A026600171619 /* CTLContactFormEditorViewController.h */,
-				0A87A2BC180A026600171619 /* CTLContactFormEditorViewController.m */,
-				0A87A2BD180A026600171619 /* CTLContactHeaderView.h */,
-				0A87A2BE180A026600171619 /* CTLContactHeaderView.m */,
-				0A87A2BF180A026600171619 /* CTLContactImportViewController.h */,
-				0A87A2C0180A026600171619 /* CTLContactImportViewController.m */,
-				0A87A2C1180A026600171619 /* CTLContactSelectorCell.h */,
-				0A87A2C2180A026600171619 /* CTLContactSelectorCell.m */,
-				0A87A2C3180A026600171619 /* CTLContactsListViewController.h */,
-				0A87A2C4180A026600171619 /* CTLContactsListViewController.m */,
-				0A87A2C5180A026600171619 /* CTLContactToolbarView.h */,
-				0A87A2C6180A026600171619 /* CTLContactToolbarView.m */,
-				0A87A2C7180A026600171619 /* CTLContainerViewController.h */,
-				0A87A2C8180A026600171619 /* CTLContainerViewController.m */,
-				0A87A2C9180A026600171619 /* CTLContainerViewDelegate.h */,
-				0A87A2CA180A026600171619 /* CTLConversationCell.h */,
-				0A87A2CB180A026600171619 /* CTLConversationCell.m */,
-				0A87A2CC180A026600171619 /* CTLConversationListViewController.h */,
-				0A87A2CD180A026600171619 /* CTLConversationListViewController.m */,
-				0A87A2CE180A026600171619 /* CTLEmptyMessagesView.h */,
-				0A87A2CF180A026600171619 /* CTLEmptyMessagesView.m */,
-				0A87A2D0180A026600171619 /* CTLEmptyMessagesView.xib */,
-				0A87A2D1180A026600171619 /* CTLEnterFormCodeViewController.h */,
-				0A87A2D2180A026600171619 /* CTLEnterFormCodeViewController.m */,
-				0A87A2D3180A026600171619 /* CTLFieldCell.h */,
-				0A87A2D4180A026600171619 /* CTLFieldCell.m */,
-				0A87A2D5180A026600171619 /* CTLInboxInterstitialViewController.h */,
-				0A87A2D6180A026600171619 /* CTLInboxInterstitialViewController.m */,
-				0A87A2D7180A026600171619 /* CTLInboxViewController.h */,
-				0A87A2D8180A026600171619 /* CTLInboxViewController.m */,
-				0A87A2D9180A026600171619 /* CTLInviteCell.h */,
-				0A87A2DA180A026600171619 /* CTLInviteCell.m */,
-				0A87A2DB180A026600171619 /* CTLInviteContactViewController.h */,
-				0A87A2DC180A026600171619 /* CTLInviteContactViewController.m */,
-				0A87A2DD180A026600171619 /* CTLLearnMoreView.h */,
-				0A87A2DE180A026600171619 /* CTLLearnMoreView.m */,
-				0A87A2DF180A026600171619 /* CTLLoginViewController.h */,
-				0A87A2E0180A026600171619 /* CTLLoginViewController.m */,
-				0A87A2E1180A026600171619 /* CTLMainMenuViewController.h */,
-				0A87A2E2180A026600171619 /* CTLMainMenuViewController.m */,
-				0A87A2E3180A026600171619 /* CTLMenuItemCell.h */,
-				0A87A2E4180A026600171619 /* CTLMenuItemCell.m */,
-				0A87A2E5180A026600171619 /* CTLMessageCell.h */,
-				0A87A2E6180A026600171619 /* CTLMessageCell.m */,
-				0A87A2E7180A026600171619 /* CTLMessageComposerViewController.h */,
-				0A87A2E8180A026600171619 /* CTLMessageComposerViewController.m */,
-				0A87A2E9180A026600171619 /* CTLMessagePreferenceViewController.h */,
-				0A87A2EA180A026600171619 /* CTLMessagePreferenceViewController.m */,
-				0A87A2EB180A026600171619 /* CTLMessageThreadViewController.h */,
-				0A87A2EC180A026600171619 /* CTLMessageThreadViewController.m */,
-				0A87A2ED180A026600171619 /* CTLMessageUpgradeView.h */,
-				0A87A2EE180A026600171619 /* CTLMessageUpgradeView.m */,
-				0A87A2EF180A026600171619 /* CTLMessageUpgradeView.xib */,
-				0A87A2F0180A026600171619 /* CTLMessengerInviteView.h */,
-				0A87A2F1180A026600171619 /* CTLMessengerInviteView.m */,
-				0A87A2F2180A026600171619 /* CTLMessengerInviteView.xib */,
-				0A87A2F3180A026600171619 /* CTLPickerButton.h */,
-				0A87A2F4180A026600171619 /* CTLPickerButton.m */,
-				0A87A2F5180A026600171619 /* CTLPickerView.h */,
-				0A87A2F6180A026600171619 /* CTLPickerView.m */,
-				0A87A2F7180A026700171619 /* CTLPinInterstialViewController.h */,
-				0A87A2F8180A026700171619 /* CTLPinInterstialViewController.m */,
-				0A87A2F9180A026700171619 /* CTLRegisterViewController.h */,
-				0A87A2FA180A026700171619 /* CTLRegisterViewController.m */,
-				0A87A2FB180A026700171619 /* CTLReplyComposerCell.h */,
-				0A87A2FC180A026700171619 /* CTLReplyComposerCell.m */,
-				0A87A2FD180A026700171619 /* CTLReplyComposerViewController.h */,
-				0A87A2FE180A026700171619 /* CTLReplyComposerViewController.m */,
-				0A87A2FF180A026700171619 /* CTLReplyToCell.h */,
-				0A87A300180A026700171619 /* CTLReplyToCell.m */,
-				0A87A301180A026700171619 /* CTLSearchTextField.h */,
-				0A87A302180A026700171619 /* CTLSearchTextField.m */,
-				0A87A303180A026700171619 /* CTLSetPinViewController.h */,
-				0A87A304180A026700171619 /* CTLSetPinViewController.m */,
-				0A87A305180A026700171619 /* CTLSettingsViewController.h */,
-				0A87A306180A026700171619 /* CTLSettingsViewController.m */,
-				0A87A307180A026700171619 /* CTLTextField.h */,
-				0A87A308180A026700171619 /* CTLTextField.m */,
-				0A87A309180A026700171619 /* CTLTextView.h */,
-				0A87A30A180A026700171619 /* CTLTextView.m */,
-				0A87A30B180A026700171619 /* CTLTopRoundedCorners.h */,
-				0A87A30C180A026700171619 /* CTLTopRoundedCorners.m */,
-				0A87A30D180A026700171619 /* CTLUpgradeInterstitialViewController.h */,
-				0A87A30E180A026700171619 /* CTLUpgradeInterstitialViewController.m */,
-				0A87A30F180A026700171619 /* CTLViewDecorator.h */,
-				0A87A310180A026700171619 /* CTLViewDecorator.m */,
-				0A87A311180A026700171619 /* CTLWelcomeViewController.h */,
-				0A87A312180A026700171619 /* CTLWelcomeViewController.m */,
-				0A87A313180A026700171619 /* CTLWhiteButton.h */,
-				0A87A314180A026700171619 /* CTLWhiteButton.m */,
-				0A87A2A1180A01DA00171619 /* CTLAccountsViewController.h */,
-				0A87A2A2180A01DA00171619 /* CTLAccountsViewController.m */,
-				0A87A2A3180A01DA00171619 /* CTLAccountViewController.h */,
-				0A87A2A4180A01DA00171619 /* CTLAccountViewController.m */,
-				0A87A2A5180A01DA00171619 /* CTLAppointmentCell.h */,
-				0A87A2A6180A01DA00171619 /* CTLAppointmentCell.m */,
-				0A87A2A7180A01DA00171619 /* CTLAppointmentFormViewController.h */,
-				0A87A2A8180A01DA00171619 /* CTLAppointmentFormViewController.m */,
-				0A87A2A9180A01DA00171619 /* CTLAppointmentsListViewController.h */,
-				0A87A2AA180A01DA00171619 /* CTLAppointmentsListViewController.m */,
-				0A87A2AB180A01DA00171619 /* CTLAutoCompleteTableView.h */,
+				0A87A3C9180A05D100171619 /* Container */,
+				0A87A3C6180A058600171619 /* Welcome */,
+				0A87A3C7180A059E00171619 /* Contacts */,
+				0A87A3CF180A075400171619 /* Upgrade */,
+				0A87A3CD180A062C00171619 /* Shared */,
+				0A87A3CC180A061300171619 /* Settings */,
+				0A87A3CB180A05F900171619 /* Appointments */,
+				0A87A3CA180A05DF00171619 /* Inbox */,
+				0A87A3C8180A05C800171619 /* Messages */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -1110,6 +992,185 @@
 				0A87A3A9180A039100171619 /* CTLFactoryAppointment.m */,
 			);
 			name = Factories;
+			sourceTree = "<group>";
+		};
+		0A87A3C6180A058600171619 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				0A87A39B180A036200171619 /* Welcome.storyboard */,
+				0A87A2DF180A026600171619 /* CTLLoginViewController.h */,
+				0A87A2E0180A026600171619 /* CTLLoginViewController.m */,
+				0A87A2F9180A026700171619 /* CTLRegisterViewController.h */,
+				0A87A2FA180A026700171619 /* CTLRegisterViewController.m */,
+				0A87A311180A026700171619 /* CTLWelcomeViewController.h */,
+				0A87A312180A026700171619 /* CTLWelcomeViewController.m */,
+				0A87A2DD180A026600171619 /* CTLLearnMoreView.h */,
+				0A87A2DE180A026600171619 /* CTLLearnMoreView.m */,
+			);
+			name = Welcome;
+			sourceTree = "<group>";
+		};
+		0A87A3C7180A059E00171619 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				0A87A3A3180A039100171619 /* Contacts.storyboard */,
+				0A87A2B7180A026600171619 /* CTLContactCell.h */,
+				0A87A2B8180A026600171619 /* CTLContactCell.m */,
+				0A87A2B9180A026600171619 /* CTLContactDetailsViewController.h */,
+				0A87A2BA180A026600171619 /* CTLContactDetailsViewController.m */,
+				0A87A2BB180A026600171619 /* CTLContactFormEditorViewController.h */,
+				0A87A2BC180A026600171619 /* CTLContactFormEditorViewController.m */,
+				0A87A2BD180A026600171619 /* CTLContactHeaderView.h */,
+				0A87A2BE180A026600171619 /* CTLContactHeaderView.m */,
+				0A87A2BF180A026600171619 /* CTLContactImportViewController.h */,
+				0A87A2C0180A026600171619 /* CTLContactImportViewController.m */,
+				0A87A2C3180A026600171619 /* CTLContactsListViewController.h */,
+				0A87A2C4180A026600171619 /* CTLContactsListViewController.m */,
+				0A87A2C5180A026600171619 /* CTLContactToolbarView.h */,
+				0A87A2C6180A026600171619 /* CTLContactToolbarView.m */,
+				0A87A2D3180A026600171619 /* CTLFieldCell.h */,
+				0A87A2D4180A026600171619 /* CTLFieldCell.m */,
+			);
+			name = Contacts;
+			sourceTree = "<group>";
+		};
+		0A87A3C8180A05C800171619 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				0A87A2FB180A026700171619 /* CTLReplyComposerCell.h */,
+				0A87A2FC180A026700171619 /* CTLReplyComposerCell.m */,
+				0A87A2FD180A026700171619 /* CTLReplyComposerViewController.h */,
+				0A87A2FE180A026700171619 /* CTLReplyComposerViewController.m */,
+				0A87A2FF180A026700171619 /* CTLReplyToCell.h */,
+				0A87A300180A026700171619 /* CTLReplyToCell.m */,
+				0A87A2CE180A026600171619 /* CTLEmptyMessagesView.h */,
+				0A87A2CF180A026600171619 /* CTLEmptyMessagesView.m */,
+				0A87A2D0180A026600171619 /* CTLEmptyMessagesView.xib */,
+				0A87A2D9180A026600171619 /* CTLInviteCell.h */,
+				0A87A2DA180A026600171619 /* CTLInviteCell.m */,
+				0A87A2DB180A026600171619 /* CTLInviteContactViewController.h */,
+				0A87A2DC180A026600171619 /* CTLInviteContactViewController.m */,
+				0A87A2C1180A026600171619 /* CTLContactSelectorCell.h */,
+				0A87A2C2180A026600171619 /* CTLContactSelectorCell.m */,
+				0A87A2CA180A026600171619 /* CTLConversationCell.h */,
+				0A87A2CB180A026600171619 /* CTLConversationCell.m */,
+				0A87A2CC180A026600171619 /* CTLConversationListViewController.h */,
+				0A87A2CD180A026600171619 /* CTLConversationListViewController.m */,
+				0A87A3AD180A039100171619 /* Messages.storyboard */,
+				0A87A2E5180A026600171619 /* CTLMessageCell.h */,
+				0A87A2E6180A026600171619 /* CTLMessageCell.m */,
+				0A87A2E7180A026600171619 /* CTLMessageComposerViewController.h */,
+				0A87A2E8180A026600171619 /* CTLMessageComposerViewController.m */,
+				0A87A2E9180A026600171619 /* CTLMessagePreferenceViewController.h */,
+				0A87A2EA180A026600171619 /* CTLMessagePreferenceViewController.m */,
+				0A87A2EB180A026600171619 /* CTLMessageThreadViewController.h */,
+				0A87A2EC180A026600171619 /* CTLMessageThreadViewController.m */,
+				0A87A2ED180A026600171619 /* CTLMessageUpgradeView.h */,
+				0A87A2EE180A026600171619 /* CTLMessageUpgradeView.m */,
+				0A87A2EF180A026600171619 /* CTLMessageUpgradeView.xib */,
+				0A87A2F0180A026600171619 /* CTLMessengerInviteView.h */,
+				0A87A2F1180A026600171619 /* CTLMessengerInviteView.m */,
+				0A87A2F2180A026600171619 /* CTLMessengerInviteView.xib */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
+		0A87A3C9180A05D100171619 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				0A87A3AC180A039100171619 /* Container.storyboard */,
+				0A87A2C9180A026600171619 /* CTLContainerViewDelegate.h */,
+				0A87A2C7180A026600171619 /* CTLContainerViewController.h */,
+				0A87A2C8180A026600171619 /* CTLContainerViewController.m */,
+				0A87A2E1180A026600171619 /* CTLMainMenuViewController.h */,
+				0A87A2E2180A026600171619 /* CTLMainMenuViewController.m */,
+				0A87A2E3180A026600171619 /* CTLMenuItemCell.h */,
+				0A87A2E4180A026600171619 /* CTLMenuItemCell.m */,
+			);
+			name = Container;
+			sourceTree = "<group>";
+		};
+		0A87A3CA180A05DF00171619 /* Inbox */ = {
+			isa = PBXGroup;
+			children = (
+				0A87A2D1180A026600171619 /* CTLEnterFormCodeViewController.h */,
+				0A87A2D2180A026600171619 /* CTLEnterFormCodeViewController.m */,
+				0A87A2D5180A026600171619 /* CTLInboxInterstitialViewController.h */,
+				0A87A2D6180A026600171619 /* CTLInboxInterstitialViewController.m */,
+				0A87A2D7180A026600171619 /* CTLInboxViewController.h */,
+				0A87A2D8180A026600171619 /* CTLInboxViewController.m */,
+				0A87A3AA180A039100171619 /* Inbox.storyboard */,
+				0A87A3AB180A039100171619 /* InboxSetup.storyboard */,
+			);
+			name = Inbox;
+			sourceTree = "<group>";
+		};
+		0A87A3CB180A05F900171619 /* Appointments */ = {
+			isa = PBXGroup;
+			children = (
+				0A87A2A5180A01DA00171619 /* CTLAppointmentCell.h */,
+				0A87A2A6180A01DA00171619 /* CTLAppointmentCell.m */,
+				0A87A2A7180A01DA00171619 /* CTLAppointmentFormViewController.h */,
+				0A87A2A8180A01DA00171619 /* CTLAppointmentFormViewController.m */,
+				0A87A2A9180A01DA00171619 /* CTLAppointmentsListViewController.h */,
+				0A87A2AA180A01DA00171619 /* CTLAppointmentsListViewController.m */,
+				0A87A3A0180A039100171619 /* Appointments.storyboard */,
+			);
+			name = Appointments;
+			sourceTree = "<group>";
+		};
+		0A87A3CC180A061300171619 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0A87A2A1180A01DA00171619 /* CTLAccountsViewController.h */,
+				0A87A2A2180A01DA00171619 /* CTLAccountsViewController.m */,
+				0A87A2A3180A01DA00171619 /* CTLAccountViewController.h */,
+				0A87A2A4180A01DA00171619 /* CTLAccountViewController.m */,
+				0A87A303180A026700171619 /* CTLSetPinViewController.h */,
+				0A87A304180A026700171619 /* CTLSetPinViewController.m */,
+				0A87A305180A026700171619 /* CTLSettingsViewController.h */,
+				0A87A306180A026700171619 /* CTLSettingsViewController.m */,
+				0A87A399180A036200171619 /* Settings.storyboard */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		0A87A3CD180A062C00171619 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				0A87A30B180A026700171619 /* CTLTopRoundedCorners.h */,
+				0A87A30C180A026700171619 /* CTLTopRoundedCorners.m */,
+				0A87A307180A026700171619 /* CTLTextField.h */,
+				0A87A308180A026700171619 /* CTLTextField.m */,
+				0A87A309180A026700171619 /* CTLTextView.h */,
+				0A87A30A180A026700171619 /* CTLTextView.m */,
+				0A87A30F180A026700171619 /* CTLViewDecorator.h */,
+				0A87A310180A026700171619 /* CTLViewDecorator.m */,
+				0A87A313180A026700171619 /* CTLWhiteButton.h */,
+				0A87A314180A026700171619 /* CTLWhiteButton.m */,
+				0A87A2AB180A01DA00171619 /* CTLAutoCompleteTableView.h */,
+				0A87A2F3180A026600171619 /* CTLPickerButton.h */,
+				0A87A2F4180A026600171619 /* CTLPickerButton.m */,
+				0A87A2F5180A026600171619 /* CTLPickerView.h */,
+				0A87A2F6180A026600171619 /* CTLPickerView.m */,
+				0A87A2B1180A026600171619 /* CTLAutoCompleteTableView.m */,
+				0A87A2B2180A026600171619 /* CTLAutoCompleteTableView.xib */,
+				0A87A2B3180A026600171619 /* CTLBottomRoundedCorners.h */,
+				0A87A2B4180A026600171619 /* CTLBottomRoundedCorners.m */,
+				0A87A2B5180A026600171619 /* CTLCellBackground.h */,
+				0A87A2B6180A026600171619 /* CTLCellBackground.m */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		0A87A3CF180A075400171619 /* Upgrade */ = {
+			isa = PBXGroup;
+			children = (
+				0A87A39A180A036200171619 /* Upgrade.storyboard */,
+				0A87A30D180A026700171619 /* CTLUpgradeInterstitialViewController.h */,
+				0A87A30E180A026700171619 /* CTLUpgradeInterstitialViewController.m */,
+			);
+			name = Upgrade;
 			sourceTree = "<group>";
 		};
 		411F2482179AF30900842564 /* SBJson */ = {
@@ -1485,6 +1546,7 @@
 				4130652716BE4E5E0063AC10 /* PhoneFormats.dat */,
 				4130654116C189630063AC10 /* Industries.plist */,
 				41D7916C1738D36900FCA232 /* ContactFormDefaults.plist */,
+				0A87A3D0180A164700171619 /* Images.xcassets */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1677,7 +1739,6 @@
 				41786ECC176831AA008808BD /* 158-wrench-2.png in Resources */,
 				41786ECD176831AA008808BD /* 158-wrench-2@2x.png in Resources */,
 				41786ECE176831AA008808BD /* message-button-type-1.png in Resources */,
-				0A87A39C180A036200171619 /* Pin.storyboard in Resources */,
 				41786ECF176831AA008808BD /* message-button-type-1@2x.png in Resources */,
 				41786ED0176831AA008808BD /* 19-clock.png in Resources */,
 				41786ED1176831AA008808BD /* 19-clock@2x.png in Resources */,
@@ -1687,6 +1748,7 @@
 				41786ED5176831AA008808BD /* 20-chat@2x.png in Resources */,
 				41786ED6176831AA008808BD /* 21-wrench.png in Resources */,
 				41786ED7176831AA008808BD /* 21-wrench@2x.png in Resources */,
+				0A87A3D1180A164700171619 /* Images.xcassets in Resources */,
 				41786ED8176831AA008808BD /* 237-key.png in Resources */,
 				41786ED9176831AA008808BD /* 237-key@2x.png in Resources */,
 				41786EDA176831AA008808BD /* 24-person.png in Resources */,
@@ -1696,7 +1758,7 @@
 				41786EDE176831AA008808BD /* 253-person.png in Resources */,
 				41786EDF176831AA008808BD /* 253-person@2x.png in Resources */,
 				41786EE0176831AA008808BD /* 256-box2.png in Resources */,
-				0A87A3B8180A039100171619 /* MainMenu.storyboard in Resources */,
+				0A87A3B8180A039100171619 /* Container.storyboard in Resources */,
 				41786EE1176831AA008808BD /* 256-box2@2x.png in Resources */,
 				41786EE2176831AA008808BD /* 258-checkmark.png in Resources */,
 				41786EE3176831AA008808BD /* 258-checkmark@2x.png in Resources */,
@@ -1925,14 +1987,12 @@
 				0A87A3B5180A039100171619 /* CTLFactoryAppointment.m in Sources */,
 				0A87A317180A026700171619 /* CTLBottomRoundedCorners.m in Sources */,
 				417F2825172F8C83003CC9A3 /* KBPopupBubbleView.m in Sources */,
-				0A87A33A180A026700171619 /* CTLPinInterstialViewController.m in Sources */,
 				0A87A344180A026700171619 /* CTLTopRoundedCorners.m in Sources */,
 				0A87A35E180A029000171619 /* _CTLCDConversation.m in Sources */,
 				0A87A388180A031D00171619 /* CTLAddressBook.m in Sources */,
 				417F2826172F8C83003CC9A3 /* KBPopupDrawableView.m in Sources */,
 				0A87A329180A026700171619 /* CTLInboxViewController.m in Sources */,
 				41D791651738AE4700FCA232 /* Clientelle.xcdatamodeld in Sources */,
-				0A87A33F180A026700171619 /* CTLSearchTextField.m in Sources */,
 				4172D8C41799024E00FD8370 /* AFHTTPClient.m in Sources */,
 				0A87A343180A026700171619 /* CTLTextView.m in Sources */,
 				4172D8C51799024E00FD8370 /* AFHTTPRequestOperation.m in Sources */,
@@ -2097,7 +2157,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -2118,7 +2178,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -2128,6 +2188,8 @@
 		417DC27316ADF1140073199D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kevin Liu (B7KWR7KHQ3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Clientelle/Clientelle-Prefix.pch";
@@ -2141,6 +2203,8 @@
 		417DC27416ADF1140073199D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kevin Liu (L5JDWR36L9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

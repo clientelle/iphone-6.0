@@ -170,7 +170,11 @@ NSString *const CTLReloadInboxNotifiyer = @"com.clientelle.notificationKeys.relo
     if(accountDict){        
         [[CTLAccountManager sharedInstance] createAccount:accountDict onComplete:^(NSDictionary *responseObject){
             //TODO: Flip to default view
+            
+            NSLog(@"GOTCHA");
+            
         } onError:^(NSError *error){
+            
             [self displayErrorMessage:[error localizedDescription]];            
         }];
     }

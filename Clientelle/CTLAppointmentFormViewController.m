@@ -13,7 +13,6 @@
 #import "CTLCDContact.h"
 #import "CTLAppointmentFormViewController.h"
 #import "CTLAppointmentsListViewController.h"
-#import "CTLPinInterstialViewController.h"
 #import "CTLContactImportViewController.h"
 #import "CTLContactsListViewController.h"
 #import "CTLContactDetailsViewController.h"

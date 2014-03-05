@@ -36,6 +36,7 @@
 
 - (void)launchWithViewFromNotification:(UILocalNotification *)notification;
 - (void)setMainViewFromNotification:(UILocalNotification *)notification applicationState:(UIApplicationState)applicationState;
-- (void)requirePin;
+
+- (void)setActiveView:(NSString *)identifier;
 
 @end
